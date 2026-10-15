@@ -177,7 +177,9 @@ export async function createAtmosphere(
       curtains.push(
         new Curtain(
           group,
-          materials.linen,
+          opening.id.startsWith("guest")
+            ? (materials.cinemaCurtain ?? materials.linen)
+            : materials.linen,
           side * (opening.width / 2 + 0.14),
           z,
           sign,

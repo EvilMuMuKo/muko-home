@@ -18,6 +18,9 @@ export interface StorageUnit {
   material: string;
   contents?: "books" | "cups" | "boxes";
   hangingGlasses?: boolean;
+  caseMaterial?: string;
+  insideMaterial?: string;
+  concealedDisplay?: boolean;
 }
 interface BaseObject {
   id: string;

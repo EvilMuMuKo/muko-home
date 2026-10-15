@@ -3,7 +3,7 @@ const roomNames: Record<string, string> = {
   kitchen: "厨房",
   bar: "水吧与餐厅",
   master: "主卧",
-  guest: "影音客房",
+  guest: "影音室 · 兼客房",
   living: "客厅",
   hall: "玄关",
   bath: "卫浴",

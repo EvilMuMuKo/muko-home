@@ -1,0 +1,317 @@
+{
+  "version": "7.0.0",
+  "environment": "Chromium / SwiftShader software GPU; no physical phone FPS measurement",
+  "errors": [],
+  "scenes": [
+    {
+      "moment": "coffee",
+      "mobile": false,
+      "lighting": "coffee",
+      "visibleRooms": [
+        "bar",
+        "hall",
+        "kitchen"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "drawCalls": 610
+    },
+    {
+      "moment": "aperitif",
+      "mobile": false,
+      "lighting": "aperitif",
+      "visibleRooms": [
+        "bar",
+        "hall",
+        "kitchen"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "drawCalls": 590
+    },
+    {
+      "moment": "game",
+      "mobile": false,
+      "lighting": "game",
+      "visibleRooms": [
+        "living",
+        "balcony"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "drawCalls": 278
+    },
+    {
+      "moment": "cinema",
+      "mobile": false,
+      "lighting": "cinema",
+      "visibleRooms": [
+        "guest"
+      ],
+      "blackoutClosed": true,
+      "doorOpen": false,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "drawCalls": 219
+    },
+    {
+      "moment": "guest-stay",
+      "mobile": false,
+      "lighting": "guest-stay",
+      "visibleRooms": [
+        "guest"
+      ],
+      "blackoutClosed": true,
+      "doorOpen": false,
+      "bedProgress": 1,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "drawCalls": 324
+    },
+    {
+      "moment": "coffee",
+      "mobile": true,
+      "lighting": "coffee",
+      "visibleRooms": [
+        "bar",
+        "hall",
+        "kitchen"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "drawCalls": 401
+    },
+    {
+      "moment": "aperitif",
+      "mobile": true,
+      "lighting": "aperitif",
+      "visibleRooms": [
+        "bar",
+        "hall",
+        "kitchen"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "drawCalls": 377
+    },
+    {
+      "moment": "game",
+      "mobile": true,
+      "lighting": "game",
+      "visibleRooms": [
+        "living",
+        "balcony"
+      ],
+      "blackoutClosed": false,
+      "doorOpen": true,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "drawCalls": 174
+    },
+    {
+      "moment": "cinema",
+      "mobile": true,
+      "lighting": "cinema",
+      "visibleRooms": [
+        "guest"
+      ],
+      "blackoutClosed": true,
+      "doorOpen": false,
+      "bedProgress": 0,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "drawCalls": 136
+    },
+    {
+      "moment": "guest-stay",
+      "mobile": true,
+      "lighting": "guest-stay",
+      "visibleRooms": [
+        "guest"
+      ],
+      "blackoutClosed": true,
+      "doorOpen": false,
+      "bedProgress": 1,
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "drawCalls": 185
+    }
+  ]
+}

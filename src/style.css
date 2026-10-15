@@ -388,3 +388,22 @@ button.active {
 #storage-doors {
   width: 100%;
 }
+
+.theme-moments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.theme-moments button {
+  min-height: 38px;
+  font-size: 11px;
+  text-align: left;
+  padding: 9px 11px;
+  border-radius: 8px;
+}
+.theme-moments button[aria-pressed="true"] {
+  background: #a86449;
+  border-color: #a86449;
+  color: #faf9f5;
+}
