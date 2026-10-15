@@ -1,0 +1,481 @@
+{
+  "method": "按模型内空尺寸扣除18mm板厚、分隔、层板与门板；未扣实际五金/管线/通风净空，非施工或承重认证",
+  "units": [
+    {
+      "id": "upper-kitchen-left",
+      "room": "kitchen",
+      "label": "灶台左侧吊柜",
+      "purpose": "调味与轻餐具",
+      "access": "mixed",
+      "closedLitres": 164.95969599999998,
+      "displayLitres": 0,
+      "external": [
+        0.65,
+        1,
+        0.32
+      ],
+      "bottom": 1.6,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-kitchen-prep",
+      "room": "kitchen",
+      "label": "备餐区吊柜",
+      "purpose": "备餐用品与食品",
+      "access": "mixed",
+      "closedLitres": 294.455744,
+      "displayLitres": 0,
+      "external": [
+        1.15,
+        1,
+        0.32
+      ],
+      "bottom": 1.6,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-kitchen-sink",
+      "room": "kitchen",
+      "label": "水槽上方吊柜",
+      "purpose": "杯具、清洁耗材",
+      "access": "mixed",
+      "closedLitres": 275.6492640000001,
+      "displayLitres": 0,
+      "external": [
+        1.08,
+        1,
+        0.32
+      ],
+      "bottom": 1.6,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-fridge",
+      "room": "kitchen",
+      "label": "冰箱顶柜",
+      "purpose": "低频厨房用品",
+      "access": "seasonal",
+      "closedLitres": 257.56262399999997,
+      "displayLitres": 0,
+      "external": [
+        0.74,
+        0.48,
+        0.86
+      ],
+      "bottom": 2.12,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-bar-coffee",
+      "room": "bar",
+      "label": "咖啡与备餐上柜",
+      "purpose": "咖啡耗材、手冲与杯具",
+      "access": "mixed",
+      "closedLitres": 354.296448,
+      "displayLitres": 177.148224,
+      "external": [
+        2.7,
+        0.82,
+        0.3
+      ],
+      "bottom": 1.78,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-bar-display",
+      "room": "bar",
+      "label": "杯酒展示柜",
+      "purpose": "酒瓶、收藏杯具",
+      "access": "mixed",
+      "closedLitres": 298.530432,
+      "displayLitres": 0,
+      "external": [
+        1.24,
+        0.9,
+        0.34
+      ],
+      "bottom": 1.7,
+      "top": 2.6,
+      "fronts": [
+        "glass",
+        "glass"
+      ]
+    },
+    {
+      "id": "upper-bar-service",
+      "room": "bar",
+      "label": "水吧服务吊柜",
+      "purpose": "餐桌用品与备品",
+      "access": "mixed",
+      "closedLitres": 114.05433599999998,
+      "displayLitres": 0,
+      "external": [
+        0.6,
+        0.82,
+        0.3
+      ],
+      "bottom": 1.78,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-master-work",
+      "room": "master",
+      "label": "双人工作区收纳",
+      "purpose": "文件、设备配件与书籍",
+      "access": "mixed",
+      "closedLitres": 474.15842133333325,
+      "displayLitres": 237.07921066666663,
+      "external": [
+        2.6,
+        0.95,
+        0.35
+      ],
+      "bottom": 1.65,
+      "top": 2.5999999999999996,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-master-wardrobe",
+      "room": "master",
+      "label": "主卧衣柜顶柜",
+      "purpose": "薄型低频收纳盒",
+      "access": "seasonal",
+      "closedLitres": 175.94092799999996,
+      "displayLitres": 0,
+      "external": [
+        1.68,
+        0.23,
+        0.6
+      ],
+      "bottom": 2.37,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "solid",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-master-bed-left",
+      "room": "master",
+      "label": "床头左侧浅柜",
+      "purpose": "轻型个人用品",
+      "access": "mixed",
+      "closedLitres": 77.446656,
+      "displayLitres": 0,
+      "external": [
+        0.54,
+        0.74,
+        0.26
+      ],
+      "bottom": 1.86,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-master-bed-right",
+      "room": "master",
+      "label": "床头右侧浅柜",
+      "purpose": "轻型展示与书籍",
+      "access": "mixed",
+      "closedLitres": 0,
+      "displayLitres": 77.446656,
+      "external": [
+        0.54,
+        0.74,
+        0.26
+      ],
+      "bottom": 1.86,
+      "top": 2.6,
+      "fronts": [
+        "open"
+      ]
+    },
+    {
+      "id": "upper-guest-media",
+      "room": "guest",
+      "label": "影音客房收纳墙",
+      "purpose": "客用备品、影音与展示",
+      "access": "mixed",
+      "closedLitres": 343.77164799999997,
+      "displayLitres": 171.88582399999999,
+      "external": [
+        2.8,
+        0.77,
+        0.3
+      ],
+      "bottom": 1.83,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-guest-wardrobe",
+      "room": "guest",
+      "label": "客房衣柜顶柜",
+      "purpose": "客用织物与低频用品",
+      "access": "seasonal",
+      "closedLitres": 295.30060799999995,
+      "displayLitres": 0,
+      "external": [
+        1.65,
+        0.38,
+        0.58
+      ],
+      "bottom": 2.22,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "solid",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-guest-bed-left",
+      "room": "guest",
+      "label": "沙发床左侧浅柜",
+      "purpose": "阅读与小件展示",
+      "access": "mixed",
+      "closedLitres": 0,
+      "displayLitres": 80.519936,
+      "external": [
+        0.56,
+        0.74,
+        0.26
+      ],
+      "bottom": 1.86,
+      "top": 2.6,
+      "fronts": [
+        "open"
+      ]
+    },
+    {
+      "id": "upper-guest-bed-right",
+      "room": "guest",
+      "label": "沙发床右侧浅柜",
+      "purpose": "轻型客用备品",
+      "access": "mixed",
+      "closedLitres": 80.519936,
+      "displayLitres": 0,
+      "external": [
+        0.56,
+        0.74,
+        0.26
+      ],
+      "bottom": 1.86,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-living-media",
+      "room": "living",
+      "label": "客厅影音上柜",
+      "purpose": "影音配件与轻型展示",
+      "access": "mixed",
+      "closedLitres": 267.78259199999997,
+      "displayLitres": 133.89129599999998,
+      "external": [
+        2.55,
+        0.65,
+        0.3
+      ],
+      "bottom": 1.95,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-living-side",
+      "room": "living",
+      "label": "电视侧展示柜",
+      "purpose": "收藏与展示",
+      "access": "mixed",
+      "closedLitres": 128.36841600000002,
+      "displayLitres": 0,
+      "external": [
+        0.55,
+        1,
+        0.3
+      ],
+      "bottom": 1.6,
+      "top": 2.6,
+      "fronts": [
+        "glass"
+      ]
+    },
+    {
+      "id": "upper-living-rear",
+      "room": "living",
+      "label": "客厅后墙上柜",
+      "purpose": "生活用品、书籍与收藏",
+      "access": "mixed",
+      "closedLitres": 288.144128,
+      "displayLitres": 144.072064,
+      "external": [
+        1.6,
+        1.05,
+        0.32
+      ],
+      "bottom": 1.55,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-entry",
+      "room": "hall",
+      "label": "玄关高位收纳",
+      "purpose": "低频出行与家庭备品",
+      "access": "seasonal",
+      "closedLitres": 192.50201599999997,
+      "displayLitres": 0,
+      "external": [
+        1.3,
+        0.58,
+        0.32
+      ],
+      "bottom": 2.02,
+      "top": 2.6,
+      "fronts": [
+        "solid",
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-entry-display",
+      "room": "hall",
+      "label": "玄关随手展示",
+      "purpose": "钥匙、随手物品与展示",
+      "access": "mixed",
+      "closedLitres": 0,
+      "displayLitres": 42.79910400000001,
+      "external": [
+        0.9,
+        0.38,
+        0.18
+      ],
+      "bottom": 1.35,
+      "top": 1.73,
+      "fronts": [
+        "open"
+      ]
+    },
+    {
+      "id": "upper-bath-mirror",
+      "room": "bath",
+      "label": "洗手台镜柜",
+      "purpose": "日用洗护用品",
+      "access": "mixed",
+      "closedLitres": 86.57625599999999,
+      "displayLitres": 0,
+      "external": [
+        0.6,
+        1.12,
+        0.18
+      ],
+      "bottom": 1.16,
+      "top": 2.2800000000000002,
+      "fronts": [
+        "mirror"
+      ]
+    },
+    {
+      "id": "upper-bath-toilet",
+      "room": "bath",
+      "label": "马桶上方浅柜",
+      "purpose": "纸品与清洁备品",
+      "access": "mixed",
+      "closedLitres": 87.809216,
+      "displayLitres": 0,
+      "external": [
+        0.52,
+        1.04,
+        0.22
+      ],
+      "bottom": 1.52,
+      "top": 2.56,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-laundry",
+      "room": "balcony",
+      "label": "洗烘机顶柜",
+      "purpose": "洗衣用品与备品",
+      "access": "mixed",
+      "closedLitres": 219.38246399999997,
+      "displayLitres": 0,
+      "external": [
+        0.68,
+        0.64,
+        0.6
+      ],
+      "bottom": 1.96,
+      "top": 2.6,
+      "fronts": [
+        "solid"
+      ]
+    },
+    {
+      "id": "upper-housekeeping",
+      "room": "balcony",
+      "label": "家政柜顶柜",
+      "purpose": "轻型家务备品",
+      "access": "seasonal",
+      "closedLitres": 87.49254400000001,
+      "displayLitres": 0,
+      "external": [
+        0.62,
+        0.28,
+        0.65
+      ],
+      "bottom": 2.32,
+      "top": 2.5999999999999996,
+      "fronts": [
+        "solid"
+      ]
+    }
+  ],
+  "closedLitres": 4564.704373333333,
+  "displayLitres": 1064.8423146666667
+}

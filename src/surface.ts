@@ -26,6 +26,7 @@ export function enhanceSurfaces(
     "steel",
     "bronze",
     "cabinetPaint",
+    "upperPaint",
   ]) {
     const original = materials[name] as THREE.MeshStandardMaterial;
     if (!original) continue;

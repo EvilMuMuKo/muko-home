@@ -362,3 +362,29 @@ button.active {
     transition: none !important;
   }
 }
+
+.storage-summary {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #4f6253;
+}
+.storage-note {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #7d8476;
+}
+.storage-card {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+.storage-card p {
+  font-size: 11px;
+  line-height: 1.8;
+  margin: 6px 0;
+}
+.storage-card button {
+  width: 100%;
+}
+#storage-doors {
+  width: 100%;
+}
