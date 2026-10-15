@@ -1,5 +1,9 @@
-# 新众花园住宅空间概念展示
+# MuKo Home
 
-在线展示：[打开住宅空间概念页](https://evilmumuko.github.io/xinzhong-garden-showcase/)
+[打开空间设计方案](https://evilmumuko.github.io/muko-home/)
 
-本页用于展示概念方案，空间尺寸与设备适配仍需现场复核。
+自然、温暖、适度复古的双人住宅空间概念设计。支持空间切换、日夜照明和家具状态展示。
+
+空间与设备仍需现场复测，当前展示不作为施工图。
+
+此仓库仅包含当前展示网页与依赖许可。
