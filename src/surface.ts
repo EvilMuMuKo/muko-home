@@ -79,6 +79,8 @@ export function enhanceSurfaces(
     "washing_machine",
     "dryer",
     "round_table",
+    "salon_banquette",
+    "coffee_table",
     "desk",
     "bench",
   ]);

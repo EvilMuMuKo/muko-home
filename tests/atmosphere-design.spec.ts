@@ -81,7 +81,7 @@ test("theme controls coordinate lights, darkening, door, shutters and the conver
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   expect(
     await page.evaluate(() => window.homePresentation.getState().version),
-  ).toBe("7.0.0");
+  ).toBe("8.0.0");
   await page.click("#panel-toggle");
   await expect(page.locator("[data-moment]")).toHaveCount(themeMoments.length);
   await page.click('[data-moment="coffee"]');

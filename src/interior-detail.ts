@@ -119,6 +119,7 @@ export function buildInteriorDetails(
   scene: THREE.Scene,
   m: Materials,
   tag: (n: THREE.Object3D, rooms: string[], kind: string) => void,
+  spatial = false,
 ) {
   m.barTile = createTileMaterial();
   const groups = new Map<string, THREE.Group>();
@@ -154,7 +155,17 @@ export function buildInteriorDetails(
     return mesh;
   }
   const bar = room("bar");
-  box(bar, 4.5, 0.67, 0.008, 2.4, 1.315, 8.35, "barTile", 0);
+  box(
+    bar,
+    4.5,
+    0.67,
+    0.008,
+    2.4,
+    1.315,
+    8.35,
+    spatial ? "salonStone" : "barTile",
+    0,
+  );
   // Framed original graphic, clear of the window and café worktop.
   const frame = new THREE.Group();
   frame.position.set(0.106, 1.75, 7.65);
@@ -190,8 +201,10 @@ export function buildInteriorDetails(
   }
   const living = room("living");
   // A folded woven throw on the sofa arm, fully inside its existing footprint.
-  box(living, 0.15, 0.022, 0.46, 10.43, 0.652, 7.43, "clayFabric", 0.009);
-  box(living, 0.016, 0.29, 0.36, 10.49, 0.52, 7.43, "clayFabric", 0.004);
+  if (!spatial) {
+    box(living, 0.15, 0.022, 0.46, 10.43, 0.652, 7.43, "clayFabric", 0.009);
+    box(living, 0.016, 0.29, 0.36, 10.49, 0.52, 7.43, "clayFabric", 0.004);
+  }
   // A few game cases on the rear sideboard with a restrained framed print above.
   for (let j = 0; j < 4; j++)
     box(
@@ -206,8 +219,9 @@ export function buildInteriorDetails(
       0.002,
     );
   const guest = room("guest");
-  for (const x of [1.05, 2.05, 3.05])
-    box(guest, 0.78, 0.74, 0.038, x, 1.29, 0.112, "cinemaAcoustic", 0.012);
+  if (!spatial)
+    for (const x of [1.05, 2.05, 3.05])
+      box(guest, 0.78, 0.74, 0.038, x, 1.29, 0.112, "cinemaAcoustic", 0.012);
   for (const x of [0.65, 3.35]) {
     box(guest, 0.2, 0.39, 0.16, x, 1.05, 3.17, "cinemaWood", 0.012);
     box(guest, 0.176, 0.365, 0.009, x, 1.05, 3.084, "cinemaAcoustic", 0.004);
@@ -308,7 +322,13 @@ export function buildInteriorDetails(
   for (const id of ["guest-sofa-bed", "living-sofa"]) {
     const group = scene.getObjectByName(id)!;
     for (const child of [...group.children])
-      if (child instanceof THREE.Mesh) addUpholsterySeam(child, m.piping);
+      if (
+        child instanceof THREE.Mesh &&
+        [m.linen, m.livingFabric, m.cinemaFabric, m.salonFabric].includes(
+          child.material as THREE.Material,
+        )
+      )
+        addUpholsterySeam(child, m.piping);
   }
   const door = scene.getObjectByName("opening:guest-door")!;
   let current = "aperitif",
@@ -341,7 +361,8 @@ export function buildInteriorDetails(
       blackoutClosed: blackout.visible,
       palette: roomPalette,
       screenInches: 83,
-      acousticPanels: 3,
+      acousticPanels: spatial ? 5 : 3,
+      compositionVersion: spatial ? 8 : 7,
       storageGroups: 24,
       decorRooms: [...groups.keys()],
       moments: themeMoments.map((s) => s.id),
