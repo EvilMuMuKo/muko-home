@@ -16,7 +16,7 @@ npm test
 npm run benchmark
 ```
 
-`src/index.html` 是入口，`src/model.js` 保留 V5 住宅数据，`src/storage-design.ts` 和 `src/atmosphere-design.ts` 分别生成 V6 收纳与 V7 配色/生活场景覆盖层，`src/scene.js` 是从原发布包还原的场景逻辑，暂保留原局部变量名。新增渲染、合批、几何、材质、布料和浅水模块使用 TypeScript。构建检查新增 TS 模块，不声称原场景已完成全量类型迁移。
+`src/index.html` 是入口，`src/model.js` 保留 V5 住宅数据，`src/storage-design.ts` 和 `src/atmosphere-design.ts` 分别生成 V6 收纳与 V7 配色/生活场景覆盖层，`src/salon-design.ts` 与 `src/salon-mesh.ts` 叠加 V8 家具及空间构图，`src/scene.js` 是从原发布包还原的场景逻辑，暂保留原局部变量名。新增渲染、合批、几何、材质、布料和浅水模块使用 TypeScript。构建检查新增 TS 模块，不声称原场景已完成全量类型迁移。
 
 `npm run build` 生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
 
@@ -37,6 +37,6 @@ npm run benchmark
 
 WebGPU 是实验性可选路径，目前不包含桌面 WebGL 的 GTAO/泛光链。移动端是否流畅仍须真机测试，不能把云端软件 GPU 的结果解释为手机 FPS，也不能据此承诺达到 3A 游戏画质。
 
-参见 [V7 墙色与生活场景](docs/atmospheres-v7.md)、[上部收纳与材质改造](docs/storage-v6.md)、[实现与验证说明](docs/implementation.md)及[纹理来源](licenses/polyhaven-textures.md)。
+参见 [V8 沙龙空间与家具](docs/salon-v8.md)、[V7 墙色与生活场景](docs/atmospheres-v7.md)、[上部收纳与材质改造](docs/storage-v6.md)、[实现与验证说明](docs/implementation.md)及[纹理来源](licenses/polyhaven-textures.md)。
 
 [桌面预览](docs/desktop-preview.png) · [移动端横屏预览](docs/mobile-preview.png)

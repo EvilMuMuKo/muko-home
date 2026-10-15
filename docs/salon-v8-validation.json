@@ -1,0 +1,868 @@
+{
+  "version": "8.0.0",
+  "environment": "Chromium / SwiftShader, emulated mobile viewport; no physical-device FPS claim",
+  "tests": {
+    "passed": 18,
+    "failed": 0
+  },
+  "storage": {
+    "method": "按模型内空尺寸扣除18mm板厚、分隔、层板与门板；未扣实际五金/管线/通风净空，非施工或承重认证",
+    "units": [
+      {
+        "id": "upper-kitchen-left",
+        "room": "kitchen",
+        "label": "灶台左侧吊柜",
+        "purpose": "调味与轻餐具",
+        "access": "mixed",
+        "closedLitres": 164.95969599999998,
+        "displayLitres": 0,
+        "external": [0.65, 1, 0.32],
+        "bottom": 1.6,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-kitchen-prep",
+        "room": "kitchen",
+        "label": "备餐区吊柜",
+        "purpose": "备餐用品与食品",
+        "access": "mixed",
+        "closedLitres": 294.455744,
+        "displayLitres": 0,
+        "external": [1.15, 1, 0.32],
+        "bottom": 1.6,
+        "top": 2.6,
+        "fronts": ["solid", "solid"]
+      },
+      {
+        "id": "upper-kitchen-sink",
+        "room": "kitchen",
+        "label": "水槽上方吊柜",
+        "purpose": "杯具、清洁耗材",
+        "access": "mixed",
+        "closedLitres": 275.6492640000001,
+        "displayLitres": 0,
+        "external": [1.08, 1, 0.32],
+        "bottom": 1.6,
+        "top": 2.6,
+        "fronts": ["solid", "solid"]
+      },
+      {
+        "id": "upper-fridge",
+        "room": "kitchen",
+        "label": "冰箱顶柜",
+        "purpose": "低频厨房用品",
+        "access": "seasonal",
+        "closedLitres": 257.56262399999997,
+        "displayLitres": 0,
+        "external": [0.74, 0.48, 0.86],
+        "bottom": 2.12,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-bar-coffee",
+        "room": "bar",
+        "label": "咖啡与备餐上柜",
+        "purpose": "咖啡耗材、手冲与杯具",
+        "access": "mixed",
+        "closedLitres": 354.296448,
+        "displayLitres": 177.148224,
+        "external": [2.7, 0.82, 0.3],
+        "bottom": 1.78,
+        "top": 2.6,
+        "fronts": ["solid", "open", "solid"]
+      },
+      {
+        "id": "upper-bar-display",
+        "room": "bar",
+        "label": "杯酒展示柜",
+        "purpose": "酒瓶、收藏杯具",
+        "access": "mixed",
+        "closedLitres": 298.530432,
+        "displayLitres": 0,
+        "external": [1.24, 0.9, 0.34],
+        "bottom": 1.7,
+        "top": 2.6,
+        "fronts": ["glass", "glass"]
+      },
+      {
+        "id": "upper-bar-service",
+        "room": "bar",
+        "label": "水吧服务吊柜",
+        "purpose": "餐桌用品与备品",
+        "access": "mixed",
+        "closedLitres": 114.05433599999998,
+        "displayLitres": 0,
+        "external": [0.6, 0.82, 0.3],
+        "bottom": 1.78,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-master-work",
+        "room": "master",
+        "label": "双人工作区收纳",
+        "purpose": "文件、设备配件与书籍",
+        "access": "mixed",
+        "closedLitres": 474.15842133333325,
+        "displayLitres": 237.07921066666663,
+        "external": [2.6, 0.95, 0.35],
+        "bottom": 1.65,
+        "top": 2.5999999999999996,
+        "fronts": ["solid", "open", "solid"]
+      },
+      {
+        "id": "upper-master-wardrobe",
+        "room": "master",
+        "label": "主卧衣柜顶柜",
+        "purpose": "薄型低频收纳盒",
+        "access": "seasonal",
+        "closedLitres": 175.94092799999996,
+        "displayLitres": 0,
+        "external": [1.68, 0.23, 0.6],
+        "bottom": 2.37,
+        "top": 2.6,
+        "fronts": ["solid", "solid", "solid"]
+      },
+      {
+        "id": "upper-master-bed-left",
+        "room": "master",
+        "label": "床头左侧浅柜",
+        "purpose": "轻型个人用品",
+        "access": "mixed",
+        "closedLitres": 77.446656,
+        "displayLitres": 0,
+        "external": [0.54, 0.74, 0.26],
+        "bottom": 1.86,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-master-bed-right",
+        "room": "master",
+        "label": "床头右侧浅柜",
+        "purpose": "轻型展示与书籍",
+        "access": "mixed",
+        "closedLitres": 0,
+        "displayLitres": 77.446656,
+        "external": [0.54, 0.74, 0.26],
+        "bottom": 1.86,
+        "top": 2.6,
+        "fronts": ["open"]
+      },
+      {
+        "id": "upper-guest-media",
+        "room": "guest",
+        "label": "影音客房收纳墙",
+        "purpose": "客用备品、影音与展示",
+        "access": "mixed",
+        "closedLitres": 343.77164799999997,
+        "displayLitres": 171.88582399999999,
+        "external": [2.8, 0.77, 0.3],
+        "bottom": 1.83,
+        "top": 2.6,
+        "fronts": ["solid", "open", "solid"]
+      },
+      {
+        "id": "upper-guest-wardrobe",
+        "room": "guest",
+        "label": "客房衣柜顶柜",
+        "purpose": "客用织物与低频用品",
+        "access": "seasonal",
+        "closedLitres": 295.30060799999995,
+        "displayLitres": 0,
+        "external": [1.65, 0.38, 0.58],
+        "bottom": 2.22,
+        "top": 2.6,
+        "fronts": ["solid", "solid", "solid"]
+      },
+      {
+        "id": "upper-guest-bed-left",
+        "room": "guest",
+        "label": "沙发床左侧浅柜",
+        "purpose": "阅读与小件展示",
+        "access": "mixed",
+        "closedLitres": 0,
+        "displayLitres": 80.519936,
+        "external": [0.56, 0.74, 0.26],
+        "bottom": 1.86,
+        "top": 2.6,
+        "fronts": ["open"]
+      },
+      {
+        "id": "upper-guest-bed-right",
+        "room": "guest",
+        "label": "沙发床右侧浅柜",
+        "purpose": "轻型客用备品",
+        "access": "mixed",
+        "closedLitres": 80.519936,
+        "displayLitres": 0,
+        "external": [0.56, 0.74, 0.26],
+        "bottom": 1.86,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-living-media",
+        "room": "living",
+        "label": "客厅影音上柜",
+        "purpose": "影音配件与轻型展示",
+        "access": "mixed",
+        "closedLitres": 267.78259199999997,
+        "displayLitres": 133.89129599999998,
+        "external": [2.55, 0.65, 0.3],
+        "bottom": 1.95,
+        "top": 2.6,
+        "fronts": ["solid", "open", "solid"]
+      },
+      {
+        "id": "upper-living-side",
+        "room": "living",
+        "label": "电视侧展示柜",
+        "purpose": "收藏与展示",
+        "access": "mixed",
+        "closedLitres": 128.36841600000002,
+        "displayLitres": 0,
+        "external": [0.55, 1, 0.3],
+        "bottom": 1.6,
+        "top": 2.6,
+        "fronts": ["glass"]
+      },
+      {
+        "id": "upper-living-rear",
+        "room": "living",
+        "label": "客厅后墙上柜",
+        "purpose": "生活用品、书籍与收藏",
+        "access": "mixed",
+        "closedLitres": 288.144128,
+        "displayLitres": 144.072064,
+        "external": [1.6, 1.05, 0.32],
+        "bottom": 1.55,
+        "top": 2.6,
+        "fronts": ["solid", "open", "solid"]
+      },
+      {
+        "id": "upper-entry",
+        "room": "hall",
+        "label": "玄关高位收纳",
+        "purpose": "低频出行与家庭备品",
+        "access": "seasonal",
+        "closedLitres": 192.50201599999997,
+        "displayLitres": 0,
+        "external": [1.3, 0.58, 0.32],
+        "bottom": 2.02,
+        "top": 2.6,
+        "fronts": ["solid", "solid"]
+      },
+      {
+        "id": "upper-entry-display",
+        "room": "hall",
+        "label": "玄关随手展示",
+        "purpose": "钥匙、随手物品与展示",
+        "access": "mixed",
+        "closedLitres": 0,
+        "displayLitres": 42.79910400000001,
+        "external": [0.9, 0.38, 0.18],
+        "bottom": 1.35,
+        "top": 1.73,
+        "fronts": ["open"]
+      },
+      {
+        "id": "upper-bath-mirror",
+        "room": "bath",
+        "label": "洗手台镜柜",
+        "purpose": "日用洗护用品",
+        "access": "mixed",
+        "closedLitres": 86.57625599999999,
+        "displayLitres": 0,
+        "external": [0.6, 1.12, 0.18],
+        "bottom": 1.16,
+        "top": 2.2800000000000002,
+        "fronts": ["mirror"]
+      },
+      {
+        "id": "upper-bath-toilet",
+        "room": "bath",
+        "label": "马桶上方浅柜",
+        "purpose": "纸品与清洁备品",
+        "access": "mixed",
+        "closedLitres": 87.809216,
+        "displayLitres": 0,
+        "external": [0.52, 1.04, 0.22],
+        "bottom": 1.52,
+        "top": 2.56,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-laundry",
+        "room": "balcony",
+        "label": "洗烘机顶柜",
+        "purpose": "洗衣用品与备品",
+        "access": "mixed",
+        "closedLitres": 219.38246399999997,
+        "displayLitres": 0,
+        "external": [0.68, 0.64, 0.6],
+        "bottom": 1.96,
+        "top": 2.6,
+        "fronts": ["solid"]
+      },
+      {
+        "id": "upper-housekeeping",
+        "room": "balcony",
+        "label": "家政柜顶柜",
+        "purpose": "轻型家务备品",
+        "access": "seasonal",
+        "closedLitres": 87.49254400000001,
+        "displayLitres": 0,
+        "external": [0.62, 0.28, 0.65],
+        "bottom": 2.32,
+        "top": 2.5999999999999996,
+        "fronts": ["solid"]
+      }
+    ],
+    "closedLitres": 4564.704373333333,
+    "displayLitres": 1064.8423146666667
+  },
+  "spatial": {
+    "solids": [
+      {
+        "room": "bar",
+        "name": "bar:portal-jamb",
+        "min": [0.0675, 0.9700000000000001, 7.949999999999999],
+        "max": [0.1325, 2.67, 8.36]
+      },
+      {
+        "room": "bar",
+        "name": "bar:portal-jamb",
+        "min": [4.9675, 0.9700000000000001, 7.949999999999999],
+        "max": [5.0325, 2.67, 8.36]
+      },
+      {
+        "room": "bar",
+        "name": "bar:portal-crown",
+        "min": [0.0674999999999999, 2.6, 7.87],
+        "max": [5.0325, 2.685, 8.36]
+      },
+      {
+        "room": "living",
+        "name": "living:media-pier",
+        "min": [7.955, 0.44999999999999996, 4.495],
+        "max": [8.025, 2.63, 4.805000000000001]
+      },
+      {
+        "room": "living",
+        "name": "living:media-pier",
+        "min": [11.215, 0.44999999999999996, 4.495],
+        "max": [11.285, 2.63, 4.805000000000001]
+      },
+      {
+        "room": "living",
+        "name": "living:media-crown",
+        "min": [7.954999999999999, 2.6, 4.470000000000001],
+        "max": [11.285, 2.68, 4.83]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:proscenium-jamb",
+        "min": [0.20500000000000002, 0.06000000000000005, 2.935],
+        "max": [0.295, 2.64, 3.2849999999999997]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:proscenium-jamb",
+        "min": [3.205, 0.06000000000000005, 2.935],
+        "max": [3.295, 2.64, 3.2849999999999997]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:proscenium-crown",
+        "min": [0.20500000000000007, 2.605, 2.885],
+        "max": [3.295, 2.68, 3.285]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:upholstered-bay",
+        "min": [0.33, 0.8700000000000001, 0.095],
+        "max": [0.97, 1.75, 0.13999999999999999]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:upholstered-bay",
+        "min": [1.01, 0.8700000000000001, 0.095],
+        "max": [1.6500000000000001, 1.75, 0.13999999999999999]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:upholstered-bay",
+        "min": [1.6900000000000002, 0.8700000000000001, 0.095],
+        "max": [2.33, 1.75, 0.13999999999999999]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:upholstered-bay",
+        "min": [2.37, 0.8700000000000001, 0.095],
+        "max": [3.01, 1.75, 0.13999999999999999]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:upholstered-bay",
+        "min": [3.0500000000000003, 0.8700000000000001, 0.095],
+        "max": [3.69, 1.75, 0.13999999999999999]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:rear-datum",
+        "min": [0.2849999999999997, 0.8375, 0.1],
+        "max": [3.735, 0.8624999999999999, 0.16]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:barrel-shell",
+        "min": [0.538, 2.488, 1.038],
+        "max": [3.612, 2.672, 1.692]
+      },
+      {
+        "room": "guest",
+        "name": "cinema:barrel-shell",
+        "min": [0.538, 2.488, 1.768],
+        "max": [3.612, 2.672, 2.432]
+      }
+    ],
+    "groups": ["bar", "living", "guest"],
+    "batching": {
+      "sources": 19,
+      "batches": 5,
+      "drawCallsReduced": 14
+    },
+    "language": "deep frames / low furniture / vaulted inner room",
+    "furniture": [
+      {
+        "id": "dining-table",
+        "x": 1.55,
+        "z": 6.5,
+        "w": 1.1,
+        "d": 0.8,
+        "h": 0.735,
+        "rotation": 0
+      },
+      {
+        "id": "dining-chair-left",
+        "x": 0.36,
+        "z": 6.5,
+        "w": 1.68,
+        "d": 0.5,
+        "h": 0.8,
+        "rotation": 90
+      },
+      {
+        "id": "dining-chair-right",
+        "x": 2.55,
+        "z": 6.5,
+        "w": 0.6,
+        "d": 0.6,
+        "h": 0.79,
+        "rotation": -90
+      },
+      {
+        "id": "living-sofa",
+        "x": 9.35,
+        "z": 7.35,
+        "w": 2.55,
+        "d": 1.05,
+        "h": 0.76,
+        "rotation": 0
+      },
+      {
+        "id": "side-table",
+        "x": 7.85,
+        "z": 7.3,
+        "w": 0.38,
+        "d": 0.38,
+        "h": 0.46,
+        "rotation": 0
+      },
+      {
+        "id": "salon-coffee-table",
+        "x": 9.35,
+        "z": 6.18,
+        "w": 1.05,
+        "d": 0.54,
+        "h": 0.34,
+        "rotation": 0
+      }
+    ],
+    "routes": [
+      {
+        "id": "guest-convert",
+        "people": [
+          {
+            "id": "path-user",
+            "points": [
+              [4.55, 2.9000000000000004],
+              [3.5500000000000003, 2.75],
+              [3.35, 2.1]
+            ],
+            "radius": 0.3,
+            "height": 1.7,
+            "durationS": 6
+          }
+        ]
+      },
+      {
+        "id": "guest-stay",
+        "people": [
+          {
+            "id": "path-user",
+            "points": [
+              [3.4000000000000004, 1.9000000000000001],
+              [3.5, 2.7],
+              [4.55, 2.9000000000000004]
+            ],
+            "radius": 0.3,
+            "height": 1.7,
+            "durationS": 6
+          }
+        ]
+      },
+      {
+        "id": "ps5-balcony",
+        "people": [
+          {
+            "id": "path-user",
+            "points": [
+              [7.5, 5.4],
+              [11.15, 5.4],
+              [11.15, 7.45],
+              [12.1, 7.45]
+            ],
+            "radius": 0.45,
+            "height": 1.7,
+            "durationS": 8
+          }
+        ]
+      },
+      {
+        "id": "guest-bench-exit-bed-open",
+        "people": [
+          {
+            "id": "bench-user",
+            "points": [
+              [0.795, 1.4],
+              [0.83, 1.4],
+              [0.83, 2.6],
+              [3.5, 2.6],
+              [4.2, 2.9]
+            ],
+            "radius": 0.3,
+            "height": 1.7,
+            "durationS": 8
+          }
+        ]
+      }
+    ]
+  },
+  "errors": [],
+  "views": [
+    {
+      "version": "8.0.0",
+      "moment": "coffee",
+      "activePoint": "bar-ritual",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 12,
+      "activeLights": 8,
+      "shadowCount": 2,
+      "drawCalls": 641,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "aperitif",
+      "activePoint": "bar-ritual",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 12,
+      "activeLights": 8,
+      "shadowCount": 2,
+      "drawCalls": 614,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "game",
+      "activePoint": "living-lounge",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 12,
+      "activeLights": 6,
+      "shadowCount": 2,
+      "drawCalls": 359,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "cinema",
+      "activePoint": "cinema-seat",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 12,
+      "activeLights": 2,
+      "shadowCount": 2,
+      "drawCalls": 259,
+      "bedProgress": 0,
+      "doorOpen": false,
+      "blackoutClosed": true
+    },
+    {
+      "version": "8.0.0",
+      "moment": "guest-stay",
+      "activePoint": "cinema-entry",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1,
+        "interactionDpr": 1,
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 12,
+      "activeLights": 4,
+      "shadowCount": 2,
+      "drawCalls": 349,
+      "bedProgress": 1,
+      "doorOpen": false,
+      "blackoutClosed": true
+    },
+    {
+      "version": "8.0.0",
+      "moment": "coffee",
+      "activePoint": "bar-ritual",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 6,
+      "activeLights": 6,
+      "shadowCount": 1,
+      "drawCalls": 412,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "aperitif",
+      "activePoint": "bar-ritual",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 6,
+      "activeLights": 6,
+      "shadowCount": 1,
+      "drawCalls": 384,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "game",
+      "activePoint": "living-lounge",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 6,
+      "activeLights": 5,
+      "shadowCount": 1,
+      "drawCalls": 219,
+      "bedProgress": 0,
+      "doorOpen": true,
+      "blackoutClosed": false
+    },
+    {
+      "version": "8.0.0",
+      "moment": "cinema",
+      "activePoint": "cinema-seat",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 6,
+      "activeLights": 2,
+      "shadowCount": 1,
+      "drawCalls": 164,
+      "bedProgress": 0,
+      "doorOpen": false,
+      "blackoutClosed": true
+    },
+    {
+      "version": "8.0.0",
+      "moment": "guest-stay",
+      "activePoint": "cinema-entry",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 6,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 2,
+        "interactionDpr": 1,
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "material": {
+        "requested": 9,
+        "loaded": 9,
+        "failed": [],
+        "metricMapping": true
+      },
+      "lightSlots": 6,
+      "activeLights": 3,
+      "shadowCount": 1,
+      "drawCalls": 201,
+      "bedProgress": 1,
+      "doorOpen": false,
+      "blackoutClosed": true
+    }
+  ]
+}

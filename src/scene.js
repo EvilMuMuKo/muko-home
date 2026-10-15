@@ -1,3 +1,6 @@
+import { createSalonDesign } from "./salon-design";
+import { prepareSalonMaterials } from "./salon-materials";
+import { buildSalonFurniture, buildSalonArchitecture } from "./salon-mesh";
 import { createAtmosphereDesign, themeMoments } from "./atmosphere-design";
 import {
   configureRoomMaterials,
@@ -40,7 +43,10 @@ import {
   Color as ve,
 } from "three";
 import baseModel from "./model.js";
-const pt = createAtmosphereDesign(createStorageDesign(baseModel));
+const pt = createSalonDesign(
+  createAtmosphereDesign(createStorageDesign(baseModel)),
+);
+let spatialDesign, compositionMaterial;
 let roomAtmosphere;
 import { OrbitControls as Mc } from "three/addons/controls/OrbitControls.js";
 import { RoundedBoxGeometry as ru } from "three/addons/geometries/RoundedBoxGeometry.js";
@@ -2452,6 +2458,7 @@ async function ew() {
   await refineMaterials(Vn, Ht);
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
   configureRoomMaterials(Vn);
+  prepareSalonMaterials(Vn);
   Ct.userData.materials = Vn;
 }
 function re(i, e, t, n, s, r, a, o = "oak", l = 0.015) {
@@ -2804,6 +2811,7 @@ function lw() {
           : [i.room],
       ),
       !(
+        buildSalonFurniture(e, i, Vn, St) ||
         (i.type === "wall_storage" &&
           (buildStorageUnit(e, i, Vn, St.storage), true)) ||
         lx({
@@ -3871,7 +3879,8 @@ async function bw() {
         materials: Vn,
       }),
       finishFurniture(Ct, ut.objects, Vn),
-      (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu)),
+      (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true)),
+      (spatialDesign = buildSalonArchitecture(Ct, Vn, Mu)),
       (xx = ax({ THREE: yi, scene: Ct, model: ut })),
       (roomBatching = batchFurniture(Ct, ut, Mu)),
       cw(),
@@ -4078,6 +4087,39 @@ window.homePresentation = {
   },
   capturePNG: () => Jt.capture(() => kn.toDataURL("image/png")),
   setLightingScene: (id) => Fp(id),
+  setInteriorView: (id) => gw({ id }),
+  getSpatialDesign: () => ({
+    ...spatialDesign,
+    furniture: ut.objects
+      .filter((o) =>
+        [
+          "dining-table",
+          "dining-chair-left",
+          "dining-chair-right",
+          "living-sofa",
+          "salon-coffee-table",
+          "side-table",
+        ].includes(o.id),
+      )
+      .map((o) => ({
+        id: o.id,
+        x: o.x,
+        z: o.z,
+        w: o.w,
+        d: o.d,
+        h: o.h,
+        rotation: o.rotation,
+      })),
+    routes: ut.presentationScenarios.map((s) => ({
+      id: s.id,
+      people: s.people,
+    })),
+  }),
+  setCompositionStudy: (enabled) => {
+    compositionMaterial ||= new ui({ color: "#bdb6a9", roughness: 0.9 });
+    Ct.overrideMaterial = enabled ? compositionMaterial : null;
+    Jt?.request({ shadow: true });
+  },
   getAtmosphereDesign: () => roomAtmosphere?.getState(),
   getPerformance: () => ({
     ...Jt?.getState(),
