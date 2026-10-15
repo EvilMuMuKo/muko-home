@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#dcd6cb" />
+    <title>MuKo Home</title>
+    <meta
+      name="description"
+      content="MuKo Home · 温暖自然的双人住宅空间概念设计"
+    />
+    <meta property="og:title" content="MuKo Home" />
+    <meta
+      property="og:description"
+      content="白天是家，夜晚是两个人的私人咖啡酒吧。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://evilmumuko.github.io/muko-home/" />
+    <link rel="canonical" href="https://evilmumuko.github.io/muko-home/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%234f6253%27/%3E%3Cpath d=%27M15 45V20l17 15 17-15v25%27 fill=%27none%27 stroke=%27%23f5efdf%27 stroke-width=%275%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main id="experience">
+      <section class="viewer" id="viewer" aria-label="MuKo Home 空间设计">
+        <canvas
+          id="scene"
+          aria-label="住宅三维空间，拖动旋转，双指或滚轮缩放"
+          tabindex="0"
+        ></canvas
+        ><img id="fallback" alt="住宅空间概览" hidden />
+        <div class="space-caption">
+          <h1 id="view-title">全屋概览</h1>
+          <span>概念方案</span><span id="view-number" hidden></span>
+          <p id="view-copy" hidden></p>
+        </div>
+        <button
+          id="panel-toggle"
+          class="panel-toggle"
+          type="button"
+          aria-controls="control-panel"
+          aria-expanded="false"
+          aria-label="打开控制面板"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16M4 12h16M4 18h16M8 4v4m8 2v4m-7 2v4" />
+          </svg>
+        </button>
+        <aside id="control-panel" aria-label="展示控制" hidden>
+          <div class="panel-head">
+            <span>展示控制</span
+            ><button id="panel-close" type="button" aria-label="关闭控制面板">
+              关闭
+            </button>
+          </div>
+          <div class="panel-tabs" role="tablist" aria-label="控制类别">
+            <button
+              role="tab"
+              id="tab-space"
+              aria-controls="panel-space"
+              aria-selected="true"
+              data-panel="space"
+            >
+              空间</button
+            ><button
+              role="tab"
+              id="tab-light"
+              aria-controls="panel-light"
+              aria-selected="false"
+              tabindex="-1"
+              data-panel="light"
+            >
+              灯光</button
+            ><button
+              role="tab"
+              id="tab-action"
+              aria-controls="panel-action"
+              aria-selected="false"
+              tabindex="-1"
+              data-panel="action"
+            >
+              动作
+            </button>
+          </div>
+          <div class="panel-body">
+            <section
+              id="panel-space"
+              role="tabpanel"
+              aria-labelledby="tab-space"
+            >
+              <h2>空间视角</h2>
+              <div class="room-tabs" aria-label="选择空间"></div>
+              <div
+                id="detail-controls"
+                class="detail-controls"
+                aria-label="餐厨局部视角"
+                hidden
+              ></div>
+              <div
+                id="viewpoint-controls"
+                class="detail-controls"
+                aria-label="室内观察点"
+              ></div>
+              <h2>显示范围</h2>
+              <div class="visibility-actions">
+                <button id="show-all" type="button">显示全屋</button
+                ><button id="show-current" type="button">只看当前</button>
+              </div>
+              <div id="room-visibility" class="room-visibility"></div>
+              <h2>视角</h2>
+              <div class="tools">
+                <button id="interior-view" type="button">室内视角</button
+                ><button id="overview-view" type="button">全屋概览</button
+                ><button
+                  id="projection"
+                  type="button"
+                  aria-label="切换俯视与透视"
+                >
+                  俯视</button
+                ><button id="reset" type="button" aria-label="复位视角">
+                  复位</button
+                ><button id="fullscreen" type="button">全屏</button
+                ><button
+                  id="export"
+                  type="button"
+                  aria-label="保存当前空间画面"
+                >
+                  保存画面
+                </button>
+              </div>
+            </section>
+            <section
+              id="panel-light"
+              role="tabpanel"
+              aria-labelledby="tab-light"
+              hidden
+            >
+              <h2>灯光场景</h2>
+              <div id="lighting-presets" class="lighting-presets"></div>
+              <button id="lighting" type="button" aria-label="切换日间与夜间">
+                日间 / 晚间
+              </button>
+            </section>
+            <section
+              id="panel-action"
+              role="tabpanel"
+              aria-labelledby="tab-action"
+              hidden
+            >
+              <h2>家具与生活</h2>
+              <button
+                id="bed-state"
+                type="button"
+                aria-label="展开或收起沙发床"
+              >
+                展开客床
+              </button>
+              <div
+                id="motion-controls"
+                class="motion-controls"
+                aria-label="家具与动线状态"
+              ></div>
+              <span
+                id="scenario-status"
+                class="scenario-status"
+                aria-live="polite"
+              ></span>
+            </section>
+          </div>
+        </aside>
+        <div class="loading" id="loading">准备空间</div>
+        <div id="notice" role="status"></div>
+        <div id="orientation-gate" role="status">
+          <svg viewBox="0 0 80 60" aria-hidden="true">
+            <rect x="18" y="8" width="44" height="28" rx="5" />
+            <path d="M64 46a28 28 0 0 1-45-1m-2-9 2 9 9-2" />
+          </svg>
+          <h2>请横屏查看</h2>
+          <p>旋转设备，展开空间方案</p>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./scene.js"></script>
+  </body>
+</html>

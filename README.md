@@ -2,8 +2,37 @@
 
 [打开空间设计方案](https://evilmumuko.github.io/muko-home/)
 
-自然、温暖、适度复古的双人住宅空间概念设计。支持空间切换、日夜照明和家具状态展示。
+自然、温暖、适度复古的双人住宅空间概念设计。支持空间切换、日夜照明、家具动作，以及可选的微风、水波和碰撞演示。空间与设备仍需现场复测，当前展示不作为施工图。
 
-空间与设备仍需现场复测，当前展示不作为施工图。
+## 开发与发布
 
-此仓库仅包含当前展示网页与依赖许可。
+使用 Node.js 24：
+
+```sh
+npm ci
+npm run dev
+npm run build
+npm test
+npm run benchmark
+```
+
+`src/index.html` 是入口，`src/model.js` 保留 V5 住宅数据，`src/scene.js` 是从原发布包还原的场景逻辑，暂保留原局部变量名。新增渲染、合批、几何、材质、布料和浅水模块使用 TypeScript。构建检查新增 TS 模块，不声称原场景已完成全量类型迁移。
+
+`npm run build` 生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
+
+本地 Playwright 默认使用 `/usr/bin/chromium`，可通过 `CHROMIUM_PATH` 指定；CI 使用 Playwright 安装的浏览器。
+
+## 使用
+
+- 默认 WebGL2；桌面支持 PBR、环境反射、GTAO、SMAA 和轻微 HDR 泛光。
+- 手机采用 PBR、环境反射、柔和接触阴影和受限实时阴影；自动限制像素数、灯光槽和模拟频率。
+- 控制面板 → 动作 → **微风与水波**：加载可暂停的窗帘、厨房水槽模拟。
+- **碰撞演示**：在当前观察方向释放小球；最多保留 8 个，小球休眠后停止绘制。
+- `?renderer=webgpu` 或 `?renderer=auto`：尝试 WebGPU；无适配器时直接使用 WebGL。运行中设备丢失时自动重载到 WebGL，视角会复位。
+- `?wasm=0`：使用 JavaScript 几何变换，便于对照。
+
+WebGPU 是实验性可选路径，目前不包含桌面 WebGL 的 GTAO/泛光链。移动端是否流畅仍须真机测试，不能把云端软件 GPU 的结果解释为手机 FPS，也不能据此承诺达到 3A 游戏画质。
+
+参见 [实现与验证说明](docs/implementation.md)。
+
+[桌面预览](docs/desktop-preview.png) · [移动端横屏预览](docs/mobile-preview.png)
