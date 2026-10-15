@@ -38,7 +38,10 @@ export function buildStorageUnit(
       1,
       Math.min(bevel, w / 4, h / 4, d / 4),
     );
-    metricUV(geo);
+    metricUV(
+      geo,
+      /oak|wood/i.test(material) && w > h ? "horizontal" : undefined,
+    );
     const mesh = new THREE.Mesh(geo, materials[material] ?? materials.oak);
     mesh.position.set(x, y, z);
     mesh.castShadow = true;
@@ -53,7 +56,7 @@ export function buildStorageUnit(
     x: number,
     y: number,
     z: number,
-    m = "oak",
+    m = unit.caseMaterial ?? "oak",
   ) => {
     const mesh = box(group, w, h, d, x, y, z, m);
     body.push(mesh);
@@ -70,7 +73,7 @@ export function buildStorageUnit(
     0,
     unit.h / 2,
     unit.d / 2 - t / 2,
-    "cabinetInterior",
+    unit.insideMaterial ?? "cabinetInterior",
   );
   const bay = (unit.w - (unit.fronts.length + 1) * t) / unit.fronts.length;
   for (let col = 0; col < unit.fronts.length; col++) {
@@ -81,7 +84,7 @@ export function buildStorageUnit(
       board(t, unit.h - 2 * t, inside, left - t / 2, unit.h / 2, -t / 2);
     for (const level of unit.shelves)
       board(bay, t, inside - 0.016, cx, level + t / 2, -t / 2);
-    if (style !== "open") {
+    if (style !== "open" || unit.concealedDisplay) {
       const topLift =
         unit.room === "kitchen" ||
         unit.id === "upper-master-work" ||
@@ -126,7 +129,7 @@ export function buildStorageUnit(
               center + sign * (leafWidth / 2 - 0.013),
               bias + height / 2,
               0,
-              "oak",
+              unit.caseMaterial ?? "oak",
             );
           for (const y of [0.013, height - 0.013])
             box(
@@ -137,7 +140,7 @@ export function buildStorageUnit(
               center,
               bias + y,
               0,
-              "oak",
+              unit.caseMaterial ?? "oak",
             );
         } else
           box(

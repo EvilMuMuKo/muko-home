@@ -1,3 +1,11 @@
+import { createAtmosphereDesign, themeMoments } from "./atmosphere-design";
+import {
+  configureRoomMaterials,
+  finishWall,
+  finishArchitecture,
+  finishFurniture,
+} from "./room-finish";
+import { buildInteriorDetails, mountMomentControls } from "./interior-detail";
 import { mountStoragePanel } from "./storage-panel";
 import { refineMaterials, materialDetailState } from "./material-detail";
 import { createStorageDesign, storageCapacity } from "./storage-design";
@@ -32,7 +40,8 @@ import {
   Color as ve,
 } from "three";
 import baseModel from "./model.js";
-const pt = createStorageDesign(baseModel);
+const pt = createAtmosphereDesign(createStorageDesign(baseModel));
+let roomAtmosphere;
 import { OrbitControls as Mc } from "three/addons/controls/OrbitControls.js";
 import { RoundedBoxGeometry as ru } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { RoomEnvironment as au } from "three/addons/environments/RoomEnvironment.js";
@@ -386,6 +395,7 @@ function Kg({
         ((_e.rotation.y = U),
           (_e.castShadow = !0),
           (_e.receiveShadow = !0),
+          finishWall(_e, _.id, u(_, Ie, Ue), n),
           (_e.name = "wall:" + _.id),
           r(_e, te, "wall"));
       }
@@ -804,7 +814,13 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     let R = r.scenes.find((C) => C.id === u) || r.scenes[0];
     for (let C of o) {
       let O = !d || d.has(C.f.roomId),
-        U = R?.levels?.[C.f.group] ?? 0;
+        U =
+          R?.fixtureLevels?.[C.f.id] ??
+          R?.roomLevels?.[C.f.roomId]?.[C.f.group] ??
+          R?.levels?.[C.f.group] ??
+          0;
+      C.color.copy(b(R?.fixtureKelvin?.[C.f.id] ?? C.f.kelvin ?? 3000));
+      C.emission.emissive.copy(C.color);
       if (
         ((C.logicalVisible = O),
         (C.root.visible = O && (p || C.f.position[1] < 2.2)),
@@ -925,7 +941,9 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
         roomId: U.f.roomId,
         position: U.f.position,
         target: U.f.target,
-        kelvin: U.f.kelvin,
+        kelvin:
+          r.scenes.find((scene) => scene.id === u)?.fixtureKelvin?.[U.f.id] ??
+          U.f.kelvin,
         intensity: x ? U.baseIntensity * U.level : U.light.intensity,
         visible: U.logicalVisible,
         shadow: x
@@ -965,7 +983,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
   );
 }
 var NM = {
-  guest: "\u5F71\u97F3\u5BA2\u623F",
+  guest: "秘密影音室",
   bath: "\u536B\u6D74",
   master: "\u4E3B\u5367",
   kitchen: "\u5C01\u95ED\u53A8\u623F",
@@ -2433,16 +2451,17 @@ async function ew() {
   Object.assign(Vn, Jg(yi));
   await refineMaterials(Vn, Ht);
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
+  configureRoomMaterials(Vn);
   Ct.userData.materials = Vn;
 }
 function re(i, e, t, n, s, r, a, o = "oak", l = 0.015) {
-  let c = ["box", e, t, n, l].join(":"),
+  let c = ["box", e, t, n, l, /oak|wood/i.test(o)].join(":"),
     h = xr.get(c);
   h ||
     ((h = l
       ? new ru(e, t, n, 2, Math.min(l, e / 4, t / 4, n / 4))
       : new Rn(e, t, n)),
-    metricUV(h),
+    metricUV(h, /oak|wood/i.test(o) && e > t ? "horizontal" : undefined),
     xr.set(c, h));
   let u = new tt(h, Vn[o] || Vn.oak);
   return (
@@ -2509,7 +2528,7 @@ function tw(i, e) {
         t.y - (e.y || 0) + t.h / 2,
         r.z,
         t.material || e.material || "oak",
-        0,
+        0.0012,
       );
     a.rotation.y = -Kn.degToRad((t.rotation || 0) - (e.rotation || 0));
   }
@@ -2759,6 +2778,7 @@ function ow() {
   });
   ((yx = i.floorRooms),
     (Nc = i.ceiling),
+    finishArchitecture(Ct, Vn, Mu),
     (_x = fx({ THREE: yi, scene: Ct, tagged: Gp })));
 }
 function lw() {
@@ -3148,25 +3168,46 @@ function cw() {
     }));
 }
 function Fp(i) {
+  if (!ut.lighting.scenes.some((s) => s.id === i)) return;
   Wp = i;
+  const moment = ut.lighting.scenes.find((s) => s.id === i);
+  roomAtmosphere?.apply(i);
   let e = _r.apply(i);
   ((_u = !e.daylight),
     document.body.classList.toggle("night", _u),
-    (Ct.getObjectByName("ambient").intensity = e.daylight
-      ? 1.5
-      : i === "night"
-        ? 0.2
-        : 0.58),
+    (Ct.getObjectByName("ambient").intensity =
+      moment?.ambientIntensity ??
+      (e.daylight ? 1.5 : i === "night" ? 0.2 : 0.58)),
     (Ct.getObjectByName("sun").intensity = e.daylight ? 2.6 : 0.04),
-    (Ct.environmentIntensity = e.daylight ? 0.55 : 0.18),
+    (Ct.environmentIntensity =
+      moment?.environmentIntensity ?? (e.daylight ? 0.55 : 0.18)),
     Ct.background.set(e.daylight ? "#e4e0d7" : "#383b35"),
-    (Ht.toneMappingExposure = e.daylight ? 0.95 : 1.12),
+    (Ht.toneMappingExposure = moment?.exposure ?? (e.daylight ? 0.95 : 1.12)),
     ($e("#lighting").textContent = e.daylight
       ? "\u591C\u95F4"
       : "\u65E5\u95F4"),
     Hp?.updateLighting(i),
     Jt?.request({ shadow: !0 }),
     Oi());
+  if (i === "cinema") {
+    ns({ storage: 0 }, 0);
+    $e("#storage-toggle")?.setAttribute("aria-pressed", "false");
+    if ($e("#storage-toggle"))
+      $e("#storage-toggle").textContent = "收纳柜门（已关）";
+    vx(false);
+  }
+  if (i === "guest-stay") vx(true);
+  if (moment?.viewId) {
+    const view = ut.presentation.interiorViews.find(
+      (v) => v.id === moment.viewId,
+    );
+    if (view) Ka(view);
+  }
+  document
+    .querySelectorAll("[data-moment]")
+    .forEach((button) =>
+      button.setAttribute("aria-pressed", String(button.dataset.moment === i)),
+    );
 }
 function Xp(i) {
   i.mode === "all"
@@ -3179,7 +3220,9 @@ function Xp(i) {
                 Wt,
                 ...(["bar", "kitchen"].includes(Wt)
                   ? ["bar", "hall", "kitchen"]
-                  : []),
+                  : Wt === "living"
+                    ? ["balcony"]
+                    : []),
               ],
         ))
       : i.visible
@@ -3563,7 +3606,9 @@ function Ka(i) {
     })),
     $n.resize(Ui.clientWidth, Ui.clientHeight),
     $n.setPose(new P(...i.position), new P(...i.target), i.horizontalFov || 72),
-    Xp({ mode: "all" }),
+    Xp({
+      mode: themeMoments.some((m) => m.viewId === i.id) ? "current" : "all",
+    }),
     ($e("#view-title").textContent = i.label),
     Ax(),
     Oi());
@@ -3825,6 +3870,8 @@ async function bw() {
         tag: Mu,
         materials: Vn,
       }),
+      finishFurniture(Ct, ut.objects, Vn),
+      (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu)),
       (xx = ax({ THREE: yi, scene: Ct, model: ut })),
       (roomBatching = batchFurniture(Ct, ut, Mu)),
       cw(),
@@ -3854,7 +3901,7 @@ async function bw() {
         },
         getActive: () => Wt,
       })),
-      Fp("warm"),
+      Fp("aperitif"),
       Ka(
         ut.presentation.interiorViews.find(
           (i) => i.id === ut.presentation.defaultView,
@@ -3882,6 +3929,21 @@ async function bw() {
   }
 }
 await bw();
+if (vu)
+  mountMomentControls(
+    (id) => {
+      Fp(id);
+      Hp?.closePanel();
+    },
+    () => {
+      roomAtmosphere.setDoorOpen(!roomAtmosphere.getState().doorOpen);
+      Jt?.request({ shadow: true });
+    },
+    () => {
+      gw({ id: "cinema-door-review" });
+      Hp?.closePanel();
+    },
+  );
 if (vu)
   mountStoragePanel(
     (id) => {
@@ -4015,6 +4077,8 @@ window.homePresentation = {
     Oi();
   },
   capturePNG: () => Jt.capture(() => kn.toDataURL("image/png")),
+  setLightingScene: (id) => Fp(id),
+  getAtmosphereDesign: () => roomAtmosphere?.getState(),
   getPerformance: () => ({
     ...Jt?.getState(),
     materialDetail: materialDetailState(),
