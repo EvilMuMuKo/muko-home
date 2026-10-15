@@ -1,0 +1,41 @@
+{
+  "baselineCommit": "36ac9b1",
+  "viewport": "900x560",
+  "backend": "Chromium + software SwiftShader (not a phone FPS benchmark)",
+  "objects": 91,
+  "nonfiniteBoundsIdentical": true,
+  "maxBoundsDeltaMetres": 0,
+  "missingObjectsIdentical": true,
+  "framesIdentical": true,
+  "roomBatching": {
+    "sources": 129,
+    "batches": 41,
+    "drawCallsReduced": 88
+  },
+  "lightSlots": {
+    "before": 12,
+    "after": 6
+  },
+  "resources": [
+    {
+      "name": "index-D67vdL4e.js",
+      "bytes": 528831
+    },
+    {
+      "name": "three.core-C7NbAuPQ.js",
+      "bytes": 378923
+    },
+    {
+      "name": "index-CUe-8VMO.css",
+      "bytes": 5629
+    },
+    {
+      "name": "quality-CtWq_7N4.js",
+      "bytes": 513
+    },
+    {
+      "name": "transform.wasm",
+      "bytes": 289
+    }
+  ]
+}
