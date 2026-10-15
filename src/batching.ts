@@ -23,11 +23,13 @@ export function batchFurniture(
     if (
       !group ||
       dynamic.has(object.type) ||
-      group.children.some((child) => !("isMesh" in child))
+      (object.type !== "wall_storage" &&
+        group.children.some((child) => !("isMesh" in child)))
     )
       continue;
     const rooms = [...(group.userData.spaceIds ?? [])].sort() as string[];
     for (const child of group.children) {
+      if (!("isMesh" in child)) continue;
       const mesh = child as THREE.Mesh,
         geometry = mesh.geometry,
         material = mesh.material as THREE.Material;

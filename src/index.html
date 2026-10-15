@@ -87,6 +87,16 @@
             >
               动作
             </button>
+            <button
+              role="tab"
+              id="tab-storage"
+              aria-controls="panel-storage"
+              aria-selected="false"
+              tabindex="-1"
+              data-panel="storage"
+            >
+              收纳
+            </button>
           </div>
           <div class="panel-body">
             <section
@@ -171,6 +181,20 @@
                 class="scenario-status"
                 aria-live="polite"
               ></span>
+            </section>
+            <section
+              id="panel-storage"
+              role="tabpanel"
+              aria-labelledby="tab-storage"
+              hidden
+            >
+              <h2>全屋上部收纳</h2>
+              <p id="storage-summary" class="storage-summary"></p>
+              <button id="storage-doors" type="button">展开 / 收起柜门</button>
+              <p class="storage-note">
+                内空容量为模型估算，尚未扣除实际五金、管线和通风净空。高位柜用于低频轻物，施工与承重须现场复核。
+              </p>
+              <div id="storage-list"></div>
             </section>
           </div>
         </aside>

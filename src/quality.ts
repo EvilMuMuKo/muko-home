@@ -7,7 +7,7 @@ const economical =
   device.connection?.saveData ||
   (device.deviceMemory !== undefined && device.deviceMemory <= 4) ||
   navigator.hardwareConcurrency <= 4;
-const pixelBudget = mobile ? 1_500_000 : 3_000_000;
+const pixelBudget = mobile ? (economical ? 1_500_000 : 2_600_000) : 4_200_000;
 const cap = Math.sqrt(pixelBudget / Math.max(1, innerWidth * innerHeight));
 export const quality = {
   mobile,
@@ -16,7 +16,7 @@ export const quality = {
   shadowLights: mobile ? 1 : 2,
   shadowSize: mobile ? 512 : 1024,
   sunShadowSize: mobile ? 1024 : 2048,
-  maxDpr: Math.min(devicePixelRatio, mobile ? 1.25 : 1.75, cap),
+  maxDpr: Math.min(devicePixelRatio, mobile ? (economical ? 1.35 : 2) : 2, cap),
   interactionDpr: Math.min(devicePixelRatio, mobile ? 1 : 1.5, cap),
   physicsHz: mobile ? 30 : 60,
   postprocessing: !mobile && !economical,

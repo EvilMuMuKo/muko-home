@@ -1,3 +1,8 @@
+import { mountStoragePanel } from "./storage-panel";
+import { refineMaterials, materialDetailState } from "./material-detail";
+import { createStorageDesign, storageCapacity } from "./storage-design";
+import { buildStorageUnit } from "./storage-mesh";
+import { metricUV } from "./texture-mapping";
 import { batchFurniture } from "./batching";
 import { quality } from "./quality";
 import { enhanceSurfaces } from "./surface";
@@ -26,7 +31,8 @@ import {
   Scene as Xi,
   Color as ve,
 } from "three";
-import pt from "./model.js";
+import baseModel from "./model.js";
+const pt = createStorageDesign(baseModel);
 import { OrbitControls as Mc } from "three/addons/controls/OrbitControls.js";
 import { RoundedBoxGeometry as ru } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { RoomEnvironment as au } from "three/addons/environments/RoomEnvironment.js";
@@ -832,6 +838,14 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
           ),
         O = [],
         U = new Map();
+      if (Wt !== "all")
+        for (const fixture of C.filter((f) => f.f.roomId === Wt).slice(
+          0,
+          quality.mobile ? 3 : 4,
+        )) {
+          O.push(fixture);
+          U.set(Wt, (U.get(Wt) || 0) + 1);
+        }
       for (let F of C)
         !U.has(F.f.roomId) && O.length < m && (O.push(F), U.set(F.f.roomId, 1));
       for (let F of C)
@@ -2415,8 +2429,9 @@ ut.cameras.forEach((i) => {
     $M.append(e));
 });
 var Vn = {};
-function ew() {
+async function ew() {
   Object.assign(Vn, Jg(yi));
+  await refineMaterials(Vn, Ht);
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
   Ct.userData.materials = Vn;
 }
@@ -2427,6 +2442,7 @@ function re(i, e, t, n, s, r, a, o = "oak", l = 0.015) {
     ((h = l
       ? new ru(e, t, n, 2, Math.min(l, e / 4, t / 4, n / 4))
       : new Rn(e, t, n)),
+    metricUV(h),
     xr.set(c, h));
   let u = new tt(h, Vn[o] || Vn.oak);
   return (
@@ -2768,6 +2784,8 @@ function lw() {
           : [i.room],
       ),
       !(
+        (i.type === "wall_storage" &&
+          (buildStorageUnit(e, i, Vn, St.storage), true)) ||
         lx({
           THREE: yi,
           g: e,
@@ -3237,8 +3255,10 @@ function ns(i, e = 600) {
     Jt?.request({ shadow: !0 }));
 }
 function bx() {
-  for (let i of St.storage)
-    i.pivot.rotation.y = ((-i.sign * Math.PI) / 2) * an.storage;
+  for (let i of St.storage) {
+    if (i.axis === "x") i.pivot.rotation.x = i.openAngle * an.storage;
+    else i.pivot.rotation.y = ((-i.sign * Math.PI) / 2) * an.storage;
+  }
   for (let i of St.keg)
     ((i.pivot.rotation.y = (-Math.PI / 2) * an.keg),
       (i.inside.visible = an.keg > 0.05));
@@ -3433,18 +3453,14 @@ function fw() {
         (ns({ chairs: s }), zc());
       }),
     St.storage.length &&
-      e(
-        "storage-toggle",
-        "\u6C34\u5427\u67DC\u95E8\uFF08\u5DF2\u5173\uFF09",
-        () => {
-          let s = Dn.storage ? 0 : 1;
-          (ns({ storage: s }),
-            ($e("#storage-toggle").textContent = s
-              ? "\u6C34\u5427\u67DC\u95E8\uFF08\u5DF2\u5F00\uFF09"
-              : "\u6C34\u5427\u67DC\u95E8\uFF08\u5DF2\u5173\uFF09"),
-            $e("#storage-toggle").setAttribute("aria-pressed", String(!!s)));
-        },
-      ),
+      e("storage-toggle", "收纳柜门（已关）", () => {
+        let s = Dn.storage ? 0 : 1;
+        (ns({ storage: s }),
+          ($e("#storage-toggle").textContent = s
+            ? "收纳柜门（已开）"
+            : "收纳柜门（已关）"),
+          $e("#storage-toggle").setAttribute("aria-pressed", String(!!s)));
+      }),
     St.keg.length &&
       e(
         "keg-toggle",
@@ -3561,30 +3577,31 @@ var wu = null,
   zp,
   Oc,
   Au = !0;
-let cu, hu, Rc, fu, mu, BloomPass;
+let cu, hu, Rc, fu, BloomPass;
 function xw() {
   if (rendering.backend !== "WebGL2" || !quality.postprocessing) return;
   matchMedia("(max-width: 1000px), (pointer: coarse)").matches ||
     ((vi = new cu(Ht)),
     vi.setPixelRatio(Ht.getPixelRatio()),
+    (vi.renderTarget1.samples = 4),
+    (vi.renderTarget2.samples = 4),
     (zp = new hu(Ct, ct)),
     (Oc = new Rc(Ct, ct, Ui.clientWidth, Ui.clientHeight, void 0, {
-      radius: 0.22,
-      thickness: 0.15,
-      scale: 0.9,
-      samples: 8,
+      radius: 0.12,
+      thickness: 0.08,
+      scale: 0.55,
+      samples: 12,
     })),
     vi.addPass(zp),
     vi.addPass(Oc),
     vi.addPass(
       new BloomPass(
         new yi.Vector2(Ui.clientWidth, Ui.clientHeight),
-        0.12,
-        0.35,
-        1.05,
+        0.045,
+        0.2,
+        1.25,
       ),
     ),
-    vi.addPass(new mu()),
     vi.addPass(new fu()));
 }
 function qp() {
@@ -3784,7 +3801,7 @@ async function bw() {
     Ht.info.autoReset = false;
     if (rendering.backend === "WebGPU") Ht.onDeviceLost = recoverGPU;
     if (rendering.backend === "WebGL2" && quality.postprocessing) {
-      ({ cu, hu, Rc, fu, mu, BloomPass } = await import("./postprocessing"));
+      ({ cu, hu, Rc, fu, BloomPass } = await import("./postprocessing"));
     }
     (Ht.setPixelRatio(quality.maxDpr),
       (Ht.shadowMap.enabled = !0),
@@ -3797,7 +3814,7 @@ async function bw() {
       (Ct.background = new ve("#e4e0d7")),
       (ct = new Ut(40, 1, 0.1, 120)),
       (Nt = new Mc(ct, kn)),
-      ew(),
+      await ew(),
       ow(),
       lw(),
       hx({
@@ -3865,6 +3882,17 @@ async function bw() {
   }
 }
 await bw();
+if (vu)
+  mountStoragePanel(
+    (id) => {
+      const view = ut.presentation.interiorViews.find((v) => v.id === id);
+      if (view) {
+        Ka(view);
+        Hp?.closePanel();
+      }
+    },
+    () => $e("#storage-toggle")?.click(),
+  );
 if (vu) {
   const windButton = document.createElement("button");
   windButton.textContent = "微风与水波";
@@ -3989,7 +4017,9 @@ window.homePresentation = {
   capturePNG: () => Jt.capture(() => kn.toDataURL("image/png")),
   getPerformance: () => ({
     ...Jt?.getState(),
+    materialDetail: materialDetailState(),
     qualityProfile: { ...quality },
+    storage: storageCapacity(),
     geometry: geometryState(),
     physics: atmosphere?.getState() ?? { loaded: false },
     rendering: { ...rendering },
@@ -4001,6 +4031,19 @@ window.homePresentation = {
     roomBatching,
     architectureBatching: _x,
   }),
+  getStorage: () => storageCapacity(),
+  setStorageOpen: (open) => {
+    ns({ storage: open ? 1 : 0 }, 0);
+    $e("#storage-toggle")?.setAttribute("aria-pressed", String(open));
+    Oi();
+  },
+  getStorageDoors: () =>
+    St.storage
+      .filter((d) => d.unitId)
+      .map((d) => ({
+        unitId: d.unitId,
+        angle: d.pivot.rotation[d.axis || "y"],
+      })),
   getState: () => ({
     version: ut.version,
     active: Wt,
@@ -4032,7 +4075,7 @@ window.homePresentation = {
         : null,
   }),
   getMovingPartTransforms: () => ({
-    storage: St.storage.map((i) => i.pivot.rotation.y),
+    storage: St.storage.map((i) => i.pivot.rotation[i.axis || "y"]),
     keg: St.keg.map((i) => ({
       angle: i.pivot.rotation.y,
       inside: i.inside.visible,

@@ -24,10 +24,10 @@
       rel="icon"
       href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%234f6253%27/%3E%3Cpath d=%27M15 45V20l17 15 17-15v25%27 fill=%27none%27 stroke=%27%23f5efdf%27 stroke-width=%275%27/%3E%3C/svg%3E"
     />
-    <script type="module" crossorigin src="./assets/index-D67vdL4e.js"></script>
+    <script type="module" crossorigin src="./assets/index-DGUShOYZ.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/three.core-C7NbAuPQ.js">
-    <link rel="modulepreload" crossorigin href="./assets/quality-CtWq_7N4.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-CUe-8VMO.css">
+    <link rel="modulepreload" crossorigin href="./assets/quality-C7i1tdIn.js">
+    <link rel="stylesheet" crossorigin href="./assets/index-DK6N2oSe.css">
   </head>
   <body>
     <main id="experience">
@@ -89,6 +89,16 @@
               data-panel="action"
             >
               动作
+            </button>
+            <button
+              role="tab"
+              id="tab-storage"
+              aria-controls="panel-storage"
+              aria-selected="false"
+              tabindex="-1"
+              data-panel="storage"
+            >
+              收纳
             </button>
           </div>
           <div class="panel-body">
@@ -174,6 +184,20 @@
                 class="scenario-status"
                 aria-live="polite"
               ></span>
+            </section>
+            <section
+              id="panel-storage"
+              role="tabpanel"
+              aria-labelledby="tab-storage"
+              hidden
+            >
+              <h2>全屋上部收纳</h2>
+              <p id="storage-summary" class="storage-summary"></p>
+              <button id="storage-doors" type="button">展开 / 收起柜门</button>
+              <p class="storage-note">
+                内空容量为模型估算，尚未扣除实际五金、管线和通风净空。高位柜用于低频轻物，施工与承重须现场复核。
+              </p>
+              <div id="storage-list"></div>
             </section>
           </div>
         </aside>
