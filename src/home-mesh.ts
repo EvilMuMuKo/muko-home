@@ -800,6 +800,7 @@ export function buildHomeArchitecture(
   const railLength = hatchConfig.railDepthMinM ?? 0.54;
   const railStage2 = group("home:hatch-rail-stage-2", ["bar", "hall"]);
   const railStage3 = group("home:hatch-rail-stage-3", ["bar", "hall"]);
+  railStage2.position.y = worktopTop - 0.034;
   for (const x of [-0.174, 0.174]) {
     const fixed = box(
       rails,

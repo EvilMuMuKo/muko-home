@@ -35,7 +35,7 @@ test("V9 household controls expose version 9 and complete reversible travel", as
   expect(initial.performance.qualityProfile.mobile).toBe(true);
   expect(initial.design.dining.defaultState).toBe("stowed");
   expect(initial.state.diningProgress).toBe(0);
-  // The hatch is an upward-flipped passage and starts clear/open by default.
+  // The counter starts concealed in the cabinet, leaving the passage open.
   expect(initial.state.hatchProgress).toBe(1);
   expect(initial.state.dishwasherProgress).toBe(0);
   expect(
@@ -127,8 +127,16 @@ test("V9 household controls expose version 9 and complete reversible travel", as
       transition.state,
     );
     if (transition.name === "hatch") {
-      const angle = await page.evaluate(() => window.homePresentation.getState().gateAngle);
-      expect(angle).toBeCloseTo((95 * Math.PI) / 180, 1);
+      const counter = await page.evaluate(() => ({
+        angle: window.homePresentation.getState().gateAngle,
+        design: window.homePresentation.getHomeDesign().hatch,
+        bounds: window.homePresentation.getHomeDesign().motionBounds.find(item => item.id === "opening:hall-gate"),
+      }));
+      expect(counter.angle).toBe(0); // No horizontal or upward gate remains.
+      expect(counter.design.kind).toBe("two_leaf_drawer_pullout");
+      expect(counter.design.depthM).toBeCloseTo(0.405, 3);
+      expect(counter.bounds.min[2]).toBeGreaterThanOrEqual(counter.design.drawerFrontZ - 0.04);
+      expect(counter.bounds.max[2]).toBeLessThanOrEqual(counter.design.drawerFrontZ + counter.design.cabinetClearDepthM + 0.02);
     } else {
       const open = await page.evaluate(
         () => window.homePresentation.getHomeDesign().motionBounds.find((item) => item.id === "kitchen-dishwasher"),

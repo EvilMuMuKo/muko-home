@@ -138,6 +138,13 @@ test("entry return uses a supported two-leaf telescopic pullout within the cabin
     4,
   );
   expect(motion.hatch!.front.rotation.x).toBeCloseTo(-Math.PI / 2, 4);
+  // All nested rails stay immediately below the worktop, never on the floor.
+  motion.hatch!.group.updateWorldMatrix(true, true);
+  for (const stage of [motion.hatch!.railStage2, motion.hatch!.railStage3]) {
+    const railBounds = meshBox(stage);
+    expect(railBounds.min.y).toBeGreaterThan(design.worktopTopM - 0.05);
+    expect(railBounds.max.y).toBeLessThan(design.worktopTopM);
+  }
 
   applyHomeMotion(motion, { dining: 0, gate: 1, dishwasher: 0 });
   const stowedBase = meshBox(motion.hatch!.baseLeaf);
