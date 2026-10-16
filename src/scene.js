@@ -1,5 +1,10 @@
+import { allocateLighting, observerRoom } from "./lighting-allocation";
+import { buildSoftBedding } from "./soft-bedding";
+import { initAreaLighting, alignAreaLight } from "./area-lighting";
+import { attachDynamicContact } from "./dynamic-contact";
 import { showWelcome } from "./welcome";
 import { createGhostWalk } from "./ghost-walk";
+import { createWalkCollision } from "./walk-collision";
 import { auditSceneModel } from "./model-audit";
 import { buildPlant } from "./plant-mesh";
 import { daylightStudy, sunDirection } from "./daylight";
@@ -14,7 +19,7 @@ import {
 } from "./home-mesh";
 import { createSalonDesign } from "./salon-design";
 import { prepareSalonMaterials } from "./salon-materials";
-import { buildSalonFurniture, buildSalonArchitecture } from "./salon-mesh";
+import { buildSalonFurniture } from "./salon-mesh";
 import { createAtmosphereDesign, themeMoments } from "./atmosphere-design";
 import {
   configureRoomMaterials,
@@ -24,13 +29,14 @@ import {
 } from "./room-finish";
 import { buildInteriorDetails, mountMomentControls } from "./interior-detail";
 import { mountStoragePanel } from "./storage-panel";
-import { refineMaterials, materialDetailState } from "./material-detail";
+import { refineMaterials, materialDetailState, auditMaterialSet } from "./material-detail";
 import { createStorageDesign, storageCapacity } from "./storage-design";
 import { buildStorageUnit } from "./storage-mesh";
 import { metricUV } from "./texture-mapping";
 import { batchFurniture } from "./batching";
 import { quality } from "./quality";
 import { enhanceSurfaces } from "./surface";
+import { bakeStaticFloorOcclusion } from "./baked-occlusion";
 import { createRenderer, environmentGenerator, rendering } from "./renderer";
 import { initGeometry, transformGeometry, geometryState } from "./geometry";
 // Scene recovered from the published V5 bundle; original local names retained.
@@ -293,7 +299,7 @@ function Kg({
     );
   }
   function f(_, A, E, L) {
-    let N = new i.Mesh(new i.ShapeGeometry(d(_)), n[A]);
+    let N = new i.Mesh(metricUV(new i.ShapeGeometry(d(_))), n[A]);
     return (
       (N.rotation.x = -Math.PI / 2),
       (N.position.y = 0.001),
@@ -689,6 +695,8 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     l = new Set(),
     c = new Set(),
     h = [],
+    areaPool = [],
+    areaBudget = quality.mobile ? 1 : 2,
     u = r.defaultScene || "warm",
     d = null,
     f = null,
@@ -788,7 +796,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
         ((R.lumens || 300) / (2 * Math.PI * (1 - Math.cos(B)))) *
         (r.previewIntensityScale ?? 0.025),
       F = null;
-    if (R.position[1] > 2.2) {
+    if (R.position[1] > 2.2 && R.type !== "line") {
       ((F = new i.Group()),
         (F.name = "fixture-mount:" + R.id),
         (F.userData.spaceIds = R.spaceIds || [R.roomId]));
@@ -818,7 +826,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     }),
       n && n(C, R.roomId));
   }
-  for (let R = 0; R < m; R++) {
+  for (let R = 0; R < m - areaBudget; R++) {
     let C = new i.SpotLight(16777215, 0, 3, Math.PI / 6, 0.65, 2);
     ((C.name = x ? `light:mobile-slot-${R}` : `light:${o[R]?.f.id || R}`),
       (C.visible = !0),
@@ -828,14 +836,19 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
         R < g ? quality.shadowSize : 1,
       ),
       (C.shadow.bias = -15e-5),
-      (C.shadow.normalBias = 0.035),
+      (C.shadow.normalBias = 0.01),
       (C.shadow.camera.near = 0.03),
       (C.shadow.camera.far = 3),
-      x && C.shadow.camera.layers.enable(1),
+
       e.add(C),
       e.add(C.target),
       h.push(C),
       !x && o[R] && (o[R].light = C));
+  }
+  for (let index = 0; index < areaBudget; index++) {
+    const light = new i.RectAreaLight(0xffffff, 0, 1, 0.035);
+    light.name = `light:area-slot-${index}`;
+    e.add(light); areaPool.push(light);
   }
   function _() {
     let R = r.scenes.find((C) => C.id === u) || r.scenes[0];
@@ -852,7 +865,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
         ((C.logicalVisible = O),
         (C.root.visible = O && (p || C.f.position[1] < 2.2)),
         C.mount && (C.mount.visible = O && p),
-        (C.emission.emissiveIntensity = U > 0 ? 0.3 + U * 0.95 : 0),
+        (C.emission.emissiveIntensity = U > 0 ? 0.08 * U : 0),
         (C.level = U),
         (C.score =
           ((C.f.lumens || 300) * U) /
@@ -879,42 +892,33 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
       }
     }
     if (x) {
-      let C = o
-          .filter((F) => F.logicalVisible && F.level > 0)
-          .sort(
-            (F, V) =>
-              V.score * (V.f.roomId === Wt ? 4 : 1) -
-              F.score * (F.f.roomId === Wt ? 4 : 1),
-          ),
-        O = [],
-        U = new Map();
-      if (Wt !== "all")
-        for (const fixture of C.filter((f) => f.f.roomId === Wt).slice(
-          0,
-          quality.mobile ? 3 : 4,
-        )) {
-          O.push(fixture);
-          U.set(Wt, (U.get(Wt) || 0) + 1);
-        }
-      for (let F of C)
-        !U.has(F.f.roomId) && O.length < m && (O.push(F), U.set(F.f.roomId, 1));
-      for (let F of C)
-        !O.includes(F) &&
-          (U.get(F.f.roomId) || 0) < 2 &&
-          O.length < m &&
-          (O.push(F), U.set(F.f.roomId, (U.get(F.f.roomId) || 0) + 1));
-      let B = O.filter(
+      const localRoom = observerRoom(t.rooms, observer, Wt);
+      const active = o.filter(F => F.logicalVisible && F.level > 0);
+      const spots = allocateLighting(active.filter(F => F.f.type !== "line"), m - areaBudget, localRoom, quality.mobile);
+      const areas = allocateLighting(active.filter(F => F.f.type === "line"), areaBudget, localRoom, quality.mobile);
+      const O = [...spots, ...areas];
+      for (let index = 0; index < areaPool.length; index++) {
+        const light = areaPool[index], fixture = areas[index];
+        if (fixture) {
+          alignAreaLight(light, fixture.f, fixture.color, fixture.level, r.previewIntensityScale ?? 0.025);
+          light.userData.sourceId = fixture.f.id;
+          light.userData.roomId = fixture.f.roomId;
+        } else { light.intensity = 0; light.userData.sourceId = null; light.userData.roomId = null; }
+      }
+      for (const fixture of O)
+        fixture.emission.emissiveIntensity = 0.18 + 0.5 * fixture.level;
+      let B = spots.filter(
         (F) => (F.f.shadowPriority || 0) > 0 && F.baseIntensity * F.level > 0,
       ).sort(
         (F, V) => (V.f.shadowPriority || 0) - (F.f.shadowPriority || 0),
       )[0];
       f = B?.f.id || null;
-      let J = B ? [B, ...O.filter((F) => F !== B)] : O;
+      let J = B ? [B, ...spots.filter((F) => F !== B)] : spots;
       for (let F = 0; F < h.length; F++) {
         let V = h[F],
           W = J[F];
         ((V.visible = !0),
-          (V.intensity = W ? W.baseIntensity * W.level : 0),
+          (V.intensity = W ? Math.min(2.8, W.baseIntensity * W.level) : 0),
           V.color.copy(W?.color || o[0]?.color || new i.Color(16777215)),
           V.position.copy(W ? y(W.f.position) : new i.Vector3()),
           V.target.position.copy(W ? y(W.f.target) : new i.Vector3()),
@@ -942,14 +946,15 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
   function L() {
     let R = o.filter((U) => U.logicalVisible).length,
       C = x
-        ? h.filter((U) => U.visible && U.intensity > 0).length
+        ? [...h, ...areaPool].filter((U) => U.visible && U.intensity > 0).length
         : o.filter((U) => U.light.visible && U.light.intensity > 0).length,
       O = x
-        ? h
+        ? [...h, ...areaPool]
             .map((U) => ({
               sourceId: U.userData.sourceId,
               color: U.color.toArray(),
-              target: U.target.position.toArray(),
+              target: U.target?.position.toArray() ?? null,
+              kind: U.isRectAreaLight ? "area" : "spot",
               intensity: U.intensity,
             }))
             .filter((U) => U.sourceId)
@@ -963,7 +968,8 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
       scene: u,
       fixtureCount: o.length,
       logicalFixtureCount: o.length,
-      slotCount: h.length,
+      slotCount: h.length + areaPool.length,
+      areaSlotCount: areaPool.length,
       visibleFixtureCount: R,
       activeLightCount: C,
       shadowCount: h.filter((U) => U.castShadow).length,
@@ -994,6 +1000,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     };
   }
   function N() {
+    for (const light of areaPool) { e.remove(light); light.dispose(); }
     for (let R of h)
       (e.remove(R),
         e.remove(R.target),
@@ -1932,7 +1939,7 @@ function cx({
     );
   if (t.type === "study_stemware") {
     (r(e, 0.032, 0.008, 0, t.h - 0.004, 0, "glass"),
-      r(e, 0.004, 0.09, 0, t.h - 0.053, 0, "steel"));
+      r(e, 0.004, 0.09, 0, t.h - 0.053, 0, "glass"));
     let c = [
         new i.Vector2(0.001, 0),
         new i.Vector2(0.025, 0.015),
@@ -2591,6 +2598,12 @@ function tw(i, e) {
       );
     a.rotation.y = -Kn.degToRad((t.rotation || 0) - (e.rotation || 0));
   }
+  if (e.id === "guest-wardrobe") {
+    // Folded linens sit on the existing lower shelf, inside the open frame.
+    re(i, 0.27, 0.075, 0.24, -0.12, 0.515, -0.22, "linen", 0.012);
+    re(i, 0.24, 0.065, 0.22, 0.13, 0.505, 0.20, "cream", 0.01);
+    re(i, 0.20, 0.055, 0.18, -0.08, 0.58, -0.20, "sage", 0.009);
+  }
 }
 function nw(i, e) {
   let t = e.articulation || {},
@@ -2654,6 +2667,16 @@ function nw(i, e) {
       "glass",
       0,
     );
+  if (e.id === "kitchen-fridge") {
+    // Small cartons rest on the fixed shelves near the rear wall.
+    for (let [x, y, z, itemW, itemH, itemD, material] of [
+      [-0.13, c + h / 3 + 0.055, 0.17, 0.12, 0.11, 0.13, "cream"],
+      [0.10, c + h / 3 + 0.065, 0.17, 0.15, 0.13, 0.14, "sage"],
+      [-0.12, c + (2 * h) / 3 + 0.055, 0.16, 0.13, 0.11, 0.13, "cream"],
+      [0.11, c + (2 * h) / 3 + 0.07, 0.16, 0.14, 0.14, 0.14, "sage"],
+    ])
+      re(i, itemW, itemH, itemD, x, y, z, material, 0.012);
+  }
   let p = new mn();
   ((p.name = `${e.id}:hinge`),
     p.position.set(
@@ -2946,10 +2969,8 @@ function lw() {
             re(e, i.w, 0.87, 0.08, 0, 0.45, -i.d / 2 + 0.03, "linen", 0.04));
           break;
         case "mattress":
-          (re(e, i.w, i.h, i.d, 0, i.h / 2, 0, "linen", 0.065),
-            re(e, i.w + 0.01, 0.02, 0.7, 0, i.h + 0.008, 0.52, "sage", 0.01));
-          for (let s of [-0.47, 0.47])
-            re(e, 0.7, 0.13, 0.43, s, i.h + 0.065, -0.68, "linen", 0.055);
+          re(e, i.w, i.h, i.d, 0, i.h / 2, 0, "linen", 0.065);
+          buildSoftBedding(e, i, Vn);
           break;
         case "sofa":
           mx(e, i);
@@ -3230,7 +3251,7 @@ function cw() {
     })),
     Ct.traverse((s) => {
       if (s.isLight && s.shadow) {
-        s.shadow.camera.layers.enable(1);
+        // Roof proxy belongs only to the directional sun, not interior spots.
         s.shadow.autoUpdate = false;
       }
     }));
@@ -3240,7 +3261,9 @@ function Fp(i) {
   Wp = i;
   const moment = ut.lighting.scenes.find((s) => s.id === i);
   roomAtmosphere?.apply(i);
+  if (Vn?.light) Vn.light.emissiveIntensity = moment?.daylight ? 0.12 : i === "cinema" ? 0.08 : 0.4;
   let e = _r.apply(i);
+  gpuFinish?.setNight(!e.daylight);
   ((_u = !e.daylight),
     document.body.classList.toggle("night", _u),
     (Ct.getObjectByName("ambient").intensity =
@@ -3311,7 +3334,7 @@ function Xp(i) {
           : e.userData.spaceIds.some((t) => Ni.has(t));
   (_r?.setVisibleRooms(Ni),
     _r?.setInterior(yr !== "overview"),
-    Nc && (Nc.castShadow = Nc.visible),
+    Nc && (Nc.castShadow = false),
     Hp?.updateVisibility(Ni),
     Jt?.request({ shadow: !0 }),
     Oi());
@@ -3416,7 +3439,7 @@ function bx() {
 function zc() {
   for (let [i, e, t] of [
     ["entry-toggle", "entry", "\u5165\u6237\u95E8"],
-    ["gate-toggle", "gate", "翻板通口"],
+    ["gate-toggle", "gate", "抽拉台面"],
     ["kitchen-toggle", "kitchen", "\u53A8\u623F\u95E8"],
     ["fridge-toggle", "fridge", "\u51B0\u7BB1\u95E8"],
     ["drawer-toggle", "drawer", "\u62BD\u5C49"],
@@ -3432,6 +3455,7 @@ function zc() {
     let s = !!Dn[e];
     (n.setAttribute("aria-pressed", String(s)),
       (n.textContent = `${t}\uFF08${s ? (e === "chairs" || e === "drawer" ? "\u5DF2\u62C9\u51FA" : "\u5DF2\u5F00") : e === "chairs" ? "\u5DF2\u6536\u56DE" : e === "drawer" ? "\u5DF2\u6536" : "\u5DF2\u5173"}\uFF09`));
+    if (e === "gate") n.textContent = `抽拉台面（${s ? "已收回" : "已拉出"}）`;
     if (e === "sofa") n.textContent = s ? "拼合沙发" : "拆分沙发";
     if (e === "tv") n.textContent = s ? "电视归位" : "电视换位";
   }
@@ -3457,12 +3481,12 @@ function fw() {
       }),
     St.gate.length)
   ) {
-    let s = e("gate-toggle", "翻板通口\uFF08\u5DF2\u5173\uFF09", () => {
+    let s = e("gate-toggle", "抽拉台面\uFF08\u5DF2\u5173\uFF09", () => {
       let r = Dn.gate ? 0 : 1;
       (ns({ gate: r }),
         (s.textContent = r
-          ? "翻板通口\uFF08\u5DF2\u5F00\uFF09"
-          : "翻板通口\uFF08\u5DF2\u5173\uFF09"),
+          ? "抽拉台面（已收回）"
+          : "抽拉台面（已拉出）"),
         s.setAttribute("aria-pressed", String(!!r)));
     });
     s.setAttribute("aria-pressed", String(!!Dn.gate));
@@ -3548,6 +3572,7 @@ function fw() {
   }
 }
 var ghostWalk = null,
+  walkCollision = null,
   lastWalkFrame = 0,
   lastWalkLightFocus = null,
   walkReturnView = null;
@@ -3556,6 +3581,7 @@ function pw() {
   return $n ? $n.getTarget() : Nt?.target || new P();
 }
 function Mx() {
+  gpuFinish?.setCamera(ct);
   vi &&
     ((zp.camera = ct),
     (Oc.camera = ct),
@@ -3568,6 +3594,7 @@ function wx() {
   ghostWalk?.dispose();
   ghostWalk = null;
   document.body.classList.remove("ghost-mode");
+  kn?.setAttribute("aria-label", "住宅三维空间，拖动旋转，双指或滚轮缩放");
   _r?.setObserver?.(null);
   (Nt?.dispose(), $n?.dispose(), (Nt = null), ($n = null));
 }
@@ -3663,6 +3690,31 @@ function toggleNearbyCabinet(id) {
   });
   Jt?.request({ shadow: true });
 }
+const localRoomDoors = new Map();
+function setWalkDoorOpen(id, open) {
+  if (id === "guest-door") {
+    roomAtmosphere.setDoorOpen(open);
+    Jt?.request({ shadow: true });
+    return;
+  }
+  if (id === "entry-door" || id === "kitchen-door") {
+    ns({ [id === "entry-door" ? "entry" : "kitchen"]: open ? 1 : 0 });
+    return;
+  }
+  const opening = ut.openings.find((o) => o.id === id && o.type === "door");
+  const group = Ct.getObjectByName("opening:" + id);
+  if (!opening || !group) return;
+  const from = group.rotation.y;
+  const to = -Kn.degToRad(opening.rotation || 0) - Kn.degToRad(opening.openAngle || 0) * Number(open);
+  const start = performance.now();
+  localRoomDoors.set(id, open);
+  xu.set("walk-door:" + id, (now) => {
+    const t = Kn.clamp((now - start) / 550, 0, 1);
+    group.rotation.y = from + (to - from) * t * t * (3 - 2 * t);
+    return t < 1;
+  });
+  Jt?.request({ shadow: true });
+}
 function walkTargets() {
   const targets = [],
     add = (id, label, position, activate, normal) => {
@@ -3710,8 +3762,8 @@ function walkTargets() {
   const hatch = ut.homeDesign.hatch;
   add(
     "walk-hatch",
-    "升起 / 放下翻板",
-    [hatch.hinge.x, 1.1, hatch.hinge.z - 0.4],
+    "拉出 / 收回台面",
+    [hatch.centerX ?? ut.objects.find((o) => o.id === "s02-entry-return").x, hatch.worktopTopM ?? 0.88, hatch.drawerFrontZ ?? hatch.hinge?.z ?? 7.425],
     () => ns({ gate: Dn.gate ? 0 : 1 }),
   );
   const bed = point("guest-sofa-bed", 0.65);
@@ -3744,6 +3796,13 @@ function walkTargets() {
         Jt?.request({ shadow: true });
       },
     );
+  for (const [id, label] of [["master-door", "主卧门"], ["bath-door", "卫浴门"], ["entry-door", "入户门"]]) {
+    const opening = ut.openings.find((o) => o.id === id);
+    if (!opening) continue;
+    add("walk-" + id, "开合" + label, [opening.center[0], 1.15, opening.center[1]], () =>
+      setWalkDoorOpen(id, id === "entry-door" ? !Dn.entry : !(localRoomDoors.get(id) ?? true)),
+    );
+  }
   for (const unit of currentStorage()) {
     const a = Kn.degToRad(unit.rotation || 0),
       normal = [Math.sin(a), -Math.cos(a)];
@@ -3791,8 +3850,14 @@ function enterGhostWalk(pose) {
   ct.updateMatrixWorld(true);
   Mx();
   document.body.classList.add("ghost-mode");
+  kn.setAttribute("aria-label", "住宅三维空间，左摇杆行走，右摇杆转头；WASD移动，IJKL转头");
   lastWalkFrame = performance.now();
   lastWalkLightFocus = null;
+  Xp({ mode: "all" });
+  walkCollision ||= createWalkCollision(ut, Ct);
+  const safeStart = walkCollision.move([ct.position.x, ct.position.z], [ct.position.x, ct.position.z]);
+  ct.position.x = safeStart[0];
+  ct.position.z = safeStart[1];
   ghostWalk = createGhostWalk({
     camera: ct,
     canvas: kn,
@@ -3809,6 +3874,7 @@ function enterGhostWalk(pose) {
     },
     onMotion: (active) => (active ? Jt?.begin() : Jt?.end()),
     getTargets: walkTargets,
+    resolveMove: (from, to) => walkCollision.move(from, to),
     onExit: exitGhostWalk,
   });
   Xp({ mode: "all" });
@@ -3844,6 +3910,7 @@ function Ka(i) {
     Xp({
       mode: themeMoments.some((m) => m.viewId === i.id) ? "current" : "all",
     }),
+    _r?.setObserver?.(i.position),
     ($e("#view-title").textContent = i.label),
     Ax(),
     Oi());
@@ -3857,8 +3924,13 @@ var wu = null,
   zp,
   Oc,
   Au = !0;
-let cu, hu, Rc, fu;
-function xw() {
+let cu, hu, Rc, fu, gpuFinish, staticOcclusion;
+async function xw() {
+  if (rendering.backend === "WebGPU" && quality.postprocessing) {
+    const {createGPUFinish} = await import("./gpu-effects");
+    gpuFinish = createGPUFinish(Ht,Ct,ct);
+    return;
+  }
   if (rendering.backend !== "WebGL2" || !quality.postprocessing) return;
   matchMedia("(max-width: 1000px), (pointer: coarse)").matches ||
     ((vi = new cu(Ht)),
@@ -4021,7 +4093,7 @@ function yw() {
   if (kp) return;
   try {
     Ht.info.reset();
-    vi ? vi.render() : Ht.render(Ct, ct);
+    gpuFinish ? gpuFinish.render() : vi ? vi.render() : Ht.render(Ct, ct);
   } catch (error) {
     if (rendering.backend === "WebGPU") recoverGPU(error);
     else throw error;
@@ -4082,6 +4154,9 @@ async function bw() {
     );
     Ht = await createRenderer(kn);
     kn = Ht.domElement;
+    await initAreaLighting(rendering.backend === "WebGPU" ? "webgpu" : "webgl");
+    kn.dataset.renderer = rendering.backend;
+    kn.dataset.geometryBackend = geometryState().backend;
     Ht.info.autoReset = false;
     if (rendering.backend === "WebGPU") Ht.onDeviceLost = recoverGPU;
     if (rendering.backend === "WebGL2" && quality.postprocessing) {
@@ -4112,17 +4187,20 @@ async function bw() {
       finishFurniture(Ct, ut.objects, Vn),
       (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
       (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
+      (staticOcclusion = bakeStaticFloorOcclusion(Ct,ut,{size:quality.mobile?256:512})),
+      homeMotion.sofaModules.forEach(root => attachDynamicContact(root, {w:0.98,d:0.86,y:0.003,strength:0.16})),
+      attachDynamicContact(Ct.getObjectByName("living-tv"), {w:0.7,d:0.5,y:0.003,strength:0.12}),
       St.gate.push({
         group: homeMotion.hatch.group,
         axis: "x",
         base: 0,
-        angle: -Kn.degToRad(95),
+        angle: 0,
       }),
       (xx = ax({ THREE: yi, scene: Ct, model: ut })),
       (roomBatching = batchFurniture(Ct, ut, Mu)),
       cw(),
       Tx(),
-      xw(),
+      await xw(),
       (Jt = tx({
         renderer: Ht,
         mobile: Lc,
@@ -4154,12 +4232,25 @@ async function bw() {
       ),
       zc(),
       (vu = !0),
+      enterGhostWalk(),
+      Jt.pause());
+    // Compile the actual entrance camera before exposing controls. WebGPU can
+    // prepare independent material pipelines asynchronously instead of blocking
+    // the first visible frame with synchronous shader compilation.
+    $e("#loading-status").textContent = "准备光影与材质";
+    await Ht.compileAsync(Ct, ct);
+    (
+      (kn.dataset.wasmVertices = String(geometryState().transformedVertices)),
       $e("#loading").classList.add("done"),
       $e("#loading").setAttribute("aria-hidden", "true"),
       (kn.style.cursor = "grab"),
-      Jt.request({ shadow: !0 }));
+      Jt.request({ shadow: !0 }),
+      Jt.resume());
   } catch (i) {
-    (console.error(i),
+    (vu = false,
+      wx(),
+      Jt?.pause(),
+      console.error(i),
       ($e("#control-panel").hidden = !0),
       ($e("#panel-toggle").hidden = !0),
       ($e("#view-title").textContent = "\u5168\u5C4B\u9759\u6001\u9884\u89C8"),
@@ -4174,7 +4265,9 @@ async function bw() {
   }
 }
 await bw();
-if (vu) showWelcome();
+if (vu) {
+  showWelcome();
+}
 if (vu)
   mountMomentControls(
     (id) => Fp(id),
@@ -4249,6 +4342,11 @@ $e("#bed-state").onclick = () => {
 };
 $e("#projection").onclick = _w;
 $e("#reset").onclick = () => {
+  if (ghostWalk) {
+    const entry = ut.presentation.interiorViews.find((v) => v.id === ut.presentation.defaultView);
+    enterGhostWalk({ position: entry.position, target: entry.target });
+    return;
+  }
   let i = ut.presentation.interiorViews.find((e) => e.id === vr);
   i ? Ka(i) : Ja(Ln);
 };
@@ -4311,6 +4409,21 @@ window.homePresentation = {
   startGhostWalk: (pose) => enterGhostWalk(pose),
   stopGhostWalk: () => exitGhostWalk(),
   getGhostWalkState: () => ghostWalk?.getState() || { active: false },
+  getWalkCollisionAudit: () => walkCollision?.audit || null,
+  getWalkNavigationSnapshot: () => walkCollision?.navigationSnapshot() || null,
+  setWalkLookTarget: target => ghostWalk?.lookToward(target),
+  getAccessoryAudit: () => ({
+    plan: ut.homeDesign.accessoryReconciliation,
+    nodes: ["ps5", "home:mobile-game-dock", "home:game-controller-left", "home:game-controller-right", "home:mobile-power-pack", "home:daily-console-tray"].map(id => {
+      const node = Ct.getObjectByName(id);
+      let meshes = 0;
+      node?.traverse(child => { if (child.isMesh) meshes++; });
+      return { id, present: !!node, parent: node?.parent?.name || null, meshes, position: node?.getWorldPosition(new P()).toArray() || null };
+    }),
+    retiredPresent: [...ut.homeDesign.accessoryReconciliation.retiredObjects, "living:media-pier", "living:media-crown"].filter(id => !!Ct.getObjectByName(id)),
+  }),
+  setWalkDoorOpen,
+  getWalkDoorStates: () => Object.fromEntries(ut.openings.filter((o) => o.type === "door").map((o) => [o.id, Ct.getObjectByName("opening:" + o.id)?.rotation.y])),
   getModelAudit: () => auditSceneModel(Ct, ut),
   getModel: () => structuredClone(ut),
   getHomeDesign: () => ({
@@ -4403,6 +4516,9 @@ window.homePresentation = {
   getPerformance: () => ({
     ...Jt?.getState(),
     materialDetail: materialDetailState(),
+    staticOcclusion,
+    materials: auditMaterialSet(Vn),
+    gpuFinish: gpuFinish?.audit() || {enabled:false,reason:quality.mobile?"mobile_budget":"compatible_direct_renderer"},
     qualityProfile: { ...quality },
     storage: storageCapacity(currentStorage()),
     geometry: geometryState(),
@@ -4459,7 +4575,7 @@ window.homePresentation = {
     scenario: Za,
     ready: vu,
     renderer: vu ? rendering.backend : "unavailable",
-    quality: vi ? "PBR + GTAO" : "PBR",
+    quality: gpuFinish ? "WebGPU PBR + TSL glow" : vi ? "PBR + GTAO" : "PBR",
     objectCount: ut.objects.length,
     glVersion:
       rendering.backend === "WebGL2"

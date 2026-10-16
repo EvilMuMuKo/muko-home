@@ -16,7 +16,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - run: git diff --exit-code -- index.html assets materials preview.jpg transform.wasm public/transform.wasm
+      - run: git diff --exit-code -- index.html assets materials preview.jpg transform.wasm public/transform.wasm favicon.svg favicon-32.png apple-touch-icon.png icon-192.png icon-512.png site.webmanifest
       - run: npx playwright install --with-deps chromium
       - run: npm test
         env:

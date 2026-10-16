@@ -10,7 +10,7 @@ test("WebGL preserves views, motion, lighting, PNG and idle suspension", async (
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await ready(page);
   expect(
     await page.evaluate(() => window.homePresentation.getState().renderer),
@@ -93,17 +93,20 @@ test("unsupported graphics show static preview", async ({ page }) => {
       return get.call(this, type, ...args);
     };
   });
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await expect(page.locator("#fallback")).toBeVisible();
   expect(
     await page.locator("#fallback").evaluate((image) => image.naturalWidth),
   ).toBeGreaterThan(1000);
 });
-test("WebGPU request produces a working scene or recovers to WebGL after device loss", async ({
+test("default requests WebGPU and produces a working scene or bounded compatibility recovery", async ({
   page,
 }) => {
-  await page.goto("/?renderer=webgpu");
+  await page.goto("/");
   await ready(page);
+  const requested = await page.evaluate(() => window.homePresentation.getPerformance().rendering.requested);
+  expect(["webgpu", "webgl"]).toContain(requested);
+  if (requested === "webgl") expect(new URL(page.url()).searchParams.get("gpuFallback")).toBe("1");
   await page.click("#panel-toggle");
   await page.click("#overview-view");
   // Dawn/SwiftShader may expose an adapter and subsequently lose it. Verify
@@ -123,12 +126,32 @@ test("WebGPU request produces a working scene or recovers to WebGL after device 
     await page.evaluate(() => window.homePresentation.getState().renderer),
   );
 });
+test("failed entrance shader preparation removes walk controls and presents the static preview", async ({page}) => {
+  let injected = false;
+  await page.route("**/assets/index-*.js", async route => {
+    const response = await route.fetch();
+    const source = await response.text();
+    const body = source.replace(/await ([\w$]+)\.compileAsync\(/, (_, name) => {
+      injected = true;
+      return `await ${name}.__rejectedCompileForTest(`;
+    });
+    await route.fulfill({response,body});
+  });
+  await page.goto("/?renderer=webgl");
+  await expect(page.locator("#fallback")).toBeVisible({timeout:120000});
+  expect(injected).toBe(true);
+  await expect(page.locator("#scene")).toBeHidden();
+  await expect(page.locator(".ghost-walk-controls")).toHaveCount(0);
+  await expect(page.locator(".home-welcome")).toHaveCount(0);
+  await expect(page.locator("#panel-toggle")).toBeHidden();
+  expect(await page.evaluate(()=>window.homePresentation.getState().ready)).toBe(false);
+});
 test("optional physics loads on demand, conserves water and pauses cleanly", async ({
   page,
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await ready(page);
   expect(
     await page.evaluate(() =>

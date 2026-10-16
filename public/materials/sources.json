@@ -55,7 +55,25 @@
         "sourceMD5": "36146634f1dbd1bc30cd071857584c10",
         "resolution": 512
       }
-    }
+    },
+    "desktopMaps": {
+      "color": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/wood_floor/wood_floor_diff_2k.jpg",
+        "sourceMD5": "d209b7416b022ed06093aef068c7fe23",
+        "resolution": 2048
+      },
+      "normal": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_nor_gl_1k.jpg",
+        "sourceMD5": "620f174d2c09b579c5d02d37b2106668",
+        "resolution": 1024
+      },
+      "roughness": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_floor/wood_floor_rough_1k.jpg",
+        "sourceMD5": "36146634f1dbd1bc30cd071857584c10",
+        "resolution": 1024
+      }
+    },
+    "desktopMapsProcessing": "Desktop variants preserve source resolution: color WebP 86; normal and roughness WebP 90 to fit the 1 MB derivative budget."
   },
   "linen": {
     "asset": "rough_linen",
@@ -87,5 +105,45 @@
       }
     },
     "processing": "Diffuse neutralized to luminance and scaled 1.3 for colour tinting; CC0 derivative. RGB WebP 86; normals WebP 90, 512 px."
+  },
+  "plaster": {
+    "asset": "white_plaster_02",
+    "url": "https://polyhaven.com/a/white_plaster_02",
+    "authors": {
+      "Rob Tuytel": "All"
+    },
+    "tileMetres": [
+      1.5,
+      1.5
+    ],
+    "license": "CC0",
+    "metadataSource": "https://api.polyhaven.com/info/white_plaster_02",
+    "maps": {
+      "color": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_diff_1k.jpg",
+        "sourceMD5": "7b10c2686bcfd76d1f309a20fd06b57e",
+        "resolution": 1024,
+        "processing": {
+          "neutralBaseRGB": [
+            239,
+            237,
+            230
+          ],
+          "scanContrast": 0.08,
+          "description": "clean lime-painted finish, reduced source albedo mottling"
+        }
+      },
+      "normal": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_nor_gl_1k.jpg",
+        "sourceMD5": "55fc03203ebf1dc703a380fde93ff502",
+        "resolution": 512
+      },
+      "roughness": {
+        "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/white_plaster_02/white_plaster_02_rough_1k.jpg",
+        "sourceMD5": "8b28f263360b8c4ddbdc4f7c650c4eeb",
+        "resolution": 512
+      }
+    },
+    "processing": "Color neutralized to a clean warm off-white and scan contrast reduced to 8 percent; original source normals and roughness retained. Color WebP86; data maps lossless WebP."
   }
 }

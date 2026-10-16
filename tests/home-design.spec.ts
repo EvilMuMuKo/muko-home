@@ -23,7 +23,7 @@ function v9Model() {
   return createHomeDesign(v8Model());
 }
 
-test("V9 keeps the V8 input intact and records concept-only bay-window and hatch geometry", () => {
+test("V9 keeps the V8 input intact and records concept-only bay-window and pullout geometry", () => {
   const base = v8Model(),
     before = structuredClone(base),
     next = createHomeDesign(base);
@@ -61,17 +61,15 @@ test("V9 keeps the V8 input intact and records concept-only bay-window and hatch
   ]);
   expect(next.homeDesign.hatch).toMatchObject({
     id: "hall-gate",
-    spanM: 0.9,
-    depthM: 0.5,
-    thicknessM: 0.03,
-    heightM: 0.95,
-    hinge: { x: 5.15, y: 0.95, z: 7.39 },
-    hingeRevealM: 0.035,
-    hardware: "concept_recessed_bronze_hinge",
-    xBounds: [4.9, 5.4],
-    openAngleDeg: 95,
-    operation: "flip_up",
-    status: "concept",
+    kind: "two_leaf_drawer_pullout",
+    spanM: 0.895,
+    depthM: 0.405,
+    thicknessM: 0.018,
+    leafCount: 2,
+    leafLengthM: 0.4475,
+    worktopTopM: 0.875,
+    hardware: "concept_two_leaf_foldout_slide_reference_salice_atim_lunch_450",
+    status: "concept_not_factory_cad",
   });
 });
 
@@ -141,7 +139,17 @@ test("mobile media layout keeps full seating and peripheral cabinet geometry", (
   expect(next.objects.some((object) => object.id === "upper-living-rear")).toBe(
     false,
   );
-  expect(screenBias.position).toEqual([9.4, 1.265, 8.99]);
+  expect(screenBias).toBeUndefined();
+  for (const scene of next.lighting.scenes) {
+    expect(scene.fixtureLevels?.["living-screen-bias"]).toBeUndefined();
+    expect(scene.fixtureKelvin?.["living-screen-bias"]).toBeUndefined();
+  }
+  expect(console.equipmentRole).toBe("peripheral_daily_storage");
+  expect(retainedMediaStorage.label).toBe("客厅轻物收纳");
+  expect(next.homeDesign.storage.removedTvWallStorageIds).toEqual(["living-rear-storage"]);
+  expect(next.homeDesign.storage.addedObjects).toEqual(["laundry-basket"]);
+  for (const id of next.homeDesign.accessoryReconciliation.retiredObjects)
+    expect(next.objects.some(object=>object.id===id)).toBe(false);
   expect(readingLight.position).toEqual([10.95, 1.265, 8.85]);
   expect(next.homeDesign.layoutComparison.alternatives[1].sofa.w).toBe(2.55);
   expect(
@@ -166,16 +174,16 @@ test("mobile media layout keeps full seating and peripheral cabinet geometry", (
   }
   expect(
     next.lighting.scenes.find((scene) => scene.id === "aperitif"),
-  ).toMatchObject({ ambientIntensity: 0.48, environmentIntensity: 0.2 });
+  ).toMatchObject({ ambientIntensity: 0.36, environmentIntensity: 0.17 });
   expect(
     next.lighting.scenes.find((scene) => scene.id === "game"),
-  ).toMatchObject({ ambientIntensity: 0.48, environmentIntensity: 0.2 });
+  ).toMatchObject({ ambientIntensity: 0.36, environmentIntensity: 0.17 });
   expect(
     next.lighting.scenes.find((scene) => scene.id === "cinema"),
-  ).toMatchObject({ ambientIntensity: 0.52, environmentIntensity: 0.18 });
+  ).toMatchObject({ ambientIntensity: 0.28, environmentIntensity: 0.13 });
 });
 
-test("entry island and hatch share the unchanged column's exact finished-width edges", () => {
+test("entry island keeps the column width and the two-leaf pullout fits its cabinet pocket", () => {
   const base = v8Model(),
     next = v9Model(),
     baseColumn = base.objects.find(
@@ -183,6 +191,9 @@ test("entry island and hatch share the unchanged column's exact finished-width e
     )!,
     column = next.objects.find((object) => object.id === "column-handdrawn")!,
     entryReturn = next.objects.find(
+      (object) => object.id === "s02-entry-return",
+    )!,
+    baseEntryReturn = base.objects.find(
       (object) => object.id === "s02-entry-return",
     )!;
   expect(column).toEqual(baseColumn);
@@ -210,12 +221,46 @@ test("entry island and hatch share the unchanged column's exact finished-width e
     crossSectionWidthM: 0.5,
     xBounds: [4.9, 5.4],
   });
-  expect(next.homeDesign.hatch).toMatchObject({
-    depthM: 0.5,
-    xBounds: [4.9, 5.4],
-    hinge: { x: 5.15, z: 7.39 },
-    hingeRevealM: 0.035,
+  const hatch = next.homeDesign.hatch,
+    interiorShelves = entryReturn.collisionParts!.filter(
+      (part) => part.y >= 0.34 && part.y < 0.9 && part.h <= 0.025 && part.w < entryReturn.w - 0.02,
+    ),
+    baseShelfLevels = baseEntryReturn.collisionParts!
+      .filter((part) => part.y >= 0.2 && part.y < 0.9 && part.h <= 0.025)
+      .map((part) => part.y),
+    finalShelfLevels = entryReturn.collisionParts!
+      .filter((part) => part.y >= 0.2 && part.y < 0.9 && part.h <= 0.025)
+      .map((part) => part.y),
+    entryEndPanel = entryReturn.collisionParts!.find(
+      (part) => part.z < entryReturn.z && part.h < 0.7 && part.w > 0.4,
+    )!;
+  expect(hatch).toMatchObject({
+    kind: "two_leaf_drawer_pullout",
+    spanM: 0.895,
+    depthM: 0.405,
+    thicknessM: 0.018,
+    leafCount: 2,
+    leafLengthM: 0.4475,
+    entryEnd: "-z",
+    drawerFrontZ: 7.425,
+    worktopTopM: 0.875,
+    cabinetClearWidthM: 0.464,
+    cabinetClearDepthM: 0.864,
+    cabinetClearHeightM: 0.277,
+    requiredClearHeightM: 0.12,
+    storedLeafStackDepthM: 0.4475,
+    storagePocketMinDepthM: 0.54,
+    storagePocketYBoundsM: [0.638, 0.915],
+    foldSequence: "pull_stacked_pair_to_far_end_then_unfold_inboard_leaf_toward_cabinet",
+    status: "concept_not_factory_cad",
   });
+  expect(hatch.depthM).toBeLessThan(hatch.cabinetClearWidthM);
+  expect(hatch.cabinetClearHeightM).toBeGreaterThan(hatch.requiredClearHeightM);
+  expect(hatch.storedLeafStackDepthM).toBeLessThanOrEqual(hatch.storagePocketMinDepthM);
+  expect(hatch.storagePocketMinDepthM).toBeLessThanOrEqual(hatch.cabinetClearDepthM);
+  expect(interiorShelves.map((part) => part.y)).toEqual([0.34, 0.62]);
+  expect(finalShelfLevels).toEqual(baseShelfLevels);
+  expect(entryEndPanel.h).toBeCloseTo(0.558);
 });
 
 test("daily dining is parked by default and stores a physical envelope, while use coordinates stay explicit", () => {
@@ -331,6 +376,7 @@ test("master bedroom selects an inline full-size workstation candidate and recor
     mac = next.objects.find((object) => object.id === "mac-desk")!,
     bed = next.objects.find((object) => object.id === "master-bed")!,
     mattress = next.objects.find((object) => object.id === "master-mattress")!,
+    nightstand = next.objects.find((object) => object.id === "nightstand")!,
     pcChair = next.objects.find((object) => object.id === "pc-chair")!,
     macChair = next.objects.find((object) => object.id === "mac-chair")!;
   expect(pc).toMatchObject({
@@ -351,28 +397,34 @@ test("master bedroom selects an inline full-size workstation candidate and recor
   expect(mattress).toMatchObject({
     w: 1.8,
     d: 2.0,
-    x: 9.4,
-    z: 1.15,
-    rotation: 90,
+    x: 9.5,
+    z: 1.145,
+    rotation: 0,
   });
-  expect(bed).toMatchObject({ x: 9.4, z: 1.15, rotation: 90, w: 1.9, d: 2.08 });
-  expect(bed.collisionParts![0].x).toBeCloseTo(9.4 + bedPart.z - oldBed.z);
-  expect(bed.collisionParts![0].z).toBeCloseTo(1.15 - (bedPart.x - oldBed.x));
-  expect(bed.collisionParts![0].rotation).toBe(90);
+  expect(bed).toMatchObject({ x: 9.5, z: 1.145, rotation: 0, w: 1.9, d: 2.08 });
+  expect(bed.collisionParts![0].x).toBeCloseTo(bedPart.x);
+  expect(bed.collisionParts![0].z).toBeCloseTo(bedPart.z);
+  expect(bed.collisionParts![0].rotation).toBe(bedPart.rotation);
+  expect(next.objects.some((object) => object.id === "nightstand-left")).toBe(false);
+  expect(nightstand).toMatchObject({ x: 10.85, z: 0.8, w: 0.42, d: 0.42 });
+  expect(nightstand.x - nightstand.w / 2 - (bed.x + bed.w / 2)).toBeCloseTo(0.19);
   const headboardLight = next.lighting.fixtures.find(
     (fixture) => fixture.id === "master-headboard",
   )!;
-  expect(headboardLight.position[0]).toBeCloseTo(9.4 + (0.185 - 1.145));
-  expect(headboardLight.position[2]).toBeCloseTo(1.15);
+  expect(headboardLight.position).toEqual([9.5, 0.875, 0.185]);
+  expect(headboardLight.target).toEqual([9.5, 1.25, 0.12]);
+  expect(headboardLight.position[1]).toBeGreaterThan(mattress.y + mattress.h);
+  const headboardPanel = bed.collisionParts!.find((part) => part.h === 0.87)!;
+  expect(headboardLight.position[2] - (headboardPanel.z + headboardPanel.d / 2)).toBeCloseTo(0.01);
   expect(pcChair.retreat.z).toBeCloseTo(2.99);
   expect(pcChair).toMatchObject({ x: 8.6, z: 3.34, w: 0.67, d: 0.65 });
   expect(pcChair.retreat).toMatchObject({ x: 8.6, z: 2.99, distanceM: 0.35 });
   expect(macChair).toMatchObject({ x: 9.9, z: 3.34, rotation: 180, w: 0.67, d: 0.65 });
   expect(macChair.retreat).toMatchObject({ x: 9.9, z: 2.99, distanceM: 0.35 });
-  const bedNorthEdge = 1.15 + 1.9 / 2,
+  const bedNorthEdge = 1.145 + 2.08 / 2,
     pulledPcChairSouthEdge = pcChair.retreat.z - pcChair.d / 2,
     pcGap = pulledPcChairSouthEdge - bedNorthEdge;
-  expect(pcGap).toBeCloseTo(0.565);
+  expect(pcGap).toBeCloseTo(0.48);
   expect(
     next.homeDesign.masterBedroom.geometry.pcChairToBedFrameGapM,
   ).toBeCloseTo(pcGap);
@@ -395,7 +447,7 @@ test("master bedroom selects an inline full-size workstation candidate and recor
       deskDepthM: 0.75,
       chairCentersSpacingM: 1.3,
       chairPairClearWidthM: 0.63,
-      pulledChairToBedFrameGapM: 0.565,
+      pulledChairToBedFrameGapM: 0.48,
     },
   });
   expect(
@@ -420,9 +472,10 @@ test("replaces selected high storage with low bedside/laundry surfaces and prese
   ])
     expect(next.objects.some((item) => item.id === id)).toBe(false);
   expect(object("guest-window-bench")).toBeUndefined();
-  expect(object("nightstand-left")).toMatchObject({
-    x: 10.7,
-    z: 1.15,
+  expect(object("nightstand-left")).toBeUndefined();
+  expect(object("nightstand")).toMatchObject({
+    x: 10.85,
+    z: 0.8,
     w: 0.42,
     d: 0.42,
     h: 0.5,

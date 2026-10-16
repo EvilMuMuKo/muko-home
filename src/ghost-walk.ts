@@ -15,6 +15,7 @@ export type GhostWalkOptions = {
   onMotion: (active: boolean) => void;
   getTargets: () => GhostWalkTarget[];
   onExit: () => void;
+  resolveMove?: (from: [number, number], to: [number, number]) => [number, number];
 };
 
 export type GhostWalkState = {
@@ -29,11 +30,12 @@ const EYE_HEIGHT = 1.74;
 const WORLD_BOUNDS = { minX: -0.4, maxX: 13.3, minZ: -0.4, maxZ: 9.8 };
 const WALK_SPEED = 1.35;
 const TURN_PER_PIXEL = 0.0032;
+const LOOK_SPEED = 1.65;
 const INTERACTION_DISTANCE = 1.6;
 const MIN_PITCH = THREE.MathUtils.degToRad(-65);
 const MAX_PITCH = THREE.MathUtils.degToRad(65);
 
-/** First-person, no-collision concept walk with touch, pointer and keyboard input. */
+/** First-person walk with independent movement/look sticks and optional solid-world resolution. */
 export function createGhostWalk({
   camera,
   canvas,
@@ -41,35 +43,53 @@ export function createGhostWalk({
   onMotion,
   getTargets,
   onExit,
+  resolveMove,
 }: GhostWalkOptions) {
   const doc = canvas.ownerDocument;
   const win = doc.defaultView ?? window;
   const overlay = doc.createElement("div");
   overlay.className = "ghost-walk-controls";
-  overlay.setAttribute("aria-label", "幽灵漫游控制");
+  overlay.setAttribute("aria-label", "室内漫游控制");
 
   const joystick = doc.createElement("div");
   joystick.className = "ghost-joystick";
   joystick.setAttribute("role", "application");
-  joystick.setAttribute("aria-label", "触控摇杆，拖动移动");
+  joystick.setAttribute("aria-label", "移动摇杆，拖动行走");
   joystick.tabIndex = 0;
   const thumb = doc.createElement("span");
   thumb.className = "ghost-joystick__thumb";
   thumb.setAttribute("aria-hidden", "true");
   joystick.append(thumb);
 
+  const lookJoystick = doc.createElement("div");
+  lookJoystick.className = "ghost-joystick ghost-look-joystick";
+  lookJoystick.setAttribute("role", "application");
+  lookJoystick.setAttribute("aria-label", "视角摇杆，拖动转头；键盘 I J K L");
+  lookJoystick.tabIndex = 0;
+  const lookThumb = doc.createElement("span");
+  lookThumb.className = "ghost-joystick__thumb";
+  lookThumb.setAttribute("aria-hidden", "true");
+  lookJoystick.append(lookThumb);
+  for (const [stick, name] of [[joystick, "移动"], [lookJoystick, "视角"]] as const) {
+    const label = doc.createElement("span");
+    label.className = "ghost-joystick__label";
+    label.textContent = name;
+    label.setAttribute("aria-hidden", "true");
+    stick.append(label);
+  }
+
   const exitButton = doc.createElement("button");
   exitButton.className = "ghost-exit";
   exitButton.type = "button";
   exitButton.textContent = "退出漫游";
-  exitButton.setAttribute("aria-label", "退出幽灵漫游");
+  exitButton.setAttribute("aria-label", "退出室内漫游");
 
   const interactButton = doc.createElement("button");
   interactButton.className = "ghost-interact";
   interactButton.type = "button";
   interactButton.hidden = true;
 
-  overlay.append(joystick, exitButton, interactButton);
+  overlay.append(joystick, lookJoystick, exitButton, interactButton);
   (canvas.parentElement ?? doc.body).append(overlay);
   canvas.classList.add("ghost-walk-active");
 
@@ -81,6 +101,9 @@ export function createGhostWalk({
   let nearestId: string | null = null;
   let joystickPointer: number | null = null;
   let dragPointer: number | null = null;
+  let lookPointer: number | null = null;
+  let lookX = 0;
+  let lookY = 0;
   let lastDragX = 0;
   let lastDragY = 0;
   let axisX = 0;
@@ -110,7 +133,7 @@ export function createGhostWalk({
   }
 
   function hasInput() {
-    return joystickPointer !== null || dragPointer !== null || keys.size > 0;
+    return joystickPointer !== null || lookPointer !== null || dragPointer !== null || keys.size > 0;
   }
 
   function syncMotion() {
@@ -173,6 +196,7 @@ export function createGhostWalk({
 
   function resize(width: number, height: number) {
     if (disposed) return;
+    clearInputAndReleasePointers();
     camera.aspect = Math.max(1, width) / Math.max(1, height);
     camera.updateProjectionMatrix();
     onChange();
@@ -228,8 +252,50 @@ export function createGhostWalk({
     event.stopPropagation();
   }
 
+  function updateLookJoystick(event: PointerEvent) {
+    const bounds = lookJoystick.getBoundingClientRect();
+    const radius = Math.max(1, Math.min(bounds.width, bounds.height) * 0.34);
+    let dx = event.clientX - (bounds.left + bounds.width / 2);
+    let dy = event.clientY - (bounds.top + bounds.height / 2);
+    const length = Math.hypot(dx, dy);
+    if (length > radius) { dx *= radius / length; dy *= radius / length; }
+    lookX = dx / radius;
+    lookY = dy / radius;
+    if (Math.hypot(lookX, lookY) < 0.12) lookX = lookY = 0;
+    lookThumb.style.transform = `translate(${dx}px, ${dy}px)`;
+  }
+
+  function onLookDown(event: PointerEvent) {
+    if (!active || lookPointer !== null) return;
+    lookPointer = event.pointerId;
+    lookJoystick.setPointerCapture?.(event.pointerId);
+    updateLookJoystick(event);
+    syncMotion();
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  function onLookMove(event: PointerEvent) {
+    if (lookPointer !== event.pointerId) return;
+    updateLookJoystick(event);
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  function releaseLook(event: PointerEvent) {
+    if (lookPointer !== event.pointerId) return;
+    lookPointer = null;
+    lookX = lookY = 0;
+    lookThumb.style.transform = "translate(0, 0)";
+    try {
+      if (lookJoystick.hasPointerCapture?.(event.pointerId))
+        lookJoystick.releasePointerCapture(event.pointerId);
+    } catch { /* cancelled capture was already released */ }
+    syncMotion();
+    event.preventDefault?.();
+    event.stopPropagation?.();
+  }
+
   function onCanvasDown(event: PointerEvent) {
-    if (!active || dragPointer !== null || event.button !== 0) return;
+    if (!active || dragPointer !== null || event.button !== 0 || event.pointerType === "touch") return;
     dragPointer = event.pointerId;
     lastDragX = event.clientX;
     lastDragY = event.clientY;
@@ -283,6 +349,10 @@ export function createGhostWalk({
     arrowleft: "left",
     d: "right",
     arrowright: "right",
+    i: "look-up",
+    k: "look-down",
+    j: "look-left",
+    l: "look-right",
   };
   function onKeyDown(event: KeyboardEvent) {
     if (!active || disposed) return;
@@ -312,6 +382,10 @@ export function createGhostWalk({
     event.preventDefault();
   }
 
+  function onVisibilityChange() {
+    if (doc.hidden) clearInputAndReleasePointers();
+  }
+
   function onWindowBlur() {
     clearInputAndReleasePointers();
   }
@@ -329,7 +403,10 @@ export function createGhostWalk({
   function clearInputAndReleasePointers() {
     const joystickId = joystickPointer;
     const canvasId = dragPointer;
-    joystickPointer = dragPointer = null;
+    const lookId = lookPointer;
+    joystickPointer = dragPointer = lookPointer = null;
+    lookX = lookY = 0;
+    lookThumb.style.transform = "translate(0, 0)";
     keys.clear();
     axisX = axisY = 0;
     thumb.style.transform = "translate(0, 0)";
@@ -345,6 +422,10 @@ export function createGhostWalk({
     } catch {
       // Ignore captures the browser has already cancelled.
     }
+    try {
+      if (lookId !== null && lookJoystick.hasPointerCapture?.(lookId))
+        lookJoystick.releasePointerCapture(lookId);
+    } catch { /* capture can already be lost */ }
     syncMotion();
   }
 
@@ -361,6 +442,14 @@ export function createGhostWalk({
       -axisY + (Number(keys.has("forward")) - Number(keys.has("backward")));
     const length = Math.hypot(moveX, moveY);
     let moved = false;
+    const turnX = lookX + Number(keys.has("look-right")) - Number(keys.has("look-left"));
+    const turnY = -lookY + Number(keys.has("look-up")) - Number(keys.has("look-down"));
+    if (dt > 0 && (Math.abs(turnX) > 0.08 || Math.abs(turnY) > 0.08)) {
+      const priorPitch = pitch;
+      yaw += THREE.MathUtils.clamp(turnX, -1, 1) * LOOK_SPEED * dt;
+      pitch = THREE.MathUtils.clamp(pitch + THREE.MathUtils.clamp(turnY, -1, 1) * LOOK_SPEED * 0.75 * dt, MIN_PITCH, MAX_PITCH);
+      moved = Math.abs(turnX) > 0.08 || Math.abs(pitch - priorPitch) > EPSILON;
+    }
     if (length > 0.08 && dt > 0) {
       const nx = moveX / Math.max(1, length);
       const ny = moveY / Math.max(1, length);
@@ -368,22 +457,31 @@ export function createGhostWalk({
       const sin = Math.sin(yaw);
       const deltaX = (sin * ny + cos * nx) * WALK_SPEED * dt;
       const deltaZ = (-cos * ny + sin * nx) * WALK_SPEED * dt;
-      const nextX = THREE.MathUtils.clamp(
+      let nextX = THREE.MathUtils.clamp(
         position.x + deltaX,
         WORLD_BOUNDS.minX,
         WORLD_BOUNDS.maxX,
       );
-      const nextZ = THREE.MathUtils.clamp(
+      let nextZ = THREE.MathUtils.clamp(
         position.z + deltaZ,
         WORLD_BOUNDS.minZ,
         WORLD_BOUNDS.maxZ,
       );
-      moved =
+      if (resolveMove) {
+        [nextX, nextZ] = resolveMove([position.x, position.z], [nextX, nextZ]);
+      }
+      moved = moved ||
         Math.abs(nextX - position.x) > EPSILON ||
         Math.abs(nextZ - position.z) > EPSILON;
       position.set(nextX, EYE_HEIGHT, nextZ);
-      if (moved) applyCameraPose();
     }
+    // Door and furniture animations can reach a stationary player too.
+    if (resolveMove && length <= 0.08) {
+      const [safeX, safeZ] = resolveMove([position.x, position.z], [position.x, position.z]);
+      moved = moved || Math.abs(safeX - position.x) > EPSILON || Math.abs(safeZ - position.z) > EPSILON;
+      position.set(safeX, EYE_HEIGHT, safeZ);
+    }
+    if (moved) applyCameraPose();
     refreshNearest();
     if (moved) onChange();
     return moved;
@@ -399,6 +497,11 @@ export function createGhostWalk({
     joystick.removeEventListener("pointerup", releaseJoystick);
     joystick.removeEventListener("pointercancel", releaseJoystick);
     joystick.removeEventListener("lostpointercapture", releaseJoystick);
+    lookJoystick.removeEventListener("pointerdown", onLookDown);
+    lookJoystick.removeEventListener("pointermove", onLookMove);
+    lookJoystick.removeEventListener("pointerup", releaseLook);
+    lookJoystick.removeEventListener("pointercancel", releaseLook);
+    lookJoystick.removeEventListener("lostpointercapture", releaseLook);
     canvas.removeEventListener("pointerdown", onCanvasDown);
     canvas.removeEventListener("pointermove", onCanvasMove);
     canvas.removeEventListener("pointerup", releaseCanvas);
@@ -407,6 +510,7 @@ export function createGhostWalk({
     win.removeEventListener("keydown", onKeyDown);
     win.removeEventListener("keyup", onKeyUp);
     win.removeEventListener("blur", onWindowBlur);
+    doc.removeEventListener("visibilitychange", onVisibilityChange);
     interactButton.removeEventListener("click", activateNearest);
     exitButton.removeEventListener("click", requestExit);
     overlay.remove();
@@ -426,6 +530,11 @@ export function createGhostWalk({
   joystick.addEventListener("pointerup", releaseJoystick);
   joystick.addEventListener("pointercancel", releaseJoystick);
   joystick.addEventListener("lostpointercapture", releaseJoystick);
+  lookJoystick.addEventListener("pointerdown", onLookDown);
+  lookJoystick.addEventListener("pointermove", onLookMove);
+  lookJoystick.addEventListener("pointerup", releaseLook);
+  lookJoystick.addEventListener("pointercancel", releaseLook);
+  lookJoystick.addEventListener("lostpointercapture", releaseLook);
   canvas.addEventListener("pointerdown", onCanvasDown);
   canvas.addEventListener("pointermove", onCanvasMove);
   canvas.addEventListener("pointerup", releaseCanvas);
@@ -434,6 +543,7 @@ export function createGhostWalk({
   win.addEventListener("keydown", onKeyDown);
   win.addEventListener("keyup", onKeyUp);
   win.addEventListener("blur", onWindowBlur);
+  doc.addEventListener("visibilitychange", onVisibilityChange);
   interactButton.addEventListener("click", activateNearest);
   exitButton.addEventListener("click", requestExit);
 
@@ -442,6 +552,15 @@ export function createGhostWalk({
 
   return {
     update,
+    lookToward(target: [number, number, number]) {
+      if (!active || disposed) return;
+      direction.set(...target).sub(position).normalize();
+      yaw = Math.atan2(direction.x, -direction.z);
+      pitch = THREE.MathUtils.clamp(Math.asin(direction.y), MIN_PITCH, MAX_PITCH);
+      applyCameraPose();
+      refreshNearest();
+      onChange();
+    },
     getTarget() {
       camera.getWorldDirection(direction).normalize();
       return camera.position.clone().add(direction);

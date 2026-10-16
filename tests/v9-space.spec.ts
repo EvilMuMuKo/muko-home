@@ -152,7 +152,7 @@ test("V9 regression: visible folding-chair meshes clear entry return and bar ser
   expect(hits.length, JSON.stringify(hits.slice(0, 6))).toBe(0);
 });
 
-test("V9 regression: visible hatch and temporary stool meshes clear return, service, and column for the whole sampled motion", () => {
+test("V9 regression: two-leaf pullout clears solid cabinet boards and column through all 101 states", () => {
   const { model, motion, bounds } = fixture(),
     island = model.objects.find((o: any) => o.id === "s02-entry-return"),
     service = model.objects.find((o: any) => o.id === "s02-bar-service"),
@@ -160,18 +160,35 @@ test("V9 regression: visible hatch and temporary stool meshes clear return, serv
     islandParts = island.collisionParts.map(boxForPart),
     serviceParts = service.collisionParts.map(boxForPart),
     pillarBox = objectBox(column),
-    hits: { step: number; object: string; island: unknown[]; service: unknown[]; pillar: unknown[] }[] = [];
-      for (let step = 0; step <= 100; step++) {
-        applyHomeMotion(motion, { dining: 0, gate: step / 100, dishwasher: 0 });
-        for (const [id, group] of [["hatch", motion.hatch!.group], ["stool", motion.hatch!.stool]] as const) {
-          const meshParts = visibleMeshBounds(group),
-            islandHit = groupHitsParts(group, islandParts),
-            serviceHit = groupHitsParts(group, serviceParts),
-            pillarHit = meshParts.flatMap(({ id: mesh, bounds: b }) => overlap3d(b, pillarBox) ? [mesh] : []);
-          if (islandHit.length || serviceHit.length || pillarHit.length)
-            hits.push({ step, object: id, island: islandHit, service: serviceHit, pillar: pillarHit });
-        }
-      }
+    hatch = motion.hatch!,
+    movingComponents = [
+      ["leaves", hatch.leaves],
+      ["rails", hatch.rails],
+      ["front", hatch.front],
+    ] as const,
+    hits: { step: number; component: string; cabinetBoards: unknown[]; service: unknown[]; column: string[] }[] = [];
+  expect(model.homeDesign.hatch.kind).toBe("two_leaf_drawer_pullout");
+  for (let step = 0; step <= 100; step++) {
+    applyHomeMotion(motion, { dining: 0, gate: step / 100, dishwasher: 0 });
+    for (const [id, group] of movingComponents) {
+      const meshParts = visibleMeshBounds(group),
+        boardHits = groupHitsParts(group, islandParts),
+        serviceHits = groupHitsParts(group, serviceParts),
+        pillarHits = meshParts.flatMap(({ id: mesh, bounds }) =>
+          overlap3d(bounds, pillarBox) ? [mesh] : [],
+        );
+      if (boardHits.length || serviceHits.length || pillarHits.length)
+        hits.push({ step, component: id, cabinetBoards: boardHits, service: serviceHits, column: pillarHits });
+    }
+  }
+  // The stored mechanism is inside the cabinet's legal empty pocket, so its
+  // enclosing AABB overlaps the island AABB. Solid collisionParts above are
+  // the correct collision surface; the cabinet shell is not a solid block.
+  applyHomeMotion(motion, { dining: 0, gate: 1, dishwasher: 0 });
+  const stowedBounds = bounds(hatch.group),
+    islandBounds = objectBox(island);
+  expect(stowedBounds.intersectsBox(islandBounds)).toBe(true);
+  expect(groupHitsParts(hatch.front, islandParts).length).toBe(0);
   
   const kitchenNorthEdge = 4.8,
     columnNorthFace = column.z - column.d / 2,
@@ -184,13 +201,13 @@ test("V9 regression: visible hatch and temporary stool meshes clear return, serv
     rawStaticGap: +rawGap.toFixed(3),
     targetRawGap: 0.9,
     humanRadiusUsed: false,
-    hatch: { hinge: model.homeDesign.hatch.hinge, reveal: model.homeDesign.hatch.hingeRevealM, samples: 101, failureCount: hits.length, firstFailures: hits.slice(0, 6) },
+    hatch: { kind: model.homeDesign.hatch.kind, worktop: [model.homeDesign.hatch.depthM, model.homeDesign.hatch.spanM], samples: 101, componentGroups: movingComponents.map(([id]) => id), emptyCabinetAabbOverlapWhenStowed: stowedBounds.intersectsBox(islandBounds), failureCount: hits.length, firstFailures: hits.slice(0, 6) },
     dishwasherPose: { x: dishwasher.x, z: dishwasher.z, rotation: dishwasher.rotation, openTravelVerifiedInExistingMotionSpec: true },
     fridgePose: { x: fridge.x, z: fridge.z, rotation: fridge.rotation, articulatedDoorAndDrawerEnvelopeJointlyChecked: false },
     kitchenTwoPersonAndDoorJointState: "BLOCKED_not_modeled_or_tested",
   }));
   expect(rawGap).toBeCloseTo(1.125, 3);
-  expect(model.homeDesign.hatch.hingeRevealM).toBe(0.035);
+  expect(model.homeDesign.hatch.kind).toBe("two_leaf_drawer_pullout");
   expect(hits.length, JSON.stringify(hits.slice(0, 6))).toBe(0);
 });
 
@@ -199,16 +216,16 @@ test("space audit: bedroom static envelopes do not establish door, storage, bedd
     bed = model.objects.find((o: any) => o.id === "master-mattress"),
     guestState = model.homeDesign.guestBed,
     master = model.homeDesign.masterBedroom;
-  const rotatedBed = { widthX: bed.d, depthZ: bed.w },
+  const restoredBed = { widthX: bed.w, depthZ: bed.d },
     guestFolded = guestState.foldedEnvelope,
     guestOpen = guestState.openEnvelope;
   console.log("SPACE_AUDIT bedroom", JSON.stringify({
-    masterBed: { center: [bed.x, bed.z], mattress: [bed.w, bed.d], worldFootprint: rotatedBed, wardrobeGapM: master.geometry.wardrobeToBedGapM, chairToBedM: master.geometry.pcChairToBedFrameGapM },
+    masterBed: { center: [bed.x, bed.z], mattress: [bed.w, bed.d], worldFootprint: restoredBed, wardrobeGapM: master.geometry.wardrobeToBedGapM, chairToBedM: master.geometry.pcChairToBedFrameGapM },
     masterProofLevel: "static geometry only; no door-leaf/wardrobe-open/two-person swept test",
     guestBed: { folded: guestFolded, open: guestOpen, mattress: guestState.mechanismNominalMattress, guestDoorWidthM: model.openings.find((o: any) => o.id === "guest-door").width, actualBeddingAndStorageClearance: false },
     guestProofLevel: "static envelope only; sofa-bed is not articulated or sampled with door, wardrobe, bedding, or person",
   }));
-  expect(rotatedBed.widthX).toBe(2);
+  expect(restoredBed).toEqual({ widthX: 1.8, depthZ: 2 });
   expect(guestOpen.d).toBe(2.1);
   expect(model.homeDesign.guestBed.simultaneousDoorStorageState).toBe("not_verified");
 });
@@ -501,7 +518,7 @@ test("V9 bedroom: sample both full-size 350 mm chair retreats against bed, wardr
   expect(deskRun.maxX - deskRun.minX).toBeCloseTo(2.6, 3);
   expect(chairCentersSpacing).toBeCloseTo(1.3, 3);
   expect(pairClearWidth).toBeCloseTo(0.63, 3);
-  expect(chairToBedGap).toBeCloseTo(0.565, 3);
+  expect(chairToBedGap).toBeCloseTo(0.48, 3);
   expect(minimumChairGap).toBeGreaterThanOrEqual(0.002);
   expect(hits, JSON.stringify(hits.slice(0, 8))).toHaveLength(0);
 });

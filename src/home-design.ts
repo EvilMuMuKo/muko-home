@@ -1,3 +1,5 @@
+import { reviseHomeLighting } from "./lighting-revision";
+
 /** V9 room planning overlay. All measurements are concept-model values. */
 type Point = [number, number];
 
@@ -82,7 +84,9 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
   patchPose(entryReturn, { x: column.x, w: sharedColumnFinishedWidthM });
   // Long open face looks into the entrance corridor (+x); hinge end is closed.
   const innerW = sharedColumnFinishedWidthM - 0.036,
-    panel = 0.018;
+    panel = 0.018,
+    entryIslandZMin = Number(entryReturn.z) - Number(entryReturn.d) / 2,
+    entryIslandClearLengthM = Number(entryReturn.d) - 0.036;
   entryReturn.accessFace = "+x";
   entryReturn.accessFrom = "entry_left_corridor";
   entryReturn.collisionParts = [
@@ -101,7 +105,10 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       w: innerW,
       d: panel,
       y: 0.08,
-      h: 0.835,
+      // The entry-facing upper end is now a pull-out mouth. Preserve its
+      // lower cabinet front; the animated flush drawer front closes the
+      // dedicated upper mechanism bay when the leaves are stowed.
+      h: sign < 0 ? 0.558 : 0.835,
       material: "oak",
     })),
     ...[0.08, 0.34, 0.62].map((y, index) => ({
@@ -121,6 +128,18 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       y: 0.915,
       h: 0.035,
       material: "barStone",
+    },
+    // Conceal the mechanism from the entrance-facing long side too. Only
+    // the two lower bays remain open storage; the upper bay is reserved.
+    {
+      x: entryIslandXMax - panel / 2,
+      z: entryReturn.z,
+      w: panel,
+      d: entryReturn.d,
+      y: 0.638,
+      h: 0.277,
+      material: "oak",
+      role: "pullout_pocket_side_fascia",
     },
     ...[-1, 1].map((sign) => ({
       x: entryIslandXMax - panel / 2,
@@ -359,32 +378,20 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     livingTask.anchor = "upper-living-media";
   }
 
-  // Keep the complete 1800 x 2000 mm bed, rotate it 90 degrees, and split the
-  // workstations on the wall opposite the bed. This is a static candidate: it opens more
-  // north-south clearance at the bed foot without changing either desk size.
-  const oldBedCenter = { x: 9.5, z: 1.145 },
-    newBedCenter = { x: 9.4, z: 1.15 };
+  // Restore the original V8 bed orientation and position. The V9 rotation also
+  // rotated its anchored headboard lights into the mattress footprint. Keep the
+  // 1800 x 2000 mm mattress and the opposite, inline workstation unchanged.
+  const newBedCenter = { x: 9.5, z: 1.145 };
   patchPose(objectById(objects, "master-bed"), {
     x: newBedCenter.x,
     z: newBedCenter.z,
-    rotation: 90,
+    rotation: 0,
   });
   patchPose(objectById(objects, "master-mattress"), {
     x: newBedCenter.x,
     z: newBedCenter.z,
-    rotation: 90,
+    rotation: 0,
   });
-  for (const fixture of model.lighting.fixtures.filter(
-    (candidate: any) => candidate.anchor === "master-bed",
-  )) {
-    for (const key of ["position", "target"] as const) {
-      const point = fixture[key];
-      if (!point) continue;
-      const dx = point[0] - oldBedCenter.x,
-        dz = point[2] - oldBedCenter.z;
-      fixture[key] = [newBedCenter.x + dz, point[1], newBedCenter.z - dx];
-    }
-  }
   const pcDesk = objectById(objects, "pc-desk"),
     pcChair = objectById(objects, "pc-chair"),
     pcMonitor = objectById(objects, "pc-monitor"),
@@ -444,29 +451,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       fixture.position = [fixture.position[0], level, fixture.position[2]];
     }
   }
-  // The rotated bed moves its bedside surface to the window-side edge. This
-  // remains below the sill and is not counted as a circulation surface.
-  if (
-    !model.objects.some((object: ObjectLike) => object.id === "nightstand-left")
-  )
-    model.objects.push({
-      id: "nightstand-left",
-      type: "cabinet_frame",
-      room: "master",
-      x: 10.7,
-      z: 1.15,
-      w: 0.42,
-      d: 0.42,
-      h: 0.5,
-      y: 0,
-      rotation: 0,
-      material: "oak",
-      collisionParts: [
-        { x: 10.7, z: 0.949, w: 0.42, d: 0.018, y: 0.08, h: 0.42 },
-        { x: 10.7, z: 1.351, w: 0.42, d: 0.018, y: 0.08, h: 0.42 },
-        { x: 10.7, z: 1.15, w: 0.399, d: 0.384, y: 0.465, h: 0.035 },
-      ],
-    });
+  // Keep the original V8 bedside cabinet; the rotation-specific extra cabinet
+  // is unnecessary with the bed restored to its original orientation.
 
   // One low sorting/folding surface replaces the high laundry cabinet use;
   // the basket ID is removed because its position becomes a fixed worktop.
@@ -708,21 +694,38 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     ],
     hatch: {
       id: "hall-gate",
-      spanM: 0.9,
-      depthM: sharedColumnFinishedWidthM,
-      thicknessM: 0.03,
-      heightM: 0.95,
-      hinge: {
-        x: Number(column.x),
-        y: 0.95,
-        z: Number(entryReturn.z) - Number(entryReturn.d) / 2 - 0.035,
-      },
-      hingeRevealM: 0.035,
-      hardware: "concept_recessed_bronze_hinge",
-      xBounds: [entryIslandXMin, entryIslandXMax],
-      openAngleDeg: 95,
-      operation: "flip_up",
-      status: "concept",
+      kind: "two_leaf_drawer_pullout",
+      // Reference dimensions match the published Salice/ATIM Lunch 450
+      // envelope; the animated parts are a concept, not manufacturer CAD.
+      spanM: 0.895,
+      depthM: 0.405,
+      thicknessM: 0.018,
+      leafCount: 2,
+      leafLengthM: 0.4475,
+      railDepthMinM: 0.54,
+      railStageCount: 3,
+      railStageStrokeM: 0.4475,
+      perStageTravelM: 0.4475,
+      slideStrokeM: 0.895,
+      entryEnd: "-z",
+      drawerFrontZ: entryIslandZMin,
+      worktopTopM: 0.875,
+      worktopThicknessM: 0.018,
+      cabinetClearWidthM: innerW,
+      cabinetClearDepthM: entryIslandClearLengthM,
+      cabinetClearHeightM: 0.277,
+      requiredClearHeightM: 0.12,
+      storedLeafStackDepthM: 0.4475,
+      storagePocketMinDepthM: 0.54,
+      upperBayUse: "enclosed_mechanism_only",
+      lowerOpenStorageBays: 2,
+      referenceUrl: "https://www.salice.com/ww/en/products/trasformabili/zero/lunch",
+      storagePocketYBoundsM: [0.638, 0.915],
+      hardware:
+        "concept_two_leaf_foldout_slide_reference_salice_atim_lunch_450",
+      foldSequence:
+        "pull_stacked_pair_to_far_end_then_unfold_inboard_leaf_toward_cabinet",
+      status: "concept_not_factory_cad",
       rendererOwner: "main-agent",
     },
     dining: {
@@ -825,8 +828,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
         w: 1.8,
         d: 2.0,
         retained: true,
-        rotationDeg: 90,
-        center: [9.4, 1.15],
+        rotationDeg: 0,
+        center: [9.5, 1.145],
       },
       selectedLayout: "inline-opposite-bed",
       retainedDeskSizes: { pc: [1.4, 0.75], mac: [1.2, 0.75] },
@@ -855,7 +858,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
         },
         {
           id: "rotated-bed-plus-east-side-mac-desk",
-          status: "selected_static_candidate",
+          status: "historical_comparison_not_selected",
           geometry: {
             bedBounds: { minX: 8.36, maxX: 10.44, minZ: 0.2, maxZ: 2.1 },
             wardrobeToBedGapM: 0.76,
@@ -865,17 +868,17 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
             deskFootprintsSeparated: true,
           },
           reason:
-            "床转90度，PC保留北墙，Mac桌转至东侧；减少椅子与桌面包络冲突，但无人体/门扇/床品同步验收",
+            "曾作为V9候选；用户不喜欢床转90度，现恢复原朝向并保留床对面一字双工位",
           evidenceLevel: "static_candidate",
         },
       ],
       geometry: {
-        bedNorthEdgeZ: 2.1,
+        bedNorthEdgeZ: 2.185,
         pcChairSouthEdgeZAtPullback: 2.665,
-        pcChairToBedFrameGapM: 0.565,
+        pcChairToBedFrameGapM: 0.48,
         macChairToPCChairGapM: 0.63,
-        wardrobeToBedGapM: 0.76,
-        eastWallToBedGapM: 1.21,
+        wardrobeToBedGapM: 0.95,
+        eastWallToBedGapM: 1.55,
         evidenceLevel: "static_candidate",
       },
       qualification:
@@ -884,7 +887,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     storage: {
       removedWallStorageIds: [...removedStorage],
       removedTvWallStorageIds: ["upper-living-rear"],
-      addedObjects: ["nightstand-left", "laundry-sort-fold"],
+      addedObjects: ["laundry-sort-fold"],
       loweredBarStorageIds: [
         "upper-bar-coffee",
         "upper-bar-display",
@@ -968,6 +971,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       view.horizontalFov = 82;
     }
     if (view.id === "living-media") {
+      view.label = "移动电视与游戏托座";
       view.position = [7.6, 1.45, 7.4];
       view.target = [9.4, 0.95, 8.9];
       view.horizontalFov = 85;
@@ -1071,6 +1075,20 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     z: 8.99,
     y: 0.53,
     rotation: 180,
+    accessoryRole: "mobile_console_only",
+  });
+  Object.assign(objectById(model.objects, "living-tv-console"), {
+    label: "客厅日用低柜",
+    purpose: "书、桌游、游戏盒、备用线材与便携充电用品；不承放电视和PS5",
+    equipmentRole: "peripheral_daily_storage",
+  });
+  Object.assign(objectById(model.objects, "upper-living-media"), {
+    label: "客厅轻物收纳",
+    purpose: "轻型桌游、整理盒及书，不承担电视设备的接线与散热",
+  });
+  Object.assign(objectById(model.objects, "upper-living-side"), {
+    label: "客厅收藏展示柜",
+    purpose: "书、收藏及生活小物，与移动电视方向独立",
   });
   patchPose(objectById(model.objects, "living-lamp"), { x: 7.4, z: 6.9 });
   patchPose(objectById(model.objects, "side-table"), { x: 7.55, z: 7.6 });
@@ -1093,6 +1111,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       { x: 9.65, z: 8.65, rotation: 165, label: "斜向共享" },
     ],
     ps5TravelsOnShelf: true,
+    shelf: { w: 0.78, d: 0.44, topM: 0.527, centerZ: -0.04 },
+    controllerDock: { count: 2, parent: "living-tv", support: "trolley_shelf", travelsWithTV: true },
     cableManagement:
       "PS5与屏内短线随架；迁移前拔掉墙侧供电，停车后接电、锁轮；不画跨通道拖线",
     loading:
@@ -1103,6 +1123,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     (object: any) => object.id !== "living-rear-storage",
   );
   model.homeDesign.storage.removedForMobility = ["living-rear-storage"];
+  model.homeDesign.storage.removedTvWallStorageIds = ["living-rear-storage"];
+  model.homeDesign.storage.addedObjects = ["laundry-basket"];
   model.homeDesign.dining.temporarySeatAvailable = false;
   model.objects = model.objects.filter(
     (object: any) =>
@@ -1122,7 +1144,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     material: "linen",
     accessFrom: "housekeeping_cabinet_left_bay",
   });
-  model.homeDesign.storage.addedObjects = ["nightstand-left", "laundry-basket"];
+  model.homeDesign.storage.addedObjects = ["laundry-basket"];
   model.homeDesign.laundryWorkflow = {
     foldingSurface: "dining-table",
     fixedSortingTableRemoved: true,
@@ -1178,7 +1200,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       deskDepthM: 0.75,
       chairCentersSpacingM: 1.3,
       chairPairClearWidthM: 0.63,
-      pulledChairToBedFrameGapM: 0.565,
+      pulledChairToBedFrameGapM: 0.48,
     },
     reason:
       "按最新偏好恢复床对面的一字工作台，保留完整床与两把正常电脑椅，不作转角延伸",
@@ -1249,13 +1271,37 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     [10.95, 1.265, 8.85],
     [10.1, 0.7, 7.0],
   );
-  moveFixture(model, "living-screen-bias", [9.4, 1.265, 8.99], [9.4, 1.1, 9.2]);
-  for (const f of model.lighting.fixtures.filter(
-    (f: any) => f.id === "living-screen-bias",
-  ))
-    f.intensity = 0;
-  for (const scene of model.lighting.scenes)
-    scene.fixtureLevels = { ...scene.fixtureLevels, "living-screen-bias": 0 };
+  // The old wall-mounted screen wash has no physical anchor in this layout.
+  model.lighting.fixtures = model.lighting.fixtures.filter(
+    (f: any) => f.id !== "living-screen-bias",
+  );
+  for (const scene of model.lighting.scenes) {
+    scene.fixtureLevels = { ...scene.fixtureLevels };
+    delete scene.fixtureLevels["living-screen-bias"];
+    if (scene.fixtureKelvin) {
+      scene.fixtureKelvin = { ...scene.fixtureKelvin };
+      delete scene.fixtureKelvin["living-screen-bias"];
+    }
+  }
+  model.homeDesign.assumptions = model.homeDesign.assumptions.filter(
+    (item: any) => item.id !== "living-east-wall",
+  );
+  model.homeDesign.assumptions.push({
+    id: "mobile-tv-support-and-power",
+    statement: "移动架VESA、载荷、重心、锁轮和停靠插座待选型；屏幕与PS5迁移时不拖带墙侧电源线",
+    status: "unverified",
+  });
+  model.homeDesign.accessoryReconciliation = {
+    tv: {
+      mobileChildren: ["ps5", "home:mobile-game-dock", "home:mobile-power-pack"],
+      removed: ["legacy_ps5_floating_controllers", "living-screen-bias"],
+      repurposed: ["living-tv-console", "upper-living-media", "upper-living-side"],
+      fixedWallFrameActive: false,
+    },
+    retiredObjects: ["living-rear-storage", "laundry-sort-fold", "hall-gate-panel", "upper-entry-display", "bag-hooks", "salon-coffee-table"],
+    retainedCompatibilityPlaceholders: ["home:hatch-legacy-tray-empty", "home:hatch-stool", "home:hatch-legacy-stop-empty"],
+    status: "concept_model_reconciled",
+  };
   // Cinema lighting excludes task/cove sources rather than reusing the bright guest scene.
   const cinema = model.lighting.scenes.find(
     (scene: any) => scene.id === "cinema",
@@ -1299,5 +1345,6 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       foldedDepthM: 0.43,
     };
   }
+  reviseHomeLighting(model);
   return model as T;
 }

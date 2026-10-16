@@ -3,7 +3,7 @@ import type { WebGPURenderer } from "three/webgpu";
 
 export type Renderer = WebGLRenderer | WebGPURenderer;
 export const rendering = {
-  requested: new URLSearchParams(location.search).get("renderer") ?? "webgl",
+  requested: new URLSearchParams(location.search).get("renderer") ?? "webgpu",
   backend: "unavailable",
   fallbackReason: new URLSearchParams(location.search).has("gpuFallback")
     ? "WebGPU runtime lost; recovered with WebGL"

@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { quality } from "./quality";
 interface Furniture {
   id: string;
@@ -39,86 +38,17 @@ export function enhanceSurfaces(
         material.sheenRoughness = 0.9;
         material.sheenColor.set("#d8cbb5");
       }
-      if (["oak", "darkoak", "cabinetPaint"].includes(name)) {
+      if (["cabinetPaint"].includes(name)) {
         material.clearcoat = 0.16;
         material.clearcoatRoughness = 0.5;
+      }
+      if (["steel", "bronze"].includes(name)) {
+        material.anisotropy = 0.25;
+        material.anisotropyRotation = Math.PI / 2;
       }
       materials[name] = material;
     }
   }
-  // Shared soft contact-occlusion atlas. Room batches cost one draw call per room.
-  const canvas = document.createElement("canvas");
-  canvas.width = canvas.height = 64;
-  const context = canvas.getContext("2d")!;
-  const gradient = context.createRadialGradient(32, 32, 3, 32, 32, 32);
-  gradient.addColorStop(0, "rgba(34,33,30,.24)");
-  gradient.addColorStop(0.55, "rgba(34,33,30,.13)");
-  gradient.addColorStop(1, "rgba(35,29,22,0)");
-  context.fillStyle = gradient;
-  context.fillRect(0, 0, 64, 64);
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.MeshBasicMaterial({
-    map: texture,
-    transparent: true,
-    depthWrite: false,
-    polygonOffset: true,
-    polygonOffsetFactor: -1,
-    toneMapped: false,
-  });
-  const rooms = new Map<string, THREE.BufferGeometry[]>();
-  const grounded = new Set([
-    "wardrobe",
-    "waterbar_cabinet",
-    "sofa",
-    "sofa_bed",
-    "bed",
-    "cabinet_frame",
-    "fridge",
-    "kegerator",
-    "washing_machine",
-    "dryer",
-    "round_table",
-    "salon_banquette",
-    "coffee_table",
-    "desk",
-    "bench",
-  ]);
-  const dynamicFurniture = new Set([
-    "fridge",
-    "sofa_bed",
-    "mobile_tv",
-    "modular_sofa",
-    "ps5",
-    "folding_table",
-    "folding_chair",
-    "office_chair",
-    "dining_chair",
-    "round_table",
-  ]);
-  for (const object of objects) {
-    if (
-      !grounded.has(object.type) ||
-      dynamicFurniture.has(object.type) ||
-      (object.y ?? 0) > 0.12
-    )
-      continue;
-    const plane = new THREE.PlaneGeometry(object.w + 0.32, object.d + 0.32);
-    plane.rotateX(-Math.PI / 2);
-    plane.rotateY(-THREE.MathUtils.degToRad(object.rotation ?? 0));
-    plane.translate(object.x, 0.013, object.z);
-    if (!rooms.has(object.room)) rooms.set(object.room, []);
-    rooms.get(object.room)!.push(plane);
-  }
-  for (const [room, planes] of rooms) {
-    const merged = mergeGeometries(planes);
-    if (merged) {
-      const mesh = new THREE.Mesh(merged, material);
-      mesh.name = "contact-occlusion:" + room;
-      mesh.renderOrder = 1;
-      scene.add(mesh);
-      tag(mesh, [room], "detail");
-    }
-    planes.forEach((p) => p.dispose());
-  }
+  // Static floor grounding is now baked once by baked-occlusion.ts.
+  // Do not leave separate shadow decals at retired furniture positions.
 }

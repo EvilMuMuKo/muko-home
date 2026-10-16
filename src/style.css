@@ -255,11 +255,27 @@ button.active {
   font-size: 12px;
   letter-spacing: 2px;
   transition: opacity 0.3s;
-  z-index: 3;
+  z-index: 30;
 }
 .loading.done {
   opacity: 0;
   pointer-events: none;
+}
+.loading > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.58);
+}
+.loading > span {
+  position: relative;
+  padding: 12px 18px;
+  border: 1px solid #ffffff38;
+  border-radius: 24px;
+  background: #28352ce0;
+  color: #f6f1e6;
 }
 #notice {
   position: absolute;
@@ -283,7 +299,7 @@ button.active {
   display: none;
   position: absolute;
   inset: 0;
-  z-index: 20;
+  z-index: 40;
   background: #e8e3da;
   color: #5d6959;
   flex-direction: column;
@@ -442,6 +458,9 @@ button.active {
 }
 .ghost-mode .space-caption {
   display: none;
+}
+#scene:focus-visible {
+  outline: none;
 }
 @media (max-width: 1024px) and (orientation: portrait) {
   .ghost-walk-controls {

@@ -76,7 +76,7 @@ test("cinema and guest-stay state APIs coordinate room lighting, doors and the c
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   expect(
     await page.evaluate(() => window.homePresentation.getState().version),
@@ -127,6 +127,23 @@ test("cinema and guest-stay state APIs coordinate room lighting, doors and the c
     await page.evaluate(
       () => window.homePresentation.getPerformance().materialDetail.loaded,
     ),
-  ).toBe(9);
+  ).toBe(12);
   expect(errors).toEqual([]);
+});
+
+test("master wallcover stays on its own physical wall face", () => {
+  const plaster = new THREE.MeshStandardMaterial({vertexColors:true});
+  const wallpaper = plaster.clone();
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(2,2.7,.18),plaster);
+  finishWall(mesh,"master-bearing",[{sign:-1,ids:["living"]},{sign:1,ids:["master"]}],{roomPlaster:plaster,masterWallcover:wallpaper});
+  expect(mesh.material).toEqual([plaster,wallpaper]);
+  const normal=mesh.geometry.getAttribute("normal");
+  for (const group of mesh.geometry.groups) {
+    for (let i=group.start;i<group.start+group.count;i++) {
+      const vertex=mesh.geometry.index!.getX(i);
+      expect(group.materialIndex === 1).toBe(normal.getZ(vertex) > .5);
+    }
+  }
+  expect(mesh.geometry.groups.length).toBeLessThanOrEqual(3);
+  mesh.geometry.dispose();plaster.dispose();wallpaper.dispose();
 });

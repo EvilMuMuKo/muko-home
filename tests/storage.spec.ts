@@ -88,13 +88,13 @@ test("new storage controls expose contents, textures load and desktop work area 
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   expect(
     await page.evaluate(
       () => window.homePresentation.getPerformance().materialDetail.loaded,
     ),
-  ).toBe(9);
+  ).toBe(12);
   const conflicts = await page.evaluate(() => {
     const bounds = window.homePresentation
       .getObjectBounds()

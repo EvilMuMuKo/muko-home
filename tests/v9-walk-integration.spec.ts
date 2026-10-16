@@ -5,7 +5,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() =>
     window.homePresentation.startGhostWalk({
@@ -13,7 +13,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
       target: [4.25, 1.15, 4.05],
     }),
   );
-  await expect(page.locator(".ghost-joystick")).toBeVisible();
+  await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
   await expect(page.locator(".ghost-interact")).toHaveAttribute(
     "data-target-id",
     "walk-fridge",
@@ -71,7 +71,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
     await page.evaluate(() => window.homePresentation.getPerformance().renders),
   ).toBe(renders);
   await page.locator(".ghost-exit").click();
-  await expect(page.locator(".ghost-joystick")).toHaveCount(0);
+  await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toHaveCount(0);
   expect(
     await page.evaluate(
       () => window.homePresentation.getGhostWalkState().active,
@@ -82,7 +82,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
 test("whole-model geometry inventory has no missing object or nonfinite data", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   const report = await page.evaluate(() =>
     window.homePresentation.getModelAudit(),
@@ -101,7 +101,7 @@ test("whole-model geometry inventory has no missing object or nonfinite data", a
 test("visible lighting choices preserve the current hatch and dining furniture state", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() => {
     const a = window.homePresentation;
@@ -121,4 +121,69 @@ test("visible lighting choices preserve the current hatch and dining furniture s
     expect(state.diningProgress).toBeCloseTo(1);
     expect(state.hatchProgress).toBeCloseTo(0);
   }
+});
+
+test("arrival is directly walkable and real wall/closed door block while an opened door permits passage", async ({page}) => {
+  // Software-rendered CI can take seconds per frame. Keep an actual renderer,
+  // but use a small landscape viewport and allow the required simulation steps.
+  await page.setViewportSize({width:640,height:360});
+  const errors: string[]=[];
+  page.on("pageerror",e=>errors.push(e.message));
+  await page.goto("/?renderer=webgl");
+  await page.waitForFunction(()=>window.homePresentation?.getState().ready);
+  expect(await page.evaluate(()=>window.homePresentation.getGhostWalkState().active)).toBe(true);
+  await expect(page.locator(".ghost-look-joystick")).toBeVisible();
+  const audit=await page.evaluate(()=>window.homePresentation.getWalkCollisionAudit());
+  expect(audit.missingGroups).toEqual([]);
+  expect(audit.staticGroups).toEqual(expect.arrayContaining(["column-handdrawn","living-sofa","living-tv","dining-table"]));
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,3.2],target:[8,1.74,3.2]}));
+  await page.keyboard.down("w");
+  await page.waitForTimeout(1600);
+  await page.keyboard.up("w");
+  const wall=await page.evaluate(()=>window.homePresentation.getCamera().position);
+  expect(wall[0]).toBeLessThanOrEqual(6.591);
+  expect(wall[0]).toBeGreaterThan(6.4);
+  await page.evaluate(()=>window.homePresentation.setWalkDoorOpen("master-door",false));
+  await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()["master-door"]+Math.PI/2)<.001);
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
+  await page.keyboard.down("w");await page.waitForTimeout(1600);await page.keyboard.up("w");
+  expect((await page.evaluate(()=>window.homePresentation.getCamera().position))[0]).toBeLessThan(6.75);
+  await page.evaluate(()=>window.homePresentation.setWalkDoorOpen("master-door",true));
+  await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()["master-door"])<.001);
+  // Opening a leaf while pressed against it can legitimately push the body
+  // sideways out of the doorway. Compare open/closed travel from the same
+  // centered approach, independently of that frame-dependent push direction.
+  const afterDoorSwing = await page.evaluate(()=>({
+    position: window.homePresentation.getCamera().position,
+    frames: window.homePresentation.getPerformance().frames,
+    door: window.homePresentation.getWalkDoorStates()["master-door"],
+  }));
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
+  await page.keyboard.down("w");
+  try {
+    await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:60000}).toBeGreaterThan(7.05);
+  } finally {
+    await page.keyboard.up("w");
+    const afterPassage = await page.evaluate(()=>({
+      position: window.homePresentation.getCamera().position,
+      frames: window.homePresentation.getPerformance().frames,
+      door: window.homePresentation.getWalkDoorStates()["master-door"],
+    }));
+    await writeFile(test.info().outputPath("door-swing-position.json"), JSON.stringify({afterDoorSwing,afterPassage}));
+    console.info("REAL_DOOR_PASSAGE", JSON.stringify({afterDoorSwing,afterPassage}));
+  }
+  expect(errors).toEqual([]);
+});
+
+test("portrait keeps the landscape gate and rotating restores both walk sticks", async ({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto("/?renderer=webgl");
+  await page.waitForFunction(()=>window.homePresentation?.getState().ready);
+  await expect(page.locator("#orientation-gate")).toBeVisible();
+  await expect(page.locator(".ghost-walk-controls")).toBeHidden();
+  await page.setViewportSize({width:844,height:390});
+  await expect(page.locator("#orientation-gate")).toBeHidden();
+  await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
+  await expect(page.locator(".ghost-look-joystick")).toBeVisible();
+  expect(await page.evaluate(()=>window.homePresentation.getGhostWalkState().active)).toBe(true);
 });
