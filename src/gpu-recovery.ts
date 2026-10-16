@@ -59,3 +59,24 @@ export function gpuStartupDeadline<T>(work: Promise<T>, timeoutMs: number): Prom
     );
   });
 }
+
+// A deadline does not cancel Three's initialization. Dispose again if an abandoned
+// renderer finishes later; dispose() can be a no-op before initialization completes.
+export async function initializeGPUResource(
+  resource: { init(): Promise<unknown>; dispose(): void },
+  timeoutMs: number,
+): Promise<void> {
+  let abandoned = false;
+  const cleanup = () => {
+    try { resource.dispose(); } catch { /* Preserve the original startup failure. */ }
+  };
+  const initialization = resource.init();
+  void initialization.then(() => { if (abandoned) cleanup(); }, () => {});
+  try {
+    await gpuStartupDeadline(initialization, timeoutMs);
+  } catch (error) {
+    abandoned = true;
+    cleanup();
+    throw error;
+  }
+}

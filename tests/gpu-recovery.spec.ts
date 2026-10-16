@@ -1,5 +1,26 @@
 import { expect, test } from "@playwright/test";
-import { gpuStartupDeadline, isGPUDeviceLoss, isSoftwareAdapter } from "../src/gpu-recovery";
+import { gpuStartupDeadline, initializeGPUResource, isGPUDeviceLoss, isSoftwareAdapter } from "../src/gpu-recovery";
+
+test("late initialization releases the abandoned GPU resource", async () => {
+  let finish!: () => void;
+  let initialized = false;
+  let released = false;
+  const resource = {
+    init: () => new Promise<void>(resolve => { finish = () => { initialized = true; resolve(); }; }),
+    dispose: () => { if (initialized) released = true; },
+  };
+  await expect(initializeGPUResource(resource, 10)).rejects.toThrow(/timed out/);
+  expect(released).toBe(false);
+  finish();
+  await Promise.resolve();
+  expect(released).toBe(true);
+});
+
+test("successful GPU initialization retains the live resource", async () => {
+  let disposed = false;
+  await initializeGPUResource({init: () => Promise.resolve(), dispose: () => { disposed = true; }}, 1000);
+  expect(disposed).toBe(false);
+});
 
 test.describe("isGPUDeviceLoss", () => {
   test("recognizes Dawn popErrorScope and explicit GPU device loss", () => {

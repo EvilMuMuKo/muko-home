@@ -1,6 +1,6 @@
 import { WebGLRenderer, PMREMGenerator } from "three";
 import type { WebGPURenderer } from "three/webgpu";
-import { gpuStartupDeadline, isSoftwareAdapter } from "./gpu-recovery";
+import { gpuStartupDeadline, initializeGPUResource, isSoftwareAdapter } from "./gpu-recovery";
 
 export type Renderer = WebGLRenderer | WebGPURenderer;
 export const rendering = {
@@ -36,7 +36,7 @@ export async function createRenderer(
         antialias: true,
       });
       try {
-        await gpuStartupDeadline(renderer.init(), 20000);
+        await initializeGPUResource(renderer, 20000);
         if (!("isWebGPUBackend" in renderer.backend))
           throw new Error("WebGPU backend unavailable");
       } catch (error) {
