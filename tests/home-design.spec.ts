@@ -320,7 +320,7 @@ test("daily dining is parked by default and stores a physical envelope, while us
   ).toMatchObject({ sill: 0.9 });
 });
 
-test("master bedroom compares three full-size layouts and selects only a static candidate", () => {
+test("master bedroom selects an inline full-size workstation candidate and records prior comparisons", () => {
   const base = v8Model(),
     next = createHomeDesign(base),
     oldPc = base.objects.find((object) => object.id === "pc-desk")!,
@@ -343,10 +343,11 @@ test("master bedroom compares three full-size layouts and selects only a static 
   expect(mac).toMatchObject({
     w: oldMac.w,
     d: oldMac.d,
-    x: 10.9,
-    z: 3.45,
-    rotation: 90,
+    x: 9.9,
+    z: 3.98,
+    rotation: 0,
   });
+  expect(pc.x + pc.w / 2).toBeCloseTo(mac.x - mac.w / 2);
   expect(mattress).toMatchObject({
     w: 1.8,
     d: 2.0,
@@ -364,8 +365,10 @@ test("master bedroom compares three full-size layouts and selects only a static 
   expect(headboardLight.position[0]).toBeCloseTo(9.4 + (0.185 - 1.145));
   expect(headboardLight.position[2]).toBeCloseTo(1.15);
   expect(pcChair.retreat.z).toBeCloseTo(2.99);
-  expect(macChair).toMatchObject({ x: 10.12, z: 3.45, rotation: 90 });
-  expect(macChair.retreat).toMatchObject({ x: 9.77, z: 3.45, distanceM: 0.35 });
+  expect(pcChair).toMatchObject({ x: 8.6, z: 3.34, w: 0.67, d: 0.65 });
+  expect(pcChair.retreat).toMatchObject({ x: 8.6, z: 2.99, distanceM: 0.35 });
+  expect(macChair).toMatchObject({ x: 9.9, z: 3.34, rotation: 180, w: 0.67, d: 0.65 });
+  expect(macChair.retreat).toMatchObject({ x: 9.9, z: 2.99, distanceM: 0.35 });
   const bedNorthEdge = 1.15 + 1.9 / 2,
     pulledPcChairSouthEdge = pcChair.retreat.z - pcChair.d / 2,
     pcGap = pulledPcChairSouthEdge - bedNorthEdge;
@@ -373,12 +376,32 @@ test("master bedroom compares three full-size layouts and selects only a static 
   expect(
     next.homeDesign.masterBedroom.geometry.pcChairToBedFrameGapM,
   ).toBeCloseTo(pcGap);
-  expect(next.homeDesign.masterBedroom.alternatives).toHaveLength(3);
+  expect(macChair.retreat.z - macChair.d / 2 - bedNorthEdge).toBeCloseTo(pcGap);
+  expect(Math.abs(macChair.retreat.x - pcChair.retreat.x)).toBeCloseTo(1.3);
+  expect(next.homeDesign.masterBedroom.workbench).toMatchObject({
+    continuousInline: true,
+    cornerReturn: false,
+    windowExtension: false,
+    xBounds: [7.9, 10.5],
+  });
+  expect(next.homeDesign.masterBedroom.selectedLayout).toBe("inline-opposite-bed");
+  expect(next.homeDesign.masterBedroom.alternatives).toHaveLength(4);
+  const alternatives = next.homeDesign.masterBedroom.alternatives;
+  expect(alternatives[alternatives.length - 1]).toMatchObject({
+    id: "inline-opposite-bed",
+    status: "selected_static_candidate",
+    geometry: {
+      deskRunWidthM: 2.6,
+      deskDepthM: 0.75,
+      chairCentersSpacingM: 1.3,
+      chairPairClearWidthM: 0.63,
+      pulledChairToBedFrameGapM: 0.565,
+    },
+  });
   expect(
-    next.homeDesign.masterBedroom.alternatives.map(
-      (candidate) => candidate.status,
-    ),
-  ).toEqual(["not_selected", "not_selected", "selected_static_candidate"]);
+    alternatives.slice(0, -1)
+      .every((candidate) => candidate.status === "historical_comparison_not_selected"),
+  ).toBe(true);
   expect(next.homeDesign.masterBedroom.geometry.evidenceLevel).toBe(
     "static_candidate",
   );
@@ -415,6 +438,24 @@ test("replaces selected high storage with low bedside/laundry surfaces and prese
   });
   expect(object("kitchen-sink", base.objects)).toEqual(object("kitchen-sink"));
   expect(object("kitchen-hob", base.objects)).toEqual(object("kitchen-hob"));
+  expect(object("upper-entry-display")).toBeUndefined();
+  expect(object("bag-hooks")).toBeUndefined();
+  expect(object("entry-pegboard")).toMatchObject({
+    x: 7.3,
+    z: 8.29,
+    y: 1.24,
+    w: 0.82,
+    h: 0.64,
+    accessFace: "-z",
+  });
+  expect(object("master-work-pegboard")).toMatchObject({
+    x: 9.2,
+    z: 4.24,
+    y: 0.97,
+    w: 2.2,
+    h: 0.56,
+    accessFace: "-z",
+  });
   expect(next.homeDesign.storage.accessStatus).toBe(
     "reach_envelope_requires_user_validation",
   );

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { buildPegboard } from "./pegboard-mesh";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { metricUV } from "./texture-mapping";
 
@@ -144,6 +145,7 @@ export function buildHomeFurniture(
   m: Materials,
   motion: HomeMotion,
 ) {
+  if (o.type === "pegboard") return buildPegboard(group, o, m);
   if (o.type === "basket") {
     box(group, m, o.w, 0.018, o.d, 0, 0.009, 0, "linen");
     for (const x of [-o.w / 2 + 0.009, o.w / 2 - 0.009])

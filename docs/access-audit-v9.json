@@ -91,9 +91,9 @@
     },
     {
       "id": "master-wardrobe-front-and-bed-gap",
-      "area": "主卧衣柜",
+      "area": "主卧衣柜、床对面一字工作台与两把办公椅",
       "priority": "P1",
-      "status": "front faces the room; the selected conservative 0.45 m-radius circle does not fit in the narrowest bed-side gap",
+      "status": "source geometry and 101-step chair-retreat AABB checks support a static inline candidate; actual person/door/wardrobe use remains unverified",
       "selectedAccessFace": "+x, inferred from front panel at x≈7.591 and wardrobe placement against the west room edge",
       "nominalStandingPosition": { "x": 8.05, "z": 1.0, "offsetFromFaceM": 0.45 },
       "calculatedConflict": {
@@ -103,13 +103,18 @@
         "requiredCircleDiameterM": 0.9,
         "shortfallM": 0.14,
         "zOverlapM": 1.64,
-        "interpretation": "the 0.45 m-radius circle is 0.14 m wider than this static gap. This is a failed conservative circle-envelope check only; it does not establish that ordinary standing or wardrobe use is physically impossible. End-on access, body orientation, and actual posture are not modeled"
+        "inlineDeskRun": { "xBounds": [7.9, 10.5], "zBounds": [3.605, 4.355], "widthM": 2.6, "depthM": 0.75, "continuous": true, "cornerReturn": false },
+        "retreatedChairs": { "centers": [[8.6, 2.99], [9.9, 2.99]], "retreatM": 0.35, "chairFootprintM": [0.67, 0.65], "centerSpacingM": 1.3, "staticPairClearWidthM": 0.63, "bedFrameNorthEdgeZ": 2.1, "chairSouthEdgeZ": 2.665, "chairToBedFrameGapM": 0.565 },
+        "doorLeafConservativeEnvelope": { "method": "AABB covering either side of the 0.88 m leaf quarter-turn around hinge [6.9,1.885]", "chairPathMinimumPlanGapM": 0.485 },
+        "sampledStaticEvidence": "tests/v9-space.spec.ts samples both chairs through 101 poses from tucked to 350 mm retreated against the bed frame, wardrobe, the conservative door-edge envelope, and each other; zero plan AABB overlap is asserted",
+        "interpretation": "the 0.45 m-radius circle is 0.14 m wider than the 0.76 m wardrobe-side gap; this is only a failed conservative circle-envelope check and does not establish ordinary standing or wardrobe use as impossible. The chair-path sample is static furniture geometry, not a person, open-wardrobe, or actual door-motion test"
       },
-      "noChangeBasis": "The 1800×2000 mm mattress is a hard constraint and remains intact. Keep the result bounded to the conservative circular-envelope metric; wardrobe door access and simultaneous use remain untested, without inferring general standing usability from circle failure.",
-      "nextAcceptance": "Test actual door type/swing plus a standing body at the center and both ends of the face, then test simultaneous access to the two desks. Preserve the bed and user scale; consider a reduced-depth door/front or alternate wardrobe access only after measurement.",
+      "noChangeBasis": "The selected preference is one 2.6 x 0.75 m straight desk run opposite the intact 1800 x 2000 mm mattress, with PC at x=8.6 and Mac at x=9.9. Both unchanged 0.67 x 0.65 m chairs retreat 350 mm; the existing static test samples this motion against frame, wardrobe, and a conservative door-edge envelope. The 0.565 m chair-to-bed gap and 0.63 m between chair footprints do not meet a 0.90 m-radius-expanded circulation target, so two-person passage is not passed.",
+      "nextAcceptance": "Add the actual full-scale 0.45 m-radius user(s), task-posture/turning envelopes, bed linen, wardrobe door/drawer opening, and hinged master-door animation; verify simultaneous use and exit with the full-scale chairs. Keep results as static-only until that combined scenario is tested.",
       "sources": [
         { "path": "src/model.js", "lines": [878, 1010] },
-        { "path": "src/home-design.ts", "lines": [858, 865] }
+        { "path": "src/home-design.ts", "lines": [1107, 1115] },
+        { "path": "tests/v9-space.spec.ts", "lines": [412, 507] }
       ]
     },
     {
@@ -177,24 +182,24 @@
       ]
     },
     {
-      "id": "entry-upper-storage-frequency",
-      "area": "玄关高位柜与随手层",
+      "id": "entry-pegboard-and-seasonal-upper-storage",
+      "area": "玄关日常洞洞板与高位季节柜",
       "priority": "P2",
-      "status": "frequency classification is sensible; high-reach acceptance not measured",
+      "status": "daily-use open shelf and loose hooks are replaced by a lower pegboard; high cabinet remains seasonal and reach/door interaction is not measured",
       "selectedAccessFaces": {
         "seasonalUpper": "-z, facing foyer",
-        "dailyDisplay": "-z, chest-height open shelf"
+        "dailyPegboard": "-z, facing foyer; replaces upper-entry-display and bag-hooks"
       },
       "nominalStandingPositions": {
-        "dailyDisplay": { "x": 7.3, "z": 7.62, "approxFrontYRangeM": [1.35, 1.73] },
+        "dailyPegboard": { "x": 7.3, "z": 7.78, "pegboardFrontZ": 8.23, "sizeM": [0.82, 0.64], "bottomY": 1.24, "topY": 1.88 },
         "seasonalUpper": { "x": 7.1, "z": 7.57, "approxFrontYRangeM": [2.02, 2.6] }
       },
-      "calculatedConflict": "The upper cabinet starts at y=2.02 and tops at 2.60 m; these heights are above ordinary chest/shoulder access for many users. The unit is already designated seasonal, while keys are assigned to the 1.35–1.73 m open shelf.",
-      "noChangeBasis": "Daily keys/small items are stored lower and the high unit is marked seasonal; no fixed geometric obstruction was identified in this read-only check.",
-      "nextAcceptance": "Confirm cabinet face and door-open clearance from foyer, with the column/entry hatch and door route in their actual states. Keep heavy/daily items out of the high cabinet unless measured reach supports them.",
+      "calculatedConflict": "The pegboard panel is at y=1.24–1.88 m with its nominal access face toward -z. Hook projection and actual bag/key retrieval geometry are not modeled. The separate upper-entry cabinet starts at y=2.02 and ends at 2.60 m and remains classified seasonal.",
+      "noChangeBasis": "The source overlay removes upper-entry-display and bag-hooks and adds entry-pegboard at x=7.3,z=8.29,y=1.24,w=0.82,h=0.64, replacing the daily-item location; the high cabinet remains for low-frequency items. No claim is made about fixing substrate capacity or the loaded hooks' clearance.",
+      "nextAcceptance": "Check key and light-bag retrieval with the entrance door and hatch in actual states; confirm screw substrate and hook load, and test that a loaded bag does not protrude into the entry passage. Keep heavy/daily items out of the high cabinet unless measured reach supports them.",
       "sources": [
         { "path": "src/storage-design.ts", "lines": [365, 395] },
-        { "path": "src/home-design.ts", "lines": [80, 128] }
+        { "path": "src/home-design.ts", "lines": [1107, 1116] }
       ]
     },
     {
@@ -276,15 +281,16 @@
       "status": "access faces are room-facing; frequency and reach need final user validation",
       "selectedAccessFaces": {
         "kitchenRuns": "+z for rotation 180 runs; +x for rotation 90 sink run",
-        "masterWork": "-z, top-lift door mode",
+        "masterPegboard": "-z, removable hooks for headphones/cables/stationery; fixing substrate and loaded projection unverified",
+        "masterWorkUpper": "-z, top-lift door mode",
         "guestMedia": "-z",
         "wardrobeSeasonalTop": "orientation-derived front; classified seasonal",
         "balconyHousekeepingTop": "-z, seasonal"
       },
       "nominalStandingPosition": "In front of each unit's transformed local -z face; exact x/z are derived from each stored unit center/rotation in storage-design.ts.",
-      "calculatedConflict": "Cabinet tops range up to y=2.60 m (kitchen and several wall units); kitchen base cabinets begin at y=1.60 m, master-work at y=1.65 m, and V9 bar storage at y=1.52 m. The code classifies some units seasonal, but does not calculate comfortable reach, door sweep against a person, or overhead item handling. The master-work unit uses top-lift doors, reducing outward swing but not proving overhead reach or loaded-item safety.",
-      "noChangeBasis": "Frequently handled bar items are already lowered; high wardrobe/fridge/entry/housekeeping spaces are classified seasonal. Keep heavy and daily-use items in reachable lower storage until a body/reach validation says otherwise.",
-      "nextAcceptance": "Check each daily-use shelf with the actual user's reach envelope and door-opening sequence. Separate everyday light cups from heavy/seasonal stock; record shelf heights and recoverability without relying on toe-standing unless explicitly accepted.",
+      "calculatedConflict": "Cabinet tops range up to y=2.60 m (kitchen and several wall units); kitchen base cabinets begin at y=1.60 m, master-work upper storage at y=1.65 m, and V9 bar storage at y=1.52 m. The master pegboard occupies x=8.1–10.3, z=4.19–4.29, y=0.97–1.53 behind the inline desk. It is assigned for small accessories, but reachable hook spacing, wall fixing, and loaded projection are not calculated. Top-lift doors on the separate upper unit reduce outward swing but do not prove overhead reach or loaded-item safety.",
+      "noChangeBasis": "The final V9 overlay replaces the entry display shelf and loose hooks with a front-facing pegboard at x=7.3,z=8.29,y=1.24 (0.82 x 0.64 m). The main bedroom adds a 2.2 x 0.56 m pegboard at x=9.2,z=4.24,y=0.97 behind the inline desk; this supports small-item storage without a corner return. High wardrobe/fridge/entry/housekeeping storage remains seasonal.",
+      "nextAcceptance": "Check daily-item retrieval with the actual user's reach envelope and verify pegboard fixing substrate/load, removable-hook clearances, door operation, and monitor/desk interaction. Separate everyday light items from heavy/seasonal stock; record shelf heights and recoverability without relying on toe-standing unless explicitly accepted.",
       "sources": [
         { "path": "src/storage-design.ts", "lines": [89, 225] },
         { "path": "src/storage-design.ts", "lines": [256, 379] },

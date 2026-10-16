@@ -360,7 +360,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
   }
 
   // Keep the complete 1800 x 2000 mm bed, rotate it 90 degrees, and split the
-  // workstations into an L. This is a static candidate: it opens more
+  // workstations on the wall opposite the bed. This is a static candidate: it opens more
   // north-south clearance at the bed foot without changing either desk size.
   const oldBedCenter = { x: 9.5, z: 1.145 },
     newBedCenter = { x: 9.4, z: 1.15 };
@@ -392,20 +392,19 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     macDesk = objectById(objects, "mac-desk"),
     macChair = objectById(objects, "mac-chair"),
     macbook = objectById(objects, "macbook");
-  // PC remains on the north wall. Mac desk turns to the east side; its user
-  // approaches from the west and pulls the chair away from the PC station.
+  // Two full-depth desk zones align along one wall, as requested; no corner return.
   patchPose(pcDesk, { x: 8.6, z: 3.98 });
   patchPose(pcChair, { x: 8.6, z: 3.34 });
   pcChair.retreat = { x: 8.6, z: 2.99, distanceM: 0.35 };
   patchPose(pcMonitor, { z: 4.1 });
   patchPose(pcTower, { z: Number(pcTower.z) + 0.045 });
-  patchPose(macDesk, { x: 10.9, z: 3.45, rotation: 90 });
-  patchPose(macChair, { x: 10.12, z: 3.45, rotation: 90 });
-  macChair.retreat = { x: 9.77, z: 3.45, distanceM: 0.35 };
-  patchPose(macbook, { x: 10.9, z: 3.45, rotation: 90 });
+  patchPose(macDesk, { x: 9.9, z: 3.98, rotation: 0 });
+  patchPose(macChair, { x: 9.9, z: 3.34, rotation: 180 });
+  macChair.retreat = { x: 9.9, z: 2.99, distanceM: 0.35 };
+  patchPose(macbook, { x: 9.9, z: 4.1, rotation: 0 });
   for (const [id, position, target] of [
     ["pc-desk-task", [8.45, 1.635, 4.065], [8.45, 0.78, 3.985]],
-    ["mac-desk-task", [10.9, 1.635, 3.45], [10.15, 0.78, 3.45]],
+    ["mac-desk-task", [9.9, 1.635, 4.065], [9.9, 0.78, 3.985]],
   ] as [string, number[], number[]][]) {
     const fixture = model.lighting.fixtures.find(
       (candidate: any) => candidate.id === id,
@@ -829,7 +828,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
         rotationDeg: 90,
         center: [9.4, 1.15],
       },
-      selectedLayout: "rotated-bed-plus-east-side-mac-desk",
+      selectedLayout: "inline-opposite-bed",
       retainedDeskSizes: { pc: [1.4, 0.75], mac: [1.2, 0.75] },
       alternatives: [
         {
@@ -874,7 +873,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
         bedNorthEdgeZ: 2.1,
         pcChairSouthEdgeZAtPullback: 2.665,
         pcChairToBedFrameGapM: 0.565,
-        macChairToPCChairGapM: 0.51,
+        macChairToPCChairGapM: 0.63,
         wardrobeToBedGapM: 0.76,
         eastWallToBedGapM: 1.21,
         evidenceLevel: "static_candidate",
@@ -1079,7 +1078,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
   model.homeDesign.storage.removedForMobility = ["living-rear-storage"];
   model.homeDesign.dining.temporarySeatAvailable = false;
   model.objects = model.objects.filter(
-    (object: any) => !["laundry-sort-fold", "hall-gate-panel"].includes(object.id),
+    (object: any) =>
+      !["laundry-sort-fold", "hall-gate-panel"].includes(object.id),
   );
   model.objects.push({
     id: "laundry-basket",
@@ -1105,6 +1105,92 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
   };
   const modularSofa = objectById(model.objects, "living-sofa");
   modularSofa.type = "modular_sofa";
+  model.objects = model.objects.filter(
+    (o: any) => !["upper-entry-display", "bag-hooks"].includes(o.id),
+  );
+  model.objects.push(
+    {
+      id: "master-work-pegboard",
+      type: "pegboard",
+      room: "master",
+      x: 9.2,
+      z: 4.24,
+      y: 0.97,
+      w: 2.2,
+      h: 0.56,
+      d: 0.14,
+      rotation: 0,
+      material: "cream",
+      purpose: "headphones_cables_stationery",
+      accessFace: "-z",
+    },
+    {
+      id: "entry-pegboard",
+      type: "pegboard",
+      room: "hall",
+      x: 7.3,
+      z: 8.29,
+      y: 1.24,
+      w: 0.82,
+      h: 0.64,
+      d: 0.14,
+      rotation: 0,
+      material: "sage",
+      purpose: "keys_bag_daily_items",
+      accessFace: "-z",
+    },
+  );
+  model.homeDesign.masterBedroom.alternatives.forEach((candidate: any) => {
+    candidate.status = "historical_comparison_not_selected";
+  });
+  model.homeDesign.masterBedroom.alternatives.push({
+    id: "inline-opposite-bed",
+    status: "selected_static_candidate",
+    geometry: {
+      deskRunWidthM: 2.6,
+      deskDepthM: 0.75,
+      chairCentersSpacingM: 1.3,
+      chairPairClearWidthM: 0.63,
+      pulledChairToBedFrameGapM: 0.565,
+    },
+    reason:
+      "按最新偏好恢复床对面的一字工作台，保留完整床与两把正常电脑椅，不作转角延伸",
+    evidenceLevel: "static_candidate",
+  });
+  model.homeDesign.masterBedroom.workbench = {
+    xBounds: [7.9, 10.5],
+    zBounds: [3.605, 4.355],
+    heightM: 0.76,
+    zones: [
+      { id: "pc-desk", widthM: 1.4 },
+      { id: "mac-desk", widthM: 1.2 },
+    ],
+    continuousInline: true,
+    cornerReturn: false,
+    windowExtension: false,
+    reason: "窗侧保留飘窗与窗帘维护，不额外占用",
+  };
+  model.homeDesign.pegboards = {
+    ids: ["master-work-pegboard", "entry-pegboard"],
+    construction: "perforated_18mm_panel_25mm_standoff_removable_hooks",
+    masterUse: "耳机、理线和文具，显示器后留空",
+    entryUse: "钥匙、轻包及随身物件，替换原展示格和悬浮挂钩",
+    notAdded: ["灶旁油污区", "水吧湿操作面", "阳台柜内设备检修区"],
+    fixing:
+      "wall substrate, fixing capacity and door/handle clearance pending survey",
+  };
+  model.lighting.fixtures.forEach((f: any) => {
+    if (f.anchor === "upper-entry-display") f.anchor = "entry-pegboard";
+  });
+  const masterView = model.presentation.interiorViews.find(
+    (v: any) => v.id === "master-work",
+  );
+  if (masterView)
+    Object.assign(masterView, {
+      position: [10.95, 1.58, 2.8],
+      target: [9.2, 1.15, 4.05],
+      horizontalFov: 94,
+    });
   model.homeDesign.modularSofa = {
     id: "living-sofa",
     moduleDimensions: { w: 1.275, d: 1.05, h: 0.76 },

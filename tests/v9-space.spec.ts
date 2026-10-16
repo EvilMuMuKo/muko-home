@@ -409,44 +409,101 @@ test("V9 circulation: search fixed 450 mm-radius route around the column with pa
   expect(full.found, "The 450 mm-radius route must remain clear with default furniture parked").toBeGreaterThanOrEqual(0);
 });
 
-test("V9 bedroom geometry: report modeled bed/workstation overlaps with both chairs fully retreated", () => {
-  const { model } = fixture(), ids = ["master-bed", "master-mattress", "master-wardrobe", "pc-desk", "pc-chair", "mac-desk", "mac-chair"],
-    selected = ids.map((id) => model.objects.find((o: any) => o.id === id)).filter(Boolean),
-    boxes = selected.map((o: any) => {
-      const box = objectBox(o);
-      if (o.retreat) box.translate(new THREE.Vector3(o.retreat.x - o.x, 0, o.retreat.z - o.z));
-      return { id: o.id, box };
-    }),
-    pairs: { a: string; b: string; overlapX: number; overlapZ: number }[] = [];
-  for (let i = 0; i < boxes.length; i++) for (let j = i + 1; j < boxes.length; j++) {
-    const a = boxes[i].box, b = boxes[j].box,
-      ox = Math.min(a.max.x, b.max.x) - Math.max(a.min.x, b.min.x),
-      oz = Math.min(a.max.z, b.max.z) - Math.max(a.min.z, b.min.z);
-    if (ox > 0.002 && oz > 0.002) pairs.push({ a: boxes[i].id, b: boxes[j].id, overlapX: +ox.toFixed(3), overlapZ: +oz.toFixed(3) });
+test("V9 bedroom: sample both full-size 350 mm chair retreats against bed, wardrobe, and door-edge geometry", () => {
+  const { model } = fixture(),
+    byId = (id: string) => model.objects.find((o: any) => o.id === id),
+    bed = objectBox(byId("master-bed")),
+    wardrobe = objectBox(byId("master-wardrobe")),
+    opening = model.openings.find((o: any) => o.id === "master-door"),
+    [hingeX, hingeZ] = opening.hinge,
+    doorWidth = opening.width,
+    // Conservative plan envelope for either side of the modeled 90-degree leaf swing.
+    doorSweep = new THREE.Box3(
+      new THREE.Vector3(hingeX - doorWidth, 0, hingeZ),
+      new THREE.Vector3(hingeX + doorWidth, opening.height, hingeZ + doorWidth),
+    ),
+    chairs = [byId("pc-chair"), byId("mac-chair")],
+    desks = [byId("pc-desk"), byId("mac-desk")],
+    obstacles = [
+      { id: "bed-frame", box: bed },
+      { id: "master-wardrobe", box: wardrobe },
+      { id: "master-door-edge-sweep-aabb", box: doorSweep },
+    ],
+    hits: { step: number; chair: string; obstacle: string; overlapX: number; overlapZ: number }[] = [],
+    minimumClearances: Record<string, number> = {};
+  let minimumChairGap = Infinity;
+  for (const chair of chairs) {
+    expect(chair.retreat.distanceM).toBeCloseTo(0.35, 3);
+    expect(chair.w).toBe(0.67);
+    expect(chair.d).toBe(0.65);
   }
-  const pc = model.objects.find((o: any) => o.id === "pc-chair"), mac = model.objects.find((o: any) => o.id === "mac-chair"),
-    bed = boxes.find((e) => e.id === "master-bed")!.box,
-    pcRetreat = { x: pc.retreat.x, z: pc.retreat.z, w: pc.w, d: pc.d },
-    macRetreat = { x: mac.retreat.x, z: mac.retreat.z, w: mac.w, d: mac.d },
-    chairGapToBed = (pcRetreat.z - pc.d / 2) - bed.max.z,
-    centers = Math.hypot(macRetreat.x - pcRetreat.x, macRetreat.z - pcRetreat.z);
-  console.log("SPACE_AUDIT master-bedroom", JSON.stringify({
-    actualModelObjectBounds: boxes.map(({ id, box }) => ({ id, min: box.min.toArray(), max: box.max.toArray() })),
-    fixedFurnitureSizeRetained: { bed: [model.objects.find((o: any) => o.id === "master-mattress").w, model.objects.find((o: any) => o.id === "master-mattress").d], pcChair: [pc.w, pc.d], macChair: [mac.w, mac.d] },
-    retreatedChairPoses: { pc: pcRetreat, mac: macRetreat, centersSpacingM: +centers.toFixed(3), pcChairToBedGapM: +chairGapToBed.toFixed(3) },
-    staticEnvelopeOverlaps: pairs.filter((pair) => !(
-      (pair.a === "master-bed" && pair.b === "master-mattress") ||
-      (pair.a === "master-mattress" && pair.b === "master-bed")
-    )),
-    personPassageAtChairPositions: "NOT_CHECKED; 0.45 m radius would require 0.90 m clear width",
-    limitations: "rotated object AABBs from actual V9 object pose/dimensions; collisionParts are not all individual visible mesh bounds; door leaf, wardrobe opening, bedding, body posture are not sampled",
+  expect(desks.map((desk: any) => [desk.x, desk.z, desk.w, desk.d, desk.rotation])).toEqual([
+    [8.6, 3.98, 1.4, 0.75, 0],
+    [9.9, 3.98, 1.2, 0.75, 0],
+  ]);
+  for (let step = 0; step <= 100; step++) {
+    const p = step / 100,
+      chairBoxes = chairs.map((chair: any) => {
+        const box = objectBox(chair);
+        box.translate(new THREE.Vector3(
+          (chair.retreat.x - chair.x) * p,
+          0,
+          (chair.retreat.z - chair.z) * p,
+        ));
+        return { id: chair.id, box };
+      });
+    const a = chairBoxes[0].box, b = chairBoxes[1].box,
+      gap = Math.max(0, Math.max(a.min.x - b.max.x, b.min.x - a.max.x));
+    minimumChairGap = Math.min(minimumChairGap, gap);
+    for (const chair of chairBoxes) for (const obstacle of obstacles) {
+      const ox = Math.min(chair.box.max.x, obstacle.box.max.x) - Math.max(chair.box.min.x, obstacle.box.min.x),
+        oz = Math.min(chair.box.max.z, obstacle.box.max.z) - Math.max(chair.box.min.z, obstacle.box.min.z);
+      if (ox > 0.002 && oz > 0.002)
+        hits.push({ step, chair: chair.id, obstacle: obstacle.id, overlapX: +ox.toFixed(3), overlapZ: +oz.toFixed(3) });
+      const key = `${chair.id}:${obstacle.id}`,
+        clearance = Math.max(0, Math.max(
+          obstacle.box.min.x - chair.box.max.x,
+          chair.box.min.x - obstacle.box.max.x,
+          obstacle.box.min.z - chair.box.max.z,
+          chair.box.min.z - obstacle.box.max.z,
+        ));
+      minimumClearances[key] = Math.min(minimumClearances[key] ?? Infinity, clearance);
+    }
+    if (a.intersectsBox(b)) {
+      const ox = Math.min(a.max.x, b.max.x) - Math.max(a.min.x, b.min.x),
+        oz = Math.min(a.max.z, b.max.z) - Math.max(a.min.z, b.min.z);
+      if (ox > 0.002 && oz > 0.002)
+        hits.push({ step, chair: `${chairBoxes[0].id}+${chairBoxes[1].id}`, obstacle: "other-chair", overlapX: +ox.toFixed(3), overlapZ: +oz.toFixed(3) });
+    }
+  }
+  const pc = chairs[0], mac = chairs[1],
+    bedNorthEdge = bed.max.z,
+    chairSouthEdge = Math.min(pc.retreat.z - pc.d / 2, mac.retreat.z - mac.d / 2),
+    chairToBedGap = chairSouthEdge - bedNorthEdge,
+    deskRun = { minX: desks[0].x - desks[0].w / 2, maxX: desks[1].x + desks[1].w / 2 },
+    chairCentersSpacing = Math.abs(pc.retreat.x - mac.retreat.x),
+    pairClearWidth = chairCentersSpacing - Math.max(pc.w, mac.w);
+  console.log("SPACE_AUDIT master-bedroom-inline", JSON.stringify({
+    selectedDeskRun: { ...deskRun, z: desks[0].z, widthM: deskRun.maxX - deskRun.minX, depthM: desks[0].d },
+    preservedFullBed: { center: [byId("master-bed").x, byId("master-bed").z], mattress: [byId("master-mattress").w, byId("master-mattress").d], frameWorldBounds: { min: bed.min.toArray(), max: bed.max.toArray() } },
+    chairRetreatM: [pc.retreat.distanceM, mac.retreat.distanceM],
+    chairCentersSpacingM: +chairCentersSpacing.toFixed(3),
+    chairPairPlanGapM: +pairClearWidth.toFixed(3),
+    chairToBedFrameGapM: +chairToBedGap.toFixed(3),
+    conservativeDoorSweepBounds: { min: doorSweep.min.toArray(), max: doorSweep.max.toArray() },
+    minimumStaticClearancesM: minimumClearances,
+    sampledIntermediateStates: 101,
+    collisionCount: hits.length,
+    firstCollisions: hits.slice(0, 8),
+    evidenceLevel: "static_plan_AABB_sampling_for_chair_retreat_paths_only",
+    limitations: "no 0.45 m-radius human, chair-user body, open wardrobe, bedding, actual hinged-door animation, or two-person simultaneous-use simulation; door bounds conservatively cover either side of the opening but are not a physical sweep test",
   }));
-  expect(pcRetreat.w).toBe(pc.w);
-  expect(macRetreat.w).toBe(mac.w);
-  expect(pairs.filter((pair) => !(
-    (pair.a === "master-bed" && pair.b === "master-mattress") ||
-    (pair.a === "master-mattress" && pair.b === "master-bed")
-  )), JSON.stringify(pairs)).toHaveLength(0);
+  expect(deskRun.maxX - deskRun.minX).toBeCloseTo(2.6, 3);
+  expect(chairCentersSpacing).toBeCloseTo(1.3, 3);
+  expect(pairClearWidth).toBeCloseTo(0.63, 3);
+  expect(chairToBedGap).toBeCloseTo(0.565, 3);
+  expect(minimumChairGap).toBeGreaterThanOrEqual(0.002);
+  expect(hits, JSON.stringify(hits.slice(0, 8))).toHaveLength(0);
 });
 
 test("V9 kitchen joint-use evidence: quantify existing appliance separation and dishwasher-open envelope", () => {
