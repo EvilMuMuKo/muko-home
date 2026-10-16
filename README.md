@@ -32,10 +32,12 @@ npm run benchmark
 - 入户岛台保留同柱宽；抽拉板采用用户接受的略窄规格，收进柜内；客厅采用锁轮移动电视与可拼合/分离的两个单人沙发模块，没有固定茶几；两间卧室有外凸飘窗。所有空间来自同一个模型。
 - 主卧床恢复原朝向，床头灯恢复配套位置；床对面保留一字双工位，保留正常桌深与两把电脑椅；长桌上方和玄关用真实穿孔洞洞板收纳耳机、理线、钥匙及轻型随身物件。
 - 手机保留材质纹理、柔和接触阴影、受限实时阴影和按需渲染，不新增手机全屏 AO/Bloom。
-- `?renderer=webgpu` 是实验路径，无适配器/丢失设备时回退 WebGL；`?wasm=0` 使用 JavaScript 几何后备。可选物理模块仅按 API 需求加载。
+- 默认优先 WebGPU；无适配器/丢失设备时回退 WebGL，`?renderer=webgl` 可显式使用兼容渲染；`?wasm=0` 使用 JavaScript 几何后备。可选物理模块仅按 API 需求加载。
 
 构建产物使用本地 HTTP 或 GitHub Pages 运行。直接 `file://` 打开 ES Modules 未获支持，请使用 `npm run preview`。当前不宣称真机手机帧率、施工精度、现场联合使用、五金承载或照度/眩光已验收。
 
 [纹理来源及许可](licenses/polyhaven-textures.md) · [V9 实施说明](docs/home-v9.md)
 
 旧版设计说明保留于 `docs/` 供追溯，不代表 V9 当前柜数、容量或布局。
+
+渲染主体由 Three.js TypeScript 模块与 WASM 几何内核组成。本地 PBR 贴图为橡木、地板、亚麻、石膏；仅地板在非移动端加载 `*-desktop.webp`。石材是程序表面。地面有静态近接 AO，环境反射是通用 RoomEnvironment 的 PMREM，不是现场探针。灯光总槽为省电移动端 4、移动端 6、桌面 12；LTC 矩形灯占 1（移动端）或 2（桌面）槽，并替换同等数量的聚光灯。高性能桌面 WebGPU 使用克制的 TSL 泛光，WebGL 桌面使用 GTAO；移动端与省电设备不加载该后处理。没有光线追踪或全局光照。物理光照验收未运行。AAA 视觉质量未批准。仍缺定制布料、缝线贴图、局部反射或间接烘焙，以及现场日照采集。自动化回归共 90 项，最终执行状态以 [PR #6 的精确提交 CI](https://github.com/EvilMuMuKo/muko-home/pull/6/checks) 为准。原生桌面 WebGPU 六张重点视角与八空间连续漫游、42 张截图复核已完成。记录见 [图形发布说明](docs/graphics-release.md)。浏览器图标与手机收藏图标来自 `public/favicon.svg`，可用 `node scripts/build-icons.mjs` 重新生成 PNG。

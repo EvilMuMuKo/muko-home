@@ -156,7 +156,7 @@ test("new table and seating preserve the PS5 balcony route with a 0.45 m avatar"
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   const result = await page.evaluate(() => {
     const api = window.homePresentation,

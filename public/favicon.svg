@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <title>MuKo Home</title>
+  <rect width="128" height="128" rx="29" fill="#344b40"/>
+  <path d="M24 57 64 24l40 33M33 54v47h62V54" fill="none" stroke="#f3ead8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M47 94V64l17 16 17-16v30" fill="none" stroke="#d2aa76" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

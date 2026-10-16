@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { auditMaterial } from "./material-detail";
 import { roomPalette, wallColour } from "./atmosphere-design";
 type Materials = Record<string, THREE.Material>;
 export function configureRoomMaterials(m: Materials) {
@@ -10,37 +11,57 @@ export function configureRoomMaterials(m: Materials) {
   ) => {
     const material = (m[source] as THREE.MeshStandardMaterial).clone();
     material.color.set(color);
-    if (roughness !== undefined) material.roughness = roughness;
+    if (roughness !== undefined) material.roughness = material.roughnessMap && (m[source] as THREE.MeshStandardMaterial).roughness === 1 ? 1 : roughness;
+    auditMaterial(
+      material,
+      name,
+      /Wood|Interior/i.test(name)
+        ? "wood"
+        : /Fabric|Curtain|Acoustic|Piping/i.test(name)
+          ? "fabric"
+          : /Metal/i.test(name)
+            ? "metal"
+            : /Glass/i.test(name)
+              ? "glass"
+              : /Paint|Ceiling/i.test(name)
+                ? "paint"
+                : "decor",
+    );
     m[name] = material;
     return material;
   };
   (m.plaster as THREE.MeshStandardMaterial).color.set(roomPalette.paper);
   const walls = clone("roomPlaster", "plaster", "#ffffff", 0.96);
-  walls.map = null;
-  walls.normalMap = null;
+  // Wall vertex tint and subtle plaster maps are independent layers.
   walls.vertexColors = true;
-  clone("barPaint", "upperPaint", roomPalette.oat, 0.78);
-  clone("livingPaint", "upperPaint", roomPalette.oat, 0.78);
-  clone("mediaPaint", "upperPaint", roomPalette.media, 0.75);
-  clone("cinemaPaint", "upperPaint", roomPalette.cinema, 0.92);
-  clone("cinemaCeiling", "plaster", roomPalette.cinemaCeiling, 1);
-  clone("barWood", "oak", "#ae906f", 0.9);
-  clone("livingWood", "oak", "#ae906f", 0.9);
-  clone("cinemaWood", "oak", "#756353", 0.94);
-  clone("barInterior", "cabinetInterior", "#746a5c");
-  clone("livingInterior", "cabinetInterior", "#bdb8aa");
-  clone("cinemaInterior", "cabinetInterior", "#58534c");
-  clone("livingFabric", "linen", "#d8d7cf");
-  clone("cinemaFabric", "linen", "#a49a8d");
-  clone("cinemaCurtain", "linen", "#514d47");
-  clone("cinemaAcoustic", "linen", "#5d5851");
-  clone("clayFabric", "linen", "#b77d67");
-  clone("oliveFabric", "sage", "#777c68");
-  clone("cinemaMetal", "bronze", "#746b5e", 0.64);
-  clone("paperPaint", "upperPaint", roomPalette.paper, 0.82);
-  clone("piping", "linen", "#baaa91");
-  const glass = clone("barGlass", "displayGlass", "#b7aa8f", 0.16);
-  glass.opacity = 0.2;
+  const wallpaper = clone("masterWallcover", "linen", "#ffffff", 1);
+  wallpaper.vertexColors = true;
+  wallpaper.normalScale.setScalar(0.055);
+  if (wallpaper instanceof THREE.MeshPhysicalMaterial) {
+    wallpaper.sheen = 0.12; wallpaper.sheenRoughness = 0.95;
+  }
+  clone("barPaint", "upperPaint", roomPalette.oat, 0.68);
+  clone("livingPaint", "upperPaint", roomPalette.oat, 0.68);
+  clone("mediaPaint", "upperPaint", roomPalette.media, 0.67);
+  clone("cinemaPaint", "upperPaint", roomPalette.cinema, 0.82);
+  clone("cinemaCeiling", "plaster", roomPalette.cinemaCeiling, 0.9);
+  clone("barWood", "oak", "#ae906f", 0.73);
+  clone("livingWood", "oak", "#ae906f", 0.73);
+  clone("cinemaWood", "oak", "#88735f", 0.82);
+  clone("barInterior", "cabinetInterior", "#827563", 0.76);
+  clone("livingInterior", "cabinetInterior", "#c5bcaa", 0.76);
+  clone("cinemaInterior", "cabinetInterior", "#70685d", 0.82);
+  clone("livingFabric", "linen", "#ddd8cd", 0.88);
+  clone("cinemaFabric", "linen", "#aea496", 0.91);
+  clone("cinemaCurtain", "linen", "#625b52", 0.92);
+  clone("cinemaAcoustic", "linen", "#6c655c", 0.94);
+  clone("clayFabric", "linen", "#b77d67", 0.86);
+  clone("oliveFabric", "sage", "#858a73", 0.9);
+  clone("cinemaMetal", "bronze", "#827866", 0.58);
+  clone("paperPaint", "upperPaint", roomPalette.paper, 0.7);
+  clone("piping", "linen", "#baaa91", 0.86);
+  const glass = clone("barGlass", "displayGlass", "#f1f4ed", 0.045);
+  glass.opacity = (m.displayGlass as THREE.MeshStandardMaterial).opacity;
 }
 export function finishWall(
   mesh: THREE.Mesh,
@@ -55,11 +76,12 @@ export function finishWall(
   geometry.computeBoundingBox();
   const minZ = geometry.boundingBox!.min.z,
     depth = geometry.boundingBox!.max.z - minZ;
+  const roomFor = (side: {ids:string[]} | undefined) => side?.ids.find(id => id !== "hall") ?? side?.ids[0];
   const minus = new THREE.Color(
-    wallColour(sides.find((s) => s.sign === -1)?.ids[0], wallId),
+    wallColour(roomFor(sides.find((s) => s.sign === -1)), wallId),
   );
   const plus = new THREE.Color(
-    wallColour(sides.find((s) => s.sign === 1)?.ids[0], wallId),
+    wallColour(roomFor(sides.find((s) => s.sign === 1)), wallId),
   );
   const colour = new THREE.Color();
   for (let i = 0; i < normals.count; i++) {
@@ -78,12 +100,27 @@ export function finishWall(
   geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
   mesh.geometry = geometry;
   mesh.material = m.roomPlaster;
+  if (m.masterWallcover && sides.some(side => roomFor(side) === "master")) {
+    // Room finishes are assigned per real wall face; neighbours keep their finish.
+    const groups: {start:number;count:number;materialIndex:number}[] = [];
+    for (const group of geometry.groups) {
+      const vertex = geometry.index?.getX(group.start) ?? group.start;
+      const sign = normals.getZ(vertex) > 0.5 ? 1 : normals.getZ(vertex) < -0.5 ? -1 : 0;
+      const wallpaperFace = sign !== 0 && roomFor(sides.find(side => side.sign === sign)) === "master";
+      const materialIndex = wallpaperFace ? 1 : 0;
+      const last = groups.at(-1);
+      if (last && last.materialIndex === materialIndex && last.start + last.count === group.start) last.count += group.count;
+      else groups.push({start:group.start,count:group.count,materialIndex});
+    }
+    geometry.clearGroups(); groups.forEach(group => geometry.addGroup(group.start,group.count,group.materialIndex));
+    mesh.material = [m.roomPlaster, m.masterWallcover];
+  }
   mesh.userData.wallFinish = {
     wallId,
     sides: sides.map((s) => ({
       sign: s.sign,
-      room: s.ids[0],
-      color: wallColour(s.ids[0], wallId),
+      room: roomFor(s),
+      color: wallColour(roomFor(s), wallId),
     })),
   };
 }

@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test("compact control panel has only space, light and action; no route or physics demo UI", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.click("#panel-toggle");
 
@@ -26,7 +26,7 @@ test("compact control panel has only space, light and action; no route or physic
 test("three light presets keep the selected camera; room viewpoints use a dropdown", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.click("#panel-toggle");
   await page.click("#tab-space");

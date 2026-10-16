@@ -75,6 +75,11 @@
   top: max(16px, env(safe-area-inset-top));
   left: max(16px, env(safe-area-inset-left));
 }
+.ghost-walk-controls .ghost-exit:hover,
+.ghost-walk-controls .ghost-interact:hover {
+  color: #fffaf0;
+  background: #355044;
+}
 .ghost-interact {
   right: max(20px, env(safe-area-inset-right));
   bottom: max(28px, env(safe-area-inset-bottom));

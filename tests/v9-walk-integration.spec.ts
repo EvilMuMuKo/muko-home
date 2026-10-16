@@ -5,7 +5,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
 }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() =>
     window.homePresentation.startGhostWalk({
@@ -82,7 +82,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
 test("whole-model geometry inventory has no missing object or nonfinite data", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   const report = await page.evaluate(() =>
     window.homePresentation.getModelAudit(),
@@ -101,7 +101,7 @@ test("whole-model geometry inventory has no missing object or nonfinite data", a
 test("visible lighting choices preserve the current hatch and dining furniture state", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() => {
     const a = window.homePresentation;
@@ -129,7 +129,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
   await page.setViewportSize({width:640,height:360});
   const errors: string[]=[];
   page.on("pageerror",e=>errors.push(e.message));
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(()=>window.homePresentation?.getState().ready);
   expect(await page.evaluate(()=>window.homePresentation.getGhostWalkState().active)).toBe(true);
   await expect(page.locator(".ghost-look-joystick")).toBeVisible();
@@ -177,7 +177,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
 
 test("portrait keeps the landscape gate and rotating restores both walk sticks", async ({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(()=>window.homePresentation?.getState().ready);
   await expect(page.locator("#orientation-gate")).toBeVisible();
   await expect(page.locator(".ghost-walk-controls")).toBeHidden();

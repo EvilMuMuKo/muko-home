@@ -1,3 +1,5 @@
+import { reviseHomeLighting } from "./lighting-revision";
+
 /** V9 room planning overlay. All measurements are concept-model values. */
 type Point = [number, number];
 
@@ -1343,5 +1345,6 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       foldedDepthM: 0.43,
     };
   }
+  reviseHomeLighting(model);
   return model as T;
 }

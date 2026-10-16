@@ -12,7 +12,7 @@ test("daylight vector follows the declared south-east orientation and remains a 
 test("daylight keeps an invisible roof shadow and does not turn clear glazing into an opaque blocker", async ({
   page,
 }) => {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   const result = await page.evaluate(() => ({
     state: window.homePresentation.getState(),

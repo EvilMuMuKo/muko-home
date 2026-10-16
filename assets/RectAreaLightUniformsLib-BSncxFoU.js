@@ -1,0 +1,1 @@
+import{n as e}from"./three.module-KlPkmavT.js";import{t}from"./RectAreaLightTexturesLib-BTpc2FC9.js";var n=class{static init(){t.init();let{LTC_FLOAT_1:n,LTC_FLOAT_2:r,LTC_HALF_1:i,LTC_HALF_2:a}=t;e.LTC_FLOAT_1=n,e.LTC_FLOAT_2=r,e.LTC_HALF_1=i,e.LTC_HALF_2=a}};export{n as RectAreaLightUniformsLib};

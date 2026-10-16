@@ -1,12 +1,16 @@
 import type { DesignInput } from "./storage-design";
 export const roomPalette = {
   paper: "#eeece5",
-  clay: "#b9826c",
+  clay: "#ad7359",
+  moss: "#6d7967",
+  masterSage: "#74806e",
+  masterMushroom: "#8d877b",
+  tobacco: "#bda68f",
   oat: "#deddd5",
   media: "#aaa99f",
-  cinema: "#514d47",
-  cinemaFront: "#303330",
-  cinemaCeiling: "#46433e",
+  cinema: "#485149",
+  cinemaFront: "#303933",
+  cinemaCeiling: "#53594f",
 };
 export interface ThemeScene {
   id: string;
@@ -327,7 +331,9 @@ export function wallColour(room: string | undefined, wallId: string) {
       ? roomPalette.cinemaFront
       : roomPalette.cinema;
   if (room === "bar" && wallId === "north") return roomPalette.clay;
+  if (room === "bar" && wallId === "west-left") return roomPalette.moss;
+  if (room === "master") return wallId === "east" ? roomPalette.masterSage : roomPalette.masterMushroom;
   if (room === "living")
-    return wallId === "master-bearing" ? roomPalette.media : roomPalette.oat;
+    return wallId === "balcony-west" ? roomPalette.tobacco : roomPalette.oat;
   return roomPalette.paper;
 }

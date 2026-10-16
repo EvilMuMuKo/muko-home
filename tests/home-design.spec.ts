@@ -174,13 +174,13 @@ test("mobile media layout keeps full seating and peripheral cabinet geometry", (
   }
   expect(
     next.lighting.scenes.find((scene) => scene.id === "aperitif"),
-  ).toMatchObject({ ambientIntensity: 0.48, environmentIntensity: 0.2 });
+  ).toMatchObject({ ambientIntensity: 0.36, environmentIntensity: 0.17 });
   expect(
     next.lighting.scenes.find((scene) => scene.id === "game"),
-  ).toMatchObject({ ambientIntensity: 0.48, environmentIntensity: 0.2 });
+  ).toMatchObject({ ambientIntensity: 0.36, environmentIntensity: 0.17 });
   expect(
     next.lighting.scenes.find((scene) => scene.id === "cinema"),
-  ).toMatchObject({ ambientIntensity: 0.52, environmentIntensity: 0.18 });
+  ).toMatchObject({ ambientIntensity: 0.28, environmentIntensity: 0.13 });
 });
 
 test("entry island keeps the column width and the two-leaf pullout fits its cabinet pocket", () => {

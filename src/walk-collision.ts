@@ -24,6 +24,7 @@ export type WalkModel = {
 
 export type WalkCollision = {
   move(from: WalkPoint, to: WalkPoint): [number, number];
+  navigationSnapshot(): { radiusM: number; shell: number[][]; polygons: Polygon[] };
   audit: {
     radiusM: number;
     eyeHeightM: number;
@@ -389,7 +390,7 @@ function currentMeshFootprints(
   const v = new THREE.Vector3();
   group.traverse((node) => {
     const mesh = node as THREE.Mesh;
-    if (!mesh.isMesh || !mesh.visible || !mesh.geometry) return;
+    if (!mesh.isMesh || !mesh.visible || !mesh.geometry || mesh.userData.physicsBody === false) return;
     for (let parent = mesh.parent; parent; parent = parent.parent)
       if (!parent.visible) return;
     const geometry = mesh.geometry;
@@ -588,5 +589,20 @@ export function createWalkCollision(
     return [x, z];
   }
 
-  return { move, audit };
+  function navigationSnapshot() {
+    scene.updateMatrixWorld(true);
+    const polygons = walls.map(wall => {
+      const corners: Polygon = [];
+      for (const [sx,sz] of [[-1,-1],[1,-1],[1,1],[-1,1]])
+        corners.push([
+          wall.x + sx*wall.halfX*wall.ux - sz*wall.halfZ*wall.uz,
+          wall.z + sx*wall.halfX*wall.uz + sz*wall.halfZ*wall.ux,
+        ]);
+      return corners;
+    });
+    for (const {group} of obstacles)
+      polygons.push(...currentMeshFootprints(group,meshHullCache));
+    return {radiusM:PERSON_RADIUS,shell:model.shell || [],polygons};
+  }
+  return { move, audit, navigationSnapshot };
 }

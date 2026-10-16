@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 async function ready(page) {
-  await page.goto("/");
+  await page.goto("/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.waitForFunction(
     () => window.homePresentation.getPerformance().renders > 0,

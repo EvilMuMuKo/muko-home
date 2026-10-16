@@ -552,6 +552,15 @@ export function createGhostWalk({
 
   return {
     update,
+    lookToward(target: [number, number, number]) {
+      if (!active || disposed) return;
+      direction.set(...target).sub(position).normalize();
+      yaw = Math.atan2(direction.x, -direction.z);
+      pitch = THREE.MathUtils.clamp(Math.asin(direction.y), MIN_PITCH, MAX_PITCH);
+      applyCameraPose();
+      refreshNearest();
+      onChange();
+    },
     getTarget() {
       camera.getWorldDirection(direction).normalize();
       return camera.position.clone().add(direction);

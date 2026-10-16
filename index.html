@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width,initial-scale=1,viewport-fit=cover"
     />
-    <meta name="theme-color" content="#dcd6cb" />
+    <meta name="theme-color" content="#344b40" />
     <title>MuKo Home</title>
     <meta
       name="description"
@@ -20,14 +20,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://evilmumuko.github.io/muko-home/" />
     <link rel="canonical" href="https://evilmumuko.github.io/muko-home/" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%234f6253%27/%3E%3Cpath d=%27M15 45V20l17 15 17-15v25%27 fill=%27none%27 stroke=%27%23f5efdf%27 stroke-width=%275%27/%3E%3C/svg%3E"
-    />
-    <script type="module" crossorigin src="./assets/index-CiuO06Rg.js"></script>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="alternate icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <script type="module" crossorigin src="./assets/index-DP0Bx8Na.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/three.core-C7NbAuPQ.js">
+    <link rel="modulepreload" crossorigin href="./assets/three.module-KlPkmavT.js">
     <link rel="modulepreload" crossorigin href="./assets/quality-C7i1tdIn.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-Dd7hVuEl.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-BehKWG9i.css">
   </head>
   <body>
     <main id="experience">
@@ -190,7 +191,10 @@
           </div>
         </aside>
         <div id="internal-controls" hidden><div id="theme-moments"></div></div>
-        <div class="loading" id="loading">准备空间</div>
+        <div class="loading" id="loading" role="status">
+          <img src="./preview.jpg" alt="" />
+          <span id="loading-status">准备空间</span>
+        </div>
         <div id="notice" role="status"></div>
         <div id="orientation-gate" role="status">
           <svg viewBox="0 0 80 60" aria-hidden="true">
