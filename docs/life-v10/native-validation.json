@@ -1,5 +1,5 @@
 {
-  "scope": "Native macOS Chrome; full suite 124 expected, 1 obsolete compile-fault injection failed; corrected injected-all-compiles fallback case then passed independently. No unresolved functional failure in these results. CI full rerun required before merge.",
+  "scope": "Native macOS Chrome; full suite 124 expected, 1 obsolete compile-fault injection failed; corrected injected-all-compiles fallback case then passed independently. No unresolved functional failure in these results. See this release commit in GitHub Actions for the separate full CI result.",
   "fullRun": {
     "startTime": "2026-10-16T09:36:38.515Z",
     "duration": 254620.748,
