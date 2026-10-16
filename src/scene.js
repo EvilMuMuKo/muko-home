@@ -3857,7 +3857,7 @@ var wu = null,
   zp,
   Oc,
   Au = !0;
-let cu, hu, Rc, fu, BloomPass;
+let cu, hu, Rc, fu;
 function xw() {
   if (rendering.backend !== "WebGL2" || !quality.postprocessing) return;
   matchMedia("(max-width: 1000px), (pointer: coarse)").matches ||
@@ -3874,14 +3874,6 @@ function xw() {
     })),
     vi.addPass(zp),
     vi.addPass(Oc),
-    vi.addPass(
-      new BloomPass(
-        new yi.Vector2(Ui.clientWidth, Ui.clientHeight),
-        0.045,
-        0.2,
-        1.25,
-      ),
-    ),
     vi.addPass(new fu()));
 }
 function qp() {
@@ -4093,7 +4085,7 @@ async function bw() {
     Ht.info.autoReset = false;
     if (rendering.backend === "WebGPU") Ht.onDeviceLost = recoverGPU;
     if (rendering.backend === "WebGL2" && quality.postprocessing) {
-      ({ cu, hu, Rc, fu, BloomPass } = await import("./postprocessing"));
+      ({ cu, hu, Rc, fu } = await import("./postprocessing"));
     }
     (Ht.setPixelRatio(quality.maxDpr),
       (Ht.shadowMap.enabled = !0),
