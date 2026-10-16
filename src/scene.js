@@ -45,6 +45,7 @@ import { quality } from "./quality";
 import { enhanceSurfaces } from "./surface";
 import { bakeStaticFloorOcclusion } from "./baked-occlusion";
 import { createRenderer, environmentGenerator, rendering } from "./renderer";
+import { gpuStartupDeadline, isGPUDeviceLoss } from "./gpu-recovery";
 import { initGeometry, transformGeometry, geometryState } from "./geometry";
 // Scene recovered from the published V5 bundle; original local names retained.
 import * as yi from "three";
@@ -4150,6 +4151,8 @@ function Tx() {
 function recoverGPU(error) {
   if (kp) return;
   kp = true;
+  vu = false;
+  wx();
   atmosphere?.resetClock();
   Jt?.pause();
   const url = new URL(location.href);
@@ -4159,6 +4162,14 @@ function recoverGPU(error) {
   // with an explicit WebGL backend; static preview remains the final fallback.
   location.replace(url.href);
 }
+window.addEventListener("unhandledrejection", event => {
+  if (!["webgpu", "auto"].includes(rendering.requested) || !isGPUDeviceLoss(event.reason)) return;
+  // Dawn can reject outstanding error-scope promises after the device is lost.
+  // Treat those as the same bounded recovery, without hiding validation/network errors.
+  event.preventDefault();
+  rendering.deviceLossEvents++;
+  if (rendering.backend !== "WebGL2") recoverGPU(event.reason);
+});
 function yw() {
   if (kp) return;
   try {
@@ -4327,7 +4338,8 @@ async function bw() {
     diffuseBounce = await createDiffuseBounce({renderer:Ht,scene:Ct,model:ut,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
     await loadDiffuseVariant(_u, false);
     bathMirror = await createBathMirror({scene:Ct,renderer:Ht,model:ut,materials:Vn,mobile:quality.mobile,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
-    if (gpuFinish) await gpuFinish.compile();
+    if (gpuFinish) await gpuStartupDeadline(gpuFinish.compile(), 20000);
+    else if (rendering.backend === "WebGPU") await gpuStartupDeadline(Ht.compileAsync(Ct, ct), 20000);
     else await Ht.compileAsync(Ct, ct);
     startupStage("compiled");
     (
@@ -4354,7 +4366,13 @@ async function bw() {
       startupStage("complete");
       Oi();
     })();
+    visualEnhancementsReady.catch(error => {
+      startupTiming.enhancementError = String(error);
+      if (isGPUDeviceLoss(error) && rendering.backend === "WebGPU") recoverGPU(error);
+      else console.warn("Local reflection preparation unavailable", error);
+    });
   } catch (i) {
+    if (rendering.backend === "WebGPU") { recoverGPU(i); return; }
     (vu = false,
       wx(),
       Jt?.pause(),

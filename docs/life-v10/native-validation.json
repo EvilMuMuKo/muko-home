@@ -28,5 +28,25 @@
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
+  },
+  "ciFirstFullRun": {
+    "runId": 38884055542,
+    "expected": 122,
+    "unexpected": 3,
+    "durationMinutes": 15.8,
+    "failures": [
+      "default WebGPU startup readiness",
+      "Dawn outstanding device-loss rejection",
+      "transient welcome separate-RPC timing"
+    ],
+    "status": "FAIL historical; fixes tested in later supplement and full CI to verify"
+  },
+  "compatibilityFixGroup": {
+    "startTime": "2026-10-16T10:26:17.558Z",
+    "duration": 27627.571,
+    "expected": 18,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
   }
 }

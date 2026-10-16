@@ -1,10 +1,12 @@
 import { WebGLRenderer, PMREMGenerator } from "three";
 import type { WebGPURenderer } from "three/webgpu";
+import { gpuStartupDeadline, isSoftwareAdapter } from "./gpu-recovery";
 
 export type Renderer = WebGLRenderer | WebGPURenderer;
 export const rendering = {
   requested: new URLSearchParams(location.search).get("renderer") ?? "webgpu",
   backend: "unavailable",
+  deviceLossEvents: 0,
   fallbackReason: new URLSearchParams(location.search).has("gpuFallback")
     ? "WebGPU runtime lost; recovered with WebGL"
     : "",
@@ -19,10 +21,14 @@ export async function createRenderer(
     try {
       if (!("gpu" in navigator)) throw new Error("WebGPU API unavailable");
       const gpu = (
-        navigator as Navigator & { gpu: { requestAdapter(): Promise<unknown> } }
+        navigator as Navigator & { gpu: { requestAdapter(): Promise<{info?:{isFallbackAdapter?:boolean};isFallbackAdapter?:boolean}|null> } }
       ).gpu;
-      if (!(await gpu.requestAdapter()))
+      const adapter = await gpuStartupDeadline(gpu.requestAdapter(), 8000);
+      if (!adapter)
         throw new Error("WebGPU adapter unavailable");
+      // Standard metadata, not user-agent/CI detection or description parsing.
+      // https://gpuweb.github.io/types/interfaces/GPURequestAdapterOptions.html
+      if (isSoftwareAdapter(adapter)) throw new Error("Software WebGPU adapter; using WebGL compatibility renderer");
       const module = await import("three/webgpu");
       const gpuCanvas = canvas.cloneNode(false) as HTMLCanvasElement;
       const renderer = new module.WebGPURenderer({
@@ -30,11 +36,11 @@ export async function createRenderer(
         antialias: true,
       });
       try {
-        await renderer.init();
+        await gpuStartupDeadline(renderer.init(), 20000);
         if (!("isWebGPUBackend" in renderer.backend))
           throw new Error("WebGPU backend unavailable");
       } catch (error) {
-        renderer.dispose();
+        try { renderer.dispose(); } catch { /* Partly initialized device cleanup. */ }
         throw error;
       }
       GPUEnvironment = module.PMREMGenerator;

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("home renders while material images are delayed, then hydrates all shared maps", async ({
   page,
-}) => {
+}, testInfo) => {
   let releaseRequests!: () => void;
   const requestsReleased = new Promise<void>((resolveRelease) => {
     releaseRequests = resolveRelease;
@@ -27,7 +27,11 @@ test("home renders while material images are delayed, then hydrates all shared m
   });
 
   try {
-    await page.goto("/", { waitUntil: "commit" });
+    // Test texture identity on one stable renderer. CPU-only CI uses WebGL;
+    // native hardware runs the WebGPU path. Device-loss reloads are covered by
+    // the separate default-renderer recovery test, which deliberately rebuilds textures.
+    const backend = testInfo.config.metadata.hardwareGPU ? "webgpu" : "webgl";
+    await page.goto(`/?renderer=${backend}`, { waitUntil: "commit" });
     await page.waitForFunction(
       () => {
         const home = (window as any).homePresentation;
@@ -49,6 +53,7 @@ test("home renders while material images are delayed, then hydrates all shared m
       const find = (key: string) =>
         state.materials.find((material: any) => material.key === key);
       return {
+        backend: state.rendering.backend,
         loaded: state.materialDetail.loaded,
         failed: state.materialDetail.failed,
         drawCalls: state.drawCalls,
@@ -62,6 +67,7 @@ test("home renders while material images are delayed, then hydrates all shared m
       };
     });
     expect(before.loaded).toBe(0);
+    expect(before.backend).toBe(testInfo.config.metadata.hardwareGPU ? "WebGPU" : "WebGL2");
     expect(before.failed).toEqual([]);
     expect(before.drawCalls).toBeGreaterThan(0);
     expect(before.ghostWalkActive).toBe(true);

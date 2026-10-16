@@ -53,3 +53,5 @@ npm run benchmark
 回归脚本：`scripts/life-release-audit.mjs`（固定像素尺寸、视角、状态、实际截图）、`scripts/whole-home-walk-audit.mjs`（连续按键与摇杆漫步）、`scripts/life-performance.mjs`（同机基线比较）。`playwright.native.config.ts` 用本机 Chrome GPU 验证；默认配置保留 SwiftShader 兼容回归，二者都不能替代真实手机硬件验收。完整测试数与精确提交 CI 以最终记录为准。
 
 浏览器图标与手机收藏图标来自 `public/favicon.svg`，可用 `node scripts/build-icons.mjs` 重新生成 PNG。用户于本轮明确授权将《最高设计纲领》及有效修改决定同步到仓库；参见 [需求基准](docs/requirements/README.md)。原始户型附件、私人标注图片及交接包仍不随发布上传。
+
+启动兼容性：标准 `GPUAdapterInfo.isFallbackAdapter` 标记为软件适配器时直接使用 WebGL；GPU 初始化或预编译超时、设备丢失时进入一次有界恢复。普通网络/着色器验证错误仍正常报告。原生 GPU 与软件渲染分开验证，GitHub CI 使用四个分片执行完整测试范围。
