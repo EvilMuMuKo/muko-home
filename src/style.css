@@ -529,3 +529,10 @@ button.active {
 @media (orientation: portrait) and (max-width: 1000px) {
   .home-welcome { display: none; }
 }
+
+@media (pointer: coarse), (max-width: 1000px) {
+  .panel-toggle, #control-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

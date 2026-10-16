@@ -4,6 +4,7 @@ import type { WebGPURenderer } from "three/webgpu";
 const textureState = {
   requested: 12,
   loaded: 0,
+  hydrated: 0,
   failed: [] as string[],
   metricMapping: true,
 };
@@ -245,6 +246,7 @@ export async function refineMaterials(
 ) {
   const progressive = options.progressive === true;
   textureState.loaded = 0;
+  textureState.hydrated = 0;
   textureState.failed = [];
   textureState.requested = 12;
   const mobile = matchMedia("(max-width:1000px), (pointer:coarse)").matches;
@@ -321,7 +323,7 @@ export async function refineMaterials(
     if (texture) configure(texture, name, channel);
     else textureState.failed.push(`${name}-${channel}`);
     if (texture) textureState.loaded++;
-    options.onTextureReady?.({
+    if (!progressive) options.onTextureReady?.({
       family: name,
       channel,
       loaded: textureState.loaded,
@@ -556,15 +558,25 @@ export async function refineMaterials(
   };
   if (progressive) {
     prepareMaterials(placeholders);
-    const hydrate = (target: THREE.Texture, source: THREE.Texture | null) => {
+    const hydrate = async (target: THREE.Texture, source: THREE.Texture | null) => {
       if (!source) return;
       // Keep the placeholder Texture object so materials cloned before decode
       // continue to see the final image without any map replacement.
+      // WebGPU allocations have immutable dimensions. Updating image/version
+      // alone leaves a previously rendered 1x1 allocation at 1x1. Dispose its
+      // GPU storage (not the shared JS identity) before re-uploading the map.
+      const prior = target.image as { width?: number; height?: number };
+      const next = source.image as { width: number; height: number };
+      if (prior?.width !== next.width || prior?.height !== next.height) {
+        const queue = (renderer as any).backend?.device?.queue;
+        if (queue?.onSubmittedWorkDone) await queue.onSubmittedWorkDone();
+        target.dispose();
+      }
       target.image = source.image;
       target.needsUpdate = true;
       source.dispose();
     };
-    materialTexturesReady = prepareLoads().then((maps) => {
+    materialTexturesReady = prepareLoads().then(async (maps) => {
       for (let i = 0; i < maps.length; i++) {
         for (const channel of channels) {
           const key =
@@ -574,7 +586,18 @@ export async function refineMaterials(
                 ? "normalMap"
                 : "roughnessMap";
           const loaded = maps[i][key];
-          hydrate(placeholders[i][key]!, loaded);
+          // Decode/download can finish together. Upload one map per small
+          // mobile task instead of sending twelve full images in one frame.
+          // Timers also settle in hidden/portrait pages where rAF is paused.
+          if (mobile) await new Promise(resolve => setTimeout(resolve, 40));
+          await hydrate(placeholders[i][key]!, loaded);
+          if (loaded) {
+            if (mobile) renderer.initTexture(placeholders[i][key]!);
+            textureState.hydrated++;
+          }
+          options.onTextureReady?.({family: maps[i].name, channel,
+            loaded:textureState.loaded, requested:textureState.requested,
+            failed:textureState.failed.length});
         }
       }
       // A missing image retains its warm placeholder, while matching the

@@ -5,6 +5,7 @@ import { LightProbeGridWebGL } from "three/addons/lighting/LightProbeGridWebGL.j
 // @ts-expect-error Internal companion class used by LightProbeGrid.bake() itself.
 import { LightProbeGridNode } from "three/addons/tsl/lighting/LightProbeGridNode.js";
 import { roomMembership } from "./room-radiance";
+import { createMobileDiffuseBounce } from "./mobile-diffuse";
 
 export type DiffuseBounceData = {
   version: 1;
@@ -119,8 +120,9 @@ export function unpackPaddedAtlasRows<T extends Uint16Array | Float32Array>(padd
   return dense;
 }
 
-export async function createDiffuseBounce(args: { renderer: Renderer; scene: THREE.Scene; model: Model; backend: "webgpu" | "webgl" }) {
+export async function createDiffuseBounce(args: { renderer: Renderer; scene: THREE.Scene; model: Model; backend: "webgpu" | "webgl"; mobile?: boolean }) {
   const { renderer, scene, model, backend } = args;
+  if (args.mobile) return createMobileDiffuseBounce({scene, validate: validateDiffuseBounceData});
   const baked = new Map<string, DiffuseBounceData>();
   const grids = new Map<string, Grid>();
   let currentRoom: string | null = null;
@@ -270,8 +272,10 @@ export async function createDiffuseBounce(args: { renderer: Renderer; scene: THR
       install(data);
     },
     setRoom(roomId: string) {
+      const nextRoom = baked.has(roomId) ? roomId : null;
+      if (currentRoom === nextRoom) return;
       if (currentRoom) { const old = grids.get(currentRoom); if (old) scene.remove(old); }
-      currentRoom = baked.has(roomId) ? roomId : null;
+      currentRoom = nextRoom;
       if (currentRoom) { let grid = grids.get(currentRoom); if (!grid) { grid = makeGrid(baked.get(currentRoom)!); grids.set(currentRoom, grid); } scene.add(grid); }
     },
     setIntensity(value: number) {

@@ -13,6 +13,8 @@ let target = {
 };
 let extraTargets = [];
 const events = { changes: 0, motion: [], exits: 0 };
+const collisionCalls = { count: 0 };
+let movingObstacles = true;
 const walk = createGhostWalk({
   camera,
   canvas,
@@ -27,17 +29,21 @@ const walk = createGhostWalk({
     },
     ...extraTargets,
   ],
+  resolveMove: (from, to) => { collisionCalls.count++; return to; },
+  hasMovingObstacles: () => movingObstacles,
   onExit: () => events.exits++,
 });
 
 window.ghostWalkHarness = {
   walk,
   events,
+  collisionCalls,
   camera,
   get target() { return target; },
   get extraTargets() { return extraTargets; },
   setTargetPosition(position) { target.position = position; },
   setExtraTargets(targets) { extraTargets = targets; },
+  setMovingObstacles(value) { movingObstacles = value; },
   step(dt = 0.05) { return walk.update(dt); },
   dispose() { walk.dispose(); },
 };

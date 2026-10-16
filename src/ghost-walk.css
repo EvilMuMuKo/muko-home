@@ -109,3 +109,11 @@
 @media (max-height: 420px) {
   .ghost-walk-controls { --stick-size: 112px; }
 }
+@media (pointer: coarse), (max-width: 1000px) {
+  /* Avoid re-blurring the live canvas into several touch-control layers. */
+  .ghost-joystick, .ghost-exit, .ghost-interact {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .ghost-joystick { background: #25332d99; }
+}

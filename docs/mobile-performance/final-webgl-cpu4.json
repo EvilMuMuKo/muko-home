@@ -1,0 +1,390 @@
+{
+  "url": "http://localhost:4173/?renderer=webgl",
+  "status": "PASS",
+  "errors": [],
+  "requestFailures": [],
+  "quality": {
+    "qualityProfile": {
+      "mobile": true,
+      "economical": false,
+      "lightSlots": 4,
+      "shadowLights": 1,
+      "shadowSize": 512,
+      "sunShadowSize": 1024,
+      "maxDpr": 1.5,
+      "interactionDpr": 1.5,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 33.333333333333336,
+      "roomReflections": false,
+      "liveMirrors": false,
+      "reflectionStrategy": "shared-environment",
+      "physicsHz": 30,
+      "postprocessing": false
+    },
+    "rendering": {
+      "requested": "webgl",
+      "backend": "WebGL2",
+      "deviceLossEvents": 0,
+      "fallbackReason": ""
+    },
+    "pixelRatio": 1.5
+  },
+  "phases": [
+    {
+      "name": "l20",
+      "before": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgl",
+          "backend": "WebGL2",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 1.5,
+        "drawingBuffer": [
+          1266,
+          585
+        ],
+        "renders": 4,
+        "shadowUpdates": 3,
+        "roomRadiance": {
+          "enabled": false,
+          "strategy": "shared-environment",
+          "captureCount": 0,
+          "captureInProgress": false,
+          "reason": "mobile_shared_environment"
+        },
+        "mirror": {
+          "enabled": false,
+          "renderedFramesObserved": 0,
+          "strategy": "material-environment",
+          "reason": "mobile_shared_environment"
+        },
+        "diffuseBounce": {
+          "backend": "mobile-sh",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 0,
+          "activeProbeCount": 1,
+          "runtimeIntensityCap": 0.35,
+          "policy": "persistent-room-average-sh",
+          "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
+          "lastError": null
+        },
+        "drawCalls": 878,
+        "triangles": 351348,
+        "startup": {
+          "started": 159.79999999701977,
+          "stages": {
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503
+          }
+        },
+        "frameP95Ms": null
+      },
+      "after": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgl",
+          "backend": "WebGL2",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 1.5,
+        "drawingBuffer": [
+          1266,
+          585
+        ],
+        "renders": 603,
+        "shadowUpdates": 3,
+        "roomRadiance": {
+          "enabled": false,
+          "strategy": "shared-environment",
+          "captureCount": 0,
+          "captureInProgress": false,
+          "reason": "mobile_shared_environment"
+        },
+        "mirror": {
+          "enabled": false,
+          "renderedFramesObserved": 0,
+          "strategy": "material-environment",
+          "reason": "mobile_shared_environment"
+        },
+        "diffuseBounce": {
+          "backend": "mobile-sh",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 0,
+          "activeProbeCount": 1,
+          "runtimeIntensityCap": 0.35,
+          "policy": "persistent-room-average-sh",
+          "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
+          "lastError": null
+        },
+        "drawCalls": 494,
+        "triangles": 199752,
+        "startup": {
+          "started": 159.79999999701977,
+          "stages": {
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
+          }
+        },
+        "frameP95Ms": 33.400000000001455
+      },
+      "elapsedMs": 20027.89999999851,
+      "raf": {
+        "p95": 16.700000000000728,
+        "worst": 66.59999999999991,
+        "over250": 0,
+        "samples": 1197
+      },
+      "renderedFps": 29.90827795225883,
+      "longtasks": [
+        {
+          "start": 2928.7999999970198,
+          "duration": 50
+        },
+        {
+          "start": 3113.0999999940395,
+          "duration": 86
+        }
+      ]
+    },
+    {
+      "name": "wl-sj",
+      "before": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgl",
+          "backend": "WebGL2",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 1.5,
+        "drawingBuffer": [
+          1266,
+          585
+        ],
+        "renders": 603,
+        "shadowUpdates": 3,
+        "roomRadiance": {
+          "enabled": false,
+          "strategy": "shared-environment",
+          "captureCount": 0,
+          "captureInProgress": false,
+          "reason": "mobile_shared_environment"
+        },
+        "mirror": {
+          "enabled": false,
+          "renderedFramesObserved": 0,
+          "strategy": "material-environment",
+          "reason": "mobile_shared_environment"
+        },
+        "diffuseBounce": {
+          "backend": "mobile-sh",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 0,
+          "activeProbeCount": 1,
+          "runtimeIntensityCap": 0.35,
+          "policy": "persistent-room-average-sh",
+          "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
+          "lastError": null
+        },
+        "drawCalls": 494,
+        "triangles": 199752,
+        "startup": {
+          "started": 159.79999999701977,
+          "stages": {
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
+          }
+        },
+        "frameP95Ms": 33.400000000001455
+      },
+      "after": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgl",
+          "backend": "WebGL2",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 1.5,
+        "drawingBuffer": [
+          1266,
+          585
+        ],
+        "renders": 1084,
+        "shadowUpdates": 5,
+        "roomRadiance": {
+          "enabled": false,
+          "strategy": "shared-environment",
+          "captureCount": 0,
+          "captureInProgress": false,
+          "reason": "mobile_shared_environment"
+        },
+        "mirror": {
+          "enabled": false,
+          "renderedFramesObserved": 0,
+          "strategy": "material-environment",
+          "reason": "mobile_shared_environment"
+        },
+        "diffuseBounce": {
+          "backend": "mobile-sh",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 0,
+          "activeProbeCount": 1,
+          "runtimeIntensityCap": 0.35,
+          "policy": "persistent-room-average-sh",
+          "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
+          "lastError": null
+        },
+        "drawCalls": 694,
+        "triangles": 268254,
+        "startup": {
+          "started": 159.79999999701977,
+          "stages": {
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
+          }
+        },
+        "frameP95Ms": 33.400000000001455
+      },
+      "elapsedMs": 16066.90000000596,
+      "raf": {
+        "p95": 16.799999999995634,
+        "worst": 16.80000000000291,
+        "over250": 0,
+        "samples": 964
+      },
+      "renderedFps": 29.93732456166538,
+      "longtasks": []
+    }
+  ],
+  "note": "CPU and viewport emulation are not actual phone or GPU performance.",
+  "cpuRate": 4,
+  "viewport": {
+    "width": 844,
+    "height": 390,
+    "deviceScaleFactor": 3
+  },
+  "startupMs": 2700,
+  "pointerCoarse": true
+}

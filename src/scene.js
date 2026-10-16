@@ -94,7 +94,9 @@ async function loadDiffuseVariant(night, compile = true) {
   syncDiffuseRoom("hall");
   for (const data of bakedDiffuse.variants[night?"night":"day"] || []) diffuseBounce.install(data);
   syncDiffuseRoom(room);
-  if (compile) await Ht.compileAsync(Ct,ct);
+  // The mobile probe keeps its light identity and shader topology. Day/night
+  // changes update uniforms, not a fresh full-scene compilation.
+  if (compile && !quality.mobile) await Ht.compileAsync(Ct,ct);
   Oi();
 }
 let renderEffectTier = 0;
@@ -1263,6 +1265,7 @@ function tx({
     m = quality.maxDpr,
     y = m,
     b = quality.interactionDpr,
+    lastSteppedAt = 0,
     v = {
       frames: 0,
       renders: 0,
@@ -1312,6 +1315,13 @@ function tx({
   }
   function N(U) {
     if (((a = 0), n())) return;
+    // Pace the entire mobile simulation/render step. Capping only drawing
+    // still spends every display tick on collision, raycasts and lighting.
+    if (s && lastSteppedAt && U - lastSteppedAt < quality.targetFrameMs - 0.5) {
+      w();
+      return;
+    }
+    lastSteppedAt = U;
     ((u = !0), v.frames++);
     let B = h,
       J = t(U) || {};
@@ -1350,6 +1360,7 @@ function tx({
       clearTimeout(d),
       (d = 0),
       (c = !1),
+      (lastSteppedAt = 0),
       (f = 0));
   }
   function C() {
@@ -1384,6 +1395,7 @@ function tx({
       animating: h,
       suspended: n(),
       shadowAutoUpdate: i.shadowMap.autoUpdate,
+      frameCap: s ? 30 : null,
     }),
   };
 }
@@ -2556,7 +2568,7 @@ ut.cameras.forEach((i) => {
 var Vn = {};
 async function ew() {
   Object.assign(Vn, Jg(yi));
-  await refineMaterials(Vn, Ht, { progressive: true, onTextureReady: () => Jt?.request({ shadow: true }) });
+  await refineMaterials(Vn, Ht, { progressive: true, onTextureReady: () => Jt?.request() });
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
   configureRoomMaterials(Vn);
   prepareSalonMaterials(Vn);
@@ -3637,6 +3649,7 @@ function fw() {
 var ghostWalk = null,
   walkCollision = null,
   lastWalkFrame = 0,
+  walkObstacleMotion = false,
   lastWalkLightFocus = null,
   walkReturnView = null;
 function pw() {
@@ -3925,6 +3938,13 @@ function enterGhostWalk(pose) {
   const safeStart = walkCollision.move([ct.position.x, ct.position.z], [ct.position.x, ct.position.z]);
   ct.position.x = safeStart[0];
   ct.position.z = safeStart[1];
+  // Prepare observer-dependent lights before the first input, not on its first
+  // turn (which would otherwise trigger a shadow redraw right under the thumb).
+  _r?.setObserver?.(ct.position.toArray());
+  lastWalkLightFocus = ct.position.clone();
+  const entryRoom = observerRoom(ut.rooms,ct.position.toArray(),"all");
+  syncDiffuseRoom(entryRoom);
+  roomRadiance?.setRoom(entryRoom);
   ghostWalk = createGhostWalk({
     camera: ct,
     canvas: kn,
@@ -3933,17 +3953,21 @@ function enterGhostWalk(pose) {
         !lastWalkLightFocus ||
         lastWalkLightFocus.distanceTo(ct.position) > 0.7
       ) {
-        _r?.setObserver?.(ct.position.toArray());
+        const room = observerRoom(ut.rooms,ct.position.toArray(),"all");
+        const lightingChanged = !quality.mobile || lastWalkLightFocus === null ||
+          observerRoom(ut.rooms,lastWalkLightFocus.toArray(),"all") !== room;
+        if (lightingChanged) _r?.setObserver?.(ct.position.toArray());
         lastWalkLightFocus = ct.position.clone();
-        roomRadiance?.setRoom(observerRoom(ut.rooms,ct.position.toArray(),"all"));
-        syncDiffuseRoom(observerRoom(ut.rooms,ct.position.toArray(),"all"));
-        Jt?.request({ shadow: true });
+        roomRadiance?.setRoom(room);
+        syncDiffuseRoom(room);
+        Jt?.request({ shadow: lightingChanged });
       }
       Oi();
     },
     onMotion: (active) => (active ? Jt?.begin() : Jt?.end()),
     getTargets: walkTargets,
     resolveMove: (from, to) => walkCollision.move(from, to),
+    hasMovingObstacles: () => xu.size > 0 || walkObstacleMotion,
     onExit: exitGhostWalk,
   });
   Xp({ mode: "all" });
@@ -4208,19 +4232,23 @@ async function enableAtmosphere() {
   return atmospherePromise;
 }
 function vw(i) {
+  // Resolve against the current animated pose, including the final animation
+  // frame after its callback removes itself from xu.
+  let n = false, s = false;
+  for (let [r, a] of xu) {
+    const active = a(i);
+    n = true;
+    s ||= active;
+    if (!active) xu.delete(r);
+  }
+  walkObstacleMotion = n;
   const walked =
     ghostWalk?.update(
       Math.min(0.05, Math.max(0, (i - lastWalkFrame) / 1000)),
     ) || false;
   lastWalkFrame = i;
   let e = ghostWalk ? walked : $n ? $n.update() : Nt?.update() || !1,
-    t = e,
-    n = !1,
-    s = !1;
-  for (let [r, a] of xu) {
-    let o = a(i);
-    ((t = !0), (n = !0), (s ||= o), o || xu.delete(r));
-  }
+    t = e || n;
   const physics = atmosphere?.step(i, Bp(), n);
   return {
     dirty: t || physics?.dirty,
@@ -4335,9 +4363,10 @@ async function bw() {
     // prepare independent material pipelines asynchronously instead of blocking
     // the first visible frame with synchronous shader compilation.
     $e("#loading-status").textContent = "准备光影与材质";
-    diffuseBounce = await createDiffuseBounce({renderer:Ht,scene:Ct,model:ut,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
+    diffuseBounce = await createDiffuseBounce({renderer:Ht,scene:Ct,model:ut,backend:rendering.backend==="WebGPU"?"webgpu":"webgl",mobile:quality.mobile});
     await loadDiffuseVariant(_u, false);
-    bathMirror = await createBathMirror({scene:Ct,renderer:Ht,model:ut,materials:Vn,mobile:quality.mobile,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
+    if (quality.liveMirrors)
+      bathMirror = await createBathMirror({scene:Ct,renderer:Ht,model:ut,materials:Vn,mobile:quality.mobile,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
     if (gpuFinish) await gpuStartupDeadline(gpuFinish.compile(), 20000);
     else if (rendering.backend === "WebGPU") await gpuStartupDeadline(Ht.compileAsync(Ct, ct), 20000);
     else await Ht.compileAsync(Ct, ct);
@@ -4356,6 +4385,14 @@ async function bw() {
     visualEnhancementsReady = (async () => {
       await whenMaterialTexturesReady();
       startupStage("textures");
+      // Mobile keeps the shared prefiltered environment already installed in
+      // cw(). A full-house six-face capture pauses input, changes material
+      // pipelines and competes with the first interactive frames on phones.
+      if (!quality.roomReflections) {
+        startupStage("complete");
+        Oi();
+        return;
+      }
       await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
       roomRadiance = await createRoomRadiance({renderer:Ht,scene:Ct,model:ut,materials:Vn,mobile:quality.mobile,environmentGenerator,
         withRenderPaused: async work => { reflectionPauseDepth++; Jt.pause(); try { return await work(); } finally { reflectionPauseDepth--; if(!reflectionPauseDepth) { Jt.resume(); Jt.request({shadow:true}); } } }
@@ -4659,9 +4696,9 @@ window.homePresentation = {
     materialDetail: materialDetailState(),
     startup: { ...startupTiming, stages: { ...startupTiming.stages } },
     exterior: exteriorWorld?.audit(),
-    roomRadiance: roomRadiance?.audit(),
+    roomRadiance: roomRadiance?.audit() ?? {enabled:false,strategy:quality.reflectionStrategy,captureCount:0,captureInProgress:false,reason:"mobile_shared_environment"},
     diffuseBounce: diffuseBounce?.audit(),
-    mirror: bathMirror?.audit(),
+    mirror: bathMirror?.audit() ?? {enabled:false,renderedFramesObserved:0,strategy:"material-environment",reason:"mobile_shared_environment"},
     staticOcclusion,
     materials: auditMaterialSet(Vn),
     gpuFinish: gpuFinish?.audit() || {enabled:false,reason:quality.mobile?"mobile_budget":"compatible_direct_renderer"},

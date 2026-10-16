@@ -52,6 +52,9 @@ test("WebGL preserves views, motion, lighting, PNG and idle suspension", async (
   const download = page.waitForEvent("download");
   await page.click("#export");
   expect((await download).suggestedFilename()).toMatch(/\.png$/);
+  // Progressive mobile uploads can legitimately request frames after entry.
+  // Test demand-rendered idle after all visual work, not mid-hydration.
+  await page.evaluate(() => window.homePresentation.whenVisualReady());
   await page.waitForFunction(
     () => !window.homePresentation.getPerformance().pending,
   );
