@@ -9,6 +9,21 @@ test("home renders while material images are delayed, then hydrates all shared m
   });
   const materialRequests = new Set<string>();
   const pageErrors: string[] = [];
+  if (testInfo.config.metadata.hardwareGPU) {
+    await page.addInitScript(() => {
+      (window as any).__gpuMapAllocations = [];
+      const prototype = (globalThis as any).GPUDevice.prototype;
+      const create = prototype.createTexture;
+      prototype.createTexture = function (descriptor: any) {
+        if (String(descriptor.label).includes("progressive-placeholder")) {
+          const size = descriptor.size;
+          (window as any).__gpuMapAllocations.push({label: descriptor.label,
+            width: size.width ?? size[0], height: size.height ?? size[1]});
+        }
+        return create.call(this, descriptor);
+      };
+    });
+  }
   page.on("pageerror", (error) => pageErrors.push(error.message));
   page.on("request", (request) => {
     if (/\/materials\/.*\.webp(?:\?|$)/.test(request.url()))
@@ -117,6 +132,15 @@ test("home renders while material images are delayed, then hydrates all shared m
       ),
     ).toBe(true);
     expect(pageErrors).toEqual([]);
+    if (testInfo.config.metadata.hardwareGPU) {
+      // Inspect real GPU allocation descriptors, not only the CPU Image width.
+      const allocations = await page.evaluate(() => (window as any).__gpuMapAllocations);
+      const full = allocations.filter((a: any) => a.width > 1 && a.height > 1);
+      expect(new Set(full.map((a: any) => a.label)).size).toBe(12);
+      await testInfo.attach("gpu-texture-allocations", {
+        body: JSON.stringify(allocations, null, 2), contentType: "application/json",
+      });
+    }
   } finally {
     releaseRequests();
   }

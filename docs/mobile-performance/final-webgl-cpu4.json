@@ -61,7 +61,7 @@
           1266,
           585
         ],
-        "renders": 5,
+        "renders": 4,
         "shadowUpdates": 3,
         "roomRadiance": {
           "enabled": false,
@@ -99,12 +99,12 @@
         "drawCalls": 878,
         "triangles": 351348,
         "startup": {
-          "started": 167.79999999701977,
+          "started": 159.79999999701977,
           "stages": {
-            "renderer": 60,
-            "model": 2148,
-            "compiled": 2554,
-            "interactive": 2555
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503
           }
         },
         "frameP95Ms": null
@@ -138,7 +138,7 @@
           1266,
           585
         ],
-        "renders": 605,
+        "renders": 603,
         "shadowUpdates": 3,
         "roomRadiance": {
           "enabled": false,
@@ -173,33 +173,37 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 503,
-        "triangles": 201220,
+        "drawCalls": 494,
+        "triangles": 199752,
         "startup": {
-          "started": 167.79999999701977,
+          "started": 159.79999999701977,
           "stages": {
-            "renderer": 60,
-            "model": 2148,
-            "compiled": 2554,
-            "interactive": 2555,
-            "textures": 3375,
-            "complete": 3375
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
           }
         },
         "frameP95Ms": 33.400000000001455
       },
-      "elapsedMs": 20036.5,
+      "elapsedMs": 20027.89999999851,
       "raf": {
-        "p95": 16.799999999999272,
-        "worst": 83.40000000000009,
+        "p95": 16.700000000000728,
+        "worst": 66.59999999999991,
         "over250": 0,
-        "samples": 1193
+        "samples": 1197
       },
-      "renderedFps": 29.945349736730467,
+      "renderedFps": 29.90827795225883,
       "longtasks": [
         {
-          "start": 3161.60000000149,
-          "duration": 91
+          "start": 2928.7999999970198,
+          "duration": 50
+        },
+        {
+          "start": 3113.0999999940395,
+          "duration": 86
         }
       ]
     },
@@ -234,7 +238,7 @@
           1266,
           585
         ],
-        "renders": 605,
+        "renders": 603,
         "shadowUpdates": 3,
         "roomRadiance": {
           "enabled": false,
@@ -269,17 +273,17 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 503,
-        "triangles": 201220,
+        "drawCalls": 494,
+        "triangles": 199752,
         "startup": {
-          "started": 167.79999999701977,
+          "started": 159.79999999701977,
           "stages": {
-            "renderer": 60,
-            "model": 2148,
-            "compiled": 2554,
-            "interactive": 2555,
-            "textures": 3375,
-            "complete": 3375
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
           }
         },
         "frameP95Ms": 33.400000000001455
@@ -313,7 +317,7 @@
           1266,
           585
         ],
-        "renders": 1085,
+        "renders": 1084,
         "shadowUpdates": 5,
         "roomRadiance": {
           "enabled": false,
@@ -348,29 +352,29 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 700,
-        "triangles": 268974,
+        "drawCalls": 694,
+        "triangles": 268254,
         "startup": {
-          "started": 167.79999999701977,
+          "started": 159.79999999701977,
           "stages": {
-            "renderer": 60,
-            "model": 2148,
-            "compiled": 2554,
-            "interactive": 2555,
-            "textures": 3375,
-            "complete": 3375
+            "renderer": 59,
+            "model": 2096,
+            "compiled": 2503,
+            "interactive": 2503,
+            "textures": 3350,
+            "complete": 3350
           }
         },
         "frameP95Ms": 33.400000000001455
       },
-      "elapsedMs": 16059,
+      "elapsedMs": 16066.90000000596,
       "raf": {
-        "p95": 16.700000000004366,
-        "worst": 33.30000000000291,
+        "p95": 16.799999999995634,
+        "worst": 16.80000000000291,
         "over250": 0,
-        "samples": 962
+        "samples": 964
       },
-      "renderedFps": 29.889781430973283,
+      "renderedFps": 29.93732456166538,
       "longtasks": []
     }
   ],
@@ -381,6 +385,6 @@
     "height": 390,
     "deviceScaleFactor": 3
   },
-  "startupMs": 2772,
+  "startupMs": 2700,
   "pointerCoarse": true
 }

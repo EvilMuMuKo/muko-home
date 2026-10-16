@@ -99,12 +99,12 @@
         "drawCalls": 880,
         "triangles": 353349,
         "startup": {
-          "started": 153.5,
+          "started": 161.69999999552965,
           "stages": {
-            "renderer": 72,
-            "model": 2247,
-            "compiled": 5150,
-            "interactive": 5150
+            "renderer": 75,
+            "model": 2225,
+            "compiled": 5020,
+            "interactive": 5021
           }
         },
         "frameP95Ms": null
@@ -138,7 +138,7 @@
           1266,
           585
         ],
-        "renders": 599,
+        "renders": 598,
         "shadowUpdates": 3,
         "roomRadiance": {
           "enabled": false,
@@ -173,41 +173,41 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 464,
-        "triangles": 196841,
+        "drawCalls": 450,
+        "triangles": 195045,
         "startup": {
-          "started": 153.5,
+          "started": 161.69999999552965,
           "stages": {
-            "renderer": 72,
-            "model": 2247,
-            "compiled": 5150,
-            "interactive": 5150,
-            "textures": 6170,
-            "complete": 6170
+            "renderer": 75,
+            "model": 2225,
+            "compiled": 5020,
+            "interactive": 5021,
+            "textures": 6178,
+            "complete": 6178
           }
         },
         "frameP95Ms": 33.400000000001455
       },
-      "elapsedMs": 20040.20000000298,
+      "elapsedMs": 20039.89999999851,
       "raf": {
         "p95": 16.799999999999272,
-        "worst": 116.60000000000036,
+        "worst": 116.69999999999982,
         "over250": 0,
-        "samples": 1185
+        "samples": 1187
       },
-      "renderedFps": 29.690322451867324,
+      "renderedFps": 29.64086647139178,
       "longtasks": [
         {
-          "start": 5800.5,
-          "duration": 83
+          "start": 5736.39999999851,
+          "duration": 86
         },
         {
-          "start": 6050,
-          "duration": 117
+          "start": 5907.89999999851,
+          "duration": 122
         },
         {
-          "start": 6167.89999999851,
-          "duration": 83
+          "start": 6030.79999999702,
+          "duration": 81
         }
       ]
     },
@@ -242,7 +242,7 @@
           1266,
           585
         ],
-        "renders": 599,
+        "renders": 598,
         "shadowUpdates": 3,
         "roomRadiance": {
           "enabled": false,
@@ -277,17 +277,17 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 464,
-        "triangles": 196841,
+        "drawCalls": 450,
+        "triangles": 195045,
         "startup": {
-          "started": 153.5,
+          "started": 161.69999999552965,
           "stages": {
-            "renderer": 72,
-            "model": 2247,
-            "compiled": 5150,
-            "interactive": 5150,
-            "textures": 6170,
-            "complete": 6170
+            "renderer": 75,
+            "model": 2225,
+            "compiled": 5020,
+            "interactive": 5021,
+            "textures": 6178,
+            "complete": 6178
           }
         },
         "frameP95Ms": 33.400000000001455
@@ -356,29 +356,29 @@
           "note": "Room-averaged SH only; no position-based GI, dynamic occlusion, or runtime bake.",
           "lastError": null
         },
-        "drawCalls": 464,
-        "triangles": 196585,
+        "drawCalls": 429,
+        "triangles": 192461,
         "startup": {
-          "started": 153.5,
+          "started": 161.69999999552965,
           "stages": {
-            "renderer": 72,
-            "model": 2247,
-            "compiled": 5150,
-            "interactive": 5150,
-            "textures": 6170,
-            "complete": 6170
+            "renderer": 75,
+            "model": 2225,
+            "compiled": 5020,
+            "interactive": 5021,
+            "textures": 6178,
+            "complete": 6178
           }
         },
         "frameP95Ms": 33.400000000001455
       },
-      "elapsedMs": 16066.69999999553,
+      "elapsedMs": 16066.89999999851,
       "raf": {
-        "p95": 16.700000000004366,
+        "p95": 16.799999999999272,
         "worst": 33.400000000001455,
         "over250": 0,
-        "samples": 958
+        "samples": 959
       },
-      "renderedFps": 29.875456689932196,
+      "renderedFps": 29.93732456167927,
       "longtasks": []
     }
   ],
@@ -389,6 +389,6 @@
     "height": 390,
     "deviceScaleFactor": 3
   },
-  "startupMs": 5314,
+  "startupMs": 5194,
   "pointerCoarse": true
 }

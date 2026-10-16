@@ -558,10 +558,20 @@ export async function refineMaterials(
   };
   if (progressive) {
     prepareMaterials(placeholders);
-    const hydrate = (target: THREE.Texture, source: THREE.Texture | null) => {
+    const hydrate = async (target: THREE.Texture, source: THREE.Texture | null) => {
       if (!source) return;
       // Keep the placeholder Texture object so materials cloned before decode
       // continue to see the final image without any map replacement.
+      // WebGPU allocations have immutable dimensions. Updating image/version
+      // alone leaves a previously rendered 1x1 allocation at 1x1. Dispose its
+      // GPU storage (not the shared JS identity) before re-uploading the map.
+      const prior = target.image as { width?: number; height?: number };
+      const next = source.image as { width: number; height: number };
+      if (prior?.width !== next.width || prior?.height !== next.height) {
+        const queue = (renderer as any).backend?.device?.queue;
+        if (queue?.onSubmittedWorkDone) await queue.onSubmittedWorkDone();
+        target.dispose();
+      }
       target.image = source.image;
       target.needsUpdate = true;
       source.dispose();
@@ -580,7 +590,7 @@ export async function refineMaterials(
           // mobile task instead of sending twelve full images in one frame.
           // Timers also settle in hidden/portrait pages where rAF is paused.
           if (mobile) await new Promise(resolve => setTimeout(resolve, 40));
-          hydrate(placeholders[i][key]!, loaded);
+          await hydrate(placeholders[i][key]!, loaded);
           if (loaded) {
             if (mobile) renderer.initTexture(placeholders[i][key]!);
             textureState.hydrated++;
