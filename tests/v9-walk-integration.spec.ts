@@ -147,10 +147,27 @@ test("arrival is directly walkable and real wall/closed door block while an open
   expect((await page.evaluate(()=>window.homePresentation.getCamera().position))[0]).toBeLessThan(6.75);
   await page.evaluate(()=>window.homePresentation.setWalkDoorOpen("master-door",true));
   await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()["master-door"])<.001);
+  // Opening a leaf while pressed against it can legitimately push the body
+  // sideways out of the doorway. Compare open/closed travel from the same
+  // centered approach, independently of that frame-dependent push direction.
+  const afterDoorSwing = await page.evaluate(()=>({
+    position: window.homePresentation.getCamera().position,
+    frames: window.homePresentation.getPerformance().frames,
+    door: window.homePresentation.getWalkDoorStates()["master-door"],
+  }));
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
   await page.keyboard.down("w");
   try {
     await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:12000}).toBeGreaterThan(7.05);
-  } finally { await page.keyboard.up("w"); }
+  } finally {
+    await page.keyboard.up("w");
+    const afterPassage = await page.evaluate(()=>({
+      position: window.homePresentation.getCamera().position,
+      frames: window.homePresentation.getPerformance().frames,
+      door: window.homePresentation.getWalkDoorStates()["master-door"],
+    }));
+    await writeFile(test.info().outputPath("door-swing-position.json"), JSON.stringify({afterDoorSwing,afterPassage}));
+  }
   expect(errors).toEqual([]);
 });
 

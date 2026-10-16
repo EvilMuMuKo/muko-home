@@ -32,6 +32,8 @@ try {
  report.closedDoorPosition=await page.evaluate(()=>window.homePresentation.getCamera().position);assert(report.closedDoorPosition[0]<6.75);report.checks.closedDoorBlocks=true;
  await page.evaluate(()=>window.homePresentation.setWalkDoorOpen('master-door',true));
  await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()['master-door'])<.001);
+ report.afterDoorSwing=await page.evaluate(()=>window.homePresentation.getCamera().position);
+ await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
  await page.keyboard.down('w');
  try {await page.waitForFunction(()=>window.homePresentation.getCamera().position[0]>7.05,null,{timeout:12000});}finally{await page.keyboard.up('w');}
  report.openDoorPosition=await page.evaluate(()=>window.homePresentation.getCamera().position);report.checks.openDoorPasses=true;
