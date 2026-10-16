@@ -241,7 +241,7 @@ test("daily dining is parked by default and stores a physical envelope, while us
         rotation: 0,
       },
       provenance:
-        "Bistro 96 cm product candidate; folding/table support mechanism is concept-only",
+        expect.stringContaining("not manufacturer CAD"),
     },
     usePositions: {
       table: { x: 2.35, z: 6.45, rotation: 0 },
