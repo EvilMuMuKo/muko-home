@@ -120,6 +120,7 @@ export function buildInteriorDetails(
   m: Materials,
   tag: (n: THREE.Object3D, rooms: string[], kind: string) => void,
   spatial = false,
+  model?: { version: string; objects: Record<string, any>[] },
 ) {
   m.barTile = createTileMaterial();
   const groups = new Map<string, THREE.Group>();
@@ -206,7 +207,7 @@ export function buildInteriorDetails(
     box(living, 0.016, 0.29, 0.36, 10.49, 0.52, 7.43, "clayFabric", 0.004);
   }
   // A few game cases on the rear sideboard with a restrained framed print above.
-  for (let j = 0; j < 4; j++)
+  for (let j = 0; j < (model?.version === "9.0.0" ? 0 : 4); j++)
     box(
       living,
       0.026,
@@ -354,6 +355,18 @@ export function buildInteriorDetails(
   }
   return {
     apply,
+    toggleScreen(room: string) {
+      for (const screen of screens.filter((screen) => screen.room === room)) {
+        const active = screen.material.emissiveIntensity < 0.1;
+        screen.material.map = screen.material.emissiveMap = active
+          ? poster
+          : null;
+        screen.material.color.set(active ? "#ffffff" : "#111615");
+        screen.material.emissive.set(active ? "#ffffff" : "#000000");
+        screen.material.emissiveIntensity = active ? 0.35 : 0;
+        screen.material.needsUpdate = true;
+      }
+    },
     setDoorOpen,
     getState: () => ({
       moment: current,
@@ -362,8 +375,10 @@ export function buildInteriorDetails(
       palette: roomPalette,
       screenInches: 83,
       acousticPanels: spatial ? 5 : 3,
-      compositionVersion: spatial ? 8 : 7,
-      storageGroups: 24,
+      compositionVersion: model?.version === "9.0.0" ? 9 : spatial ? 8 : 7,
+      storageGroups: model
+        ? model.objects.filter((o) => o.type === "wall_storage").length
+        : 24,
       decorRooms: [...groups.keys()],
       moments: themeMoments.map((s) => s.id),
     }),
@@ -374,16 +389,6 @@ export function mountMomentControls(
   onDoor: () => void,
   onReviewDoor: () => void,
 ) {
-  const container = document.querySelector("#theme-moments")!;
-  for (const moment of themeMoments) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = moment.label;
-    button.dataset.moment = moment.id;
-    button.setAttribute("aria-pressed", String(moment.id === "aperitif"));
-    button.onclick = () => onSelect(moment.id);
-    container.append(button);
-  }
   const review = document.createElement("button");
   review.id = "cinema-door-review";
   review.type = "button";

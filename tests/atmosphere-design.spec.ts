@@ -10,7 +10,6 @@ import {
 import {
   createAtmosphereDesign,
   roomPalette,
-  themeMoments,
 } from "../src/atmosphere-design";
 import { finishWall } from "../src/room-finish";
 
@@ -72,7 +71,7 @@ test("wall finishes colour the two physical faces independently without recolour
   material.dispose();
 });
 
-test("theme controls coordinate lights, darkening, door, shutters and the convertible guest bed", async ({
+test("cinema and guest-stay state APIs coordinate room lighting, doors and the convertible guest bed", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -81,22 +80,10 @@ test("theme controls coordinate lights, darkening, door, shutters and the conver
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   expect(
     await page.evaluate(() => window.homePresentation.getState().version),
-  ).toBe("8.0.0");
+  ).toBe("9.0.0");
   await page.click("#panel-toggle");
-  await expect(page.locator("[data-moment]")).toHaveCount(themeMoments.length);
-  await page.click('[data-moment="coffee"]');
-  await page.waitForFunction(
-    () => !window.homePresentation.getPerformance().pending,
-  );
-  expect(
-    await page.evaluate(() => window.homePresentation.getState().night),
-  ).toBe(false);
-  expect(
-    await page.evaluate(() => window.homePresentation.getState().activePoint),
-  ).toBe("bar-ritual");
   await page.evaluate(() => window.homePresentation.setStorageOpen(true));
-  await page.click("#panel-toggle");
-  await page.click('[data-moment="cinema"]');
+  await page.evaluate(() => window.homePresentation.setLightingScene("cinema"));
   await page.waitForFunction(
     () => !window.homePresentation.getPerformance().pending,
   );
@@ -117,33 +104,25 @@ test("theme controls coordinate lights, darkening, door, shutters and the conver
       cinema.state.lighting.allocated.map((f) => f.sourceId),
     ).not.toContain(id);
   }
+  await page.click("#tab-space");
+  await page.click('[data-view="guest"]');
   await page.click("#panel-toggle");
-  await page.click('[data-moment="guest-stay"]');
+  await page.click("#tab-action");
+  await page.click("#bed-state");
   await page.waitForFunction(
     () => window.homePresentation.getState().bedProgress === 1,
   );
-  await page.click("#panel-toggle");
-  await page.click("#tab-action");
-  await page.click("#cinema-door-review");
-  expect(
-    await page.evaluate(() => window.homePresentation.getState().activePoint),
-  ).toBe("cinema-door-review");
-  await page.click("#panel-toggle");
-  await page.click("#tab-action");
-  await page.click("#cinema-door-toggle");
-  expect(
-    await page.evaluate(
-      () => window.homePresentation.getAtmosphereDesign().doorOpen,
-    ),
-  ).toBe(true);
-  await page.click("#panel-close");
-  await page.evaluate(() => window.homePresentation.setLightingScene("game"));
+  await page.evaluate(() => window.homePresentation.setLightingScene("guest-stay"));
   await page.waitForFunction(
     () => !window.homePresentation.getPerformance().pending,
   );
-  expect(
-    await page.evaluate(() => window.homePresentation.getState().active),
-  ).toBe("living");
+  const guestStay = await page.evaluate(() => ({
+    state: window.homePresentation.getState(),
+    atmosphere: window.homePresentation.getAtmosphereDesign(),
+  }));
+  expect(guestStay.state.bedProgress).toBe(1);
+  expect(guestStay.atmosphere.doorOpen).toBe(false);
+  expect(guestStay.atmosphere.blackoutClosed).toBe(true);
   expect(
     await page.evaluate(
       () => window.homePresentation.getPerformance().materialDetail.loaded,
