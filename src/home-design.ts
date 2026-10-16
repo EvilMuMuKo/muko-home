@@ -746,7 +746,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
           localFoldedFootprint: { w: 1.05, d: 0.3 },
         },
         provenance:
-          "Bistro 96 cm product candidate; folding/table support mechanism is concept-only",
+          "Generic 960 mm folding-table concept; geometry, folded budget and support mechanism are not manufacturer CAD",
         foldedPositionStatus:
           "candidate; preserve kitchen-slider clear opening",
       },
@@ -950,8 +950,14 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
 
   // Keep the bar-seat camera aimed at daily dining and the preparation leg;
   // the living camera now shows the flipped sofa/media axis.
+  model.presentation.defaultView = "entry-view";
   const views = model.presentation.interiorViews as any[];
   for (const view of views) {
+    if (view.id === "entry-view") {
+      view.position = [5.775, 1.74, 8.17];
+      view.target = [4.1, 1.35, 6.55];
+      view.horizontalFov = 92;
+    }
     if (["living-main", "living-lounge"].includes(view.id)) {
       view.position = [10.95, 1.4, 6.05];
       view.target = [9.3, 1.15, 8.9];

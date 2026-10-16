@@ -1,3 +1,4 @@
+import { showWelcome } from "./welcome";
 import { createGhostWalk } from "./ghost-walk";
 import { auditSceneModel } from "./model-audit";
 import { buildPlant } from "./plant-mesh";
@@ -4183,6 +4184,7 @@ async function bw() {
   }
 }
 await bw();
+if (vu) showWelcome();
 if (vu)
   mountMomentControls(
     (id) => Fp(id),
