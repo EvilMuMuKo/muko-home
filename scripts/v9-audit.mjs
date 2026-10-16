@@ -127,6 +127,26 @@ try {
     ];
     const profileRun = { profile: profile.id, runtime, design, captures: [], extraCaptures: [], pageErrors };
 
+    if (!performanceOnly) {
+      const welcomePage = await context.newPage();
+      const welcomeErrors = [];
+      welcomePage.on("pageerror", (error) => welcomeErrors.push(error.message));
+      await welcomePage.emulateMedia({ reducedMotion: "no-preference" });
+      await welcomePage.goto(baseURL, { waitUntil: "networkidle" });
+      await welcomePage.waitForFunction(() => window.homePresentation?.getState().ready, { timeout: 120_000 });
+      await welcomePage.locator(".home-welcome").waitFor({ state: "visible", timeout: 5_000 });
+      const welcomeScreenshot = resolve(outputDir, `${label}-${profile.id}-welcome-entry.png`);
+      await welcomePage.screenshot({ path: welcomeScreenshot, animations: "disabled" });
+      profileRun.welcomeCapture = {
+        screenshot: welcomeScreenshot,
+        text: await welcomePage.locator(".home-welcome p").textContent(),
+        ribbonCount: await welcomePage.locator(".home-welcome i").count(),
+        camera: await welcomePage.evaluate(() => window.homePresentation.getCamera()),
+        pageErrors: welcomeErrors,
+      };
+      await welcomePage.close();
+    }
+
     for (const view of views) {
       const viewReady = await page.evaluate(({ id, light }) => {
         const api = window.homePresentation;
@@ -256,6 +276,10 @@ try {
       );
     };
     const overview = async () => {
+      const panel = page.locator("#control-panel");
+      if (await panel.evaluate((node) => node.hidden))
+        await page.locator("#panel-toggle").click();
+      await page.locator("#tab-space").click();
       await page.locator("#overview-view").click();
       await page.waitForTimeout(250);
     };
@@ -263,6 +287,18 @@ try {
     // Geometry/state coverage beyond the three timed performance views.
     if (!performanceOnly) {
       await captureExtra("overview", overview);
+      await captureExtra("ghost-walk-fridge", async () => {
+        await page.evaluate(() => window.homePresentation.startGhostWalk({
+          position: [3.25, 1.74, 4.05],
+          target: [4.25, 1.15, 4.05],
+        }));
+        await page.waitForFunction(
+          () => window.homePresentation.getGhostWalkState().nearestId === "walk-fridge",
+          { timeout: 5_000 },
+        );
+      });
+      await page.evaluate(() => window.homePresentation.stopGhostWalk());
+      await page.waitForTimeout(100);
       await captureExtra("hatch-closed", async () => {
         await page.evaluate(() => window.homePresentation.setHatchOpen(false));
         await waitProgress("hatchProgress", 0);

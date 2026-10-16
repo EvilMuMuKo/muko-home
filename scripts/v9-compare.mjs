@@ -40,8 +40,31 @@ const metrics = [
 function getMetric(record, path) {
   return path.split(".").reduce((value, part) => value?.[part], record);
 }
+const cameraTolerance = {
+  positionM: 0.01,
+  targetM: 0.01,
+  verticalFovDegrees: 0.1,
+  aspect: 0.01,
+};
+function cameraEquivalence(a, b) {
+  const first = a?.camera, second = b?.camera;
+  if (!first || !second || !Array.isArray(first.position) || !Array.isArray(second.position) ||
+      !Array.isArray(first.target) || !Array.isArray(second.target))
+    return { equivalent: false, reason: "camera data missing", deltas: null };
+  const deltas = {
+    positionM: Math.max(...first.position.map((value, index) => Math.abs(value - second.position[index]))),
+    targetM: Math.max(...first.target.map((value, index) => Math.abs(value - second.target[index]))),
+    verticalFovDegrees: Math.abs(first.verticalFov - second.verticalFov),
+    aspect: Math.abs(first.aspect - second.aspect),
+  };
+  const equivalent = Object.entries(cameraTolerance).every(([key, tolerance]) =>
+    Number.isFinite(deltas[key]) && deltas[key] <= tolerance,
+  );
+  return { equivalent, deltas, tolerance: cameraTolerance };
+}
 const comparisons = [...new Set([...before.keys(), ...after.keys()])].sort().map((capture) => {
   const base = before.get(capture), candidate = after.get(capture);
+  const cameraMatch = cameraEquivalence(base, candidate);
   const rows = Object.fromEntries(metrics.map((metric) => {
     const baseline = getMetric(base, metric), current = getMetric(candidate, metric);
     return [metric, {
@@ -53,12 +76,21 @@ const comparisons = [...new Set([...before.keys(), ...after.keys()])].sort().map
         : null,
     }];
   }));
-  return { capture, matched: !!base && !!candidate, metrics: rows };
+  return {
+    capture,
+    matched: !!base && !!candidate,
+    cameraEquivalent: cameraMatch,
+    timingComparable: !!base && !!candidate && cameraMatch.equivalent,
+    metrics: rows,
+  };
 });
 const result = {
   baseline: { label: v8.label, capturedAt: v8.capturedAt, note: v8.note },
   candidate: { label: v9.label, capturedAt: v9.capturedAt, note: v9.note },
-  note: "Performance metrics are comparable only within this matched SwiftShader/emulated-browser setup. renderMs is synchronous JavaScript render-call duration; frameMs is requestAnimationFrame interval during an automated pointer gesture, not GPU timing or real-device FPS. Extra design-state screenshots are not performance measurements.",
+  note: "Performance metrics are comparable only within this matched SwiftShader/emulated-browser setup and when timingComparable is true. View IDs are not assumed to imply equal camera poses. Camera equivalence tolerances are 0.01 m for position/target, 0.1 degrees vertical FOV, and 0.01 aspect ratio. renderMs is synchronous JavaScript render-call duration; frameMs is requestAnimationFrame interval during an automated pointer gesture, not GPU timing or real-device FPS. Extra design-state screenshots are not performance measurements.",
+  cameraTolerance,
+  timingComparableCount: comparisons.filter((item) => item.timingComparable).length,
+  poseChanged: comparisons.filter((item) => item.matched && !item.timingComparable).map((item) => item.capture),
   comparisons,
   unmatchedV8: [...before.keys()].filter((capture) => !after.has(capture)),
   unmatchedV9: [...after.keys()].filter((capture) => !before.has(capture)),

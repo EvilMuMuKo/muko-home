@@ -29,16 +29,38 @@ export function showWelcome(): () => void {
       root.append(ribbon);
     }
   }
-  document.querySelector("#viewer")!.append(root);
-  // Animation is transient; no retained particles, listeners, timers or GPU context.
+  // Wait until module/deferred scene initialization has completed and the browser
+  // has had a chance to paint the arrival view. Starting the timer while the
+  // renderer is still booting can consume the entire welcome before it is seen.
   const duration = reduced ? 2200 : 4200;
+  let timer: number | undefined;
+  let frame1 = 0;
+  let frame2 = 0;
+  let dismissed = false;
+  const start = () => {
+    if (dismissed) return;
+    frame1 = requestAnimationFrame(() => {
+      frame2 = requestAnimationFrame(() => {
+        if (dismissed) return;
+        document.querySelector("#viewer")!.append(root);
+        // CSS animations start on insertion, so begin the dismissal clock here too.
+        timer = window.setTimeout(dismiss, duration);
+      });
+    });
+  };
   const dismiss = () => {
-    clearTimeout(timer);
+    dismissed = true;
+    if (timer !== undefined) clearTimeout(timer);
+    cancelAnimationFrame(frame1);
+    cancelAnimationFrame(frame2);
+    window.removeEventListener("load", onLoad);
     document.removeEventListener("pointerdown", dismiss);
     document.removeEventListener("keydown", dismiss);
     root.remove();
   };
-  const timer = setTimeout(dismiss, duration);
+  const onLoad = () => start();
+  if (document.readyState === "complete") start();
+  else window.addEventListener("load", onLoad, { once: true });
   document.addEventListener("pointerdown", dismiss, { once: true });
   document.addEventListener("keydown", dismiss, { once: true });
   return dismiss;
