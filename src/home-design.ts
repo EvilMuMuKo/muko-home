@@ -954,7 +954,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
   for (const view of views) {
     if (view.id === "entry-view") {
       view.position = [5.775, 1.74, 8.17];
-      view.target = [4.1, 1.35, 6.55];
+      view.target = [6.65, 1.35, 6.3];
       view.horizontalFov = 92;
     }
     if (["living-main", "living-lounge"].includes(view.id)) {
@@ -983,6 +983,33 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       view.target = [2.35, 1.0, 6.45];
     }
   }
+
+  views.push(
+    {
+      id: "entry-storage",
+      roomId: "bar",
+      label: "玄关随手收纳",
+      position: [7.15, 1.62, 7.15],
+      target: [7.3, 1.55, 8.29],
+      horizontalFov: 74,
+    },
+    {
+      id: "master-bay",
+      roomId: "master",
+      label: "主卧飘窗",
+      position: [10.6, 1.48, 2.8],
+      target: [11.95, 1.25, 2.0],
+      horizontalFov: 82,
+    },
+    {
+      id: "guest-bay",
+      roomId: "guest",
+      label: "客房飘窗",
+      position: [1.2, 1.5, 2.4],
+      target: [-0.25, 1.3, 1.5],
+      horizontalFov: 82,
+    },
+  );
 
   // Replace the V8 lighting presets that were tuned against the old view and
   // portal fixture. Keep the atmosphere package's current authored levels.

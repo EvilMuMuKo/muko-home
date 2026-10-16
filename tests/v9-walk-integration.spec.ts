@@ -98,3 +98,26 @@ test("whole-model geometry inventory has no missing object or nonfinite data", a
     JSON.stringify(report, null, 2),
   );
 });
+test("visible lighting choices preserve the current hatch and dining furniture state", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.waitForFunction(() => window.homePresentation?.getState().ready);
+  await page.evaluate(() => {
+    const a = window.homePresentation;
+    a.setHatchOpen(false);
+    a.setDiningOpen(true);
+  });
+  await page.waitForFunction(
+    () => window.homePresentation.getState().diningProgress > 0.99,
+  );
+  for (const scene of ["aperitif", "cinema", "day-public"]) {
+    await page.evaluate(
+      (s) => window.homePresentation.setLightingScene(s),
+      scene,
+    );
+    const state = await page.evaluate(() => window.homePresentation.getState());
+    expect(state.diningProgress).toBeCloseTo(1);
+    expect(state.hatchProgress).toBeCloseTo(0);
+  }
+});

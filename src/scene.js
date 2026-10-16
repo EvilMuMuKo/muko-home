@@ -3267,8 +3267,6 @@ function Fp(i) {
   }
   if (i === "guest-stay") vx(true);
   if (i === "two-person-dining") ns({ dining: 1, gate: 1 });
-  if (["day-public", "coffee", "game", "cinema"].includes(i))
-    ns({ dining: 0, gate: 1 });
   if (
     !ghostWalk &&
     moment?.viewId &&
