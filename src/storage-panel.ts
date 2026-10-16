@@ -1,4 +1,8 @@
-import { storageCapacity, upperStorage } from "./storage-design";
+import {
+  storageCapacity,
+  upperStorage,
+  type StorageUnit,
+} from "./storage-design";
 const roomNames: Record<string, string> = {
   kitchen: "厨房",
   bar: "水吧与餐厅",
@@ -22,14 +26,16 @@ const reviewPoints: Record<string, string> = {
 export function mountStoragePanel(
   onView: (id: string) => void,
   onOpen: () => void,
+  actualUnits: StorageUnit[] = upperStorage,
 ) {
   const list = document.querySelector("#storage-list")!;
-  const report = storageCapacity();
+  const report = storageCapacity(actualUnits);
   document.querySelector("#storage-summary")!.textContent =
-    `${upperStorage.length} 组上部柜体 · 封闭约 ${(report.closedLitres / 1000).toFixed(1)} m³ · 展示约 ${(report.displayLitres / 1000).toFixed(1)} m³`;
+    "随手取用，妥帖收藏。";
   for (const [room, name] of Object.entries(roomNames)) {
-    const units = report.units.filter((u) => u.room === room),
-      card = document.createElement("article");
+    const units = report.units.filter((u) => u.room === room);
+    if (!units.length) continue;
+    const card = document.createElement("article");
     card.className = "storage-card";
     const button = document.createElement("button");
     button.type = "button";
@@ -38,7 +44,9 @@ export function mountStoragePanel(
     button.onclick = () => onView(reviewPoints[room]);
     card.append(button);
     const capacity = document.createElement("p");
-    capacity.textContent = `封闭 ${Math.round(units.reduce((s, u) => s + u.closedLitres, 0))} L · 展示 ${Math.round(units.reduce((s, u) => s + u.displayLitres, 0))} L`;
+    capacity.textContent = units.some((u) => u.access === "seasonal")
+      ? "日常与季节收纳"
+      : "日常收纳";
     card.append(capacity);
     const text = document.createElement("p");
     text.textContent = units

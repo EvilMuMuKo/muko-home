@@ -12,18 +12,18 @@ export function prepareSalonMaterials(m: Record<string, THREE.Material>) {
     m[name] = a;
     return a;
   };
-  clone("salonTimber", "oak", "#9c7955", 0.84);
-  clone("salonDarkTimber", "oak", "#69513d", 0.9);
-  clone("salonFabric", "linen", "#cdbda5", 0.98);
-  clone("salonClay", "linen", "#ad7157", 0.96);
-  clone("salonVault", "linen", "#918072", 0.98);
-  clone("salonPanel", "linen", "#716158", 1);
-  clone("salonFrame", "upperPaint", "#cbbb9e", 0.8);
-  clone("salonMediaFrame", "upperPaint", "#c9bda8", 0.82);
-  clone("salonCinemaFrame", "upperPaint", "#786556", 0.95);
-  const paper = clone("salonPaper", "linen", "#f2e5c9", 0.92);
-  paper.emissive.set("#caa072");
-  paper.emissiveIntensity = 0.1;
+  clone("salonTimber", "oak", "#a88968", 0.9);
+  clone("salonDarkTimber", "oak", "#65564a", 0.94);
+  clone("salonFabric", "linen", "#d0cec6", 0.98);
+  clone("salonClay", "linen", "#b77d67", 0.96);
+  clone("salonVault", "linen", "#a7a198", 0.98);
+  clone("salonPanel", "linen", "#746e66", 1);
+  clone("salonFrame", "upperPaint", "#c5b59b", 0.88);
+  clone("salonMediaFrame", "upperPaint", "#c7c2b6", 0.9);
+  clone("salonCinemaFrame", "upperPaint", "#81776b", 0.96);
+  const paper = clone("salonPaper", "linen", "#eeeae0", 0.94);
+  paper.emissive.set("#8e8577");
+  paper.emissiveIntensity = 0.035;
   paper.normalScale.setScalar(0.1);
   // One shared metre-scale stone atlas, generated locally; low-amplitude strata and pores.
   const canvas = document.createElement("canvas");
@@ -41,9 +41,9 @@ export function prepareSalonMaterials(m: Record<string, THREE.Material>) {
         pore = seed % 199 === 0 ? -20 : 0,
         v = stratum + pore + (seed % 5) - 2;
       const i = (y * 1024 + x) * 4;
-      pixels.data[i] = 216 + v;
-      pixels.data[i + 1] = 201 + v;
-      pixels.data[i + 2] = 175 + v;
+      pixels.data[i] = 207 + v;
+      pixels.data[i + 1] = 207 + v;
+      pixels.data[i + 2] = 198 + v;
       pixels.data[i + 3] = 255;
     }
   c.putImageData(pixels, 0, 0);
@@ -57,29 +57,15 @@ export function prepareSalonMaterials(m: Record<string, THREE.Material>) {
   m.salonStone = new THREE.MeshStandardMaterial({
     map,
     bumpMap: bump,
-    bumpScale: 0.0015,
-    roughness: 0.76,
-    color: "#f4eddf",
+    bumpScale: 0.0008,
+    roughness: 0.84,
+    color: "#efeee8",
   });
   m.salonDarkStone = new THREE.MeshStandardMaterial({
     map,
     roughness: 0.8,
-    color: "#827465",
+    color: "#777168",
   });
-  // Subtle vertical relief for cabinet fronts and pedestal tambours; shared texture, no slat draw calls.
-  const ribs = document.createElement("canvas");
-  ribs.width = 256;
-  ribs.height = 32;
-  const rc = ribs.getContext("2d")!;
-  for (let x = 0; x < 256; x++) {
-    const v = Math.round(125 + 90 * Math.cos((x * Math.PI) / 16));
-    rc.fillStyle = `rgb(${v},${v},${v})`;
-    rc.fillRect(x, 0, 1, 32);
-  }
-  const relief = new THREE.CanvasTexture(ribs);
-  relief.wrapS = relief.wrapT = THREE.RepeatWrapping;
-  relief.repeat.set(8, 1);
-  const timber = clone("salonReeded", "salonTimber", "#94704d", 0.88);
-  timber.bumpMap = relief;
-  timber.bumpScale = 0.002;
+  // Keep the established material id; calm continuous grain avoids another repeated rib pattern.
+  clone("salonReeded", "salonTimber", "#9e8061", 0.92);
 }

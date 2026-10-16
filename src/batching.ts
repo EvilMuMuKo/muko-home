@@ -15,6 +15,14 @@ export function batchFurniture(
     "office_chair",
     "dining_chair",
     "door_leaf",
+    "folding_table",
+    "folding_chair",
+    "dishwasher",
+    "modular_sofa",
+    "mobile_tv",
+    "ps5",
+    "washer",
+    "dryer",
   ]);
   const buckets = new Map<string, { mesh: THREE.Mesh; rooms: string[] }[]>();
   scene.updateMatrixWorld(true);

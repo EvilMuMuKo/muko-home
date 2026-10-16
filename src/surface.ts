@@ -51,8 +51,8 @@ export function enhanceSurfaces(
   canvas.width = canvas.height = 64;
   const context = canvas.getContext("2d")!;
   const gradient = context.createRadialGradient(32, 32, 3, 32, 32, 32);
-  gradient.addColorStop(0, "rgba(35,29,22,.32)");
-  gradient.addColorStop(0.55, "rgba(35,29,22,.18)");
+  gradient.addColorStop(0, "rgba(34,33,30,.24)");
+  gradient.addColorStop(0.55, "rgba(34,33,30,.13)");
   gradient.addColorStop(1, "rgba(35,29,22,0)");
   context.fillStyle = gradient;
   context.fillRect(0, 0, 64, 64);
@@ -84,8 +84,25 @@ export function enhanceSurfaces(
     "desk",
     "bench",
   ]);
+  const dynamicFurniture = new Set([
+    "fridge",
+    "sofa_bed",
+    "mobile_tv",
+    "modular_sofa",
+    "ps5",
+    "folding_table",
+    "folding_chair",
+    "office_chair",
+    "dining_chair",
+    "round_table",
+  ]);
   for (const object of objects) {
-    if (!grounded.has(object.type) || (object.y ?? 0) > 0.12) continue;
+    if (
+      !grounded.has(object.type) ||
+      dynamicFurniture.has(object.type) ||
+      (object.y ?? 0) > 0.12
+    )
+      continue;
     const plane = new THREE.PlaneGeometry(object.w + 0.32, object.d + 0.32);
     plane.rotateX(-Math.PI / 2);
     plane.rotateY(-THREE.MathUtils.degToRad(object.rotation ?? 0));

@@ -19,28 +19,28 @@ export function configureRoomMaterials(m: Materials) {
   walls.map = null;
   walls.normalMap = null;
   walls.vertexColors = true;
-  clone("barPaint", "upperPaint", "#e2d5bf", 0.62);
-  clone("livingPaint", "upperPaint", roomPalette.oat, 0.7);
+  clone("barPaint", "upperPaint", roomPalette.oat, 0.78);
+  clone("livingPaint", "upperPaint", roomPalette.oat, 0.78);
   clone("mediaPaint", "upperPaint", roomPalette.media, 0.75);
   clone("cinemaPaint", "upperPaint", roomPalette.cinema, 0.92);
   clone("cinemaCeiling", "plaster", roomPalette.cinemaCeiling, 1);
-  clone("barWood", "oak", "#c2a582");
-  clone("livingWood", "oak", "#dcc8a4");
-  clone("cinemaWood", "oak", "#70523f");
-  clone("barInterior", "cabinetInterior", "#73604e");
-  clone("livingInterior", "cabinetInterior", "#bbab91");
-  clone("cinemaInterior", "cabinetInterior", "#51433a");
-  clone("livingFabric", "linen", "#e3d7c3");
-  clone("cinemaFabric", "linen", "#8b7468");
-  clone("cinemaCurtain", "linen", "#463f3c");
-  clone("cinemaAcoustic", "linen", "#534944");
-  clone("clayFabric", "linen", "#b7775c");
-  clone("oliveFabric", "sage", "#77806b");
-  clone("cinemaMetal", "bronze", "#6f6252", 0.55);
+  clone("barWood", "oak", "#ae906f", 0.9);
+  clone("livingWood", "oak", "#ae906f", 0.9);
+  clone("cinemaWood", "oak", "#756353", 0.94);
+  clone("barInterior", "cabinetInterior", "#746a5c");
+  clone("livingInterior", "cabinetInterior", "#bdb8aa");
+  clone("cinemaInterior", "cabinetInterior", "#58534c");
+  clone("livingFabric", "linen", "#d8d7cf");
+  clone("cinemaFabric", "linen", "#a49a8d");
+  clone("cinemaCurtain", "linen", "#514d47");
+  clone("cinemaAcoustic", "linen", "#5d5851");
+  clone("clayFabric", "linen", "#b77d67");
+  clone("oliveFabric", "sage", "#777c68");
+  clone("cinemaMetal", "bronze", "#746b5e", 0.64);
   clone("paperPaint", "upperPaint", roomPalette.paper, 0.82);
   clone("piping", "linen", "#baaa91");
   const glass = clone("barGlass", "displayGlass", "#b7aa8f", 0.16);
-  glass.opacity = 0.24;
+  glass.opacity = 0.2;
 }
 export function finishWall(
   mesh: THREE.Mesh,

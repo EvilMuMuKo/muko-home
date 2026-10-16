@@ -1,3 +1,16 @@
+import { createGhostWalk } from "./ghost-walk";
+import { auditSceneModel } from "./model-audit";
+import { buildPlant } from "./plant-mesh";
+import { daylightStudy, sunDirection } from "./daylight";
+import { createHomeDesign } from "./home-design";
+import {
+  createHomeMotion,
+  buildHomeFurniture,
+  buildHomeArchitecture,
+  applyHomeMotion,
+  homeMotionBounds,
+  updateHomeLighting,
+} from "./home-mesh";
 import { createSalonDesign } from "./salon-design";
 import { prepareSalonMaterials } from "./salon-materials";
 import { buildSalonFurniture, buildSalonArchitecture } from "./salon-mesh";
@@ -43,9 +56,12 @@ import {
   Color as ve,
 } from "three";
 import baseModel from "./model.js";
-const pt = createSalonDesign(
-  createAtmosphereDesign(createStorageDesign(baseModel)),
+const pt = createHomeDesign(
+  createSalonDesign(createAtmosphereDesign(createStorageDesign(baseModel))),
 );
+const homeMotion = createHomeMotion();
+const currentStorage = () =>
+  ut.objects.filter((o) => o.type === "wall_storage");
 let spatialDesign, compositionMaterial;
 let roomAtmosphere;
 import { OrbitControls as Mc } from "three/addons/controls/OrbitControls.js";
@@ -434,7 +450,10 @@ function Kg({
           ? ["bar", "hall"]
           : c(_.center[0], _.center[1], Math.sin(E) * 0.15, Math.cos(E) * 0.15),
       N = 0.035;
-    if (_.type === "window") {
+    if (
+      _.type === "window" &&
+      !t.homeDesign?.bayWindows?.some((b) => b.windowId === _.id)
+    ) {
       let R = new i.Group();
       ((R.name = "opening:" + _.id),
         R.position.set(_.center[0], _.sill, _.center[1]),
@@ -610,7 +629,7 @@ function Kg({
         r(R, ["kitchen", "bar", "hall"], "opening"),
         a.kitchen.push({ group: R, closed: C, travel: _.travel || [0, 0] }));
     }
-    if (_.type === "gate") {
+    if (_.type === "gate" && _.id !== "hall-gate") {
       let R = new i.Group();
       ((R.name = "opening:" + _.id), R.position.set(_.hinge[0], 0, _.hinge[1]));
       let C = _.thickness || 0.025;
@@ -672,6 +691,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     u = r.defaultScene || "warm",
     d = null,
     f = null,
+    observer = null,
     p = !0,
     x = true,
     g = quality.shadowLights,
@@ -833,7 +853,14 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
         C.mount && (C.mount.visible = O && p),
         (C.emission.emissiveIntensity = U > 0 ? 0.3 + U * 0.95 : 0),
         (C.level = U),
-        (C.score = (C.f.lumens || 300) * U),
+        (C.score =
+          ((C.f.lumens || 300) * U) /
+          (observer
+            ? 1 +
+              0.18 *
+                ((C.f.position[0] - observer[0]) ** 2 +
+                  (C.f.position[2] - observer[2]) ** 2)
+            : 1)),
         !x)
       ) {
         let B = C.light;
@@ -980,6 +1007,10 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
     {
       apply: A,
       setVisibleRooms: E,
+      setObserver(position) {
+        observer = position;
+        _();
+      },
       setInterior(R) {
         ((p = !!R), _());
       },
@@ -1083,10 +1114,16 @@ function $g({
           id: y,
           ...b,
         }));
-  for (let y of x) {
+  for (let y of x.filter((s) =>
+    ["day-public", "aperitif", "cinema"].includes(s.id),
+  )) {
     let b = document.createElement("button");
     ((b.type = "button"),
-      (b.textContent = y.label || y.name || y.id),
+      (b.textContent = {
+        "day-public": "日间",
+        aperitif: "夜间",
+        cinema: "观影",
+      }[y.id]),
       (b.dataset.lightPreset = y.id),
       b.setAttribute("aria-pressed", "false"),
       b.addEventListener("click", () => e(y.id)),
@@ -1309,6 +1346,14 @@ var BM = new Set([
     "sofa_bed",
     "office_chair",
     "dining_chair",
+    "folding_table",
+    "folding_chair",
+    "dishwasher",
+    "modular_sofa",
+    "mobile_tv",
+    "ps5",
+    "washer",
+    "dryer",
     "architecture",
     "fixture",
     "door",
@@ -2424,6 +2469,12 @@ var QM = {},
     chairs: 0,
     storage: 0,
     keg: 0,
+    dining: 0,
+    diningRetreat: 0,
+    dishwasher: 0,
+    laundry: 0,
+    tv: 0,
+    sofa: 0,
   },
   Dn = { ...an };
 var Za = null,
@@ -2746,24 +2797,9 @@ function gx(i, e) {
     (at(i, 0.04, 0.019, 0.14, 0.74, -0.365, "steel").rotation.x = Math.PI / 2));
 }
 function aw(i, e) {
-  at(i, 0.13, 0.24, 0, 0.12, 0, "stone", 0.1);
-  let t = new tt(new Ei(0.012, 0.022, 0.45, 6), Vn.darkoak);
-  ((t.position.y = 0.42), i.add(t));
-  for (let n = 0; n < 13; n++) {
-    let s = "leaf";
-    xr.has(s) || xr.set(s, new Zi(0.11, 10, 8));
-    let r = new tt(xr.get(s), Vn.sage);
-    (r.scale.set(1, 0.43, 1.8),
-      r.rotation.set(n * 0.7, n * 2.4, 0.4),
-      r.position.set(
-        Math.sin(n * 2.4) * 0.13,
-        0.37 + n * 0.025,
-        Math.cos(n * 2.4) * 0.13,
-      ),
-      (r.castShadow = !0),
-      i.add(r));
-  }
+  buildPlant(i, e, Vn);
 }
+
 var yx = [],
   Gp = [],
   Ni = new Set(ut.rooms.map((i) => i.id)),
@@ -2811,6 +2847,7 @@ function lw() {
           : [i.room],
       ),
       !(
+        buildHomeFurniture(e, i, Vn, homeMotion) ||
         buildSalonFurniture(e, i, Vn, St) ||
         (i.type === "wall_storage" &&
           (buildStorageUnit(e, i, Vn, St.storage), true)) ||
@@ -3136,25 +3173,47 @@ function lw() {
   }
 }
 function cw() {
-  let i = new nr("#fff4df", "#6c6256", 0.65);
+  // A transparent glazing pane must not behave like an opaque shadow blocker.
+  Ct.traverse((node) => {
+    if (
+      node.isMesh &&
+      !Array.isArray(node.material) &&
+      node.material?.transparent &&
+      node.material.opacity < 0.8
+    )
+      node.castShadow = false;
+  });
+  let i = new nr("#f4f4ed", "#77756b", 0.65);
   ((i.name = "ambient"), Ct.add(i));
-  let e = new ar("#fff0d7", 0.1);
+  let e = new ar("#fff7ea", 0.1);
   ((e.name = "sun"),
-    e.position.set(14, 18, -4),
+    e.position.fromArray(
+      sunDirection().map((v, index) => [6, 0.8, 4.5][index] + v * 24),
+    ),
     (e.castShadow = !0),
     e.shadow.mapSize.set(quality.sunShadowSize, quality.sunShadowSize),
     Object.assign(e.shadow.camera, {
-      left: -14,
-      right: 14,
-      top: 14,
-      bottom: -14,
+      left: -10,
+      right: 10,
+      top: 10,
+      bottom: -10,
       near: 1,
       far: 45,
     }),
     e.shadow.camera.layers.enable(1),
     (e.shadow.bias = -3e-4),
-    (e.shadow.normalBias = 0.035),
+    (e.shadow.normalBias = 0.014),
     Ct.add(e));
+  e.target.position.set(6, 0.8, 4.5);
+  Ct.add(e.target);
+  // Camera cutaway never removes the roof from the solar shadow pass.
+  const roofShadow = Nc.clone();
+  roofShadow.name = "daylight:roof-shadow";
+  roofShadow.layers.set(1);
+  roofShadow.visible = true;
+  roofShadow.castShadow = true;
+  roofShadow.receiveShadow = false;
+  Ct.add(roofShadow);
   let t = environmentGenerator(Ht),
     n = new au();
   ((Ct.environment = t.fromScene(n, 0.04).texture),
@@ -3191,6 +3250,7 @@ function Fp(i) {
       moment?.environmentIntensity ?? (e.daylight ? 0.55 : 0.18)),
     Ct.background.set(e.daylight ? "#e4e0d7" : "#383b35"),
     (Ht.toneMappingExposure = moment?.exposure ?? (e.daylight ? 0.95 : 1.12)),
+    updateHomeLighting(homeMotion, e.daylight),
     ($e("#lighting").textContent = e.daylight
       ? "\u591C\u95F4"
       : "\u65E5\u95F4"),
@@ -3205,7 +3265,14 @@ function Fp(i) {
     vx(false);
   }
   if (i === "guest-stay") vx(true);
-  if (moment?.viewId) {
+  if (i === "two-person-dining") ns({ dining: 1, gate: 1 });
+  if (["day-public", "coffee", "game", "cinema"].includes(i))
+    ns({ dining: 0, gate: 1 });
+  if (
+    !ghostWalk &&
+    moment?.viewId &&
+    !["day-public", "aperitif", "cinema"].includes(i)
+  ) {
     const view = ut.presentation.interiorViews.find(
       (v) => v.id === moment.viewId,
     );
@@ -3239,12 +3306,12 @@ function Xp(i) {
   for (let e of Gp)
     e.visible =
       e.userData.kind === "ceiling"
-        ? yr === "interior" && Ni.size > 0
+        ? yr !== "overview" && Ni.size > 0
         : e.userData.kind === "plinth"
           ? Ni.size === ut.rooms.length
           : e.userData.spaceIds.some((t) => Ni.has(t));
   (_r?.setVisibleRooms(Ni),
-    _r?.setInterior(yr === "interior"),
+    _r?.setInterior(yr !== "overview"),
     Nc && (Nc.castShadow = Nc.visible),
     Hp?.updateVisibility(Ni),
     Jt?.request({ shadow: !0 }),
@@ -3257,7 +3324,7 @@ function vx(i) {
     n = yu[0]?.progress || 0,
     s = i ? 1 : 0,
     r = (a) => {
-      let o = e ? Math.min(1, (a - t) / e) : 1,
+      let o = e ? Math.max(0, Math.min(1, (a - t) / e)) : 1,
         l = n + (s - n) * (o * o * (3 - 2 * o));
       for (let c of yu)
         ((c.progress = l),
@@ -3277,7 +3344,9 @@ function vx(i) {
       : "\u5C55\u5F00\u5BA2\u5E8A"),
     $e("#bed-state").setAttribute("aria-pressed", String(i)));
 }
+var localStorageProgress = new Map();
 function ns(i, e = 600) {
+  if (Object.hasOwn(i, "storage")) localStorageProgress.clear();
   let t = { ...an },
     n = { ...Dn, ...i };
   (i.fridge === 0 ? (n.drawer = 0) : n.drawer > 0 && (n.fridge = 1),
@@ -3293,7 +3362,7 @@ function ns(i, e = 600) {
   let r = performance.now();
   (xu.set("motion", (a) => {
     let o = e * s.length,
-      l = e ? Math.min(s.length, (a - r) / e) : s.length,
+      l = e ? Math.max(0, Math.min(s.length, (a - r) / e)) : s.length,
       c = Math.min(s.length - 1, Math.floor(l)),
       h = l >= s.length ? 1 : l - c,
       u = h * h * (3 - 2 * h),
@@ -3307,14 +3376,25 @@ function ns(i, e = 600) {
 }
 function bx() {
   for (let i of St.storage) {
-    if (i.axis === "x") i.pivot.rotation.x = i.openAngle * an.storage;
-    else i.pivot.rotation.y = ((-i.sign * Math.PI) / 2) * an.storage;
+    const progress = localStorageProgress.get(i.unitId) ?? an.storage;
+    if (i.axis === "x") i.pivot.rotation.x = i.openAngle * progress;
+    else i.pivot.rotation.y = ((-i.sign * Math.PI) / 2) * progress;
   }
   for (let i of St.keg)
     ((i.pivot.rotation.y = (-Math.PI / 2) * an.keg),
       (i.inside.visible = an.keg > 0.05));
   for (let i of St.entry) i.group.rotation.y = i.base - i.angle * an.entry;
-  for (let i of St.gate) i.group.rotation.y = i.base - i.angle * an.gate;
+  for (let i of St.gate)
+    i.group.rotation[i.axis || "y"] = i.base - i.angle * an.gate;
+  applyHomeMotion(homeMotion, {
+    dining: an.dining,
+    gate: an.gate,
+    dishwasher: an.dishwasher,
+    laundry: an.laundry,
+    tv: an.tv,
+    sofa: an.sofa,
+    diningRetreat: an.diningRetreat,
+  });
   for (let i of St.kitchen)
     i.group.position.set(
       i.closed[0] + i.travel[0] * an.kitchen,
@@ -3334,111 +3414,27 @@ function bx() {
     );
   }
 }
-function hw() {
-  for (let i of ut.presentationScenarios || [])
-    for (let e of i.people || []) {
-      let t = new mn();
-      t.name = `person:${i.id}:${e.id}`;
-      let n = e.height || 1.7,
-        s = e.radius || 0.18,
-        r = new ui({ color: "#8e9b86", roughness: 0.95 }),
-        a = new Ei(
-          Math.min(s * 0.17, 0.045),
-          Math.min(s * 0.19, 0.05),
-          n * 0.34,
-          7,
-        );
-      for (let c of [-n * 0.055, n * 0.055]) {
-        let h = new tt(a, r);
-        (h.position.set(c, n * 0.17, 0), t.add(h));
-      }
-      let o = new tt(new _s(n * 0.075, n * 0.34, 4, 8), r);
-      ((o.position.y = n * 0.6), t.add(o));
-      for (let c of [-1, 1]) {
-        let h = new tt(new _s(n * 0.025, n * 0.25, 3, 6), r);
-        (h.position.set(c * n * 0.14, n * 0.62, 0),
-          (h.rotation.z = -c * 0.12),
-          t.add(h));
-      }
-      let l = new tt(new Zi(n * 0.09, 10, 8), Vn.stone);
-      ((l.position.y = n * 0.91),
-        t.add(l),
-        (t.visible = !1),
-        Ct.add(t),
-        Fc.push({ g: t, scenario: i, person: e }));
-    }
-}
-var bu = 0,
-  Sx = -1,
-  Uc = !1;
 function zc() {
   for (let [i, e, t] of [
     ["entry-toggle", "entry", "\u5165\u6237\u95E8"],
-    ["gate-toggle", "gate", "\u534A\u95E8"],
+    ["gate-toggle", "gate", "翻板通口"],
     ["kitchen-toggle", "kitchen", "\u53A8\u623F\u95E8"],
     ["fridge-toggle", "fridge", "\u51B0\u7BB1\u95E8"],
     ["drawer-toggle", "drawer", "\u62BD\u5C49"],
-    ["chairs-toggle", "chairs", "\u9910\u6905"],
+    ["chairs-toggle", "chairs", "工位退椅"],
+    ["dining-toggle", "dining", "餐桌展开"],
+    ["dishwasher-toggle", "dishwasher", "洗碗机"],
+    ["laundry-toggle", "laundry", "洗烘舱门"],
+    ["sofa-toggle", "sofa", "沙发"],
+    ["tv-toggle", "tv", "电视"],
   ]) {
     let n = $e(`#${i}`);
     if (!n) continue;
     let s = !!Dn[e];
     (n.setAttribute("aria-pressed", String(s)),
       (n.textContent = `${t}\uFF08${s ? (e === "chairs" || e === "drawer" ? "\u5DF2\u62C9\u51FA" : "\u5DF2\u5F00") : e === "chairs" ? "\u5DF2\u6536\u56DE" : e === "drawer" ? "\u5DF2\u6536" : "\u5DF2\u5173"}\uFF09`));
-  }
-}
-function dw(i) {
-  let e = ut.presentationScenarios || [],
-    t = e.find((n) => n.id === i);
-  t &&
-    (t.room && Wt !== t.room
-      ? ja(t.room)
-      : !t.room && !["bar", "kitchen", "all"].includes(Wt) && ja("bar"),
-    t.states?.guestBedOpen !== void 0 && vx(!!t.states.guestBedOpen),
-    (Sx = e.indexOf(t)),
-    (Za = i),
-    (Uc = !0),
-    ($e("#scenario-stop").hidden = !1),
-    (bu = performance.now()),
-    ns({
-      entry: t.states?.entryOpen === void 0 || t.states.entryOpen ? 1 : 0,
-      gate: t.states?.gateOpen ? 1 : 0,
-      kitchen: t.states?.kitchenOpen ? 1 : 0,
-      fridge: t.states?.fridgeOpen ? 1 : 0,
-      drawer: t.states?.fridgeOpen ? 1 : 0,
-      chairs: t.states?.chairsPulled ? 1 : 0,
-    }),
-    zc(),
-    ($e("#scenario-status").textContent =
-      `\u751F\u6D3B\u52A8\u7EBF\uFF1A${t.label}`),
-    matchMedia("(prefers-reduced-motion: reduce)").matches &&
-      (bu -= t.durationS * 1e3),
-    Oi());
-}
-function uw(i) {
-  if (!Fc.length) return;
-  let e = (ut.presentationScenarios || []).find((n) => n.id === Za),
-    t = e ? Math.max(0, (i - bu) / 1e3) : 0;
-  for (let n of Fc) {
-    if (!e || n.scenario.id !== Za) {
-      n.g.visible = !1;
-      continue;
-    }
-    let s = n.person,
-      r = s.points || [];
-    if (((n.g.visible = r.length > 0), r.length < 1)) continue;
-    if (r.length === 1) {
-      n.g.position.set(r[0][0], 0, r[0][1]);
-      continue;
-    }
-    let a = Kn.clamp((t - (s.startAtS || 0)) / (s.durationS || 1), 0, 1),
-      o = a * (r.length - 1),
-      l = Math.min(r.length - 2, Math.floor(o)),
-      c = o - l,
-      h = r[l],
-      u = r[l + 1];
-    (n.g.position.set(h[0] + (u[0] - h[0]) * c, 0, h[1] + (u[1] - h[1]) * c),
-      (n.g.rotation.y = Math.atan2(u[0] - h[0], u[1] - h[1])));
+    if (e === "sofa") n.textContent = s ? "拼合沙发" : "拆分沙发";
+    if (e === "tv") n.textContent = s ? "电视归位" : "电视换位";
   }
 }
 function fw() {
@@ -3462,12 +3458,12 @@ function fw() {
       }),
     St.gate.length)
   ) {
-    let s = e("gate-toggle", "\u534A\u95E8\uFF08\u5DF2\u5173\uFF09", () => {
+    let s = e("gate-toggle", "翻板通口\uFF08\u5DF2\u5173\uFF09", () => {
       let r = Dn.gate ? 0 : 1;
       (ns({ gate: r }),
         (s.textContent = r
-          ? "\u534A\u95E8\uFF08\u5DF2\u5F00\uFF09"
-          : "\u534A\u95E8\uFF08\u5DF2\u5173\uFF09"),
+          ? "翻板通口\uFF08\u5DF2\u5F00\uFF09"
+          : "翻板通口\uFF08\u5DF2\u5173\uFF09"),
         s.setAttribute("aria-pressed", String(!!r)));
     });
     s.setAttribute("aria-pressed", String(!!Dn.gate));
@@ -3525,22 +3521,21 @@ function fw() {
             $e("#keg-toggle").setAttribute("aria-pressed", String(!!s)));
         },
       ));
-  let t = ut.presentationScenarios || [];
-  if (t.length) {
-    e("scenario-run", "\u751F\u6D3B\u52A8\u7EBF", () => {
-      let r = (Sx + 1) % t.length;
-      dw(t[r].id);
-    });
-    let s = e("scenario-stop", "\u7ED3\u675F\u52A8\u7EBF", () => {
-      ((Za = null),
-        (Uc = !1),
-        Fc.forEach((r) => (r.g.visible = !1)),
-        ($e("#scenario-status").textContent = ""),
-        (s.hidden = !0),
-        Oi());
-    });
-    s.hidden = !0;
-  }
+  e("dining-toggle", "展开餐桌", () => {
+    const open = !Dn.dining;
+    ns({ dining: open ? 1 : 0, diningRetreat: 0, gate: 1 });
+    $e("#dining-toggle").textContent = open ? "收起餐桌" : "展开餐桌";
+  });
+  e("dishwasher-toggle", "打开洗碗机", () => {
+    const open = !Dn.dishwasher;
+    ns({ dishwasher: open ? 1 : 0 });
+    $e("#dishwasher-toggle").textContent = open ? "收起洗碗机" : "打开洗碗机";
+  });
+  e("sofa-toggle", "拆分 / 拼合沙发", () => ns({ sofa: Dn.sofa ? 0 : 1 }));
+  e("tv-toggle", "电视换位", () => ns({ tv: Dn.tv ? 0 : 1 }));
+  e("laundry-toggle", "打开洗烘舱门", () =>
+    ns({ laundry: Dn.laundry ? 0 : 1 }),
+  );
   let n = ut.detailCameras || [];
   if (n.length) {
     let s = $e("#detail-controls");
@@ -3553,7 +3548,12 @@ function fw() {
     }
   }
 }
+var ghostWalk = null,
+  lastWalkFrame = 0,
+  lastWalkLightFocus = null,
+  walkReturnView = null;
 function pw() {
+  if (ghostWalk) return ghostWalk.getTarget();
   return $n ? $n.getTarget() : Nt?.target || new P();
 }
 function Mx() {
@@ -3566,20 +3566,78 @@ function Mx() {
     (Oc.gtaoMaterial.needsUpdate = !0));
 }
 function wx() {
+  ghostWalk?.dispose();
+  ghostWalk = null;
+  document.body.classList.remove("ghost-mode");
+  _r?.setObserver?.(null);
   (Nt?.dispose(), $n?.dispose(), (Nt = null), ($n = null));
 }
-function mw() {
-  let i = $e("#viewpoint-controls");
-  i.replaceChildren();
-  for (let e of ut.presentation.interiorViews.filter((t) => t.roomId === Wt)) {
-    let t = document.createElement("button");
-    ((t.textContent = e.label),
-      (t.dataset.point = e.id),
-      t.classList.toggle("active", e.id === vr),
-      (t.onclick = () => Ka(e)),
-      i.append(t));
+function updateActionVisibility() {
+  const rooms = {
+    "sofa-toggle": ["living"],
+    "tv-toggle": ["living"],
+    "entry-toggle": ["hall"],
+    "gate-toggle": ["all", "bar", "hall"],
+    "kitchen-toggle": ["kitchen"],
+    "fridge-toggle": ["kitchen"],
+    "drawer-toggle": ["kitchen"],
+    "dishwasher-toggle": ["kitchen"],
+    "chairs-toggle": ["master"],
+    "dining-toggle": ["all", "bar"],
+    "keg-toggle": ["bar"],
+    "laundry-toggle": ["balcony"],
+    "storage-toggle": [
+      "all",
+      "bar",
+      "kitchen",
+      "living",
+      "master",
+      "guest",
+      "bath",
+      "hall",
+      "balcony",
+    ],
+    "cinema-door-toggle": ["guest"],
+    "bed-state": ["all", "guest"],
+  };
+  for (const [id, visibleRooms] of Object.entries(rooms)) {
+    const node = $e(`#${id}`);
+    if (node) node.hidden = !visibleRooms.includes(Wt);
   }
-  i.hidden = Wt === "all";
+  for (const id of [
+    "scenario-run",
+    "scenario-stop",
+    "scenario-status",
+    "atmosphere-toggle",
+    "physics-drop",
+    "cinema-door-review",
+  ])
+    if ($e(`#${id}`)) $e("#internal-controls").append($e(`#${id}`));
+}
+function mw() {
+  let container = $e("#viewpoint-controls");
+  container.replaceChildren();
+  const views = ut.presentation.interiorViews.filter(
+    (view) => view.roomId === Wt,
+  );
+  const select = document.createElement("select");
+  select.id = "viewpoint-select";
+  select.setAttribute("aria-label", "选择观察角度");
+  for (const view of views) {
+    const option = document.createElement("option");
+    option.value = view.id;
+    option.textContent = view.label;
+    option.selected = view.id === vr;
+    select.append(option);
+  }
+  select.onchange = () => {
+    const view = views.find((v) => v.id === select.value);
+    if (view) Ka(view);
+    Hp?.closePanel();
+  };
+  container.append(select);
+  container.hidden = Wt === "all";
+  updateActionVisibility();
 }
 function Ax() {
   ($e(".room-tabs")
@@ -3593,6 +3651,176 @@ function Ax() {
       ? "\u7A7A\u95F4\u900F\u89C6"
       : "\u4FEF\u89C6"),
     mw());
+}
+function toggleNearbyCabinet(id) {
+  const from = localStorageProgress.get(id) ?? an.storage,
+    to = from > 0.5 ? 0 : 1,
+    start = performance.now();
+  xu.set("cabinet:" + id, (now) => {
+    const p = Math.max(0, Math.min(1, (now - start) / 450));
+    localStorageProgress.set(id, from + (to - from) * p * p * (3 - 2 * p));
+    bx();
+    return p < 1;
+  });
+  Jt?.request({ shadow: true });
+}
+function walkTargets() {
+  const targets = [],
+    add = (id, label, position, activate, normal) => {
+      if (
+        normal &&
+        (ct.position.x - position[0]) * normal[0] +
+          (ct.position.z - position[2]) * normal[1] <
+          -0.05
+      )
+        return;
+      targets.push({ id, label, position, activate });
+    };
+  const point = (id, y) => {
+    const group = Ct.getObjectByName(id);
+    return group ? group.getWorldPosition(new P()).setY(y).toArray() : null;
+  };
+  const toggle = (id, label, objectId, y, key, normal) => {
+    const p = point(objectId, y);
+    if (p) add(id, label, p, () => ns({ [key]: Dn[key] ? 0 : 1 }), normal);
+  };
+  toggle(
+    "walk-fridge",
+    "开合冰箱门",
+    "kitchen-fridge",
+    1.15,
+    "fridge",
+    [-1, 0],
+  );
+  toggle(
+    "walk-dishwasher",
+    "开合洗碗机",
+    "kitchen-dishwasher",
+    0.62,
+    "dishwasher",
+    [0, 1],
+  );
+  toggle("walk-laundry", "开合洗烘机门", "washer", 0.65, "laundry", [0, 1]);
+  toggle("walk-keg", "开合精酿柜", "kegerator", 0.65, "keg", [0, -1]);
+  toggle("walk-sofa", "拼合 / 拆分沙发", "living-sofa", 0.65, "sofa");
+  const table = point("dining-table", 0.85);
+  if (table)
+    add("walk-table", "展开 / 收起餐桌", table, () =>
+      ns({ dining: Dn.dining ? 0 : 1, diningRetreat: 0, gate: 1 }),
+    );
+  const hatch = ut.homeDesign.hatch;
+  add(
+    "walk-hatch",
+    "升起 / 放下翻板",
+    [hatch.hinge.x, 1.1, hatch.hinge.z - 0.4],
+    () => ns({ gate: Dn.gate ? 0 : 1 }),
+  );
+  const bed = point("guest-sofa-bed", 0.65);
+  if (bed) add("walk-bed", "展开 / 收起客床", bed, () => vx(!Vp));
+  const tv = point("living-tv", 1.265);
+  if (tv)
+    add(
+      "walk-tv",
+      "开关电视",
+      tv,
+      () => roomAtmosphere.toggleScreen("living"),
+      [0, -1],
+    );
+  const kitchen = ut.openings.find((o) => o.id === "kitchen-door");
+  if (kitchen)
+    add(
+      "walk-kitchen-door",
+      "开合厨房门",
+      [kitchen.center[0], 1.15, kitchen.center[1]],
+      () => ns({ kitchen: Dn.kitchen ? 0 : 1 }),
+    );
+  const door = ut.openings.find((o) => o.id === "guest-door");
+  if (door)
+    add(
+      "walk-guest-door",
+      "开合影音室门",
+      [door.center[0], 1.15, door.center[1]],
+      () => {
+        roomAtmosphere.setDoorOpen(!roomAtmosphere.getState().doorOpen);
+        Jt?.request({ shadow: true });
+      },
+    );
+  for (const unit of currentStorage()) {
+    const a = Kn.degToRad(unit.rotation || 0),
+      normal = [Math.sin(a), -Math.cos(a)];
+    add(
+      "walk-storage:" + unit.id,
+      "开合收纳柜",
+      [
+        unit.x + normal[0] * (unit.d / 2 + 0.02),
+        Math.min(1.75, unit.y + 0.25),
+        unit.z + normal[1] * (unit.d / 2 + 0.02),
+      ],
+      () => toggleNearbyCabinet(unit.id),
+      normal,
+    );
+  }
+  const walls = Gp.filter((node) => node.userData.kind === "wall");
+  const ray = new yi.Raycaster();
+  return targets.filter((target) => {
+    const delta = new P(...target.position).sub(ct.position),
+      distance = delta.length();
+    if (distance > 1.6) return false;
+    ray.set(ct.position, delta.normalize());
+    ray.far = Math.max(0, distance - 0.03);
+    return ray.intersectObjects(walls, true).length === 0;
+  });
+}
+function enterGhostWalk(pose) {
+  if (!vu) return;
+  const original =
+    ut.presentation.interiorViews.find((view) => view.id === vr) ||
+    ut.presentation.interiorViews.find((view) => view.roomId === "bar");
+  const prior = yr === "interior" ? ct.position.toArray() : [6.9, 1.74, 7.6],
+    target = yr === "interior" ? pw().toArray() : [5.15, 1.3, 7.0];
+  wx();
+  walkReturnView = original;
+  yr = "walk";
+  Ln = false;
+  Wt = "all";
+  vr = null;
+  wu = "walk";
+  ct = new Ut(62, Ui.clientWidth / Ui.clientHeight, 0.045, 100);
+  ct.position.fromArray(pose?.position || prior);
+  ct.position.y = 1.74;
+  ct.lookAt(new P(...(pose?.target || target)));
+  ct.updateMatrixWorld(true);
+  Mx();
+  document.body.classList.add("ghost-mode");
+  lastWalkFrame = performance.now();
+  lastWalkLightFocus = null;
+  ghostWalk = createGhostWalk({
+    camera: ct,
+    canvas: kn,
+    onChange: () => {
+      if (
+        !lastWalkLightFocus ||
+        lastWalkLightFocus.distanceTo(ct.position) > 0.7
+      ) {
+        _r?.setObserver?.(ct.position.toArray());
+        lastWalkLightFocus = ct.position.clone();
+        Jt?.request({ shadow: true });
+      }
+      Oi();
+    },
+    onMotion: (active) => (active ? Jt?.begin() : Jt?.end()),
+    getTargets: walkTargets,
+    onExit: exitGhostWalk,
+  });
+  Xp({ mode: "all" });
+  Hp?.closePanel();
+  $e("#view-title").textContent = "自由漫游";
+  Ax();
+  kn.focus({ preventScroll: true });
+  Oi();
+}
+function exitGhostWalk() {
+  if (ghostWalk) Ka(walkReturnView || ut.presentation.interiorViews[0]);
 }
 function Ka(i) {
   (wx(),
@@ -3661,6 +3889,7 @@ function qp() {
   if (!Ht) return;
   let i = Ui.clientWidth,
     e = Ui.clientHeight;
+  if (ghostWalk) ghostWalk.resize(i, e);
   if ((Ht.setSize(i, e, !1), vi?.setSize(i, e), $n)) $n.resize(i, e);
   else {
     if (((ct.aspect = i / e), ct.isOrthographicCamera)) {
@@ -3700,7 +3929,18 @@ function Ja(i = !1) {
     t = ut.cameras.find((l) => l.id === e) || ut.cameras[0],
     n =
       e === "all"
-        ? ut.shell
+        ? [
+            ...ut.shell,
+            ...(ut.homeDesign?.bayWindows || []).flatMap((b) => {
+              const opening = ut.openings.find((o) => o.id === b.windowId);
+              const c = b.center || opening.center;
+              const dir = b.outward?.[0] || (b.roomId === "guest" ? -1 : 1);
+              return [
+                [c[0] + dir * b.projectionM, c[1] - b.widthM / 2],
+                [c[0] + dir * b.projectionM, c[1] + b.widthM / 2],
+              ];
+            }),
+          ]
         : e === "bar"
           ? [
               [0, 5.2],
@@ -3823,18 +4063,18 @@ async function enableAtmosphere() {
   return atmospherePromise;
 }
 function vw(i) {
-  let e = $n ? $n.update() : Nt?.update() || !1,
+  const walked =
+    ghostWalk?.update(
+      Math.min(0.05, Math.max(0, (i - lastWalkFrame) / 1000)),
+    ) || false;
+  lastWalkFrame = i;
+  let e = ghostWalk ? walked : $n ? $n.update() : Nt?.update() || !1,
     t = e,
     n = !1,
     s = !1;
   for (let [r, a] of xu) {
     let o = a(i);
     ((t = !0), (n = !0), (s ||= o), o || xu.delete(r));
-  }
-  if (Uc) {
-    (uw(i), (t = !0), (n = !0));
-    let r = ut.presentationScenarios.find((a) => a.id === Za);
-    ((Uc = !!r && i - bu < r.durationS * 1e3), (s ||= Uc));
   }
   const physics = atmosphere?.step(i, Bp(), n);
   return {
@@ -3879,12 +4119,17 @@ async function bw() {
         materials: Vn,
       }),
       finishFurniture(Ct, ut.objects, Vn),
-      (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true)),
-      (spatialDesign = buildSalonArchitecture(Ct, Vn, Mu)),
+      (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
+      (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
+      St.gate.push({
+        group: homeMotion.hatch.group,
+        axis: "x",
+        base: 0,
+        angle: -Kn.degToRad(95),
+      }),
       (xx = ax({ THREE: yi, scene: Ct, model: ut })),
       (roomBatching = batchFurniture(Ct, ut, Mu)),
       cw(),
-      hw(),
       Tx(),
       xw(),
       (Jt = tx({
@@ -3910,7 +4155,7 @@ async function bw() {
         },
         getActive: () => Wt,
       })),
-      Fp("aperitif"),
+      Fp("day-public"),
       Ka(
         ut.presentation.interiorViews.find(
           (i) => i.id === ut.presentation.defaultView,
@@ -3940,18 +4185,12 @@ async function bw() {
 await bw();
 if (vu)
   mountMomentControls(
-    (id) => {
-      Fp(id);
-      Hp?.closePanel();
-    },
+    (id) => Fp(id),
     () => {
       roomAtmosphere.setDoorOpen(!roomAtmosphere.getState().doorOpen);
       Jt?.request({ shadow: true });
     },
-    () => {
-      gw({ id: "cinema-door-review" });
-      Hp?.closePanel();
-    },
+    () => {},
   );
 if (vu)
   mountStoragePanel(
@@ -3963,6 +4202,7 @@ if (vu)
       }
     },
     () => $e("#storage-toggle")?.click(),
+    currentStorage(),
   );
 if (vu) {
   const windButton = document.createElement("button");
@@ -4003,13 +4243,15 @@ if (vu) {
       dropButton.disabled = false;
     }
   };
-  $e("#motion-controls").append(windButton, dropButton);
+  $e("#internal-controls").append(windButton, dropButton);
+  updateActionVisibility();
 }
+$e("#walk-start").onclick = () => enterGhostWalk();
 $e("#interior-view").onclick = () => ja(Wt === "all" ? "bar" : Wt);
 $e("#overview-view").onclick = () => {
   ((Wt = "all"), Ja(!1));
 };
-$e("#lighting").onclick = () => Fp(_u ? "day" : "warm");
+$e("#lighting").onclick = () => Fp(_u ? "day-public" : "aperitif");
 $e("#bed-state").onclick = () => {
   (vx(!Vp), Wt !== "guest" && ja("guest"));
 };
@@ -4074,6 +4316,51 @@ document.addEventListener("visibilitychange", () => {
   Bp() ? (atmosphere?.resetClock(), Jt?.pause()) : Jt?.resume();
 });
 window.homePresentation = {
+  startGhostWalk: (pose) => enterGhostWalk(pose),
+  stopGhostWalk: () => exitGhostWalk(),
+  getGhostWalkState: () => ghostWalk?.getState() || { active: false },
+  getModelAudit: () => auditSceneModel(Ct, ut),
+  getModel: () => structuredClone(ut),
+  getHomeDesign: () => ({
+    ...ut.homeDesign,
+    motionBounds: homeMotionBounds(homeMotion),
+    architecture: spatialDesign,
+    daylight: {
+      ...daylightStudy,
+      roofProxyPresent: !!Ct.getObjectByName("daylight:roof-shadow"),
+      transparentShadowCasters: (() => {
+        let count = 0;
+        Ct.traverse((node) => {
+          if (
+            node.isMesh &&
+            node.castShadow &&
+            !Array.isArray(node.material) &&
+            node.material?.transparent &&
+            node.material.opacity < 0.8
+          )
+            count++;
+        });
+        return count;
+      })(),
+    },
+    states: { dining: an.dining, hatch: an.gate, dishwasher: an.dishwasher },
+  }),
+  setDiningOpen: (open) => {
+    ns({ dining: open ? 1 : 0, diningRetreat: 0, gate: 1 });
+  },
+  setDiningChairRetreat: (pulled) =>
+    ns({ dining: 1, diningRetreat: pulled ? 1 : 0, gate: 1 }),
+  setHatchOpen: (open) => {
+    ns({ gate: open ? 1 : 0 });
+  },
+  setSofaSeparated: (separated) => ns({ sofa: separated ? 1 : 0 }),
+  setMobileTVAlternative: (alternative) => ns({ tv: alternative ? 1 : 0 }),
+  setLaundryOpen: (open) => {
+    ns({ laundry: open ? 1 : 0 });
+  },
+  setDishwasherOpen: (open) => {
+    ns({ dishwasher: open ? 1 : 0 });
+  },
   setAtmosphereEnabled: async (enabled) => {
     const physics = await enableAtmosphere();
     physics.setWind(enabled);
@@ -4125,7 +4412,7 @@ window.homePresentation = {
     ...Jt?.getState(),
     materialDetail: materialDetailState(),
     qualityProfile: { ...quality },
-    storage: storageCapacity(),
+    storage: storageCapacity(currentStorage()),
     geometry: geometryState(),
     physics: atmosphere?.getState() ?? { loaded: false },
     rendering: { ...rendering },
@@ -4137,7 +4424,7 @@ window.homePresentation = {
     roomBatching,
     architectureBatching: _x,
   }),
-  getStorage: () => storageCapacity(),
+  getStorage: () => storageCapacity(currentStorage()),
   setStorageOpen: (open) => {
     ns({ storage: open ? 1 : 0 }, 0);
     $e("#storage-toggle")?.setAttribute("aria-pressed", String(open));
@@ -4166,7 +4453,14 @@ window.homePresentation = {
     lighting: _r?.getState(),
     bedProgress: yu[0]?.progress || 0,
     entryAngle: St.entry[0]?.group.rotation.y || 0,
-    gateAngle: St.gate[0]?.group.rotation.y || 0,
+    gateAngle: homeMotion.hatch?.group.rotation.x || 0,
+    hatchProgress: an.gate,
+    diningProgress: an.dining,
+    diningRetreatProgress: an.diningRetreat,
+    dishwasherProgress: an.dishwasher,
+    laundryProgress: an.laundry,
+    tvProgress: an.tv,
+    sofaProgress: an.sofa,
     kitchenProgress: an.kitchen,
     fridgeAngle: St.fridge[0]?.pivot.rotation.y || 0,
     drawerProgress: an.drawer,
@@ -4187,7 +4481,8 @@ window.homePresentation = {
       inside: i.inside.visible,
     })),
     entry: St.entry.map((i) => i.group.rotation.y),
-    gate: St.gate.map((i) => i.group.rotation.y),
+    gate: St.gate.map((i) => i.group.rotation[i.axis || "y"]),
+    home: homeMotionBounds(homeMotion),
     kitchen: St.kitchen.map((i) => i.group.position.toArray()),
     fridge: St.fridge.map((i) => ({
       angle: i.pivot.rotation.y,

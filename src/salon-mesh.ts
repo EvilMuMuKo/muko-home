@@ -285,7 +285,10 @@ export function buildSalonFurniture(
     ].map(([x, y]) => new THREE.Vector2(x, y));
     const shade = mesh(
       group,
-      new THREE.LatheGeometry(points, 48),
+      new THREE.LatheGeometry(
+        new THREE.SplineCurve(points).getPoints(32).map((p) => new THREE.Vector2(Math.max(0, p.x), p.y)),
+        48,
+      ),
       0,
       1.05,
       0,

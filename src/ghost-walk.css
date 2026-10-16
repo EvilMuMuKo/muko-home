@@ -1,0 +1,86 @@
+.ghost-walk-controls {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.ghost-joystick {
+  box-sizing: border-box;
+  position: absolute;
+  left: max(18px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 80px;
+  height: 80px;
+  border: 1px solid #ffffff9c;
+  border-radius: 50%;
+  background: #25332d45;
+  box-shadow: inset 0 0 0 1px #25332d22, 0 3px 16px #10161125;
+  backdrop-filter: blur(5px);
+  touch-action: none;
+  pointer-events: auto;
+  cursor: grab;
+}
+.ghost-joystick:active {
+  cursor: grabbing;
+}
+.ghost-joystick::before,
+.ghost-joystick::after {
+  position: absolute;
+  content: "";
+  background: #ffffff4d;
+  pointer-events: none;
+}
+.ghost-joystick::before {
+  left: 50%;
+  top: 15px;
+  bottom: 15px;
+  width: 1px;
+}
+.ghost-joystick::after {
+  top: 50%;
+  left: 15px;
+  right: 15px;
+  height: 1px;
+}
+.ghost-joystick__thumb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px;
+  border: 1px solid #ffffffcc;
+  border-radius: 50%;
+  background: #f5f0e3d9;
+  box-shadow: 0 2px 8px #10161138;
+  pointer-events: none;
+  will-change: transform;
+}
+.ghost-exit,
+.ghost-interact {
+  position: absolute;
+  pointer-events: auto;
+  color: #f9f7f0;
+  border: 1px solid #ffffff55;
+  background: #26332edb;
+  box-shadow: 0 3px 14px #1118;
+  backdrop-filter: blur(8px);
+  touch-action: manipulation;
+}
+.ghost-exit {
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+}
+.ghost-interact {
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(28px, env(safe-area-inset-bottom));
+  min-width: 110px;
+}
+@media (max-width: 600px) {
+  .ghost-interact {
+    right: max(16px, env(safe-area-inset-right));
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 92px);
+  }
+}

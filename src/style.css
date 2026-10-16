@@ -407,3 +407,44 @@ button.active {
   border-color: #a86449;
   color: #faf9f5;
 }
+/* V9: one compact context at a time; model audit controls stay out of presentation. */
+#control-panel {
+  width: min(286px, calc(100vw - 32px));
+}
+#viewpoint-controls {
+  display: block;
+}
+#viewpoint-select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff8;
+  color: var(--ink);
+  padding: 8px;
+  font: inherit;
+  font-size: 11px;
+}
+#lighting-presets {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+#lighting-presets button {
+  padding: 8px 4px;
+}
+#internal-controls,
+#internal-visibility,
+#panel-storage {
+  display: none !important;
+}
+#interior-view,
+#fullscreen {
+  display: none;
+}
+.ghost-mode .space-caption {
+  display: none;
+}
+@media (max-width: 1024px) and (orientation: portrait) {
+  .ghost-walk-controls {
+    visibility: hidden;
+  }
+}

@@ -76,7 +76,7 @@
               tabindex="-1"
               data-panel="light"
             >
-              灯光</button
+              日夜</button
             ><button
               role="tab"
               id="tab-action"
@@ -87,16 +87,6 @@
             >
               动作
             </button>
-            <button
-              role="tab"
-              id="tab-storage"
-              aria-controls="panel-storage"
-              aria-selected="false"
-              tabindex="-1"
-              data-panel="storage"
-            >
-              收纳
-            </button>
           </div>
           <div class="panel-body">
             <section
@@ -104,12 +94,6 @@
               role="tabpanel"
               aria-labelledby="tab-space"
             >
-              <h2>生活场景</h2>
-              <div
-                id="theme-moments"
-                class="theme-moments"
-                aria-label="主题空间与灯光"
-              ></div>
               <h2>空间视角</h2>
               <div class="room-tabs" aria-label="选择空间"></div>
               <div
@@ -123,15 +107,15 @@
                 class="detail-controls"
                 aria-label="室内观察点"
               ></div>
-              <h2>显示范围</h2>
-              <div class="visibility-actions">
+              <div hidden id="internal-visibility">
                 <button id="show-all" type="button">显示全屋</button
                 ><button id="show-current" type="button">只看当前</button>
+                <div id="room-visibility"></div>
               </div>
-              <div id="room-visibility" class="room-visibility"></div>
               <h2>视角</h2>
               <div class="tools">
-                <button id="interior-view" type="button">室内视角</button
+                <button id="walk-start" type="button">自由漫游</button
+                ><button id="interior-view" type="button">室内视角</button
                 ><button id="overview-view" type="button">全屋概览</button
                 ><button
                   id="projection"
@@ -157,9 +141,14 @@
               aria-labelledby="tab-light"
               hidden
             >
-              <h2>灯光场景</h2>
+              <h2>空间光线</h2>
               <div id="lighting-presets" class="lighting-presets"></div>
-              <button id="lighting" type="button" aria-label="切换日间与夜间">
+              <button
+                id="lighting"
+                hidden
+                type="button"
+                aria-label="切换日间与夜间"
+              >
                 日间 / 晚间
               </button>
             </section>
@@ -169,7 +158,7 @@
               aria-labelledby="tab-action"
               hidden
             >
-              <h2>家具与生活</h2>
+              <h2>当前空间</h2>
               <button
                 id="bed-state"
                 type="button"
@@ -180,13 +169,8 @@
               <div
                 id="motion-controls"
                 class="motion-controls"
-                aria-label="家具与动线状态"
+                aria-label="当前空间家具状态"
               ></div>
-              <span
-                id="scenario-status"
-                class="scenario-status"
-                aria-live="polite"
-              ></span>
             </section>
             <section
               id="panel-storage"
@@ -194,16 +178,15 @@
               aria-labelledby="tab-storage"
               hidden
             >
-              <h2>全屋上部收纳</h2>
+              <h2>生活收纳</h2>
               <p id="storage-summary" class="storage-summary"></p>
               <button id="storage-doors" type="button">展开 / 收起柜门</button>
-              <p class="storage-note">
-                内空容量为模型估算，尚未扣除实际五金、管线和通风净空。高位柜用于低频轻物，施工与承重须现场复核。
-              </p>
+              <p class="storage-note">常用物件顺手可取，低频备品妥帖收藏。</p>
               <div id="storage-list"></div>
             </section>
           </div>
         </aside>
+        <div id="internal-controls" hidden><div id="theme-moments"></div></div>
         <div class="loading" id="loading">准备空间</div>
         <div id="notice" role="status"></div>
         <div id="orientation-gate" role="status">
