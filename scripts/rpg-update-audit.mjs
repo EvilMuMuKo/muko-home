@@ -1,0 +1,47 @@
+import { chromium } from '@playwright/test';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import assert from 'node:assert/strict';
+const url=process.argv[2]||'http://localhost:4173/';
+const out=resolve(process.argv[3]||'../../outputs/MuKo Home 漫游与抽拉台面更新');
+await mkdir(out,{recursive:true});
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+const report={time:new Date().toISOString(),url,status:'FAIL',checks:{},screenshots:[],errors:[],missing:[],scope:'Actual Chromium with mobile landscape viewport/touch emulation. Model collision and software behavior only; not physical-phone or as-built acceptance.'};
+try {
+ const page=await browser.newPage({viewport:{width:844,height:390},deviceScaleFactor:1,isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+ page.on('pageerror',e=>report.errors.push(e.message));
+ page.on('response',r=>{if(r.status()>=400)report.missing.push([r.url(),r.status()]);});
+ await page.goto(url,{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});
+ report.start=await page.evaluate(()=>({state:window.homePresentation.getState(),walk:window.homePresentation.getGhostWalkState(),audit:window.homePresentation.getWalkCollisionAudit(),bundle:[...document.scripts].map(s=>s.src).filter(Boolean)}));
+ assert.equal(report.start.walk.active,true);assert.deepEqual(report.start.audit.missingGroups,[]);
+ report.checks.arrivalWalk=true;
+ const left=await page.locator('.ghost-joystick:not(.ghost-look-joystick)').boundingBox(),right=await page.locator('.ghost-look-joystick').boundingBox();
+ assert(left.width>=112 && right.width>=112);assert(left.x+left.width<right.x);
+ report.sticks={left,right};report.checks.dualStickLayout=true;
+ const shot=async(name)=>{await page.waitForFunction(()=>!window.homePresentation.getPerformance().pending);const path=resolve(out,name+'.png');await page.screenshot({path});report.screenshots.push(path);};
+ await page.locator('.home-welcome').waitFor({state:'detached',timeout:10000});
+ await shot('mobile-entry-dual-sticks');
+ await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,3.2],target:[8,1.74,3.2]}));
+ await page.keyboard.down('w');await page.waitForTimeout(1800);await page.keyboard.up('w');
+ report.wallPosition=await page.evaluate(()=>window.homePresentation.getCamera().position);assert(report.wallPosition[0]<=6.591);report.checks.wallBlocks=true;
+ await page.evaluate(()=>window.homePresentation.setWalkDoorOpen('master-door',false));
+ await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()['master-door']+Math.PI/2)<.001);
+ await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
+ await page.keyboard.down('w');await page.waitForTimeout(1800);await page.keyboard.up('w');
+ report.closedDoorPosition=await page.evaluate(()=>window.homePresentation.getCamera().position);assert(report.closedDoorPosition[0]<6.75);report.checks.closedDoorBlocks=true;
+ await page.evaluate(()=>window.homePresentation.setWalkDoorOpen('master-door',true));
+ await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()['master-door'])<.001);
+ await page.keyboard.down('w');
+ try {await page.waitForFunction(()=>window.homePresentation.getCamera().position[0]>7.05,null,{timeout:12000});}finally{await page.keyboard.up('w');}
+ report.openDoorPosition=await page.evaluate(()=>window.homePresentation.getCamera().position);report.checks.openDoorPasses=true;
+ await page.evaluate(()=>window.homePresentation.setInteriorView('master-main'));await shot('mobile-master-original-bed');
+ report.model=await page.evaluate(()=>({bed:window.homePresentation.getModel().objects.find(o=>o.id==='master-mattress'),hatch:window.homePresentation.getModel().homeDesign.hatch,issues:window.homePresentation.getModelAudit().issues}));
+ assert.equal(report.model.bed.rotation,0);assert.deepEqual(report.model.issues,[]);report.checks.restoredBed=true;
+ await page.evaluate(()=>window.homePresentation.setInteriorView('two-entries'));
+ await page.evaluate(()=>window.homePresentation.setHatchOpen(false));
+ await page.waitForFunction(()=>window.homePresentation.getState().hatchProgress<.001);await shot('mobile-counter-pulled-out');
+ await page.evaluate(()=>window.homePresentation.setHatchOpen(true));
+ await page.waitForFunction(()=>window.homePresentation.getState().hatchProgress>.999);await shot('mobile-counter-hidden');report.checks.counterStates=true;
+ assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);report.status='PASS';
+} catch(e){report.error=String(e);process.exitCode=1;}finally{await browser.close();await writeFile(resolve(out,'browser-validation.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:report.status,checks:report.checks,error:report.error,screenshots:report.screenshots},null,2));}

@@ -8,6 +8,8 @@ test("arrival starts at entrance and reduced motion has text without ribbons", a
   await page.locator("#panel-toggle").click();
   await expect(page.locator(".home-welcome")).toHaveCount(0);
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
+  await expect(page.locator(".ghost-look-joystick")).toBeVisible();
+  expect(await page.evaluate(() => window.homePresentation.getGhostWalkState().active)).toBe(true);
   const model = await page.evaluate(() => window.homePresentation.getModel());
   expect(model.presentation.defaultView).toBe("entry-view");
   const camera = await page.evaluate(() => window.homePresentation.getCamera());

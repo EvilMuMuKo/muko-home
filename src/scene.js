@@ -1,5 +1,6 @@
 import { showWelcome } from "./welcome";
 import { createGhostWalk } from "./ghost-walk";
+import { createWalkCollision } from "./walk-collision";
 import { auditSceneModel } from "./model-audit";
 import { buildPlant } from "./plant-mesh";
 import { daylightStudy, sunDirection } from "./daylight";
@@ -3416,7 +3417,7 @@ function bx() {
 function zc() {
   for (let [i, e, t] of [
     ["entry-toggle", "entry", "\u5165\u6237\u95E8"],
-    ["gate-toggle", "gate", "翻板通口"],
+    ["gate-toggle", "gate", "抽拉台面"],
     ["kitchen-toggle", "kitchen", "\u53A8\u623F\u95E8"],
     ["fridge-toggle", "fridge", "\u51B0\u7BB1\u95E8"],
     ["drawer-toggle", "drawer", "\u62BD\u5C49"],
@@ -3432,6 +3433,7 @@ function zc() {
     let s = !!Dn[e];
     (n.setAttribute("aria-pressed", String(s)),
       (n.textContent = `${t}\uFF08${s ? (e === "chairs" || e === "drawer" ? "\u5DF2\u62C9\u51FA" : "\u5DF2\u5F00") : e === "chairs" ? "\u5DF2\u6536\u56DE" : e === "drawer" ? "\u5DF2\u6536" : "\u5DF2\u5173"}\uFF09`));
+    if (e === "gate") n.textContent = `抽拉台面（${s ? "已收回" : "已拉出"}）`;
     if (e === "sofa") n.textContent = s ? "拼合沙发" : "拆分沙发";
     if (e === "tv") n.textContent = s ? "电视归位" : "电视换位";
   }
@@ -3457,12 +3459,12 @@ function fw() {
       }),
     St.gate.length)
   ) {
-    let s = e("gate-toggle", "翻板通口\uFF08\u5DF2\u5173\uFF09", () => {
+    let s = e("gate-toggle", "抽拉台面\uFF08\u5DF2\u5173\uFF09", () => {
       let r = Dn.gate ? 0 : 1;
       (ns({ gate: r }),
         (s.textContent = r
-          ? "翻板通口\uFF08\u5DF2\u5F00\uFF09"
-          : "翻板通口\uFF08\u5DF2\u5173\uFF09"),
+          ? "抽拉台面（已收回）"
+          : "抽拉台面（已拉出）"),
         s.setAttribute("aria-pressed", String(!!r)));
     });
     s.setAttribute("aria-pressed", String(!!Dn.gate));
@@ -3548,6 +3550,7 @@ function fw() {
   }
 }
 var ghostWalk = null,
+  walkCollision = null,
   lastWalkFrame = 0,
   lastWalkLightFocus = null,
   walkReturnView = null;
@@ -3568,6 +3571,7 @@ function wx() {
   ghostWalk?.dispose();
   ghostWalk = null;
   document.body.classList.remove("ghost-mode");
+  kn?.setAttribute("aria-label", "住宅三维空间，拖动旋转，双指或滚轮缩放");
   _r?.setObserver?.(null);
   (Nt?.dispose(), $n?.dispose(), (Nt = null), ($n = null));
 }
@@ -3663,6 +3667,31 @@ function toggleNearbyCabinet(id) {
   });
   Jt?.request({ shadow: true });
 }
+const localRoomDoors = new Map();
+function setWalkDoorOpen(id, open) {
+  if (id === "guest-door") {
+    roomAtmosphere.setDoorOpen(open);
+    Jt?.request({ shadow: true });
+    return;
+  }
+  if (id === "entry-door" || id === "kitchen-door") {
+    ns({ [id === "entry-door" ? "entry" : "kitchen"]: open ? 1 : 0 });
+    return;
+  }
+  const opening = ut.openings.find((o) => o.id === id && o.type === "door");
+  const group = Ct.getObjectByName("opening:" + id);
+  if (!opening || !group) return;
+  const from = group.rotation.y;
+  const to = -Kn.degToRad(opening.rotation || 0) - Kn.degToRad(opening.openAngle || 0) * Number(open);
+  const start = performance.now();
+  localRoomDoors.set(id, open);
+  xu.set("walk-door:" + id, (now) => {
+    const t = Kn.clamp((now - start) / 550, 0, 1);
+    group.rotation.y = from + (to - from) * t * t * (3 - 2 * t);
+    return t < 1;
+  });
+  Jt?.request({ shadow: true });
+}
 function walkTargets() {
   const targets = [],
     add = (id, label, position, activate, normal) => {
@@ -3710,8 +3739,8 @@ function walkTargets() {
   const hatch = ut.homeDesign.hatch;
   add(
     "walk-hatch",
-    "升起 / 放下翻板",
-    [hatch.hinge.x, 1.1, hatch.hinge.z - 0.4],
+    "拉出 / 收回台面",
+    [hatch.centerX ?? ut.objects.find((o) => o.id === "s02-entry-return").x, hatch.worktopTopM ?? 0.88, hatch.drawerFrontZ ?? hatch.hinge?.z ?? 7.425],
     () => ns({ gate: Dn.gate ? 0 : 1 }),
   );
   const bed = point("guest-sofa-bed", 0.65);
@@ -3744,6 +3773,13 @@ function walkTargets() {
         Jt?.request({ shadow: true });
       },
     );
+  for (const [id, label] of [["master-door", "主卧门"], ["bath-door", "卫浴门"], ["entry-door", "入户门"]]) {
+    const opening = ut.openings.find((o) => o.id === id);
+    if (!opening) continue;
+    add("walk-" + id, "开合" + label, [opening.center[0], 1.15, opening.center[1]], () =>
+      setWalkDoorOpen(id, id === "entry-door" ? !Dn.entry : !(localRoomDoors.get(id) ?? true)),
+    );
+  }
   for (const unit of currentStorage()) {
     const a = Kn.degToRad(unit.rotation || 0),
       normal = [Math.sin(a), -Math.cos(a)];
@@ -3791,8 +3827,14 @@ function enterGhostWalk(pose) {
   ct.updateMatrixWorld(true);
   Mx();
   document.body.classList.add("ghost-mode");
+  kn.setAttribute("aria-label", "住宅三维空间，左摇杆行走，右摇杆转头；WASD移动，IJKL转头");
   lastWalkFrame = performance.now();
   lastWalkLightFocus = null;
+  Xp({ mode: "all" });
+  walkCollision ||= createWalkCollision(ut, Ct);
+  const safeStart = walkCollision.move([ct.position.x, ct.position.z], [ct.position.x, ct.position.z]);
+  ct.position.x = safeStart[0];
+  ct.position.z = safeStart[1];
   ghostWalk = createGhostWalk({
     camera: ct,
     canvas: kn,
@@ -3809,6 +3851,7 @@ function enterGhostWalk(pose) {
     },
     onMotion: (active) => (active ? Jt?.begin() : Jt?.end()),
     getTargets: walkTargets,
+    resolveMove: (from, to) => walkCollision.move(from, to),
     onExit: exitGhostWalk,
   });
   Xp({ mode: "all" });
@@ -4116,7 +4159,7 @@ async function bw() {
         group: homeMotion.hatch.group,
         axis: "x",
         base: 0,
-        angle: -Kn.degToRad(95),
+        angle: 0,
       }),
       (xx = ax({ THREE: yi, scene: Ct, model: ut })),
       (roomBatching = batchFurniture(Ct, ut, Mu)),
@@ -4174,7 +4217,10 @@ async function bw() {
   }
 }
 await bw();
-if (vu) showWelcome();
+if (vu) {
+  enterGhostWalk();
+  showWelcome();
+}
 if (vu)
   mountMomentControls(
     (id) => Fp(id),
@@ -4249,6 +4295,11 @@ $e("#bed-state").onclick = () => {
 };
 $e("#projection").onclick = _w;
 $e("#reset").onclick = () => {
+  if (ghostWalk) {
+    const entry = ut.presentation.interiorViews.find((v) => v.id === ut.presentation.defaultView);
+    enterGhostWalk({ position: entry.position, target: entry.target });
+    return;
+  }
   let i = ut.presentation.interiorViews.find((e) => e.id === vr);
   i ? Ka(i) : Ja(Ln);
 };
@@ -4311,6 +4362,9 @@ window.homePresentation = {
   startGhostWalk: (pose) => enterGhostWalk(pose),
   stopGhostWalk: () => exitGhostWalk(),
   getGhostWalkState: () => ghostWalk?.getState() || { active: false },
+  getWalkCollisionAudit: () => walkCollision?.audit || null,
+  setWalkDoorOpen,
+  getWalkDoorStates: () => Object.fromEntries(ut.openings.filter((o) => o.type === "door").map((o) => [o.id, Ct.getObjectByName("opening:" + o.id)?.rotation.y])),
   getModelAudit: () => auditSceneModel(Ct, ut),
   getModel: () => structuredClone(ut),
   getHomeDesign: () => ({

@@ -59,7 +59,7 @@ try {
       { name: "dishwasher", expectedId: "walk-dishwasher", position: [dishwasher.x, 1.74, dishwasher.z + 0.985], target: [dishwasher.x, 0.62, dishwasher.z] },
       { name: "keg", expectedId: "walk-keg", position: [keg.x, 1.74, keg.z - 0.95], target: [keg.x, 0.65, keg.z] },
       { name: "mobile-tv", expectedId: "walk-tv", position: [tv.x, 1.74, tv.z - 1.4], target: [tv.x, 1.265, tv.z] },
-      { name: "hatch", expectedId: "walk-hatch", position: [hatch.hinge.x - 0.95, 1.74, hatch.hinge.z - 0.4], target: [hatch.hinge.x, 1.1, hatch.hinge.z - 0.4] },
+      { name: "hatch", expectedId: "walk-hatch", position: [5.15 - 0.95, 1.74, hatch.drawerFrontZ ?? hatch.hinge?.z ?? 7.425], target: [5.15, hatch.worktopTopM ?? 1.1, hatch.drawerFrontZ ?? hatch.hinge?.z ?? 7.425] },
       { name: "guest-bed", expectedId: "walk-bed", position: [bed.x, 1.74, bed.z + 1.13], target: [bed.x, 0.65, bed.z] },
       { name: "upper-fridge-storage", expectedId: "walk-storage:upper-fridge", ...storagePose },
     ];

@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import * as THREE from "three";
+import { OBB } from "three/addons/math/OBB.js";
 import base from "../src/model.js";
 import { createStorageDesign } from "../src/storage-design";
 import { createAtmosphereDesign } from "../src/atmosphere-design";
@@ -62,28 +63,93 @@ function objectBox(o: any) {
     new THREE.Vector3(o.x + w / 2, (o.y || 0) + o.h, o.z + d / 2),
   );
 }
-test("V9 hatch is column-aligned and its complete upward sweep clears protected structure", () => {
+test("entry return uses a supported two-leaf telescopic pullout within the cabinet budget", () => {
   const { model, v8, motion, bounds } = fixture();
   const pillar = model.objects.find((o: any) => o.id === "column-handdrawn");
   expect(pillar).toEqual(v8.objects.find((o) => o.id === pillar.id));
   const island = model.objects.find((o: any) => o.id === "s02-entry-return");
   expect(island.x).toBe(pillar.x);
   expect(island.w).toBe(pillar.w);
-  expect(model.homeDesign.hatch.depthM).toBe(pillar.w);
-  expect(model.homeDesign.hatch.hinge.x).toBe(pillar.x);
-  const sweep = [];
+  expect(island.w).toBe(0.5);
+  expect(island.d).toBe(0.9);
+  const design = model.homeDesign.hatch;
+  expect(design.kind).toBe("two_leaf_drawer_pullout");
+  expect(design.status).toBe("concept_not_factory_cad");
+  expect(design.spanM).toBe(0.895);
+  expect(design.depthM).toBe(0.405);
+  expect(design.leafCount).toBe(2);
+  expect(design.leafLengthM * 2).toBeCloseTo(design.spanM, 4);
+  expect(design.cabinetClearWidthM).toBeGreaterThan(design.depthM);
+  expect(design.cabinetClearDepthM).toBeGreaterThanOrEqual(
+    design.railDepthMinM,
+  );
+  expect(design.cabinetClearHeightM).toBeGreaterThanOrEqual(
+    design.requiredClearHeightM,
+  );
+  expect(design.storagePocketMinDepthM).toBeLessThan(design.cabinetClearDepthM);
+  expect(
+    island.collisionParts.filter(
+      (p: any) => p.h <= 0.025 && [0.08, 0.34, 0.62].includes(p.y),
+    ),
+  ).toHaveLength(3);
+  expect(design.storagePocketYBoundsM).toEqual([0.638, 0.915]);
+  expect(design.lowerOpenStorageBays).toBe(2);
+  expect(island.collisionParts.find((p:any)=>p.role==="pullout_pocket_side_fascia")).toMatchObject({y:0.638,h:0.277,d:0.9});
+  expect(motion.hatch!.group.name).toBe("opening:hall-gate");
+
+  const meshBox = (o: THREE.Object3D) => {
+    o.updateWorldMatrix(true, true);
+    return new THREE.Box3().setFromObject(o);
+  };
   for (let step = 0; step <= 100; step++) {
-    applyHomeMotion(motion, { dining: 0, gate: step / 100, dishwasher: 0 });
+    applyHomeMotion(motion, { dining: 0, gate: 1 - step / 100, dishwasher: 0 });
     const box = bounds(motion.hatch!.group);
     expect(overlap(box, objectBox(pillar)), `pillar at ${step}%`).toBe(false);
-    expect(overlap(box, objectBox(island)), `island at ${step}%`).toBe(false);
-    sweep.push({
-      progress: step / 100,
-      min: box.min.toArray(),
-      max: box.max.toArray(),
-    });
+    const allLeafBounds = meshBox(motion.hatch!.baseLeaf);
+    expect(allLeafBounds.min.y).toBeGreaterThanOrEqual(0.1);
+    expect(allLeafBounds.max.y).toBeLessThan(0.915);
+    expect(motion.hatch!.leaves.position.z).toBeLessThanOrEqual(
+      design.leafLengthM / 2 + 0.001,
+    );
+    expect(motion.hatch!.leaves.position.z).toBeGreaterThanOrEqual(
+      -design.spanM - 0.001,
+    );
+    expect(motion.hatch!.railStage2.position.z).toBeGreaterThanOrEqual(
+      -design.leafLengthM - 0.001,
+    );
+    expect(motion.hatch!.railStage3.position.z).toBeGreaterThanOrEqual(
+      -design.leafLengthM - 0.001,
+    );
   }
-  expect(model.homeDesign.hatch.spanM).toBeGreaterThanOrEqual(0.85);
+  applyHomeMotion(motion, { dining: 0, gate: 0, dishwasher: 0 });
+  const extended = meshBox(motion.hatch!.baseLeaf);
+  expect(extended.min.z).toBeCloseTo(design.drawerFrontZ - design.spanM, 3);
+  expect(extended.max.z).toBeCloseTo(
+    design.drawerFrontZ - design.leafLengthM,
+    3,
+  );
+  expect(motion.hatch!.outerLeafPivot.rotation.x).toBeCloseTo(Math.PI, 4);
+  expect(motion.hatch!.railStage2.position.z).toBeCloseTo(
+    -design.leafLengthM,
+    4,
+  );
+  expect(motion.hatch!.railStage3.position.z).toBeCloseTo(
+    -design.leafLengthM,
+    4,
+  );
+  expect(motion.hatch!.front.rotation.x).toBeCloseTo(-Math.PI / 2, 4);
+
+  applyHomeMotion(motion, { dining: 0, gate: 1, dishwasher: 0 });
+  const stowedBase = meshBox(motion.hatch!.baseLeaf);
+  const stowedTop = meshBox(motion.hatch!.outerLeafPivot);
+  expect(stowedBase.min.z).toBeGreaterThanOrEqual(design.drawerFrontZ - 0.001);
+  expect(stowedBase.max.z).toBeLessThanOrEqual(
+    design.drawerFrontZ + design.cabinetClearDepthM + 0.001,
+  );
+  expect(stowedTop.max.y).toBeLessThan(0.915);
+  expect(motion.hatch!.front.rotation.x).toBeCloseTo(0, 4);
+  expect(motion.hatch!.tray.visible).toBe(false);
+  expect(motion.hatch!.stool.visible).toBe(false);
 });
 test("V9 folding table uses one complete assembly and fits its stowed budget", () => {
   const { motion, model, bounds } = fixture();
@@ -192,4 +258,21 @@ test("two sofa modules and mobile television clear peripheral furniture in their
   expect(model.homeDesign.mobileTV.stand.locking).toBe(true);
   expect(model.homeDesign.modularSofa.middleArmrest).toBe(false);
   expect(motion.sofaModules).toHaveLength(2);
+});
+
+test("two tabletop leaves have no volume overlap during the complete fold sequence",()=>{
+  const {motion}=fixture();
+  const first=motion.hatch!.baseLeaf;
+  const second=motion.hatch!.outerLeafPivot.children.find(o=>(o as THREE.Mesh).isMesh) as THREE.Mesh;
+  const obb=(mesh:THREE.Mesh)=>{
+    mesh.updateWorldMatrix(true,false);
+    mesh.geometry.computeBoundingBox();
+    const box=new OBB().fromBox3(mesh.geometry.boundingBox!).applyMatrix4(mesh.matrixWorld);
+    box.halfSize.addScalar(-0.0002); // ignore touching finished edges under 0.4mm combined tolerance
+    return box;
+  };
+  for(let step=0;step<=200;step++){
+    applyHomeMotion(motion,{dining:0,gate:1-step/200,dishwasher:0});
+    expect(obb(first).intersectsOBB(obb(second)),`leaf volume at ${step/2}%`).toBe(false);
+  }
 });

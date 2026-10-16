@@ -27,11 +27,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("touch joystick and keyboard move at eye height within the ghost bounds", async ({ page }) => {
-  const joystick = page.locator(".ghost-joystick");
+  const joystick = page.locator(".ghost-joystick:not(.ghost-look-joystick)");
   const box = await joystick.boundingBox();
   expect(box).not.toBeNull();
-  expect(box!.width).toBe(80);
-  expect(box!.height).toBe(80);
+  expect(box!.width).toBe(120);
+  expect(box!.height).toBe(120);
 
   await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
   await page.mouse.down();
@@ -112,6 +112,42 @@ test("canvas drag rotates view and a nearby forward target is the only interacti
   expect(rotated.yaw).not.toBeCloseTo(0, 2);
   expect(rotated.pitch).not.toBeCloseTo(0, 2);
   expect(await page.evaluate(() => window.ghostWalkHarness.events.motion)).toEqual([true, false]);
+});
+
+test("dual touch sticks move and turn independently, release and blur stop both", async ({ page }) => {
+  const left = (await page.locator(".ghost-joystick:not(.ghost-look-joystick)").boundingBox())!;
+  const right = (await page.locator(".ghost-look-joystick").boundingBox())!;
+  const x1 = left.x + left.width / 2, y1 = left.y + left.height / 2;
+  const x2 = right.x + right.width / 2, y2 = right.y + right.height / 2;
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [
+    { x: x1, y: y1, id: 1 }, { x: x2, y: y2, id: 2 },
+  ] });
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [
+    { x: x1, y: y1 - 35, id: 1 }, { x: x2 + 34, y: y2 - 15, id: 2 },
+  ] });
+  await page.evaluate(() => { for (let i=0;i<12;i++) window.ghostWalkHarness.step(); });
+  const moved = await page.evaluate(() => window.ghostWalkHarness.walk.getState());
+  expect(moved.position[2]).toBeLessThan(4.8);
+  expect(moved.yaw).toBeGreaterThan(.2);
+  expect(moved.pitch).toBeGreaterThan(.1);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  const before = await page.evaluate(() => window.ghostWalkHarness.walk.getState());
+  await page.evaluate(() => { for (let i=0;i<20;i++) window.ghostWalkHarness.step(); });
+  expect(await page.evaluate(() => window.ghostWalkHarness.walk.getState())).toEqual(before);
+  await page.keyboard.down("l");
+  await page.evaluate(() => { for (let i=0;i<150;i++) window.ghostWalkHarness.step(); });
+  await page.keyboard.up("l");
+  expect((await page.evaluate(() => window.ghostWalkHarness.walk.getState())).yaw).toBeGreaterThan(before.yaw + 3);
+  await page.keyboard.down("i");
+  await page.evaluate(() => { for (let i=0;i<150;i++) window.ghostWalkHarness.step(); });
+  await page.keyboard.up("i");
+  expect((await page.evaluate(() => window.ghostWalkHarness.walk.getState())).pitch).toBeCloseTo(65 * Math.PI / 180);
+  await page.keyboard.down("w");
+  await page.evaluate(() => dispatchEvent(new Event("blur")));
+  await page.keyboard.up("w");
+  expect(await page.evaluate(() => window.ghostWalkHarness.step())).toBe(false);
+  expect(await page.evaluate(() => window.ghostWalkHarness.events.motion.at(-1))).toBe(false);
 });
 
 test("Escape exits, idle updates do not request renders, and dispose removes listeners and UI", async ({ page }) => {

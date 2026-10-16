@@ -26,6 +26,13 @@ export type HomeMotion = {
   laundry: { group: THREE.Group; pivot: THREE.Group }[];
   hatch?: {
     group: THREE.Group;
+    leaves: THREE.Group;
+    baseLeaf: THREE.Mesh;
+    outerLeafPivot: THREE.Group;
+    rails: THREE.Group;
+    railStage2: THREE.Group;
+    railStage3: THREE.Group;
+    front: THREE.Group;
     tray: THREE.Group;
     stool: THREE.Group;
     stop: THREE.Mesh;
@@ -716,81 +723,153 @@ export function buildHomeArchitecture(
     box(rack, m, 0.7, 0.012, 0.009, 2.31, 2.422, z, "bronze", 0.002);
 
   const hatchConfig = model.homeDesign?.hatch || {};
-  const hx = hatchConfig.hinge?.x ?? 4.705,
-    hz = hatchConfig.hinge?.z ?? 7.405;
-  const span = hatchConfig.spanM || 0.9,
-    depth = hatchConfig.depthM || 0.4,
-    height = hatchConfig.heightM || 0.95;
+  const hx =
+      hatchConfig.hinge?.x ??
+      model.objects.find((o: any) => o.id === "s02-entry-return")?.x ??
+      4.705,
+    hz = hatchConfig.drawerFrontZ ?? 7.425,
+    width = hatchConfig.depthM ?? 0.405,
+    leafLength = hatchConfig.leafLengthM ?? 0.4475,
+    stroke = hatchConfig.spanM ?? 0.895,
+    pocketHeight = hatchConfig.cabinetClearHeightM ?? 0.277,
+    worktopTop = hatchConfig.worktopTopM ?? 0.875,
+    worktopThickness = hatchConfig.worktopThicknessM ?? 0.018;
   const hatch = group("opening:hall-gate", ["bar", "hall"], "opening");
-  hatch.position.set(hx, height, hz);
+  hatch.position.set(hx, 0, hz);
   hatch.userData.animated = true;
-  box(hatch, m, depth, 0.03, span, 0, -0.015, -span / 2, "salonTimber", 0.01);
-  box(hatch, m, depth, 0.012, 0.014, 0, -0.015, -0.04, "bronze", 0.002);
-  // Stops and receiver are deliberately independent of the protected column.
-  const hardware = group("home:hatch-hardware", ["bar", "hall"]);
-  solid(
-    hardware,
-    "bar",
-    "hatch:receiver",
-    0.055,
-    height - 0.035,
-    0.055,
-    hx,
-    (height - 0.035) / 2,
-    hz - span - 0.03,
-    "salonTimber",
-  );
+
+  // A measured concept based on a two-leaf fold-out tabletop: the stacked
+  // leaves travel outward together on three nested rail stages, then the
+  // inboard leaf unfolds back toward the cabinet. It is not manufacturer CAD.
+  const front = group("home:hatch-drawer-front", ["bar", "hall"]);
+  front.position.set(0, 0.638, 0);
   box(
-    hardware,
+    front,
     m,
-    0.085,
-    0.025,
-    0.075,
-    hx,
-    height - 0.042,
-    hz - span + 0.003,
-    "bronze",
+    0.464,
+    pocketHeight,
+    0.018,
+    0,
+    pocketHeight / 2,
+    0.009,
+    "salonTimber",
+    0.004,
   );
-  for (const x of [hx - 0.13, hx + 0.13]) {
-    rod(
-      hardware,
+  hatch.add(front);
+
+  const leaves = group("home:hatch-pullout-leaves", ["bar", "hall"]);
+  const packetStoredCenterZ = leafLength / 2;
+  leaves.position.set(
+    0,
+    worktopTop - worktopThickness / 2,
+    packetStoredCenterZ,
+  );
+  const baseLeaf = box(
+    leaves,
+    m,
+    width,
+    worktopThickness,
+    leafLength,
+    0,
+    0,
+    0,
+    "salonTimber",
+    0.003,
+  );
+  baseLeaf.name = "home:hatch-leaf-base";
+  const outerLeafPivot = group("home:hatch-leaf-fold-pivot", ["bar", "hall"]);
+  outerLeafPivot.position.set(0, worktopThickness / 2, leafLength / 2);
+  box(
+    outerLeafPivot,
+    m,
+    width,
+    worktopThickness,
+    leafLength,
+    0,
+    worktopThickness / 2,
+    -leafLength / 2,
+    "salonTimber",
+    0.003,
+  ).name = "home:hatch-leaf-outer";
+  leaves.add(outerLeafPivot);
+  hatch.add(leaves);
+
+  // Two visible rail banks, each represented as three nested 540 mm stages.
+  // The drawn overlap makes the support concept inspectable at full extension.
+  const rails = group("home:hatch-telescopic-rails", ["bar", "hall"]);
+  const railLength = hatchConfig.railDepthMinM ?? 0.54;
+  const railStage2 = group("home:hatch-rail-stage-2", ["bar", "hall"]);
+  const railStage3 = group("home:hatch-rail-stage-3", ["bar", "hall"]);
+  for (const x of [-0.174, 0.174]) {
+    const fixed = box(
+      rails,
       m,
-      [x, 0.72, hz + 0.06],
-      [x, 0.91, hz - 0.03],
-      0.009,
+      0.012,
+      0.012,
+      railLength,
+      x,
+      worktopTop - 0.034,
+      railLength / 2,
       "steel",
+      0.002,
     );
-    box(hardware, m, 0.035, 0.09, 0.025, x, 0.86, hz + 0.015, "bronze");
+    fixed.name = `home:hatch-rail-${x < 0 ? "left" : "right"}-stage-1`;
+    const middle = box(
+      railStage2,
+      m,
+      0.012,
+      0.012,
+      railLength,
+      x,
+      0,
+      railLength / 2,
+      "steel",
+      0.002,
+    );
+    middle.name = `home:hatch-rail-${x < 0 ? "left" : "right"}-stage-2`;
+    const moving = box(
+      railStage3,
+      m,
+      0.012,
+      0.012,
+      railLength,
+      x,
+      0,
+      railLength / 2,
+      "steel",
+      0.002,
+    );
+    moving.name = `home:hatch-rail-${x < 0 ? "left" : "right"}-stage-3`;
   }
-  const stop = box(
-    hardware,
-    m,
-    0.025,
-    0.025,
-    0.065,
-    hx + 0.18,
-    height + 0.02,
-    hz + 0.025,
-    "bronze",
-  );
+  rails.add(railStage2);
+  railStage2.add(railStage3);
+  hatch.add(rails);
+
+  // Legacy references remain available for consumers, with no old tray,
+  // stool, flip hinge, stop, or receiver geometry in the scene.
   const tray = new THREE.Group();
-  hatch.add(tray);
-  box(tray, m, 0.27, 0.014, 0.22, 0, 0.015, -span * 0.5, "salonStone");
-  const cup = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.032, 0.028, 0.065, 16),
-    m.cream,
-  );
-  cup.position.set(0, 0.054, -span * 0.5);
-  tray.add(cup);
+  tray.name = "home:hatch-legacy-tray-empty";
+  tray.visible = false;
   const stool = group("home:hatch-stool", ["bar"]);
   stool.userData.animated = true;
-  box(stool, m, 0.39, 0.045, 0.36, 0, 0.65, 0, "salonFabric", 0.025);
-  for (const x of [-0.16, 0.16])
-    for (const z of [-0.14, 0.14])
-      rod(stool, m, [x, 0.025, z], [x, 0.64, z], 0.012, "salonTimber");
-  rod(stool, m, [-0.16, 0.25, -0.14], [0.16, 0.25, -0.14], 0.009, "bronze");
-  box(stool, m, 0.36, 0.17, 0.025, 0, 0.82, 0.16, "salonTimber", 0.012);
-  motion.hatch = { group: hatch, tray, stool, stop };
+  stool.visible = false;
+  const stop = new THREE.Mesh(new THREE.BufferGeometry(), m.bronze);
+  stop.name = "home:hatch-legacy-stop-empty";
+  stop.visible = false;
+  hatch.add(tray);
+  motion.hatch = {
+    group: hatch,
+    leaves,
+    baseLeaf,
+    outerLeafPivot,
+    rails,
+    railStage2,
+    railStage3,
+    front,
+    tray,
+    stool,
+    stop,
+  };
 
   // One continuous, restrained cinema ceiling datum, not disconnected decorative vaults.
   const cinema = group("home:cinema-composition", ["guest"]);
@@ -1000,20 +1079,45 @@ export function applyHomeMotion(
   }
   if (motion.hatch) {
     const p = state.gate,
-      { group, tray, stool, stop } = motion.hatch;
-    // Clear the top and seat before lifting; leave the open leaf held beyond vertical.
-    group.rotation.x =
-      THREE.MathUtils.degToRad(model?.homeDesign?.hatch?.openAngleDeg || 95) *
-      smooth((p - 0.25) / 0.75);
-    tray.visible = p < 0.06;
-    stool.visible = !!config?.temporarySeatAvailable;
-    stool.position.set(
-      4.12 - smooth(p / 0.24) * 0.07,
-      0,
-      6.95 - smooth(p / 0.24) * 0.8,
-    );
-    stool.scale.setScalar(1);
-    stop.visible = true;
+      {
+        group,
+        leaves,
+        outerLeafPivot,
+        railStage2,
+        railStage3,
+        front,
+        tray,
+        stool,
+        stop,
+      } = motion.hatch;
+    const deploy = 1 - p;
+    // Front drops first, then the folded pair slides out on two sequential
+    // 447.5 mm rail stages (each member is 540 mm), then the inboard leaf folds
+    // back toward the cabinet. Reverse playback stows in the safe reverse order.
+    const door = smooth(deploy / 0.18);
+    const pull = smooth((deploy - 0.18) / 0.52);
+    const unfold = smooth((deploy - 0.7) / 0.3);
+    const stroke =
+      motion.model?.homeDesign?.hatch?.spanM ??
+      model?.homeDesign?.hatch?.spanM ??
+      0.895;
+    const stageTravel =
+      motion.model?.homeDesign?.hatch?.perStageTravelM ?? stroke / 2;
+    const travel = stroke * pull;
+    leaves.position.z =
+      (motion.model?.homeDesign?.hatch?.leafLengthM ?? 0.4475) / 2 - travel;
+    // A surface-edge book hinge: the pivot is on the top face of the first
+    // leaf and the second leaf is offset by half its thickness. This gives
+    // stacked and coplanar endpoints without either rigid board cutting through the other.
+    outerLeafPivot.position.y = (model?.homeDesign?.hatch?.worktopThicknessM ?? 0.018) / 2;
+    outerLeafPivot.rotation.x = Math.PI * unfold;
+    railStage2.position.z = -Math.min(travel, stageTravel);
+    railStage3.position.z = -Math.max(0, travel - stageTravel);
+    front.rotation.x = (-Math.PI / 2) * door;
+    tray.visible = false;
+    stool.visible = false;
+    stop.visible = false;
+    group.rotation.set(0, 0, 0);
   }
   if (motion.dishwasher) {
     const p = state.dishwasher;
