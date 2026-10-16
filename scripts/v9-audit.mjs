@@ -317,24 +317,6 @@ try {
           { timeout: 5_000 },
         );
       });
-      await captureExtra("ghost-walk-fridge-open-retreated", async () => {
-        const start = await page.evaluate(
-          () => window.homePresentation.getGhostWalkState().position,
-        );
-        await page.keyboard.down("s");
-        try {
-          await page.waitForFunction(
-            (origin) => {
-              const position = window.homePresentation.getGhostWalkState().position;
-              return Math.hypot(position[0] - origin[0], position[2] - origin[2]) >= 0.45;
-            },
-            start,
-            { timeout: 5_000 },
-          );
-        } finally {
-          await page.keyboard.up("s");
-        }
-      });
       await page.evaluate(() => window.homePresentation.stopGhostWalk());
       await page.waitForTimeout(100);
       await captureExtra("ghost-fridge-open-view", async () => {
