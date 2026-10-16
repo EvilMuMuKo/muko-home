@@ -139,7 +139,17 @@ test("mobile media layout keeps full seating and peripheral cabinet geometry", (
   expect(next.objects.some((object) => object.id === "upper-living-rear")).toBe(
     false,
   );
-  expect(screenBias.position).toEqual([9.4, 1.265, 8.99]);
+  expect(screenBias).toBeUndefined();
+  for (const scene of next.lighting.scenes) {
+    expect(scene.fixtureLevels?.["living-screen-bias"]).toBeUndefined();
+    expect(scene.fixtureKelvin?.["living-screen-bias"]).toBeUndefined();
+  }
+  expect(console.equipmentRole).toBe("peripheral_daily_storage");
+  expect(retainedMediaStorage.label).toBe("客厅轻物收纳");
+  expect(next.homeDesign.storage.removedTvWallStorageIds).toEqual(["living-rear-storage"]);
+  expect(next.homeDesign.storage.addedObjects).toEqual(["laundry-basket"]);
+  for (const id of next.homeDesign.accessoryReconciliation.retiredObjects)
+    expect(next.objects.some(object=>object.id===id)).toBe(false);
   expect(readingLight.position).toEqual([10.95, 1.265, 8.85]);
   expect(next.homeDesign.layoutComparison.alternatives[1].sofa.w).toBe(2.55);
   expect(

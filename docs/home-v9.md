@@ -32,3 +32,7 @@ Keep the existing Three.js/Vite stack and mobile quality tiers. No new mobile fu
 Run `npm ci`, `npm run build`, and `npm test`. Set `CHROMIUM_PATH` when local Chromium is not at `/usr/bin/chromium`. `scripts/v9-audit.mjs` captures comparable render evidence against a running server; `scripts/v9-compare.mjs` compares those reports. Software-renderer timing does not measure physical-phone FPS.
 
 Component sweeps use sampled visible-mesh AABBs and explicit tolerances; reports must retain limitations for body envelopes, coupled tasks, surveyed fit and hardware loads. Browser checks do not certify construction or everyday joint use.
+
+## Equipment transition cleanup
+
+The current mobile-TV layout owns its PS5, two supported controller charging bases, power-pack bracket and short internal cable. The former fixed screen-wash light and scene temperature overrides are removed. The perimeter low cabinet, upper cabinet and side cabinet remain useful, with explicit daily-storage roles and no television/PS5 installation assigned to them. Old coffee table, rear cabinet, flip-up furniture, entry display and laundry folding unit are excluded from the selected model; the storage ledger now names the actual replacements. See `equipment-reconciliation.md` for the inventory and verification boundary.

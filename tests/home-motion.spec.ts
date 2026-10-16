@@ -53,6 +53,36 @@ function overlap(a: THREE.Box3, b: THREE.Box3) {
     Math.min(a.max.z, b.max.z) - Math.max(a.min.z, b.min.z) > 0.002
   );
 }
+
+test("mobile TV carries supported console, controllers and power pack without old fixed-device props", () => {
+  const { scene, model, motion, bounds } = fixture();
+  const tv = motion.mobileTV!.group;
+  const ps5 = scene.getObjectByName("ps5")!;
+  const dock = scene.getObjectByName("home:mobile-game-dock")!;
+  const pack = scene.getObjectByName("home:mobile-power-pack")!;
+  const shelf = scene.getObjectByName("home:mobile-device-shelf")!;
+  for (const object of [ps5, dock, pack]) expect(object.parent).toBe(tv);
+  const shelfBounds = bounds(shelf);
+  for (const object of [ps5, dock]) {
+    const b = bounds(object);
+    expect(b.min.y).toBeGreaterThanOrEqual(shelfBounds.max.y - 0.001);
+    expect(b.min.y - shelfBounds.max.y).toBeLessThan(0.005);
+    for (const axis of ["x", "z"] as const) {
+      expect(b.min[axis]).toBeGreaterThanOrEqual(shelfBounds.min[axis]);
+      expect(b.max[axis]).toBeLessThanOrEqual(shelfBounds.max[axis]);
+    }
+  }
+  const offsets = [ps5,dock,pack].map(object=>object.position.clone());
+  for (let i=0;i<=100;i++) {
+    applyHomeMotion(motion,{dining:0,gate:1,dishwasher:0,tv:i/100},model);
+    tv.updateWorldMatrix(true,true);
+    for (const [index,object] of [ps5,dock,pack].entries())
+      expect(object.getWorldPosition(new THREE.Vector3()).distanceTo(tv.localToWorld(offsets[index].clone()))).toBeLessThan(0.00001);
+  }
+  expect(scene.getObjectByName("home:daily-console-tray")).toBeTruthy();
+  for (const name of ["living:media-pier","living:media-crown","living-rear-storage","hall-gate-panel"])
+    expect(scene.getObjectByName(name)).toBeUndefined();
+});
 function objectBox(o: any) {
   const quarter = Math.abs(Math.sin(THREE.MathUtils.degToRad(o.rotation || 0))),
     c = Math.abs(Math.cos(THREE.MathUtils.degToRad(o.rotation || 0)));

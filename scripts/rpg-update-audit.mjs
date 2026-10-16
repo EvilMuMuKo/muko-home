@@ -15,6 +15,11 @@ try {
  await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});
  report.start=await page.evaluate(()=>({state:window.homePresentation.getState(),walk:window.homePresentation.getGhostWalkState(),audit:window.homePresentation.getWalkCollisionAudit(),bundle:[...document.scripts].map(s=>s.src).filter(Boolean)}));
  assert.equal(report.start.walk.active,true);assert.deepEqual(report.start.audit.missingGroups,[]);
+ report.accessories=await page.evaluate(()=>window.homePresentation.getAccessoryAudit());
+ assert.deepEqual(report.accessories.retiredPresent,[]);
+ assert(report.accessories.nodes.every(n=>n.present && n.meshes>0));
+ for(const id of ['ps5','home:mobile-game-dock','home:mobile-power-pack'])assert.equal(report.accessories.nodes.find(n=>n.id===id).parent,'living-tv');
+ report.checks.accessoryReconciliation=true;
  report.checks.arrivalWalk=true;
  const left=await page.locator('.ghost-joystick:not(.ghost-look-joystick)').boundingBox(),right=await page.locator('.ghost-look-joystick').boundingBox();
  assert(left.width>=112 && right.width>=112);assert(left.x+left.width<right.x);
@@ -45,5 +50,7 @@ try {
  await page.waitForFunction(()=>window.homePresentation.getState().hatchProgress<.001);await shot('mobile-counter-pulled-out');
  await page.evaluate(()=>window.homePresentation.setHatchOpen(true));
  await page.waitForFunction(()=>window.homePresentation.getState().hatchProgress>.999);await shot('mobile-counter-hidden');report.checks.counterStates=true;
+ await page.evaluate(()=>window.homePresentation.setInteriorView('living-media'));await shot('mobile-tv-and-game-dock');
+ await page.evaluate(()=>window.homePresentation.setInteriorView('living-storage'));await shot('mobile-daily-storage');
  assert.deepEqual(report.errors,[]);assert.deepEqual(report.missing,[]);report.status='PASS';
 } catch(e){report.error=String(e);process.exitCode=1;}finally{await browser.close();await writeFile(resolve(out,'browser-validation.json'),JSON.stringify(report,null,2));console.log(JSON.stringify({status:report.status,checks:report.checks,error:report.error,screenshots:report.screenshots},null,2));}

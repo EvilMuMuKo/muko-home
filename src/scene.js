@@ -15,7 +15,7 @@ import {
 } from "./home-mesh";
 import { createSalonDesign } from "./salon-design";
 import { prepareSalonMaterials } from "./salon-materials";
-import { buildSalonFurniture, buildSalonArchitecture } from "./salon-mesh";
+import { buildSalonFurniture } from "./salon-mesh";
 import { createAtmosphereDesign, themeMoments } from "./atmosphere-design";
 import {
   configureRoomMaterials,
@@ -4363,6 +4363,16 @@ window.homePresentation = {
   stopGhostWalk: () => exitGhostWalk(),
   getGhostWalkState: () => ghostWalk?.getState() || { active: false },
   getWalkCollisionAudit: () => walkCollision?.audit || null,
+  getAccessoryAudit: () => ({
+    plan: ut.homeDesign.accessoryReconciliation,
+    nodes: ["ps5", "home:mobile-game-dock", "home:game-controller-left", "home:game-controller-right", "home:mobile-power-pack", "home:daily-console-tray"].map(id => {
+      const node = Ct.getObjectByName(id);
+      let meshes = 0;
+      node?.traverse(child => { if (child.isMesh) meshes++; });
+      return { id, present: !!node, parent: node?.parent?.name || null, meshes, position: node?.getWorldPosition(new P()).toArray() || null };
+    }),
+    retiredPresent: [...ut.homeDesign.accessoryReconciliation.retiredObjects, "living:media-pier", "living:media-crown"].filter(id => !!Ct.getObjectByName(id)),
+  }),
   setWalkDoorOpen,
   getWalkDoorStates: () => Object.fromEntries(ut.openings.filter((o) => o.type === "door").map((o) => [o.id, Ct.getObjectByName("opening:" + o.id)?.rotation.y])),
   getModelAudit: () => auditSceneModel(Ct, ut),

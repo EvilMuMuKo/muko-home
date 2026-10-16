@@ -969,6 +969,7 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       view.horizontalFov = 82;
     }
     if (view.id === "living-media") {
+      view.label = "移动电视与游戏托座";
       view.position = [7.6, 1.45, 7.4];
       view.target = [9.4, 0.95, 8.9];
       view.horizontalFov = 85;
@@ -1072,6 +1073,20 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     z: 8.99,
     y: 0.53,
     rotation: 180,
+    accessoryRole: "mobile_console_only",
+  });
+  Object.assign(objectById(model.objects, "living-tv-console"), {
+    label: "客厅日用低柜",
+    purpose: "书、桌游、游戏盒、备用线材与便携充电用品；不承放电视和PS5",
+    equipmentRole: "peripheral_daily_storage",
+  });
+  Object.assign(objectById(model.objects, "upper-living-media"), {
+    label: "客厅轻物收纳",
+    purpose: "轻型桌游、整理盒及书，不承担电视设备的接线与散热",
+  });
+  Object.assign(objectById(model.objects, "upper-living-side"), {
+    label: "客厅收藏展示柜",
+    purpose: "书、收藏及生活小物，与移动电视方向独立",
   });
   patchPose(objectById(model.objects, "living-lamp"), { x: 7.4, z: 6.9 });
   patchPose(objectById(model.objects, "side-table"), { x: 7.55, z: 7.6 });
@@ -1094,6 +1109,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
       { x: 9.65, z: 8.65, rotation: 165, label: "斜向共享" },
     ],
     ps5TravelsOnShelf: true,
+    shelf: { w: 0.78, d: 0.44, topM: 0.527, centerZ: -0.04 },
+    controllerDock: { count: 2, parent: "living-tv", support: "trolley_shelf", travelsWithTV: true },
     cableManagement:
       "PS5与屏内短线随架；迁移前拔掉墙侧供电，停车后接电、锁轮；不画跨通道拖线",
     loading:
@@ -1104,6 +1121,8 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     (object: any) => object.id !== "living-rear-storage",
   );
   model.homeDesign.storage.removedForMobility = ["living-rear-storage"];
+  model.homeDesign.storage.removedTvWallStorageIds = ["living-rear-storage"];
+  model.homeDesign.storage.addedObjects = ["laundry-basket"];
   model.homeDesign.dining.temporarySeatAvailable = false;
   model.objects = model.objects.filter(
     (object: any) =>
@@ -1250,13 +1269,37 @@ export function createHomeDesign<T extends Record<string, any>>(base: T): T {
     [10.95, 1.265, 8.85],
     [10.1, 0.7, 7.0],
   );
-  moveFixture(model, "living-screen-bias", [9.4, 1.265, 8.99], [9.4, 1.1, 9.2]);
-  for (const f of model.lighting.fixtures.filter(
-    (f: any) => f.id === "living-screen-bias",
-  ))
-    f.intensity = 0;
-  for (const scene of model.lighting.scenes)
-    scene.fixtureLevels = { ...scene.fixtureLevels, "living-screen-bias": 0 };
+  // The old wall-mounted screen wash has no physical anchor in this layout.
+  model.lighting.fixtures = model.lighting.fixtures.filter(
+    (f: any) => f.id !== "living-screen-bias",
+  );
+  for (const scene of model.lighting.scenes) {
+    scene.fixtureLevels = { ...scene.fixtureLevels };
+    delete scene.fixtureLevels["living-screen-bias"];
+    if (scene.fixtureKelvin) {
+      scene.fixtureKelvin = { ...scene.fixtureKelvin };
+      delete scene.fixtureKelvin["living-screen-bias"];
+    }
+  }
+  model.homeDesign.assumptions = model.homeDesign.assumptions.filter(
+    (item: any) => item.id !== "living-east-wall",
+  );
+  model.homeDesign.assumptions.push({
+    id: "mobile-tv-support-and-power",
+    statement: "移动架VESA、载荷、重心、锁轮和停靠插座待选型；屏幕与PS5迁移时不拖带墙侧电源线",
+    status: "unverified",
+  });
+  model.homeDesign.accessoryReconciliation = {
+    tv: {
+      mobileChildren: ["ps5", "home:mobile-game-dock", "home:mobile-power-pack"],
+      removed: ["legacy_ps5_floating_controllers", "living-screen-bias"],
+      repurposed: ["living-tv-console", "upper-living-media", "upper-living-side"],
+      fixedWallFrameActive: false,
+    },
+    retiredObjects: ["living-rear-storage", "laundry-sort-fold", "hall-gate-panel", "upper-entry-display", "bag-hooks", "salon-coffee-table"],
+    retainedCompatibilityPlaceholders: ["home:hatch-legacy-tray-empty", "home:hatch-stool", "home:hatch-legacy-stop-empty"],
+    status: "concept_model_reconciled",
+  };
   // Cinema lighting excludes task/cove sources rather than reusing the bright guest scene.
   const cinema = model.lighting.scenes.find(
     (scene: any) => scene.id === "cinema",

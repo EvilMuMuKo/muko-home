@@ -124,6 +124,9 @@ test("visible lighting choices preserve the current hatch and dining furniture s
 });
 
 test("arrival is directly walkable and real wall/closed door block while an opened door permits passage", async ({page}) => {
+  // Software-rendered CI can take seconds per frame. Keep an actual renderer,
+  // but use a small landscape viewport and allow the required simulation steps.
+  await page.setViewportSize({width:640,height:360});
   const errors: string[]=[];
   page.on("pageerror",e=>errors.push(e.message));
   await page.goto("/");
@@ -158,7 +161,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
   await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
   await page.keyboard.down("w");
   try {
-    await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:12000}).toBeGreaterThan(7.05);
+    await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:60000}).toBeGreaterThan(7.05);
   } finally {
     await page.keyboard.up("w");
     const afterPassage = await page.evaluate(()=>({
@@ -167,6 +170,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
       door: window.homePresentation.getWalkDoorStates()["master-door"],
     }));
     await writeFile(test.info().outputPath("door-swing-position.json"), JSON.stringify({afterDoorSwing,afterPassage}));
+    console.info("REAL_DOOR_PASSAGE", JSON.stringify({afterDoorSwing,afterPassage}));
   }
   expect(errors).toEqual([]);
 });

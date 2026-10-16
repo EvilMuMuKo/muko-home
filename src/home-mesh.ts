@@ -153,6 +153,13 @@ export function buildHomeFurniture(
   motion: HomeMotion,
 ) {
   if (o.type === "pegboard") return buildPegboard(group, o, m);
+  if (o.type === "ps5" && o.accessoryRole === "mobile_console_only") {
+    box(group, m, o.w, o.h, o.d, 0, o.h / 2, 0, "cream", 0.018);
+    box(group, m, o.w - 0.06, o.h + 0.003, o.d - 0.014, 0, o.h / 2, 0, "charcoal", 0.014);
+    for (let i = 0; i < 6; i++)
+      box(group, m, 0.002, 0.003, 0.06, -0.055 + i * 0.022, o.h + 0.003, 0, "steel");
+    return true;
+  }
   if (o.type === "basket") {
     box(group, m, o.w, 0.018, o.d, 0, 0.009, 0, "linen");
     for (const x of [-o.w / 2 + 0.009, o.w / 2 - 0.009])
@@ -295,7 +302,27 @@ export function buildHomeFurniture(
         box(group, m, 0.025, 0.05, 0.025, x, 0.095, z, "steel");
         box(group, m, 0.045, 0.012, 0.065, x, 0.1, z + 0.025, "bronze");
       }
-    box(group, m, 0.62, 0.024, 0.3, 0, 0.515, -0.09, "salonTimber");
+    box(group, m, 0.78, 0.024, 0.44, 0, 0.515, -0.04, "salonTimber").name = "home:mobile-device-shelf";
+    const dock = new THREE.Group();
+    dock.name = "home:mobile-game-dock";
+    dock.position.set(0, 0.527, 0.095);
+    for (const x of [-0.265, 0.265]) {
+      box(dock, m, 0.15, 0.014, 0.085, x, 0.007, 0, "charcoal", 0.012);
+      const controller = new THREE.Group();
+      controller.name = `home:game-controller-${x < 0 ? "left" : "right"}`;
+      controller.position.set(x, 0.014, 0);
+      box(controller, m, 0.12, 0.024, 0.055, 0, 0.014, 0, "cream", 0.015);
+      for (const side of [-1, 1]) {
+        const grip = box(controller, m, 0.035, 0.028, 0.065, side * 0.049, 0.019, 0.015, "cream", 0.015);
+        grip.rotation.y = side * 0.22;
+        box(controller, m, 0.012, 0.006, 0.012, side * 0.023, 0.031, 0.005, "charcoal", 0.004);
+      }
+      dock.add(controller);
+    }
+    group.add(dock);
+    const pack = box(group, m, 0.18, 0.045, 0.075, 0, 0.43, -0.11, "charcoal", 0.008);
+    pack.name = "home:mobile-power-pack";
+    box(group, m, 0.34, 0.012, 0.11, 0, 0.402, -0.11, "steel");
     const wire = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 1.23, -0.12),
       new THREE.Vector3(0.04, 0.88, -0.12),
@@ -940,6 +967,10 @@ export function buildHomeArchitecture(
         media.z - 0.025,
         i % 2 ? "clayFabric" : "oliveFabric",
       );
+    const tray = group("home:daily-console-tray", ["living"]);
+    box(tray, m, 0.36, 0.022, 0.24, media.x + 0.48, media.h + 0.011, media.z, "salonTimber", 0.012);
+    box(tray, m, 0.09, 0.012, 0.17, media.x + 0.43, media.h + 0.028, media.z, "charcoal", 0.008);
+    box(tray, m, 0.12, 0.025, 0.09, media.x + 0.56, media.h + 0.034, media.z, "oliveFabric", 0.008);
   }
   return {
     version: 9,
