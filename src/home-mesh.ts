@@ -154,6 +154,9 @@ export function buildHomeFurniture(
 ) {
   if (o.type === "pegboard") return buildPegboard(group, o, m);
   if (o.type === "ps5" && o.accessoryRole === "mobile_console_only") {
+    for (const x of [-0.14, 0.14])
+      for (const z of [-0.07, 0.07])
+        box(group, m, 0.018, 0.003, 0.018, x, -0.0015, z, "charcoal", 0.001);
     box(group, m, o.w, o.h, o.d, 0, o.h / 2, 0, "cream", 0.018);
     box(group, m, o.w - 0.06, o.h + 0.003, o.d - 0.014, 0, o.h / 2, 0, "charcoal", 0.014);
     for (let i = 0; i < 6; i++)
@@ -307,10 +310,10 @@ export function buildHomeFurniture(
     dock.name = "home:mobile-game-dock";
     dock.position.set(0, 0.527, 0.095);
     for (const x of [-0.265, 0.265]) {
-      box(dock, m, 0.15, 0.014, 0.085, x, 0.007, 0, "charcoal", 0.012);
+      box(dock, m, 0.15, 0.014, 0.085, x, 0.007, 0, "charcoal", 0.012).name = `home:controller-base-${x < 0 ? "left" : "right"}`;
       const controller = new THREE.Group();
       controller.name = `home:game-controller-${x < 0 ? "left" : "right"}`;
-      controller.position.set(x, 0.014, 0);
+      controller.position.set(x, 0.012, 0);
       box(controller, m, 0.12, 0.024, 0.055, 0, 0.014, 0, "cream", 0.015);
       for (const side of [-1, 1]) {
         const grip = box(controller, m, 0.035, 0.028, 0.065, side * 0.049, 0.019, 0.015, "cream", 0.015);

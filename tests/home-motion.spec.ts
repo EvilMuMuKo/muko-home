@@ -63,6 +63,11 @@ test("mobile TV carries supported console, controllers and power pack without ol
   const shelf = scene.getObjectByName("home:mobile-device-shelf")!;
   for (const object of [ps5, dock, pack]) expect(object.parent).toBe(tv);
   const shelfBounds = bounds(shelf);
+  for (const side of ["left", "right"]) {
+    const controller = bounds(scene.getObjectByName(`home:game-controller-${side}`)!);
+    const base = bounds(scene.getObjectByName(`home:controller-base-${side}`)!);
+    expect(controller.min.y).toBeCloseTo(base.max.y, 5);
+  }
   for (const object of [ps5, dock]) {
     const b = bounds(object);
     expect(b.min.y).toBeGreaterThanOrEqual(shelfBounds.max.y - 0.001);
