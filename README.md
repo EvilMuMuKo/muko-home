@@ -16,7 +16,7 @@ npm test
 npm run benchmark
 ```
 
-`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 生成 V9 最终布局、飘窗和动作参数，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/scene.js` 负责统一渲染与交互。详见 [V9 设计与验证范围](docs/home-v9.md)。
+`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
 
 `npm run build` 生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
 
@@ -36,8 +36,22 @@ npm run benchmark
 
 构建产物使用本地 HTTP 或 GitHub Pages 运行。直接 `file://` 打开 ES Modules 未获支持，请使用 `npm run preview`。当前不宣称真机手机帧率、施工精度、现场联合使用、五金承载或照度/眩光已验收。
 
-[纹理来源及许可](licenses/polyhaven-textures.md) · [V9 实施说明](docs/home-v9.md)
+[纹理来源及许可](licenses/polyhaven-textures.md) · [V10 实施说明](docs/life-v10.md)
 
-旧版设计说明保留于 `docs/` 供追溯，不代表 V9 当前柜数、容量或布局。
+旧版设计说明保留于 `docs/` 供追溯，不代表 V10 当前柜数、容量或布局。
 
-渲染主体由 Three.js TypeScript 模块与 WASM 几何内核组成。本地 PBR 贴图为橡木、地板、亚麻、石膏；仅地板在非移动端加载 `*-desktop.webp`。石材是程序表面。地面有静态近接 AO，环境反射是通用 RoomEnvironment 的 PMREM，不是现场探针。灯光总槽为省电移动端 4、移动端 6、桌面 12；LTC 矩形灯占 1（移动端）或 2（桌面）槽，并替换同等数量的聚光灯。高性能桌面 WebGPU 使用克制的 TSL 泛光，WebGL 桌面使用 GTAO；移动端与省电设备不加载该后处理。没有光线追踪或全局光照。物理光照验收未运行。AAA 视觉质量未批准。仍缺定制布料、缝线贴图、局部反射或间接烘焙，以及现场日照采集。自动化回归共 90 项，最终执行状态以 [PR #6 的精确提交 CI](https://github.com/EvilMuMuKo/muko-home/pull/6/checks) 为准。原生桌面 WebGPU 六张重点视角与八空间连续漫游、42 张截图复核已完成。记录见 [图形发布说明](docs/graphics-release.md)。浏览器图标与手机收藏图标来自 `public/favicon.svg`，可用 `node scripts/build-icons.mjs` 重新生成 PNG。
+渲染主体由锁定的 Three.js 0.186.0、TypeScript 与 WASM 几何内核组成；不因本次调整升级依赖。材质为本地 PBR 贴图与独立的程序微表面，钢与墙面不共用肌理。固定画质档在转向和静止时维持相同像素尺寸；高性能桌面 WebGPU 使用 4x MSAA、空间 SMAA 及受限泛光，移动端保留原生抗锯齿，继续不加载全屏 AO/Bloom。
+
+启动采用渐进材质加载：先建立可漫步的场景，再将完整贴图更新到原有共享纹理；局部反射等待贴图完成和首屏显示，启动只预编译一次实际渲染通道。完整材质、阴影、碰撞与分辨率预算不因加载优化而删减。本机 Chrome 冷 HTTP 缓存的一次同模型对照为旧启动顺序约 7.1 秒、新版约 4.1 秒；这不是公网或真实手机耗时保证。[启动记录](docs/life-v10/startup-load.json)包含测量范围和重复样本，`whenVisualReady()` 可等待完整视觉准备。
+
+持续转向的本机测试中，横屏手机尺寸仿真约 60fps；桌面高画质首次遍历约 34fps、P95 约 50ms，**未达到桌面 60fps 目标**，仍有首次着色器与效果切换卡顿。两种配置的像素预算不同于旧版，不能将其视为同画质性能比较。详见[性能记录](docs/life-v10/performance.json)；真实手机硬件仍为 NOT RUN。
+
+`src/exterior-world.ts` 提供各窗共享的概念住宅绿景与日夜天空。`src/room-radiance.ts` 按房间延迟生成局部反射，并在捕获时暂停主渲染，避免把暂时隐藏的家具误当成通路。反射目标延迟保留至页面释放，不在漫步时销毁仍可能被 WebGPU 引用的纹理。浴室两片镜柜使用独立、有限分辨率的平面反射和 4x MSAA。
+
+`src/generated-diffuse.json` 是通过 `node scripts/bake-diffuse.mjs` 离线生成的七房间日夜间接光；更新建筑、材质或照明后需重新生成并构建。运行时不自动烘焙，探针省略可移动家具。它是低阶近似，WebGPU 体积边缘与 WebGL 回退均有跨空间漏光限制，没有光线追踪。本轮不宣称达到 3A 成品游戏美术或现场光照验收。
+
+回归脚本：`scripts/life-release-audit.mjs`（固定像素尺寸、视角、状态、实际截图）、`scripts/whole-home-walk-audit.mjs`（连续按键与摇杆漫步）、`scripts/life-performance.mjs`（同机基线比较）。`playwright.native.config.ts` 用本机 Chrome GPU 验证；默认配置保留 SwiftShader 兼容回归，二者都不能替代真实手机硬件验收。完整测试数与精确提交 CI 以最终记录为准。
+
+浏览器图标与手机收藏图标来自 `public/favicon.svg`，可用 `node scripts/build-icons.mjs` 重新生成 PNG。用户于本轮明确授权将《最高设计纲领》及有效修改决定同步到仓库；参见 [需求基准](docs/requirements/README.md)。原始户型附件、私人标注图片及交接包仍不随发布上传。
+
+启动兼容性：标准 `GPUAdapterInfo.isFallbackAdapter` 标记为软件适配器时直接使用 WebGL；GPU 初始化或预编译超时、设备丢失时进入一次有界恢复。普通网络/着色器验证错误仍正常报告。原生 GPU 与软件渲染分开验证，GitHub CI 使用四个分片执行完整测试范围。

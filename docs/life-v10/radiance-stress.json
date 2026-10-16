@@ -1,0 +1,679 @@
+{
+  "url": "http://localhost:4173/",
+  "out": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home 空间与视觉升级/radiance-stress.json",
+  "date": "2026-10-16T09:43:41.292Z",
+  "timeoutMs": 300000,
+  "status": "PASS",
+  "elapsedMs": 26441,
+  "pageErrors": [],
+  "failedResources": [],
+  "consoleErrors": [],
+  "destroyedTextureErrors": [],
+  "switches": [
+    {
+      "index": 0,
+      "viewId": "entry-view",
+      "roomId": "bar",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bar",
+        "activePoint": "entry-view",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 1,
+      "viewId": "bar-main",
+      "roomId": "bar",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "bar",
+        "activePoint": "bar-main",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 2,
+      "viewId": "hall-view",
+      "roomId": "bar",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bar",
+        "activePoint": "hall-view",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 3,
+      "viewId": "dining-kitchen",
+      "roomId": "bar",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "bar",
+        "activePoint": "dining-kitchen",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 4,
+      "viewId": "two-entries",
+      "roomId": "bar",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bar",
+        "activePoint": "two-entries",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 5,
+      "viewId": "dining-seated",
+      "roomId": "bar",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "bar",
+        "activePoint": "dining-seated",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 6,
+      "viewId": "master-main",
+      "roomId": "master",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "master",
+        "activePoint": "master-main",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 7,
+      "viewId": "master-work",
+      "roomId": "master",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "master",
+        "activePoint": "master-work",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 8,
+      "viewId": "guest-main",
+      "roomId": "guest",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "guest",
+        "activePoint": "guest-main",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 9,
+      "viewId": "guest-seated",
+      "roomId": "guest",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "guest",
+        "activePoint": "guest-seated",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 10,
+      "viewId": "living-main",
+      "roomId": "living",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "living",
+        "activePoint": "living-main",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 11,
+      "viewId": "living-seated",
+      "roomId": "living",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "living",
+        "activePoint": "living-seated",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 12,
+      "viewId": "balcony-main",
+      "roomId": "balcony",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "balcony",
+        "activePoint": "balcony-main",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 13,
+      "viewId": "kitchen-main",
+      "roomId": "kitchen",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "kitchen",
+        "activePoint": "kitchen-main",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 14,
+      "viewId": "bath-main",
+      "roomId": "bath",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bath",
+        "activePoint": "bath-main",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 15,
+      "viewId": "kitchen-fridge",
+      "roomId": "kitchen",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "kitchen",
+        "activePoint": "kitchen-fridge",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 16,
+      "viewId": "s02-rack",
+      "roomId": "bar",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bar",
+        "activePoint": "s02-rack",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 17,
+      "viewId": "guest-storage",
+      "roomId": "guest",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "guest",
+        "activePoint": "guest-storage",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 18,
+      "viewId": "guest-reading",
+      "roomId": "guest",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "guest",
+        "activePoint": "guest-reading",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 19,
+      "viewId": "living-storage",
+      "roomId": "living",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "living",
+        "activePoint": "living-storage",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 20,
+      "viewId": "living-media",
+      "roomId": "living",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "living",
+        "activePoint": "living-media",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 21,
+      "viewId": "kitchen-upper-review",
+      "roomId": "kitchen",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "kitchen",
+        "activePoint": "kitchen-upper-review",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 22,
+      "viewId": "bath-upper-review",
+      "roomId": "bath",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bath",
+        "activePoint": "bath-upper-review",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 23,
+      "viewId": "laundry-upper-review",
+      "roomId": "balcony",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "balcony",
+        "activePoint": "laundry-upper-review",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 24,
+      "viewId": "housekeeping-upper-review",
+      "roomId": "balcony",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "balcony",
+        "activePoint": "housekeeping-upper-review",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 25,
+      "viewId": "master-upper-review",
+      "roomId": "master",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "master",
+        "activePoint": "master-upper-review",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 26,
+      "viewId": "guest-upper-review",
+      "roomId": "guest",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "guest",
+        "activePoint": "guest-upper-review",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 27,
+      "viewId": "living-upper-review",
+      "roomId": "living",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "living",
+        "activePoint": "living-upper-review",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    },
+    {
+      "index": 28,
+      "viewId": "bar-upper-review",
+      "roomId": "bar",
+      "lightingScene": "day-public",
+      "daylight": true,
+      "applied": {
+        "active": "bar",
+        "activePoint": "bar-upper-review",
+        "lightScene": "day-public",
+        "night": false
+      }
+    },
+    {
+      "index": 29,
+      "viewId": "hall-storage-review",
+      "roomId": "hall",
+      "lightingScene": "aperitif",
+      "daylight": false,
+      "applied": {
+        "active": "hall",
+        "activePoint": "hall-storage-review",
+        "lightScene": "aperitif",
+        "night": true
+      }
+    }
+  ],
+  "afterBurst": {
+    "kind": "local-specular-reflections",
+    "captureCount": 2,
+    "cacheEntries": 2,
+    "cacheCapacity": 16,
+    "captureInProgress": false,
+    "currentRoom": "hall",
+    "night": true,
+    "mobile": false,
+    "capturePoints": [
+      {
+        "roomId": "guest",
+        "position": [
+          1.92,
+          1.35,
+          1.7
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "bath",
+        "position": [
+          5.745,
+          1.35,
+          1.0725
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "master",
+        "position": [
+          9.037500000000001,
+          1.35,
+          2.4200000000000004
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "kitchen",
+        "position": [
+          1.225,
+          1.35,
+          4.54
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "bar",
+        "position": [
+          2.4,
+          1.35,
+          7.0649999999999995
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "hall",
+        "position": [
+          6.76,
+          1.35,
+          6.27
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "living",
+        "position": [
+          9.275,
+          1.35,
+          8.1125
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "balcony",
+        "position": [
+          12.25,
+          1.35,
+          5.6375
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      }
+    ],
+    "animatedRootsHiddenDuringCapture": 28,
+    "cutawayNodesRestoredDuringCapture": 6,
+    "lastError": null,
+    "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+  },
+  "rooms": [
+    {
+      "roomId": "guest",
+      "viewId": "guest-main",
+      "active": "guest",
+      "activePoint": "guest-main",
+      "cacheEntries": 3,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "guest"
+    },
+    {
+      "roomId": "bath",
+      "viewId": "bath-main",
+      "active": "bath",
+      "activePoint": "bath-main",
+      "cacheEntries": 4,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "bath"
+    },
+    {
+      "roomId": "master",
+      "viewId": "master-main",
+      "active": "master",
+      "activePoint": "master-main",
+      "cacheEntries": 5,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "master"
+    },
+    {
+      "roomId": "kitchen",
+      "viewId": "kitchen-main",
+      "active": "kitchen",
+      "activePoint": "kitchen-main",
+      "cacheEntries": 6,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "kitchen"
+    },
+    {
+      "roomId": "bar",
+      "viewId": "bar-main",
+      "active": "bar",
+      "activePoint": "bar-main",
+      "cacheEntries": 7,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "bar"
+    },
+    {
+      "roomId": "hall",
+      "viewId": "hall-storage-review",
+      "active": "hall",
+      "activePoint": "hall-storage-review",
+      "cacheEntries": 7,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "hall"
+    },
+    {
+      "roomId": "living",
+      "viewId": "living-main",
+      "active": "living",
+      "activePoint": "living-main",
+      "cacheEntries": 8,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "living"
+    },
+    {
+      "roomId": "balcony",
+      "viewId": "balcony-main",
+      "active": "balcony",
+      "activePoint": "balcony-main",
+      "cacheEntries": 9,
+      "cacheCapacity": 16,
+      "lastError": null,
+      "currentRoom": "balcony"
+    }
+  ],
+  "roomRadiance": {
+    "kind": "local-specular-reflections",
+    "captureCount": 9,
+    "cacheEntries": 9,
+    "cacheCapacity": 16,
+    "captureInProgress": false,
+    "currentRoom": "balcony",
+    "night": true,
+    "mobile": false,
+    "capturePoints": [
+      {
+        "roomId": "guest",
+        "position": [
+          1.92,
+          1.35,
+          1.7
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "bath",
+        "position": [
+          5.745,
+          1.35,
+          1.0725
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "master",
+        "position": [
+          9.037500000000001,
+          1.35,
+          2.4200000000000004
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "kitchen",
+        "position": [
+          1.225,
+          1.35,
+          4.54
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "bar",
+        "position": [
+          2.4,
+          1.35,
+          7.0649999999999995
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "hall",
+        "position": [
+          6.76,
+          1.35,
+          6.27
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "living",
+        "position": [
+          9.275,
+          1.35,
+          8.1125
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      },
+      {
+        "roomId": "balcony",
+        "position": [
+          12.25,
+          1.35,
+          5.6375
+        ],
+        "mobileSize": 64,
+        "desktopSize": 128
+      }
+    ],
+    "animatedRootsHiddenDuringCapture": 126,
+    "cutawayNodesRestoredDuringCapture": 27,
+    "lastError": null,
+    "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+  },
+  "error": null
+}

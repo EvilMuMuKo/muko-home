@@ -90,7 +90,11 @@ button.active {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  text-shadow: 0 1px 14px #fff9;
+  text-shadow: none;
+  color: #334438;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: #f8f5eedd;
 }
 .space-caption h1 {
   font-size: 13px;
@@ -331,7 +335,8 @@ button.active {
   margin: 0;
 }
 .night .space-caption {
-  text-shadow: 0 1px 14px #0009;
+  text-shadow: none;
+  background: #222c28dd;
   color: #ede8df;
 }
 .night .space-caption > span {

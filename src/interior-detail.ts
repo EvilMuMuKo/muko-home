@@ -120,7 +120,7 @@ export function buildInteriorDetails(
   m: Materials,
   tag: (n: THREE.Object3D, rooms: string[], kind: string) => void,
   spatial = false,
-  model?: { version: string; objects: Record<string, any>[] },
+  model?: { version: string; objects: Record<string, any>[]; homeDesign?: any },
 ) {
   m.barTile = createTileMaterial();
   const groups = new Map<string, THREE.Group>();
@@ -207,7 +207,7 @@ export function buildInteriorDetails(
     box(living, 0.016, 0.29, 0.36, 10.49, 0.52, 7.43, "clayFabric", 0.004);
   }
   // A few game cases on the rear sideboard with a restrained framed print above.
-  for (let j = 0; j < (model?.version === "9.0.0" ? 0 : 4); j++)
+  for (let j = 0; j < (model?.homeDesign?.mobileTV ? 0 : 4); j++)
     box(
       living,
       0.026,
@@ -375,7 +375,7 @@ export function buildInteriorDetails(
       palette: roomPalette,
       screenInches: 83,
       acousticPanels: spatial ? 5 : 3,
-      compositionVersion: model?.version === "9.0.0" ? 9 : spatial ? 8 : 7,
+      compositionVersion: model?.homeDesign?.lifeRevision ? 10 : model?.homeDesign ? 9 : spatial ? 8 : 7,
       storageGroups: model
         ? model.objects.filter((o) => o.type === "wall_storage").length
         : 24,

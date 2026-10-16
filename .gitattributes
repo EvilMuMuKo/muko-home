@@ -4,3 +4,4 @@ index.html linguist-generated=true
 transform.wasm linguist-generated=true
 public/transform.wasm linguist-generated=true
 materials/* linguist-generated=true
+*.pdf binary

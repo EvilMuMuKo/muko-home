@@ -8,7 +8,7 @@ async function ready(page) {
   );
 }
 
-test("V9 household controls expose version 9 and complete reversible travel", async ({
+test("V10 household controls expose version 10 and complete reversible travel", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -24,10 +24,10 @@ test("V9 household controls expose version 9 and complete reversible travel", as
       performance: api.getPerformance(),
     };
   });
-  expect(initial.state.version).toBe("9.0.0");
+  expect(initial.state.version).toBe("10.0.0");
   expect(initial.design.version).toBe(1);
   expect(initial.design.selectedLivingLayout).toBe("mobile-tv-flexible");
-  expect(initial.model.version).toBe("9.0.0");
+  expect(initial.model.version).toBe("10.0.0");
   expect(initial.model.homeDesign.version).toBe(initial.design.version);
   expect(initial.state.renderer).toBe("WebGL2");
   expect(initial.performance.drawCalls).toBeGreaterThan(0);
@@ -43,9 +43,95 @@ test("V9 household controls expose version 9 and complete reversible travel", as
       (object) => object.room === "living" && object.type === "coffee_table",
     ),
   ).toBe(false);
-  expect(
-    initial.model.objects.filter((object) => object.type === "folding_chair"),
-  ).toHaveLength(2);
+  const diningChairs = initial.model.objects.filter(
+    (object) => object.type === "folding_chair",
+  );
+  expect(diningChairs).toHaveLength(2);
+  const diningTable = initial.model.objects.find((object) => object.id === "dining-table");
+  expect(diningTable).toMatchObject({
+    type: "folding_table",
+    room: "living",
+    shape: "rectangle",
+    x: 11.0,
+    z: 9.06,
+    w: 1.1,
+    d: 0.7,
+    h: 0.74,
+    rotation: 0,
+  });
+  expect(initial.design.dining.role).toBe("living_normal_height_daily_dining");
+  expect(initial.design.dining.stateEnvelopes.deployed).toMatchObject({
+    shape: "rectangle",
+    w: 1.1,
+    d: 0.7,
+    h: 0.74,
+  });
+  expect(initial.design.dining.stateEnvelopes.folded.shape).toBe("upright_folded_table");
+  expect(diningChairs).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        id: "dining-chair-left",
+        room: "living",
+        x: 8.27,
+        z: 8.78,
+        w: 0.5,
+        d: 0.55,
+        h: 0.88,
+        rotation: 0,
+      }),
+      expect.objectContaining({
+        id: "dining-chair-right",
+        room: "living",
+        x: 8.27,
+        z: 9.03,
+        w: 0.5,
+        d: 0.55,
+        h: 0.88,
+        rotation: 0,
+      }),
+    ]),
+  );
+  const records = initial.model.objects.find((object) => object.id === "reading-records");
+  expect(records).toMatchObject({
+    type: "record_console",
+    room: "bar",
+    placement: "below_bar_window",
+    x: 0.29,
+    z: 6.5,
+    w: 1.2,
+    d: 0.34,
+    h: 0.68,
+    windowSillM: 0.9,
+    highestEquipmentTopM: 0.765,
+  });
+  expect(records.h).toBeLessThanOrEqual(records.windowSillM);
+  expect(records.highestEquipmentTopM).toBeLessThanOrEqual(records.windowSillM);
+  expect(initial.design.readingNook).toMatchObject({
+    recordsId: "reading-records",
+    mainDining: false,
+    windowUncovered: true,
+    recordsUnderWindow: true,
+  });
+  const fridge = initial.model.objects.find((object) => object.id === "kitchen-fridge");
+  const kitchen = initial.model.rooms.find((room) => room.id === "kitchen");
+  expect(fridge).toMatchObject({
+    room: "hall",
+    x: 4.045,
+    z: 4.05,
+    w: 0.91,
+    d: 0.75,
+    rotation: 90,
+    accessFace: "+x",
+  });
+  expect(initial.design.lifeRevision.kitchen.externalFridge).toBe(true);
+  const fridgeAngle = (fridge.rotation * Math.PI) / 180;
+  const fridgeHalfX =
+    (Math.abs(Math.cos(fridgeAngle)) * fridge.w +
+      Math.abs(Math.sin(fridgeAngle)) * fridge.d) /
+    2;
+  expect(fridge.x - fridgeHalfX).toBeGreaterThan(
+    Math.max(...kitchen.polygon.map((point) => point[0])),
+  );
   expect(initial.model.objects.find((object) => object.id === "living-tv")?.type).toBe("mobile_tv");
   expect(initial.design.mobileTV.poses).toHaveLength(2);
   const sofa = initial.model.objects.find((object) => object.id === "living-sofa");
@@ -67,6 +153,7 @@ test("V9 household controls expose version 9 and complete reversible travel", as
   const deployedDining = await page.evaluate(() => {
     const design = window.homePresentation.getHomeDesign();
     return {
+      frames: window.homePresentation.getObjectFrames(),
       bounds: design.motionBounds.filter((item) =>
         ["dining-table", "dining-chair-left", "dining-chair-right"].includes(item.id),
       ),
@@ -81,14 +168,18 @@ test("V9 household controls expose version 9 and complete reversible travel", as
   const tableBounds = deployedDining.bounds.find((item) => item.id === "dining-table")!;
   expect(center(tableBounds, "x")).toBeCloseTo(deployedDining.locations.table.x, 1);
   expect(center(tableBounds, "z")).toBeCloseTo(deployedDining.locations.table.z, 1);
+  expect(tableBounds.max[0] - tableBounds.min[0]).toBeCloseTo(1.1, 1);
+  expect(tableBounds.max[2] - tableBounds.min[2]).toBeCloseTo(0.7, 1);
   for (const [index, chair] of deployedDining.locations.chairs.entries()) {
     const bounds = deployedDining.bounds.find(
       (item) =>
         item.id ===
         (index === 0 ? "dining-chair-left" : "dining-chair-right"),
     )!;
-    expect(center(bounds, "x")).toBeCloseTo(chair.x, 1);
-    expect(center(bounds, "z")).toBeCloseTo(chair.z, 1);
+    const frame=deployedDining.frames.find(row=>row[0]===bounds.id)!;
+    // Chair origin is asymmetric to its visible AABB; verify the actual root.
+    expect(frame[1][0]).toBeCloseTo(chair.x, 3);
+    expect(frame[1][2]).toBeCloseTo(chair.z, 3);
   }
   await page.evaluate(() => window.homePresentation.setDiningOpen(false));
   await page.waitForFunction(
@@ -105,6 +196,7 @@ test("V9 household controls expose version 9 and complete reversible travel", as
     initial.design.dining.table.parkedEnvelope.z,
     1,
   );
+  expect(foldedTable.max[2] - foldedTable.min[2]).toBeLessThanOrEqual(0.2);
 
   const transitions = [
     { name: "hatch", setter: "setHatchOpen", state: "hatchProgress" },
@@ -194,7 +286,7 @@ test("V9 household controls expose version 9 and complete reversible travel", as
   expect(errors).toEqual([]);
 });
 
-test("V9 operating states remain renderable and capture clean screenshots", async ({
+test("V10 operating states remain renderable and capture clean screenshots", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -220,7 +312,7 @@ test("V9 operating states remain renderable and capture clean screenshots", asyn
       performance: window.homePresentation.getPerformance(),
       camera: window.homePresentation.getCamera(),
     }));
-    expect(report.state.version).toBe("9.0.0");
+    expect(report.state.version).toBe("10.0.0");
     expect(report.performance.drawCalls).toBeGreaterThan(0);
     expect(report.performance.triangles).toBeGreaterThan(0);
     expect(report.camera.verticalFov).toBeGreaterThan(0);

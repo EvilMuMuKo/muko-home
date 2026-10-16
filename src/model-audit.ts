@@ -5,7 +5,7 @@ export function auditSceneModel(scene: THREE.Scene, model: { objects: any[] }) {
   const checked = new Set<string>(),
     issues: string[] = [];
   const objects = model.objects
-    .filter((o) => o.type !== "door_leaf")
+    .filter((o) => o.type !== "door_leaf" && !o.rendererHidden)
     .map((o) => {
       const group = scene.getObjectByName(o.id);
       if (!group) return { id: o.id, type: o.type, missing: true };
@@ -50,7 +50,7 @@ export function auditSceneModel(scene: THREE.Scene, model: { objects: any[] }) {
       };
     });
   return {
-    version: 9,
+    version: 10,
     objects,
     checkedGeometryCount: checked.size,
     issues,

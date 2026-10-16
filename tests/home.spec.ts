@@ -126,19 +126,36 @@ test("default requests WebGPU and produces a working scene or bounded compatibil
     await page.evaluate(() => window.homePresentation.getState().renderer),
   );
 });
+test("software WebGPU adapter selects working WebGL before creating a GPU device", async ({page}) => {
+  await page.addInitScript(() => {
+    (window as any).__requestedSoftwareDevice = false;
+    Object.defineProperty(navigator, "gpu", {configurable:true,value:{requestAdapter:async()=>({
+      info:{isFallbackAdapter:true},
+      requestDevice:()=>{(window as any).__requestedSoftwareDevice=true;throw new Error("Software GPU device must not be requested");},
+    })}});
+  });
+  await page.goto("/");
+  await ready(page);
+  const state = await page.evaluate(()=>({rendering:window.homePresentation.getPerformance().rendering,device:(window as any).__requestedSoftwareDevice}));
+  expect(state.rendering.backend).toBe("WebGL2");
+  expect(state.rendering.fallbackReason).toContain("Software WebGPU adapter");
+  expect(state.device).toBe(false);
+});
 test("failed entrance shader preparation removes walk controls and presents the static preview", async ({page}) => {
   let injected = false;
   await page.route("**/assets/index-*.js", async route => {
     const response = await route.fetch();
     const source = await response.text();
-    const body = source.replace(/await ([\w$]+)\.compileAsync\(/, (_, name) => {
+    // Any startup compile must fail, including when optional variant compiles
+    // precede the entrance compile in the bundle but are skipped at startup.
+    const body = source.replace(/await ([\w$]+)\.compileAsync\(/g, (_, name) => {
       injected = true;
       return `await ${name}.__rejectedCompileForTest(`;
     });
     await route.fulfill({response,body});
   });
   await page.goto("/?renderer=webgl");
-  await expect(page.locator("#fallback")).toBeVisible({timeout:120000});
+  await expect(page.locator("#fallback")).toBeVisible({timeout:20000});
   expect(injected).toBe(true);
   await expect(page.locator("#scene")).toBeHidden();
   await expect(page.locator(".ghost-walk-controls")).toHaveCount(0);

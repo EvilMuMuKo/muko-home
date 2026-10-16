@@ -1,0 +1,226 @@
+{
+  "status": "PASS",
+  "scope": "Same current V10 geometry/materials, native macOS Chrome, localhost. Before is an isolated copy restoring blocking startup order. HTTP cold cache is cleared; GPU shader cache is not cleared. Not real-phone or internet latency acceptance.",
+  "beforeSourceSHA256": "ab6e087f5ef529645032153b3faf3b9d994709f86b8cd755d7853c2ff7668c3c",
+  "afterSourceSHA256": "f218e5cc75de0c38c17a4e8d5d27467cb16842666bca3aa5ca2f54bed0b5d031",
+  "before": [
+    {
+      "cache": "cold",
+      "navigationElapsedMs": 7133,
+      "loadingEvents": [
+        {
+          "at": 7.600000001490116,
+          "text": "",
+          "done": false
+        },
+        {
+          "at": 8.100000001490116,
+          "text": "准备空间",
+          "done": false
+        },
+        {
+          "at": 891.8000000044703,
+          "text": "准备光影与材质",
+          "done": false
+        },
+        {
+          "at": 7056.89999999851,
+          "text": "准备光影与材质",
+          "done": true
+        }
+      ],
+      "startup": {
+        "started": 47.5,
+        "stages": {
+          "renderer": 32,
+          "model": 823,
+          "compiled": 6241,
+          "interactive": 7009
+        }
+      },
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "fallbackReason": ""
+      },
+      "dpr": 1,
+      "transferBytes": 4216272,
+      "materialDetail": {
+        "requested": 12,
+        "loaded": 12,
+        "failed": [],
+        "metricMapping": true
+      },
+      "errors": [],
+      "failedRequests": [],
+      "navigationError": null
+    }
+  ],
+  "after": [
+    {
+      "navigationElapsedMs": 4075,
+      "loadingEvents": [
+        {
+          "at": 7,
+          "text": "",
+          "done": false
+        },
+        {
+          "at": 7.600000001490116,
+          "text": "准备空间",
+          "done": false
+        },
+        {
+          "at": 889.6000000014901,
+          "text": "准备光影与材质",
+          "done": false
+        },
+        {
+          "at": 3305.89999999851,
+          "text": "准备光影与材质",
+          "done": true
+        }
+      ],
+      "transferBytes": 2695988,
+      "failedRequests": [],
+      "navigationError": null,
+      "pageErrors": [],
+      "cache": "cold",
+      "startup": {
+        "started": 55.399999998509884,
+        "stages": {
+          "renderer": 38,
+          "model": 834,
+          "compiled": 3250,
+          "interactive": 3250,
+          "textures": 3251
+        }
+      },
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "fallbackReason": ""
+      },
+      "dpr": 1,
+      "materialDetail": {
+        "requested": 12,
+        "loaded": 12,
+        "failed": [],
+        "metricMapping": true
+      }
+    },
+    {
+      "navigationElapsedMs": 4087,
+      "loadingEvents": [
+        {
+          "at": 8.399999998509884,
+          "text": "",
+          "done": false
+        },
+        {
+          "at": 9.299999997019768,
+          "text": "准备空间",
+          "done": false
+        },
+        {
+          "at": 879.7000000029802,
+          "text": "准备光影与材质",
+          "done": false
+        },
+        {
+          "at": 3330.2000000029802,
+          "text": "准备光影与材质",
+          "done": true
+        }
+      ],
+      "transferBytes": 7800,
+      "failedRequests": [],
+      "navigationError": null,
+      "pageErrors": [],
+      "cache": "warm",
+      "startup": {
+        "started": 46.20000000298023,
+        "stages": {
+          "renderer": 18,
+          "model": 833,
+          "compiled": 3284,
+          "interactive": 3284,
+          "textures": 3284
+        }
+      },
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "fallbackReason": ""
+      },
+      "dpr": 1,
+      "materialDetail": {
+        "requested": 12,
+        "loaded": 12,
+        "failed": [],
+        "metricMapping": true
+      }
+    },
+    {
+      "navigationElapsedMs": 3986,
+      "loadingEvents": [
+        {
+          "at": 7.100000001490116,
+          "text": "",
+          "done": false
+        },
+        {
+          "at": 8,
+          "text": "准备空间",
+          "done": false
+        },
+        {
+          "at": 851.3999999985099,
+          "text": "准备光影与材质",
+          "done": false
+        },
+        {
+          "at": 3222.39999999851,
+          "text": "准备光影与材质",
+          "done": true
+        }
+      ],
+      "transferBytes": 7800,
+      "failedRequests": [],
+      "navigationError": null,
+      "pageErrors": [],
+      "cache": "warm",
+      "startup": {
+        "started": 42.5,
+        "stages": {
+          "renderer": 14,
+          "model": 809,
+          "compiled": 3180,
+          "interactive": 3180,
+          "textures": 3180
+        }
+      },
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "fallbackReason": ""
+      },
+      "dpr": 1,
+      "materialDetail": {
+        "requested": 12,
+        "loaded": 12,
+        "failed": [],
+        "metricMapping": true
+      }
+    }
+  ],
+  "syntheticDelayedTextures": {
+    "status": "PASS",
+    "test": "tests/progressive-materials.spec.ts",
+    "requested": 12,
+    "loadedAtFirstInteractiveFrame": 0,
+    "loadedAfterRelease": 12,
+    "sameTextureUUIDs": true,
+    "errors": 0
+  }
+}
