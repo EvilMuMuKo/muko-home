@@ -1,1 +1,7 @@
+# Three.js shader strings preserve upstream whitespace in generated bundles.
+assets/* -whitespace linguist-generated=true
+index.html linguist-generated=true
+transform.wasm linguist-generated=true
+public/transform.wasm linguist-generated=true
+materials/* linguist-generated=true
 *.pdf binary
