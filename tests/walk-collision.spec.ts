@@ -344,6 +344,25 @@ test("a moving mesh pushes a stationary walker out of its actual world pose", ()
   expect(moved[0]).not.toBe(2);
 });
 
+test("collision movement updates obstacle roots without forcing a scene-wide matrix traversal", () => {
+  const { scene, model } = fixture(undefined, [{ id: "chair", type: "dining_chair" }]);
+  const chair = new THREE.Group();
+  chair.name = "chair";
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.5, 1, 0.5));
+  chair.add(mesh);
+  scene.add(chair);
+  const unrelated = new THREE.Group();
+  scene.add(unrelated);
+  let sceneWideUpdates = 0;
+  scene.updateMatrixWorld = () => { sceneWideUpdates++; return scene; };
+  const collision = createWalkCollision(model, scene);
+
+  collision.move([2, 1], [2.1, 1]);
+
+  expect(sceneWideUpdates).toBe(0);
+  expect(chair.matrixWorld.elements[12]).toBe(0);
+});
+
 test("door depenetration stays on the floor and chooses a path clear of the adjacent wall", () => {
   const model: WalkModel = {
     shell: [

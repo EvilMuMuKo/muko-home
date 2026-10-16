@@ -535,7 +535,10 @@ export function createWalkCollision(
   };
 
   function move(from: WalkPoint, to: WalkPoint): [number, number] {
-    scene.updateMatrixWorld(true);
+    // Update only collision roots and their descendants. A forced scene-wide
+    // update traverses render-only foliage, lights, and architecture on every
+    // joystick frame; updateWorldMatrix still follows animated ancestors.
+    for (const { group } of obstacles) group.updateWorldMatrix(true, true);
     const meshes = obstacles.map(({ group }) =>
       currentMeshFootprints(group, meshHullCache),
     );
@@ -595,7 +598,7 @@ export function createWalkCollision(
   }
 
   function navigationSnapshot() {
-    scene.updateMatrixWorld(true);
+    for (const { group } of obstacles) group.updateWorldMatrix(true, true);
     const polygons = walls.map(wall => {
       const corners: Polygon = [];
       for (const [sx,sz] of [[-1,-1],[1,-1],[1,1],[-1,1]])

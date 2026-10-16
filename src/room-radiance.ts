@@ -336,7 +336,9 @@ export async function createRoomRadiance(args: {
     },
     whenReady: waitUntilIdle,
     setRoom(roomId: string | null) {
-      currentRoom = roomId && planByRoom.has(roomId) ? roomId : null;
+      const nextRoom = roomId && planByRoom.has(roomId) ? roomId : null;
+      if (currentRoom === nextRoom) return;
+      currentRoom = nextRoom;
       if (currentRoom) requestCurrent();
       else trackRequest(withRenderMutationLock(async () => {
         await waitForSubmittedWork(renderer);

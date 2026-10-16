@@ -60,6 +60,7 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
   expect(
     Math.hypot(after[0] - before[0], after[2] - before[2]),
   ).toBeGreaterThan(0.15);
+  await page.evaluate(() => window.homePresentation.whenVisualReady());
   await page.waitForFunction(
     () => !window.homePresentation.getPerformance().pending,
   );

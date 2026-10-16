@@ -55,3 +55,5 @@ npm run benchmark
 浏览器图标与手机收藏图标来自 `public/favicon.svg`，可用 `node scripts/build-icons.mjs` 重新生成 PNG。用户于本轮明确授权将《最高设计纲领》及有效修改决定同步到仓库；参见 [需求基准](docs/requirements/README.md)。原始户型附件、私人标注图片及交接包仍不随发布上传。
 
 启动兼容性：标准 `GPUAdapterInfo.isFallbackAdapter` 标记为软件适配器时直接使用 WebGL；GPU 初始化或预编译超时、设备丢失时进入一次有界恢复。普通网络/着色器验证错误仍正常报告。原生 GPU 与软件渲染分开验证，GitHub CI 使用四个分片执行完整测试范围。
+
+手机运行策略已进一步调整为稳定30Hz预算：手机默认不再暂停漫步去捕获整屋反射，使用共享环境与固定的房间平均SH探针；贴图分批上传，碰撞与互动减少重复扫描。固定手机DPR最高1.5，转向时不改变；桌面保留局部反射与实时镜面。具体取舍、复跑方法和真机边界见[手机漫步修订](docs/mobile-runtime.md)。

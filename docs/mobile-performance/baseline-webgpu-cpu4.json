@@ -1,0 +1,898 @@
+{
+  "url": "http://127.0.0.1:8790/",
+  "status": "PASS",
+  "errors": [],
+  "requestFailures": [],
+  "quality": {
+    "qualityProfile": {
+      "mobile": true,
+      "economical": false,
+      "lightSlots": 6,
+      "shadowLights": 1,
+      "shadowSize": 512,
+      "sunShadowSize": 1024,
+      "maxDpr": 2,
+      "interactionDpr": 2,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 33.333333333333336,
+      "physicsHz": 30,
+      "postprocessing": false
+    },
+    "rendering": {
+      "requested": "webgpu",
+      "backend": "WebGPU",
+      "deviceLossEvents": 0,
+      "fallbackReason": ""
+    },
+    "pixelRatio": 2
+  },
+  "phases": [
+    {
+      "name": "l20",
+      "before": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 6,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 2,
+          "interactionDpr": 2,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 2,
+        "drawingBuffer": [
+          1688,
+          780
+        ],
+        "renders": 3,
+        "shadowUpdates": 3,
+        "roomRadiance": {
+          "kind": "local-specular-reflections",
+          "captureCount": 1,
+          "cacheEntries": 1,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "hall",
+          "night": false,
+          "mobile": true,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 14,
+          "cutawayNodesRestoredDuringCapture": 3,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 512,
+          "perLeafWidth": 512,
+          "perLeafHeight": 256,
+          "samples": 4,
+          "totalPixelBudget": 262144,
+          "totalSamplePixelBudget": 1048576,
+          "renderedFramesObserved": 4,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "diffuseBounce": {
+          "backend": "webgpu",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": null,
+          "activeGridCount": 0,
+          "animatedRootsHidden": 0,
+          "modelObjectsOmitted": 130,
+          "lastError": null,
+          "bakeMode": "manual-offline-static-architecture-only",
+          "runtimeIntensityCap": 0.6,
+          "webgpuFalloff": 0.7,
+          "nearWallNote": "0.7 m WebGPU falloff keeps inset probes contributing near walls; adjacent-room leakage can occur within that range because wall occlusion is not evaluated by runtime sampling.",
+          "mobileBakePolicy": "manual-developer-call-only",
+          "crossBackendAtlasLoad": "supported by shared packed atlas layout; preserved source texel type",
+          "atlasFormat": "half-float",
+          "webglFalloff": null
+        },
+        "drawCalls": 2911,
+        "triangles": 1623323,
+        "startup": {
+          "started": 162,
+          "stages": {
+            "renderer": 72,
+            "model": 2229,
+            "compiled": 5606,
+            "interactive": 5606,
+            "textures": 5606,
+            "complete": 9269
+          }
+        },
+        "frameP95Ms": null
+      },
+      "after": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 6,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 2,
+          "interactionDpr": 2,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 2,
+        "drawingBuffer": [
+          1688,
+          780
+        ],
+        "renders": 541,
+        "shadowUpdates": 6,
+        "roomRadiance": {
+          "kind": "local-specular-reflections",
+          "captureCount": 2,
+          "cacheEntries": 2,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "living",
+          "night": false,
+          "mobile": true,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 28,
+          "cutawayNodesRestoredDuringCapture": 6,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 512,
+          "perLeafWidth": 512,
+          "perLeafHeight": 256,
+          "samples": 4,
+          "totalPixelBudget": 262144,
+          "totalSamplePixelBudget": 1048576,
+          "renderedFramesObserved": 206,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "diffuseBounce": {
+          "backend": "webgpu",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 1,
+          "animatedRootsHidden": 0,
+          "modelObjectsOmitted": 130,
+          "lastError": null,
+          "bakeMode": "manual-offline-static-architecture-only",
+          "runtimeIntensityCap": 0.6,
+          "webgpuFalloff": 0.7,
+          "nearWallNote": "0.7 m WebGPU falloff keeps inset probes contributing near walls; adjacent-room leakage can occur within that range because wall occlusion is not evaluated by runtime sampling.",
+          "mobileBakePolicy": "manual-developer-call-only",
+          "crossBackendAtlasLoad": "supported by shared packed atlas layout; preserved source texel type",
+          "atlasFormat": "half-float",
+          "webglFalloff": null
+        },
+        "drawCalls": 115,
+        "triangles": 85343,
+        "startup": {
+          "started": 162,
+          "stages": {
+            "renderer": 72,
+            "model": 2229,
+            "compiled": 5606,
+            "interactive": 5606,
+            "textures": 5606,
+            "complete": 9269
+          }
+        },
+        "frameP95Ms": 50
+      },
+      "elapsedMs": 20046,
+      "raf": {
+        "p95": 50,
+        "worst": 3333.2000000000007,
+        "over250": 7,
+        "samples": 552
+      },
+      "renderedFps": 26.838271974458745,
+      "longtasks": [
+        {
+          "start": 9692.70000000298,
+          "duration": 1429
+        },
+        {
+          "start": 11286.40000000596,
+          "duration": 1786
+        },
+        {
+          "start": 13123.90000000596,
+          "duration": 407
+        },
+        {
+          "start": 13572.90000000596,
+          "duration": 65
+        },
+        {
+          "start": 13638,
+          "duration": 87
+        },
+        {
+          "start": 13725.60000000149,
+          "duration": 64
+        },
+        {
+          "start": 13789.70000000298,
+          "duration": 69
+        },
+        {
+          "start": 13860.30000000447,
+          "duration": 67
+        },
+        {
+          "start": 13927.70000000298,
+          "duration": 465
+        },
+        {
+          "start": 14393,
+          "duration": 77
+        },
+        {
+          "start": 15131,
+          "duration": 159
+        },
+        {
+          "start": 15435.5,
+          "duration": 74
+        },
+        {
+          "start": 15595.40000000596,
+          "duration": 94
+        },
+        {
+          "start": 15690,
+          "duration": 83
+        },
+        {
+          "start": 15774.10000000149,
+          "duration": 3324
+        },
+        {
+          "start": 19099.40000000596,
+          "duration": 52
+        },
+        {
+          "start": 19157.30000000447,
+          "duration": 233
+        },
+        {
+          "start": 19475.40000000596,
+          "duration": 58
+        },
+        {
+          "start": 19533.70000000298,
+          "duration": 51
+        },
+        {
+          "start": 19585.40000000596,
+          "duration": 105
+        },
+        {
+          "start": 19788,
+          "duration": 58
+        },
+        {
+          "start": 19975,
+          "duration": 101
+        },
+        {
+          "start": 20183.80000000447,
+          "duration": 83
+        },
+        {
+          "start": 21038.90000000596,
+          "duration": 63
+        },
+        {
+          "start": 27513.10000000149,
+          "duration": 55
+        }
+      ]
+    },
+    {
+      "name": "wl-sj",
+      "before": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 6,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 2,
+          "interactionDpr": 2,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 2,
+        "drawingBuffer": [
+          1688,
+          780
+        ],
+        "renders": 541,
+        "shadowUpdates": 6,
+        "roomRadiance": {
+          "kind": "local-specular-reflections",
+          "captureCount": 2,
+          "cacheEntries": 2,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "living",
+          "night": false,
+          "mobile": true,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 28,
+          "cutawayNodesRestoredDuringCapture": 6,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 512,
+          "perLeafWidth": 512,
+          "perLeafHeight": 256,
+          "samples": 4,
+          "totalPixelBudget": 262144,
+          "totalSamplePixelBudget": 1048576,
+          "renderedFramesObserved": 206,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "diffuseBounce": {
+          "backend": "webgpu",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 1,
+          "animatedRootsHidden": 0,
+          "modelObjectsOmitted": 130,
+          "lastError": null,
+          "bakeMode": "manual-offline-static-architecture-only",
+          "runtimeIntensityCap": 0.6,
+          "webgpuFalloff": 0.7,
+          "nearWallNote": "0.7 m WebGPU falloff keeps inset probes contributing near walls; adjacent-room leakage can occur within that range because wall occlusion is not evaluated by runtime sampling.",
+          "mobileBakePolicy": "manual-developer-call-only",
+          "crossBackendAtlasLoad": "supported by shared packed atlas layout; preserved source texel type",
+          "atlasFormat": "half-float",
+          "webglFalloff": null
+        },
+        "drawCalls": 115,
+        "triangles": 85343,
+        "startup": {
+          "started": 162,
+          "stages": {
+            "renderer": 72,
+            "model": 2229,
+            "compiled": 5606,
+            "interactive": 5606,
+            "textures": 5606,
+            "complete": 9269
+          }
+        },
+        "frameP95Ms": 50
+      },
+      "after": {
+        "qualityProfile": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 6,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 2,
+          "interactionDpr": 2,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "rendering": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "pixelRatio": 2,
+        "drawingBuffer": [
+          1688,
+          780
+        ],
+        "renders": 1346,
+        "shadowUpdates": 40,
+        "roomRadiance": {
+          "kind": "local-specular-reflections",
+          "captureCount": 2,
+          "cacheEntries": 2,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "living",
+          "night": false,
+          "mobile": true,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 28,
+          "cutawayNodesRestoredDuringCapture": 6,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 512,
+          "perLeafWidth": 512,
+          "perLeafHeight": 256,
+          "samples": 4,
+          "totalPixelBudget": 262144,
+          "totalSamplePixelBudget": 1048576,
+          "renderedFramesObserved": 483,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "diffuseBounce": {
+          "backend": "webgpu",
+          "bakeCount": 0,
+          "cachedRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "living",
+            "balcony"
+          ],
+          "currentRoom": "living",
+          "activeGridCount": 1,
+          "animatedRootsHidden": 0,
+          "modelObjectsOmitted": 130,
+          "lastError": null,
+          "bakeMode": "manual-offline-static-architecture-only",
+          "runtimeIntensityCap": 0.6,
+          "webgpuFalloff": 0.7,
+          "nearWallNote": "0.7 m WebGPU falloff keeps inset probes contributing near walls; adjacent-room leakage can occur within that range because wall occlusion is not evaluated by runtime sampling.",
+          "mobileBakePolicy": "manual-developer-call-only",
+          "crossBackendAtlasLoad": "supported by shared packed atlas layout; preserved source texel type",
+          "atlasFormat": "half-float",
+          "webglFalloff": null
+        },
+        "drawCalls": 85,
+        "triangles": 83175,
+        "startup": {
+          "started": 162,
+          "stages": {
+            "renderer": 72,
+            "model": 2229,
+            "compiled": 5606,
+            "interactive": 5606,
+            "textures": 5606,
+            "complete": 9269
+          }
+        },
+        "frameP95Ms": 33.400000000001455
+      },
+      "elapsedMs": 16055.80000000447,
+      "raf": {
+        "p95": 33.400000000001455,
+        "worst": 50.10000000000218,
+        "over250": 0,
+        "samples": 826
+      },
+      "renderedFps": 50.13764496317691,
+      "longtasks": [
+        {
+          "start": 40444.30000000447,
+          "duration": 57
+        },
+        {
+          "start": 40521.80000000447,
+          "duration": 51
+        },
+        {
+          "start": 44122.5,
+          "duration": 50
+        }
+      ]
+    }
+  ],
+  "note": "CPU and viewport emulation are not actual phone or GPU performance.",
+  "cpuRate": 4,
+  "viewport": {
+    "width": 844,
+    "height": 390,
+    "deviceScaleFactor": 3
+  },
+  "startupMs": 5780,
+  "pointerCoarse": true
+}

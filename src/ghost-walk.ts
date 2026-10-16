@@ -16,6 +16,8 @@ export type GhostWalkOptions = {
   getTargets: () => GhostWalkTarget[];
   onExit: () => void;
   resolveMove?: (from: [number, number], to: [number, number]) => [number, number];
+  /** Whether animated obstacles may need to push a stationary walker. */
+  hasMovingObstacles?: () => boolean;
 };
 
 export type GhostWalkState = {
@@ -44,6 +46,7 @@ export function createGhostWalk({
   getTargets,
   onExit,
   resolveMove,
+  hasMovingObstacles = () => true,
 }: GhostWalkOptions) {
   const doc = canvas.ownerDocument;
   const win = doc.defaultView ?? window;
@@ -109,6 +112,11 @@ export function createGhostWalk({
   let axisX = 0;
   let axisY = 0;
   let nearestTarget: GhostWalkTarget | null = null;
+  let lastNearestRefresh = -Infinity;
+  let lastNearestYaw = NaN;
+  let lastNearestPitch = NaN;
+  let nearestRefreshPending = false;
+  const NEAREST_REFRESH_MS = 100;
   const keys = new Set<string>();
   const direction = new THREE.Vector3();
   const forward = new THREE.Vector3();
@@ -129,6 +137,7 @@ export function createGhostWalk({
   function setMotion(next: boolean) {
     if (motionActive === next) return;
     motionActive = next;
+    if (!next) refreshNearest();
     onMotion(next);
   }
 
@@ -184,14 +193,22 @@ export function createGhostWalk({
     }
     nearestTarget = best;
     nearestId = best?.id ?? null;
-    interactButton.hidden = !best;
+    if (interactButton.hidden === !!best) interactButton.hidden = !best;
     if (best) {
-      interactButton.textContent = `使用：${best.label}`;
-      interactButton.setAttribute("aria-label", `与${best.label}互动`);
-      interactButton.dataset.targetId = best.id;
-    } else {
+      const text = `使用：${best.label}`;
+      const ariaLabel = `与${best.label}互动`;
+      if (interactButton.textContent !== text) interactButton.textContent = text;
+      if (interactButton.getAttribute("aria-label") !== ariaLabel)
+        interactButton.setAttribute("aria-label", ariaLabel);
+      if (interactButton.dataset.targetId !== best.id)
+        interactButton.dataset.targetId = best.id;
+    } else if (!best && interactButton.hasAttribute("data-target-id")) {
       interactButton.removeAttribute("data-target-id");
     }
+    lastNearestRefresh = win.performance.now();
+    lastNearestYaw = yaw;
+    lastNearestPitch = pitch;
+    nearestRefreshPending = false;
   }
 
   function resize(width: number, height: number) {
@@ -476,13 +493,17 @@ export function createGhostWalk({
       position.set(nextX, EYE_HEIGHT, nextZ);
     }
     // Door and furniture animations can reach a stationary player too.
-    if (resolveMove && length <= 0.08) {
+    if (resolveMove && length <= 0.08 && hasMovingObstacles()) {
       const [safeX, safeZ] = resolveMove([position.x, position.z], [position.x, position.z]);
       moved = moved || Math.abs(safeX - position.x) > EPSILON || Math.abs(safeZ - position.z) > EPSILON;
       position.set(safeX, EYE_HEIGHT, safeZ);
     }
     if (moved) applyCameraPose();
-    refreshNearest();
+    const now = win.performance.now();
+    const poseChanged = moved || yaw !== lastNearestYaw || pitch !== lastNearestPitch;
+    nearestRefreshPending ||= poseChanged;
+    if (dtSeconds <= 0 || (nearestRefreshPending && now - lastNearestRefresh >= NEAREST_REFRESH_MS))
+      refreshNearest();
     if (moved) onChange();
     return moved;
   }

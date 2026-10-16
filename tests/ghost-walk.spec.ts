@@ -166,6 +166,18 @@ test("Escape exits, idle updates do not request renders, and dispose removes lis
   expect(await page.locator("#scene").evaluate((element) => element.classList.contains("ghost-walk-active"))).toBe(false);
 });
 
+test("stationary look skips collision resolution when no obstacles are moving", async ({ page }) => {
+  await page.evaluate(() => window.ghostWalkHarness.setMovingObstacles(false));
+  await page.keyboard.down("l");
+  await page.evaluate(() => window.ghostWalkHarness.step());
+  await page.keyboard.up("l");
+  expect(await page.evaluate(() => window.ghostWalkHarness.collisionCalls.count)).toBe(0);
+
+  await page.evaluate(() => window.ghostWalkHarness.setMovingObstacles(true));
+  await page.evaluate(() => window.ghostWalkHarness.step());
+  expect(await page.evaluate(() => window.ghostWalkHarness.collisionCalls.count)).toBeGreaterThan(0);
+});
+
 declare global {
   interface Window {
     ghostWalkHarness: {
@@ -179,6 +191,8 @@ declare global {
       extraTargets: Array<{ id: string; label: string; position: [number, number, number]; activations: number }>;
       setTargetPosition(position: [number, number, number]): void;
       setExtraTargets(targets: Array<{ id: string; label: string; position: [number, number, number]; activate: () => void; activations: number }>): void;
+      collisionCalls: { count: number };
+      setMovingObstacles(value: boolean): void;
       step(dt?: number): boolean;
       dispose(): void;
     };
