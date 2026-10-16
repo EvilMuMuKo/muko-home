@@ -1,0 +1,4158 @@
+{
+  "url": "http://localhost:4173/",
+  "baseline": false,
+  "date": "2026-10-16T09:44:47.684Z",
+  "status": "PASS",
+  "scope": "Real macOS Chromium GPU; phone-size viewport is emulation, not physical-phone acceptance",
+  "profiles": [
+    {
+      "id": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "deviceScaleFactor": 2,
+      "errors": [],
+      "missing": [],
+      "turns": [
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          },
+          "idle": {
+            "dpr": 1.800205749557739,
+            "buffer": [
+              2592,
+              1620
+            ]
+          }
+        }
+      ],
+      "shots": [
+        "desktop-entry.png",
+        "desktop-master-day.png",
+        "desktop-master-night.png",
+        "desktop-reading-day.png",
+        "desktop-kitchen.png",
+        "desktop-living.png",
+        "desktop-cinema.png",
+        "desktop-living-dining.png",
+        "desktop-living-activity.png",
+        "desktop-living-relax.png",
+        "desktop-bath.png"
+      ],
+      "states": [
+        {
+          "mode": "dining",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                5.475000023841858
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                6.524999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                5.475000023841858
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                6.524999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                8.749999988079072,
+                0.02003656637553458,
+                7.450000005960464
+              ],
+              "max": [
+                9.85000001192093,
+                0.7400000001862646,
+                8.149999994039536
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.322499999925494,
+                0.015629571343532794,
+                7.5550000003352755
+              ],
+              "max": [
+                8.800000004172325,
+                0.8700000143051148,
+                8.044999999664723
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                9.799999995827674,
+                0.015629571343532794,
+                7.5550000003352755
+              ],
+              "max": [
+                10.277500000074506,
+                0.8700000143051148,
+                8.044999999664723
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        },
+        {
+          "mode": "activity",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                5.050000023841858
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                6.099999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                5.050000023841858
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                6.099999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                10.449999988079071,
+                0.03977611760902855,
+                9.029215678240954
+              ],
+              "max": [
+                11.550000011920929,
+                1.0899999940395355,
+                9.090784321759047
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                8.75749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                8.802500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                9.00749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                9.052500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        },
+        {
+          "mode": "relax",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                6.0750000238418576
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                7.124999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                6.0750000238418576
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                7.124999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                10.449999988079071,
+                0.03977611760902855,
+                9.029215678240954
+              ],
+              "max": [
+                11.550000011920929,
+                1.0899999940395355,
+                9.090784321759047
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                8.75749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                8.802500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                9.00749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                9.052500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        }
+      ],
+      "initial": {
+        "state": {
+          "version": "10.0.0",
+          "active": "all",
+          "activeDetail": "walk",
+          "viewMode": "walk",
+          "activePoint": null,
+          "ceilingVisible": true,
+          "wallClipping": false,
+          "night": false,
+          "top": false,
+          "bedOpen": false,
+          "lightScene": "day-public",
+          "visibleRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "hall",
+            "living",
+            "balcony"
+          ],
+          "lighting": {
+            "scene": "day-public",
+            "fixtureCount": 41,
+            "logicalFixtureCount": 41,
+            "slotCount": 12,
+            "areaSlotCount": 2,
+            "visibleFixtureCount": 41,
+            "activeLightCount": 12,
+            "shadowCount": 2,
+            "shadowBudget": 2,
+            "daylight": true,
+            "allocated": [
+              {
+                "sourceId": "living-wall-accent",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  7.02,
+                  1,
+                  6.5
+                ],
+                "kind": "spot",
+                "intensity": 2.0071966240994805
+              },
+              {
+                "sourceId": "entry-wash",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  7,
+                  0.8,
+                  7.45
+                ],
+                "kind": "spot",
+                "intensity": 2.024999874238553
+              },
+              {
+                "sourceId": "corridor-wash",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  5.05,
+                  1.2,
+                  2.6
+                ],
+                "kind": "spot",
+                "intensity": 2.14287737988812
+              },
+              {
+                "sourceId": "balcony-laundry",
+                "color": [
+                  1,
+                  0.530398553914474,
+                  0.2656410734124271
+                ],
+                "target": [
+                  12.12,
+                  0.62,
+                  8.93
+                ],
+                "kind": "spot",
+                "intensity": 2.8
+              },
+              {
+                "sourceId": "kitchen-base-2",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  3.15,
+                  0.85,
+                  4.1
+                ],
+                "kind": "spot",
+                "intensity": 2.1341451124927135
+              },
+              {
+                "sourceId": "reading-local-task",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  1.6,
+                  0.8,
+                  6.65
+                ],
+                "kind": "spot",
+                "intensity": 1.4608731424801311
+              },
+              {
+                "sourceId": "bath-shower",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  6.4,
+                  0.45,
+                  0.6
+                ],
+                "kind": "spot",
+                "intensity": 2.316499902189279
+              },
+              {
+                "sourceId": "master-wardrobe-face",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  7.61,
+                  1.1,
+                  1
+                ],
+                "kind": "spot",
+                "intensity": 2.650908926275924
+              },
+              {
+                "sourceId": "guest-reader",
+                "color": [
+                  1,
+                  0.384996332512617,
+                  0.09622815040414821
+                ],
+                "target": [
+                  1.5,
+                  0.55,
+                  0.7
+                ],
+                "kind": "spot",
+                "intensity": 2.324166674455121
+              },
+              {
+                "sourceId": "living-reading-lamp",
+                "color": [
+                  1,
+                  0.384996332512617,
+                  0.09622815040414821
+                ],
+                "target": [
+                  10.1,
+                  0.7,
+                  7
+                ],
+                "kind": "spot",
+                "intensity": 1.2226251717519014
+              },
+              {
+                "sourceId": "storage-entry-task",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": null,
+                "kind": "area",
+                "intensity": 7.308135141974785
+              },
+              {
+                "sourceId": "bar-task",
+                "color": [
+                  1,
+                  0.530398553914474,
+                  0.2656410734124271
+                ],
+                "target": null,
+                "kind": "area",
+                "intensity": 56.42766164167198
+              }
+            ],
+            "fixtures": [
+              {
+                "id": "entry-shoe-low",
+                "roomId": "hall",
+                "position": [
+                  7.5,
+                  0.12,
+                  7.96
+                ],
+                "target": [
+                  7.5,
+                  0.015,
+                  7.6
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "entry-wash",
+                "roomId": "hall",
+                "position": [
+                  7,
+                  2.58,
+                  7.1
+                ],
+                "target": [
+                  7,
+                  0.8,
+                  7.45
+                ],
+                "kelvin": 3000,
+                "intensity": 2.024999874238553,
+                "visible": true,
+                "shadow": true
+              },
+              {
+                "id": "corridor-wash",
+                "roomId": "hall",
+                "position": [
+                  5.8,
+                  2.58,
+                  2.65
+                ],
+                "target": [
+                  5.05,
+                  1.2,
+                  2.6
+                ],
+                "kelvin": 3000,
+                "intensity": 2.14287737988812,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "corridor-guide",
+                "roomId": "hall",
+                "position": [
+                  6.8,
+                  0.2,
+                  4.15
+                ],
+                "target": [
+                  6.35,
+                  0.015,
+                  4.15
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "dining-offset-1",
+                "roomId": "living",
+                "position": [
+                  9.02,
+                  2.55,
+                  7.8
+                ],
+                "target": [
+                  9.02,
+                  0.75,
+                  7.8
+                ],
+                "kelvin": 3000,
+                "intensity": 0.5077510650540311,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "dining-offset-2",
+                "roomId": "living",
+                "position": [
+                  9.58,
+                  2.55,
+                  7.8
+                ],
+                "target": [
+                  9.58,
+                  0.75,
+                  7.8
+                ],
+                "kelvin": 3000,
+                "intensity": 0.5077510650540311,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bar-task",
+                "roomId": "bar",
+                "position": [
+                  1.5,
+                  1.495,
+                  7.989999999999999
+                ],
+                "target": [
+                  1.5,
+                  0.95,
+                  7.95
+                ],
+                "kelvin": 3500,
+                "intensity": 2.4326871431284816,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-1",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  1.842,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  1.6620000000000001,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-2",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  2.1820000000000004,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  2.0020000000000002,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-3",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  2.3840000000000003,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  2.204,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bar-wall-wash",
+                "roomId": "bar",
+                "position": [
+                  0.45,
+                  2.55,
+                  7.48
+                ],
+                "target": [
+                  0.12,
+                  1.4,
+                  7.48
+                ],
+                "kelvin": 3000,
+                "intensity": 1.1224595799413961,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-base-1",
+                "roomId": "kitchen",
+                "position": [
+                  1.58,
+                  2.58,
+                  4.48
+                ],
+                "target": [
+                  1.58,
+                  0.85,
+                  4.23
+                ],
+                "kelvin": 3000,
+                "intensity": 2.1341451124927135,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-base-2",
+                "roomId": "kitchen",
+                "position": [
+                  3.15,
+                  2.58,
+                  4.35
+                ],
+                "target": [
+                  3.15,
+                  0.85,
+                  4.1
+                ],
+                "kelvin": 3000,
+                "intensity": 2.1341451124927135,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-prep-profile",
+                "roomId": "kitchen",
+                "position": [
+                  2.275,
+                  1.585,
+                  3.79
+                ],
+                "target": [
+                  2.2,
+                  0.94,
+                  3.855
+                ],
+                "kelvin": 3500,
+                "intensity": 1.8100350767325013,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-sink-task",
+                "roomId": "kitchen",
+                "position": [
+                  0.4,
+                  1.585,
+                  4.7
+                ],
+                "target": [
+                  0.45,
+                  0.94,
+                  4.7
+                ],
+                "kelvin": 3500,
+                "intensity": 1.0731841213999291,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "living-wall-cove",
+                "roomId": "living",
+                "position": [
+                  9.4,
+                  2.47,
+                  9.16
+                ],
+                "target": [
+                  9.4,
+                  2.61,
+                  9.2
+                ],
+                "kelvin": 2700,
+                "intensity": 1.1351002110171857,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "living-wall-accent",
+                "roomId": "living",
+                "position": [
+                  7.48,
+                  2.58,
+                  6.5
+                ],
+                "target": [
+                  7.02,
+                  1,
+                  6.5
+                ],
+                "kelvin": 3000,
+                "intensity": 2.0071966240994805,
+                "visible": true,
+                "shadow": true
+              },
+              {
+                "id": "living-reading-lamp",
+                "roomId": "living",
+                "position": [
+                  10.95,
+                  1.265,
+                  8.85
+                ],
+                "target": [
+                  10.1,
+                  0.7,
+                  7
+                ],
+                "kelvin": 2700,
+                "intensity": 1.2226251717519014,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-headboard",
+                "roomId": "master",
+                "position": [
+                  9.5,
+                  0.875,
+                  0.185
+                ],
+                "target": [
+                  9.5,
+                  1.25,
+                  0.12
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-underbed",
+                "roomId": "master",
+                "position": [
+                  9.5,
+                  0.12,
+                  2.165
+                ],
+                "target": [
+                  9.5,
+                  0.015,
+                  2.585
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-reading-1",
+                "roomId": "master",
+                "position": [
+                  8.47,
+                  1.12,
+                  0.18
+                ],
+                "target": [
+                  8.270000000000001,
+                  0.56,
+                  0.5249999999999999
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-reading-2",
+                "roomId": "master",
+                "position": [
+                  10.53,
+                  1.12,
+                  0.18
+                ],
+                "target": [
+                  10.729999999999999,
+                  0.56,
+                  0.5249999999999999
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-wardrobe-face",
+                "roomId": "master",
+                "position": [
+                  7.8,
+                  2.57,
+                  1
+                ],
+                "target": [
+                  7.61,
+                  1.1,
+                  1
+                ],
+                "kelvin": 3000,
+                "intensity": 2.650908926275924,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "pc-desk-task",
+                "roomId": "master",
+                "position": [
+                  8.45,
+                  1.635,
+                  4.065
+                ],
+                "target": [
+                  8.45,
+                  0.78,
+                  3.985
+                ],
+                "kelvin": 3500,
+                "intensity": 0.6792362065288342,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "mac-desk-task",
+                "roomId": "master",
+                "position": [
+                  9.9,
+                  1.635,
+                  4.065
+                ],
+                "target": [
+                  9.9,
+                  0.78,
+                  3.985
+                ],
+                "kelvin": 3500,
+                "intensity": 0.6792362065288342,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-wall-wash",
+                "roomId": "master",
+                "position": [
+                  10.85,
+                  2.55,
+                  0.8
+                ],
+                "target": [
+                  11.52,
+                  1.25,
+                  0.75
+                ],
+                "kelvin": 3000,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-screen-bias",
+                "roomId": "guest",
+                "position": [
+                  2.05,
+                  1.19,
+                  3.255
+                ],
+                "target": [
+                  2.05,
+                  1.19,
+                  3.32
+                ],
+                "kelvin": 2700,
+                "intensity": 0.10693130299465853,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-wall-cove",
+                "roomId": "guest",
+                "position": [
+                  0.15,
+                  2.48,
+                  1.2
+                ],
+                "target": [
+                  0.1,
+                  2.62,
+                  1.2
+                ],
+                "kelvin": 2700,
+                "intensity": 2.6004113925120977,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-reader",
+                "roomId": "guest",
+                "position": [
+                  0.95,
+                  1.2,
+                  0.25
+                ],
+                "target": [
+                  1.5,
+                  0.55,
+                  0.7
+                ],
+                "kelvin": 2700,
+                "intensity": 2.324166674455121,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-night-guide",
+                "roomId": "guest",
+                "position": [
+                  4.62,
+                  0.18,
+                  2.05
+                ],
+                "target": [
+                  4.2,
+                  0.015,
+                  2.05
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-mirror-side-1",
+                "roomId": "bath",
+                "position": [
+                  5.13,
+                  1.72,
+                  0.19
+                ],
+                "target": [
+                  5.55,
+                  1.5,
+                  0.19
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6356213753439702,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-mirror-side-2",
+                "roomId": "bath",
+                "position": [
+                  5.13,
+                  1.72,
+                  0.91
+                ],
+                "target": [
+                  5.55,
+                  1.5,
+                  0.91
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6356213753439702,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-shower",
+                "roomId": "bath",
+                "position": [
+                  6.4,
+                  2.58,
+                  0.6
+                ],
+                "target": [
+                  6.4,
+                  0.45,
+                  0.6
+                ],
+                "kelvin": 3000,
+                "intensity": 2.316499902189279,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-night",
+                "roomId": "bath",
+                "position": [
+                  5.32,
+                  0.2,
+                  0.5
+                ],
+                "target": [
+                  5.7,
+                  0.015,
+                  0.5
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-laundry",
+                "roomId": "balcony",
+                "position": [
+                  12.25,
+                  2.5,
+                  8.58
+                ],
+                "target": [
+                  12.12,
+                  0.62,
+                  8.93
+                ],
+                "kelvin": 3500,
+                "intensity": 7.962655295964568,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-storage",
+                "roomId": "balcony",
+                "position": [
+                  12.22,
+                  2.58,
+                  8.2
+                ],
+                "target": [
+                  12.25,
+                  1.1,
+                  8.88
+                ],
+                "kelvin": 3500,
+                "intensity": 2.293244725237795,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-low",
+                "roomId": "balcony",
+                "position": [
+                  12.25,
+                  0.18,
+                  8.67
+                ],
+                "target": [
+                  12.25,
+                  0.015,
+                  8.22
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-living-task",
+                "roomId": "living",
+                "position": [
+                  9.6,
+                  1.535,
+                  4.8
+                ],
+                "target": [
+                  9.6,
+                  0.82,
+                  4.6
+                ],
+                "kelvin": 3000,
+                "intensity": 0.4277252119786341,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-guest-task",
+                "roomId": "guest",
+                "position": [
+                  1.75,
+                  1.815,
+                  3.18
+                ],
+                "target": [
+                  1.75,
+                  0.5,
+                  3.13
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6683206437166158,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-entry-task",
+                "roomId": "hall",
+                "position": [
+                  6.75,
+                  1.84,
+                  8.23
+                ],
+                "target": [
+                  6.75,
+                  1.15,
+                  8.1
+                ],
+                "kelvin": 3000,
+                "intensity": 0.20049619311498473,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "reading-local-task",
+                "roomId": "bar",
+                "position": [
+                  1.9,
+                  1.35,
+                  5.98
+                ],
+                "target": [
+                  1.6,
+                  0.8,
+                  6.65
+                ],
+                "kelvin": 3000,
+                "intensity": 1.4608731424801311,
+                "visible": true,
+                "shadow": false
+              }
+            ]
+          },
+          "bedProgress": 0,
+          "entryAngle": -1.5707963267948966,
+          "gateAngle": 0,
+          "hatchProgress": 1,
+          "diningProgress": 0,
+          "diningRetreatProgress": 0,
+          "dishwasherProgress": 0,
+          "laundryProgress": 0,
+          "tvProgress": 0,
+          "sofaProgress": 0,
+          "activityProgress": 0,
+          "drinksFridgeProgress": 0,
+          "showerProgress": 0,
+          "foldingShelfProgress": 0,
+          "kitchenProgress": 0,
+          "fridgeAngle": 0,
+          "drawerProgress": 0,
+          "scenario": null,
+          "ready": true,
+          "renderer": "WebGPU",
+          "quality": "WebGPU PBR + TSL glow",
+          "objectCount": 130,
+          "glVersion": null
+        },
+        "backend": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "fallbackReason": ""
+        },
+        "geometry": {
+          "backend": "wasm",
+          "transformedVertices": 520771,
+          "batches": 487,
+          "reason": ""
+        },
+        "buffer": [
+          2592,
+          1620
+        ],
+        "pixelRatio": 1.800205749557739,
+        "materialFailures": []
+      },
+      "resolutionStable": true,
+      "modelAudit": {
+        "issues": [],
+        "missing": []
+      },
+      "final": {
+        "pixelRatio": 1.800205749557739,
+        "frameMs": [
+          16.600000000000364,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.699999999999818,
+          33.30000000000018,
+          16.699999999999818,
+          16.5,
+          16.699999999999818,
+          16.700000000000728,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.600000000000364,
+          16.599999999999454,
+          16.700000000000728,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.600000000000364,
+          16.600000000000364,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.599999999998545,
+          33.399999999999636,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.80000000000109,
+          16.69999999999891,
+          16.600000000000364,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.599999999998545,
+          16.80000000000109,
+          16.600000000000364,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.600000000000364,
+          16.80000000000109,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.600000000000364,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.69999999999891,
+          16.700000000000728,
+          16.69999999999709,
+          16.700000000000728,
+          16.600000000002183,
+          16.69999999999709,
+          16.600000000002183,
+          16.700000000000728,
+          16.600000000002183,
+          16.799999999999272,
+          16.5,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.799999999999272
+        ],
+        "effects": {
+          "kind": "WebGPU spatial SMAA + thresholded bloom",
+          "enabled": true,
+          "mobile": false,
+          "antialiasing": "4xMSAA + SMAA 1x",
+          "temporalAccumulation": false,
+          "motionBlur": false,
+          "resolutionScale": 0.25,
+          "mainResolutionScale": 1,
+          "mainSamples": 4,
+          "economy": 0,
+          "strength": 0.015,
+          "threshold": 1.5,
+          "rayTracing": false
+        },
+        "exterior": {
+          "treeInstances": 60,
+          "leafInstances": 36000,
+          "leafTriangleCount": 144000,
+          "buildingInstances": 15,
+          "meshCount": 10,
+          "bounds": {
+            "min": [
+              -150,
+              -4.5000001192092896,
+              -150
+            ],
+            "max": [
+              150,
+              5.121250014603138,
+              150
+            ]
+          },
+          "intersectsHomeEnvelope": false,
+          "groundY": -4.5,
+          "deterministicSeed": 1297435471
+        },
+        "reflection": {
+          "kind": "local-specular-reflections",
+          "captureCount": 8,
+          "cacheEntries": 8,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "bath",
+          "night": false,
+          "mobile": false,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 112,
+          "cutawayNodesRestoredDuringCapture": 23,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 1024,
+          "perLeafWidth": 540,
+          "perLeafHeight": 270,
+          "samples": 4,
+          "totalPixelBudget": 291600,
+          "totalSamplePixelBudget": 1166400,
+          "renderedFramesObserved": 344,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "drawCalls": 198,
+        "triangles": 554728
+      }
+    },
+    {
+      "id": "landscape-mobile",
+      "viewport": {
+        "width": 900,
+        "height": 560
+      },
+      "deviceScaleFactor": 2,
+      "errors": [],
+      "missing": [],
+      "turns": [
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        },
+        {
+          "moving": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          },
+          "idle": {
+            "dpr": 2,
+            "buffer": [
+              1800,
+              1120
+            ]
+          }
+        }
+      ],
+      "shots": [
+        "landscape-mobile-entry.png",
+        "landscape-mobile-master-day.png",
+        "landscape-mobile-master-night.png",
+        "landscape-mobile-reading-day.png",
+        "landscape-mobile-kitchen.png",
+        "landscape-mobile-living.png",
+        "landscape-mobile-cinema.png",
+        "landscape-mobile-living-dining.png",
+        "landscape-mobile-living-activity.png",
+        "landscape-mobile-living-relax.png",
+        "landscape-mobile-bath.png"
+      ],
+      "states": [
+        {
+          "mode": "dining",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                5.475000023841858
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                6.524999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                5.475000023841858
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                6.524999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                8.749999988079072,
+                0.02003656637553458,
+                7.450000005960464
+              ],
+              "max": [
+                9.85000001192093,
+                0.7400000001862646,
+                8.149999994039536
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.322499999925494,
+                0.015629571343532794,
+                7.5550000003352755
+              ],
+              "max": [
+                8.800000004172325,
+                0.8700000143051148,
+                8.044999999664723
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                9.799999995827674,
+                0.015629571343532794,
+                7.5550000003352755
+              ],
+              "max": [
+                10.277500000074506,
+                0.8700000143051148,
+                8.044999999664723
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        },
+        {
+          "mode": "activity",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                5.050000023841858
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                6.099999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                5.050000023841858
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                6.099999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                10.449999988079071,
+                0.03977611760902855,
+                9.029215678240954
+              ],
+              "max": [
+                11.550000011920929,
+                1.0899999940395355,
+                9.090784321759047
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                8.75749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                8.802500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                9.00749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                9.052500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        },
+        {
+          "mode": "relax",
+          "motion": [
+            {
+              "id": "living-tv",
+              "min": [
+                8.57500001192093,
+                0.0029999999999999367,
+                8.572500001192093
+              ],
+              "max": [
+                10.224999988079071,
+                1.7300000035762786,
+                9.21500000178814
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-1",
+              "min": [
+                8.025,
+                -2.98023217215615e-10,
+                6.0750000238418576
+              ],
+              "max": [
+                9.319999999552964,
+                0.7600000059604645,
+                7.124999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "sofa-module-2",
+              "min": [
+                9.280000000447036,
+                -2.98023217215615e-10,
+                6.0750000238418576
+              ],
+              "max": [
+                10.575,
+                0.7600000059604645,
+                7.124999976158142
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-table",
+              "min": [
+                10.449999988079071,
+                0.03977611760902855,
+                9.029215678240954
+              ],
+              "max": [
+                11.550000011920929,
+                1.0899999940395355,
+                9.090784321759047
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-left",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                8.75749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                8.802500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "dining-chair-right",
+              "min": [
+                8.025000000335275,
+                0.014999995962707013,
+                9.00749999910593
+              ],
+              "max": [
+                8.514999999664724,
+                1.0192655643541173,
+                9.052500000894069
+              ],
+              "visible": true
+            },
+            {
+              "id": "opening:hall-gate",
+              "min": [
+                4.918000006675721,
+                0.6379999949932098,
+                7.424999989271164
+              ],
+              "max": [
+                5.38199999332428,
+                0.9150000050067901,
+                7.965000010728836
+              ],
+              "visible": true
+            },
+            {
+              "id": "home:hatch-stool",
+              "min": [
+                null,
+                null,
+                null
+              ],
+              "max": [
+                null,
+                null,
+                null
+              ],
+              "visible": false
+            },
+            {
+              "id": "kitchen-dishwasher",
+              "min": [
+                2.099999988079071,
+                3.576278662098531e-9,
+                3.514999988079071
+              ],
+              "max": [
+                2.700000011920929,
+                0.8199999976158141,
+                4.154000000432134
+              ],
+              "visible": true
+            },
+            {
+              "id": "washer",
+              "min": [
+                11.949999988079071,
+                -1.1920928966180355e-8,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                0.8500000238418579,
+                5.416500000074506
+              ],
+              "visible": true
+            },
+            {
+              "id": "dryer",
+              "min": [
+                11.949999988079071,
+                0.899999988079071,
+                4.65000000038743
+              ],
+              "max": [
+                12.550000011920929,
+                1.7500000238418578,
+                5.416500000074506
+              ],
+              "visible": true
+            }
+          ]
+        }
+      ],
+      "initial": {
+        "state": {
+          "version": "10.0.0",
+          "active": "all",
+          "activeDetail": "walk",
+          "viewMode": "walk",
+          "activePoint": null,
+          "ceilingVisible": true,
+          "wallClipping": false,
+          "night": false,
+          "top": false,
+          "bedOpen": false,
+          "lightScene": "day-public",
+          "visibleRooms": [
+            "guest",
+            "bath",
+            "master",
+            "kitchen",
+            "bar",
+            "hall",
+            "living",
+            "balcony"
+          ],
+          "lighting": {
+            "scene": "day-public",
+            "fixtureCount": 41,
+            "logicalFixtureCount": 41,
+            "slotCount": 6,
+            "areaSlotCount": 1,
+            "visibleFixtureCount": 41,
+            "activeLightCount": 6,
+            "shadowCount": 1,
+            "shadowBudget": 1,
+            "daylight": true,
+            "allocated": [
+              {
+                "sourceId": "living-wall-accent",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  7.02,
+                  1,
+                  6.5
+                ],
+                "kind": "spot",
+                "intensity": 2.0071966240994805
+              },
+              {
+                "sourceId": "entry-wash",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  7,
+                  0.8,
+                  7.45
+                ],
+                "kind": "spot",
+                "intensity": 2.024999874238553
+              },
+              {
+                "sourceId": "corridor-wash",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  5.05,
+                  1.2,
+                  2.6
+                ],
+                "kind": "spot",
+                "intensity": 2.14287737988812
+              },
+              {
+                "sourceId": "balcony-laundry",
+                "color": [
+                  1,
+                  0.530398553914474,
+                  0.2656410734124271
+                ],
+                "target": [
+                  12.12,
+                  0.62,
+                  8.93
+                ],
+                "kind": "spot",
+                "intensity": 2.8
+              },
+              {
+                "sourceId": "kitchen-base-2",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": [
+                  3.15,
+                  0.85,
+                  4.1
+                ],
+                "kind": "spot",
+                "intensity": 2.1341451124927135
+              },
+              {
+                "sourceId": "storage-entry-task",
+                "color": [
+                  1,
+                  0.44076420334152056,
+                  0.15567688219465178
+                ],
+                "target": null,
+                "kind": "area",
+                "intensity": 7.308135141974785
+              }
+            ],
+            "fixtures": [
+              {
+                "id": "entry-shoe-low",
+                "roomId": "hall",
+                "position": [
+                  7.5,
+                  0.12,
+                  7.96
+                ],
+                "target": [
+                  7.5,
+                  0.015,
+                  7.6
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "entry-wash",
+                "roomId": "hall",
+                "position": [
+                  7,
+                  2.58,
+                  7.1
+                ],
+                "target": [
+                  7,
+                  0.8,
+                  7.45
+                ],
+                "kelvin": 3000,
+                "intensity": 2.024999874238553,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "corridor-wash",
+                "roomId": "hall",
+                "position": [
+                  5.8,
+                  2.58,
+                  2.65
+                ],
+                "target": [
+                  5.05,
+                  1.2,
+                  2.6
+                ],
+                "kelvin": 3000,
+                "intensity": 2.14287737988812,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "corridor-guide",
+                "roomId": "hall",
+                "position": [
+                  6.8,
+                  0.2,
+                  4.15
+                ],
+                "target": [
+                  6.35,
+                  0.015,
+                  4.15
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "dining-offset-1",
+                "roomId": "living",
+                "position": [
+                  9.02,
+                  2.55,
+                  7.8
+                ],
+                "target": [
+                  9.02,
+                  0.75,
+                  7.8
+                ],
+                "kelvin": 3000,
+                "intensity": 0.5077510650540311,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "dining-offset-2",
+                "roomId": "living",
+                "position": [
+                  9.58,
+                  2.55,
+                  7.8
+                ],
+                "target": [
+                  9.58,
+                  0.75,
+                  7.8
+                ],
+                "kelvin": 3000,
+                "intensity": 0.5077510650540311,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bar-task",
+                "roomId": "bar",
+                "position": [
+                  1.5,
+                  1.495,
+                  7.989999999999999
+                ],
+                "target": [
+                  1.5,
+                  0.95,
+                  7.95
+                ],
+                "kelvin": 3500,
+                "intensity": 2.4326871431284816,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-1",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  1.842,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  1.6620000000000001,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-2",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  2.1820000000000004,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  2.0020000000000002,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "display-level-3",
+                "roomId": "bar",
+                "position": [
+                  3.7,
+                  2.3840000000000003,
+                  7.955
+                ],
+                "target": [
+                  3.7,
+                  2.204,
+                  8.110000000000001
+                ],
+                "kelvin": 2700,
+                "intensity": 0.1079316602093643,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bar-wall-wash",
+                "roomId": "bar",
+                "position": [
+                  0.45,
+                  2.55,
+                  7.48
+                ],
+                "target": [
+                  0.12,
+                  1.4,
+                  7.48
+                ],
+                "kelvin": 3000,
+                "intensity": 1.1224595799413961,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-base-1",
+                "roomId": "kitchen",
+                "position": [
+                  1.58,
+                  2.58,
+                  4.48
+                ],
+                "target": [
+                  1.58,
+                  0.85,
+                  4.23
+                ],
+                "kelvin": 3000,
+                "intensity": 2.1341451124927135,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-base-2",
+                "roomId": "kitchen",
+                "position": [
+                  3.15,
+                  2.58,
+                  4.35
+                ],
+                "target": [
+                  3.15,
+                  0.85,
+                  4.1
+                ],
+                "kelvin": 3000,
+                "intensity": 2.1341451124927135,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-prep-profile",
+                "roomId": "kitchen",
+                "position": [
+                  2.275,
+                  1.585,
+                  3.79
+                ],
+                "target": [
+                  2.2,
+                  0.94,
+                  3.855
+                ],
+                "kelvin": 3500,
+                "intensity": 1.8100350767325013,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "kitchen-sink-task",
+                "roomId": "kitchen",
+                "position": [
+                  0.4,
+                  1.585,
+                  4.7
+                ],
+                "target": [
+                  0.45,
+                  0.94,
+                  4.7
+                ],
+                "kelvin": 3500,
+                "intensity": 1.0731841213999291,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "living-wall-cove",
+                "roomId": "living",
+                "position": [
+                  9.4,
+                  2.47,
+                  9.16
+                ],
+                "target": [
+                  9.4,
+                  2.61,
+                  9.2
+                ],
+                "kelvin": 2700,
+                "intensity": 1.1351002110171857,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "living-wall-accent",
+                "roomId": "living",
+                "position": [
+                  7.48,
+                  2.58,
+                  6.5
+                ],
+                "target": [
+                  7.02,
+                  1,
+                  6.5
+                ],
+                "kelvin": 3000,
+                "intensity": 2.0071966240994805,
+                "visible": true,
+                "shadow": true
+              },
+              {
+                "id": "living-reading-lamp",
+                "roomId": "living",
+                "position": [
+                  10.95,
+                  1.265,
+                  8.85
+                ],
+                "target": [
+                  10.1,
+                  0.7,
+                  7
+                ],
+                "kelvin": 2700,
+                "intensity": 1.2226251717519014,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-headboard",
+                "roomId": "master",
+                "position": [
+                  9.5,
+                  0.875,
+                  0.185
+                ],
+                "target": [
+                  9.5,
+                  1.25,
+                  0.12
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-underbed",
+                "roomId": "master",
+                "position": [
+                  9.5,
+                  0.12,
+                  2.165
+                ],
+                "target": [
+                  9.5,
+                  0.015,
+                  2.585
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-reading-1",
+                "roomId": "master",
+                "position": [
+                  8.47,
+                  1.12,
+                  0.18
+                ],
+                "target": [
+                  8.270000000000001,
+                  0.56,
+                  0.5249999999999999
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-reading-2",
+                "roomId": "master",
+                "position": [
+                  10.53,
+                  1.12,
+                  0.18
+                ],
+                "target": [
+                  10.729999999999999,
+                  0.56,
+                  0.5249999999999999
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-wardrobe-face",
+                "roomId": "master",
+                "position": [
+                  7.8,
+                  2.57,
+                  1
+                ],
+                "target": [
+                  7.61,
+                  1.1,
+                  1
+                ],
+                "kelvin": 3000,
+                "intensity": 2.650908926275924,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "pc-desk-task",
+                "roomId": "master",
+                "position": [
+                  8.45,
+                  1.635,
+                  4.065
+                ],
+                "target": [
+                  8.45,
+                  0.78,
+                  3.985
+                ],
+                "kelvin": 3500,
+                "intensity": 0.6792362065288342,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "mac-desk-task",
+                "roomId": "master",
+                "position": [
+                  9.9,
+                  1.635,
+                  4.065
+                ],
+                "target": [
+                  9.9,
+                  0.78,
+                  3.985
+                ],
+                "kelvin": 3500,
+                "intensity": 0.6792362065288342,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "master-wall-wash",
+                "roomId": "master",
+                "position": [
+                  10.85,
+                  2.55,
+                  0.8
+                ],
+                "target": [
+                  11.52,
+                  1.25,
+                  0.75
+                ],
+                "kelvin": 3000,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-screen-bias",
+                "roomId": "guest",
+                "position": [
+                  2.05,
+                  1.19,
+                  3.255
+                ],
+                "target": [
+                  2.05,
+                  1.19,
+                  3.32
+                ],
+                "kelvin": 2700,
+                "intensity": 0.10693130299465853,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-wall-cove",
+                "roomId": "guest",
+                "position": [
+                  0.15,
+                  2.48,
+                  1.2
+                ],
+                "target": [
+                  0.1,
+                  2.62,
+                  1.2
+                ],
+                "kelvin": 2700,
+                "intensity": 2.6004113925120977,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-reader",
+                "roomId": "guest",
+                "position": [
+                  0.95,
+                  1.2,
+                  0.25
+                ],
+                "target": [
+                  1.5,
+                  0.55,
+                  0.7
+                ],
+                "kelvin": 2700,
+                "intensity": 2.324166674455121,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "guest-night-guide",
+                "roomId": "guest",
+                "position": [
+                  4.62,
+                  0.18,
+                  2.05
+                ],
+                "target": [
+                  4.2,
+                  0.015,
+                  2.05
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-mirror-side-1",
+                "roomId": "bath",
+                "position": [
+                  5.13,
+                  1.72,
+                  0.19
+                ],
+                "target": [
+                  5.55,
+                  1.5,
+                  0.19
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6356213753439702,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-mirror-side-2",
+                "roomId": "bath",
+                "position": [
+                  5.13,
+                  1.72,
+                  0.91
+                ],
+                "target": [
+                  5.55,
+                  1.5,
+                  0.91
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6356213753439702,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-shower",
+                "roomId": "bath",
+                "position": [
+                  6.4,
+                  2.58,
+                  0.6
+                ],
+                "target": [
+                  6.4,
+                  0.45,
+                  0.6
+                ],
+                "kelvin": 3000,
+                "intensity": 2.316499902189279,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "bath-night",
+                "roomId": "bath",
+                "position": [
+                  5.32,
+                  0.2,
+                  0.5
+                ],
+                "target": [
+                  5.7,
+                  0.015,
+                  0.5
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-laundry",
+                "roomId": "balcony",
+                "position": [
+                  12.25,
+                  2.5,
+                  8.58
+                ],
+                "target": [
+                  12.12,
+                  0.62,
+                  8.93
+                ],
+                "kelvin": 3500,
+                "intensity": 7.962655295964568,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-storage",
+                "roomId": "balcony",
+                "position": [
+                  12.22,
+                  2.58,
+                  8.2
+                ],
+                "target": [
+                  12.25,
+                  1.1,
+                  8.88
+                ],
+                "kelvin": 3500,
+                "intensity": 2.293244725237795,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "balcony-low",
+                "roomId": "balcony",
+                "position": [
+                  12.25,
+                  0.18,
+                  8.67
+                ],
+                "target": [
+                  12.25,
+                  0.015,
+                  8.22
+                ],
+                "kelvin": 2700,
+                "intensity": 0,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-living-task",
+                "roomId": "living",
+                "position": [
+                  9.6,
+                  1.535,
+                  4.8
+                ],
+                "target": [
+                  9.6,
+                  0.82,
+                  4.6
+                ],
+                "kelvin": 3000,
+                "intensity": 0.4277252119786341,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-guest-task",
+                "roomId": "guest",
+                "position": [
+                  1.75,
+                  1.815,
+                  3.18
+                ],
+                "target": [
+                  1.75,
+                  0.5,
+                  3.13
+                ],
+                "kelvin": 3000,
+                "intensity": 0.6683206437166158,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "storage-entry-task",
+                "roomId": "hall",
+                "position": [
+                  6.75,
+                  1.84,
+                  8.23
+                ],
+                "target": [
+                  6.75,
+                  1.15,
+                  8.1
+                ],
+                "kelvin": 3000,
+                "intensity": 0.20049619311498473,
+                "visible": true,
+                "shadow": false
+              },
+              {
+                "id": "reading-local-task",
+                "roomId": "bar",
+                "position": [
+                  1.9,
+                  1.35,
+                  5.98
+                ],
+                "target": [
+                  1.6,
+                  0.8,
+                  6.65
+                ],
+                "kelvin": 3000,
+                "intensity": 1.4608731424801311,
+                "visible": true,
+                "shadow": false
+              }
+            ]
+          },
+          "bedProgress": 0,
+          "entryAngle": -1.5707963267948966,
+          "gateAngle": 0,
+          "hatchProgress": 1,
+          "diningProgress": 0,
+          "diningRetreatProgress": 0,
+          "dishwasherProgress": 0,
+          "laundryProgress": 0,
+          "tvProgress": 0,
+          "sofaProgress": 0,
+          "activityProgress": 0,
+          "drinksFridgeProgress": 0,
+          "showerProgress": 0,
+          "foldingShelfProgress": 0,
+          "kitchenProgress": 0,
+          "fridgeAngle": 0,
+          "drawerProgress": 0,
+          "scenario": null,
+          "ready": true,
+          "renderer": "WebGPU",
+          "quality": "PBR",
+          "objectCount": 130,
+          "glVersion": null
+        },
+        "backend": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "fallbackReason": ""
+        },
+        "geometry": {
+          "backend": "wasm",
+          "transformedVertices": 520771,
+          "batches": 487,
+          "reason": ""
+        },
+        "buffer": [
+          1800,
+          1120
+        ],
+        "pixelRatio": 2,
+        "materialFailures": []
+      },
+      "resolutionStable": true,
+      "modelAudit": {
+        "issues": [],
+        "missing": []
+      },
+      "final": {
+        "pixelRatio": 2,
+        "frameMs": [
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.599999999999454,
+          16.800000000000182,
+          16.600000000000364,
+          16.599999999999454,
+          16.800000000000182,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.800000000000182,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.599999999999454,
+          16.699999999999818,
+          16.700000000000728,
+          16.699999999999818,
+          16.599999999999454,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.800000000000182,
+          16.599999999999454,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.699999999999818,
+          16.699999999999818,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.699999999999818,
+          16.700000000000728,
+          16.599999999999454,
+          16.699999999999818,
+          16.600000000000364,
+          16.600000000000364,
+          16.799999999999272,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.80000000000109,
+          16.599999999998545,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.600000000000364,
+          16.700000000000728,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.80000000000109,
+          16.599999999998545,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.600000000000364,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.69999999999891,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.599999999998545,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.599999999998545,
+          16.600000000000364,
+          16.80000000000109,
+          16.599999999998545,
+          16.700000000000728,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.69999999999891,
+          16.600000000000364,
+          16.700000000000728,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.700000000000728,
+          16.600000000000364,
+          16.69999999999891,
+          16.600000000000364,
+          16.799999999999272,
+          16.600000000000364,
+          16.700000000000728
+        ],
+        "effects": {
+          "enabled": false,
+          "reason": "mobile_budget"
+        },
+        "exterior": {
+          "treeInstances": 42,
+          "leafInstances": 13440,
+          "leafTriangleCount": 53760,
+          "buildingInstances": 10,
+          "meshCount": 10,
+          "bounds": {
+            "min": [
+              -150,
+              -4.5000001192092896,
+              -150
+            ],
+            "max": [
+              150,
+              5.121250014603138,
+              150
+            ]
+          },
+          "intersectsHomeEnvelope": false,
+          "groundY": -4.5,
+          "deterministicSeed": 1297435471
+        },
+        "reflection": {
+          "kind": "local-specular-reflections",
+          "captureCount": 8,
+          "cacheEntries": 8,
+          "cacheCapacity": 16,
+          "captureInProgress": false,
+          "currentRoom": "bath",
+          "night": false,
+          "mobile": true,
+          "capturePoints": [
+            {
+              "roomId": "guest",
+              "position": [
+                1.92,
+                1.35,
+                1.7
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bath",
+              "position": [
+                5.745,
+                1.35,
+                1.0725
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "master",
+              "position": [
+                9.037500000000001,
+                1.35,
+                2.4200000000000004
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "kitchen",
+              "position": [
+                1.225,
+                1.35,
+                4.54
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "bar",
+              "position": [
+                2.4,
+                1.35,
+                7.0649999999999995
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "hall",
+              "position": [
+                6.76,
+                1.35,
+                6.27
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "living",
+              "position": [
+                9.275,
+                1.35,
+                8.1125
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            },
+            {
+              "roomId": "balcony",
+              "position": [
+                12.25,
+                1.35,
+                5.6375
+              ],
+              "mobileSize": 64,
+              "desktopSize": 128
+            }
+          ],
+          "animatedRootsHiddenDuringCapture": 112,
+          "cutawayNodesRestoredDuringCapture": 23,
+          "lastError": null,
+          "note": "Room-positioned PMREM reflections only. This is not a lightmap or diffuse global illumination bake."
+        },
+        "mirror": {
+          "enabled": true,
+          "backend": "webgpu",
+          "storageUnitId": "upper-bath-mirror",
+          "expectedLeafCount": 2,
+          "enabledLeafCount": 2,
+          "perLeafEdge": 512,
+          "perLeafWidth": 512,
+          "perLeafHeight": 256,
+          "samples": 4,
+          "totalPixelBudget": 262144,
+          "totalSamplePixelBudget": 1048576,
+          "renderedFramesObserved": 322,
+          "note": "Two reflectors are attached to the final moving bath mirror leaves with recursive bounces disabled. Live output remains unverified until rendered on the selected backend. Three.js updates them only when visible mirror faces are rendered."
+        },
+        "drawCalls": 183,
+        "triangles": 275809
+      }
+    }
+  ]
+}

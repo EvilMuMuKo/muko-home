@@ -5,6 +5,7 @@ import { createStorageDesign } from "../src/storage-design";
 import { createAtmosphereDesign } from "../src/atmosphere-design";
 import { createSalonDesign } from "../src/salon-design";
 import { createHomeDesign } from "../src/home-design";
+import { createLifeDesign } from "../src/life-design";
 import {
   applyHomeMotion,
   buildHomeArchitecture,
@@ -12,11 +13,11 @@ import {
   createHomeMotion,
 } from "../src/home-mesh";
 
-function fixture() {
+function fixture(final = false) {
   const v8 = createSalonDesign(
       createAtmosphereDesign(createStorageDesign(original as never)),
     ),
-    model: any = createHomeDesign(v8),
+    model: any = final ? createLifeDesign(createHomeDesign(v8)) : createHomeDesign(v8),
     motion = createHomeMotion(),
     scene = new THREE.Scene(),
     material = new THREE.MeshStandardMaterial(),
@@ -108,13 +109,13 @@ function barObstacleParts(model: any, omitted: string[] = []) {
   return result;
 }
 
-test("V9 regression: visible folding-chair meshes clear entry return and bar service throughout parking/use motion", () => {
-  const { model, motion } = fixture(),
+test("V10 regression: visible folding-chair meshes clear entry return and bar service throughout parking/use motion", () => {
+  const { model, motion } = fixture(true),
     service = model.objects.find((o: any) => o.id === "s02-bar-service"),
     worktop = model.objects.find((o: any) => o.id === "bar-window-worktop"),
     connector = model.objects.find((o: any) => o.id === "bar-window-worktop-connector"),
     serviceParts = service.collisionParts.map(boxForPart),
-    counterParts = [...worktop.collisionParts, ...connector.collisionParts].map(boxForPart),
+    counterParts = [...(worktop?.collisionParts || []), ...(connector?.collisionParts || [])].map(boxForPart),
     allFixedBarParts = barObstacleParts(model, ["dining-table", "dining-chair-left", "dining-chair-right"]),
     island = model.objects.find((o: any) => o.id === "s02-entry-return"),
     islandParts = island.collisionParts.map(boxForPart),
@@ -230,8 +231,8 @@ test("space audit: bedroom static envelopes do not establish door, storage, bedd
   expect(model.homeDesign.guestBed.simultaneousDoorStorageState).toBe("not_verified");
 });
 
-test("V9 dining: sample every chair-retreat step at full furniture scale", () => {
-  const { model, motion } = fixture(),
+test("V10 dining: sample every chair-retreat step at full furniture scale", () => {
+  const { model, motion } = fixture(true),
     service = model.objects.find((o: any) => o.id === "s02-bar-service"),
     island = model.objects.find((o: any) => o.id === "s02-entry-return"),
     serviceParts = service.collisionParts.map(boxForPart),

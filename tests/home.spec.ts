@@ -131,14 +131,16 @@ test("failed entrance shader preparation removes walk controls and presents the 
   await page.route("**/assets/index-*.js", async route => {
     const response = await route.fetch();
     const source = await response.text();
-    const body = source.replace(/await ([\w$]+)\.compileAsync\(/, (_, name) => {
+    // Any startup compile must fail, including when optional variant compiles
+    // precede the entrance compile in the bundle but are skipped at startup.
+    const body = source.replace(/await ([\w$]+)\.compileAsync\(/g, (_, name) => {
       injected = true;
       return `await ${name}.__rejectedCompileForTest(`;
     });
     await route.fulfill({response,body});
   });
   await page.goto("/?renderer=webgl");
-  await expect(page.locator("#fallback")).toBeVisible({timeout:120000});
+  await expect(page.locator("#fallback")).toBeVisible({timeout:20000});
   expect(injected).toBe(true);
   await expect(page.locator("#scene")).toBeHidden();
   await expect(page.locator(".ghost-walk-controls")).toHaveCount(0);

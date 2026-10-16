@@ -9,7 +9,7 @@ export type SoftBeddingMaterials = {
 
 /** Low-poly, asymmetric superellipsoid cushion with a flattened mattress contact face. */
 export function createPillowGeometry(width = 0.7, depth = 0.43) {
-  const around = 24, rings = 16, exponent = 0.62;
+  const around = 32, rings = 20, exponent = 0.62;
   const positions: number[] = [], uvs: number[] = [], indices: number[] = [];
   const signedPow = (v: number) => Math.sign(v) * Math.pow(Math.abs(v), exponent);
   for (let j = 0; j <= rings; j++) {
@@ -58,7 +58,8 @@ export function createRunnerGeometry(width: number, mattressDepth: number) {
     for (let i = 0; i <= xSegments; i++) {
       const u = i / xSegments, x = (u - 0.5) * width;
       const edge = Math.pow(Math.abs(2 * u - 1), 2);
-      const wave = 0.004 * Math.sin(v * Math.PI * 5 + u * 1.7) * edge * Math.sin(Math.PI * v);
+      const wave = (0.004 * (1 + Math.sin(v * Math.PI * 5 + u * 1.7)) * edge +
+        0.008 * (1 + Math.sin(u * Math.PI * 3.5 + v * 1.1)) * Math.sin(Math.PI*u)) * Math.sin(Math.PI * v);
       positions.push(x, wave + drape, z);
       uvs.push(x, z);
     }
@@ -112,7 +113,9 @@ export function buildSoftBedding(
     const seam = new THREE.Mesh(createPiping(targetW, targetD), pipingMaterial);
     seam.position.copy(cushion.position);
     seam.name = "soft-bedding:pillow-piping";
-    seam.castShadow = true;
+    // A 1.3mm stitched seam is below the sun-shadow texel budget. Its own
+    // material/geometry supplies the seam; a separate hard shadow would crawl.
+    seam.castShadow = false;
     parent.add(seam);
     pillows.push(cushion);
   }

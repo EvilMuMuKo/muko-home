@@ -1,0 +1,32 @@
+{
+  "scope": "Native macOS Chrome; full suite 124 expected, 1 obsolete compile-fault injection failed; corrected injected-all-compiles fallback case then passed independently. No unresolved functional failure in these results. CI full rerun required before merge.",
+  "fullRun": {
+    "startTime": "2026-10-16T09:36:38.515Z",
+    "duration": 254620.748,
+    "expected": 124,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "retest": {
+    "test": "tests/home.spec.ts failed entrance shader preparation",
+    "status": "PASS",
+    "count": 1,
+    "durationSeconds": 7.9
+  },
+  "progressiveDelayedTextureTest": {
+    "status": "PASS",
+    "requested": 12,
+    "beforeReleaseLoaded": 0,
+    "afterReleaseLoaded": 12
+  },
+  "typecheck": "PASS",
+  "finalStartupGroup": {
+    "startTime": "2026-10-16T09:52:59.541Z",
+    "duration": 17783.033,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -9,6 +9,13 @@ import { auditSceneModel } from "./model-audit";
 import { buildPlant } from "./plant-mesh";
 import { daylightStudy, sunDirection } from "./daylight";
 import { createHomeDesign } from "./home-design";
+import { createLifeDesign } from "./life-design";
+import { createLifeMotion, buildLifeFurniture, applyLifeMotion } from "./life-mesh";
+import { createExteriorWorld } from "./exterior-world";
+import { createRoomRadiance } from "./room-radiance";
+import { createBathMirror } from "./planar-mirror";
+import { createDiffuseBounce } from "./diffuse-bounce";
+import bakedDiffuse from "./generated-diffuse.json";
 import {
   createHomeMotion,
   buildHomeFurniture,
@@ -29,7 +36,7 @@ import {
 } from "./room-finish";
 import { buildInteriorDetails, mountMomentControls } from "./interior-detail";
 import { mountStoragePanel } from "./storage-panel";
-import { refineMaterials, materialDetailState, auditMaterialSet } from "./material-detail";
+import { refineMaterials, whenMaterialTexturesReady, materialDetailState, auditMaterialSet } from "./material-detail";
 import { createStorageDesign, storageCapacity } from "./storage-design";
 import { buildStorageUnit } from "./storage-mesh";
 import { metricUV } from "./texture-mapping";
@@ -63,13 +70,35 @@ import {
   Color as ve,
 } from "three";
 import baseModel from "./model.js";
-const pt = createHomeDesign(
+const pt = createLifeDesign(createHomeDesign(
   createSalonDesign(createAtmosphereDesign(createStorageDesign(baseModel))),
-);
+));
 const homeMotion = createHomeMotion();
+const lifeMotion = createLifeMotion();
 const currentStorage = () =>
   ut.objects.filter((o) => o.type === "wall_storage");
-let spatialDesign, compositionMaterial;
+let spatialDesign, compositionMaterial, exteriorWorld, roomRadiance;
+let diffuseBounce, diffuseReady = Promise.resolve();
+let visualEnhancementsReady = Promise.resolve();
+const startupTiming = { started: performance.now(), stages: {} };
+function startupStage(name) { startupTiming.stages[name] = Math.round(performance.now() - startupTiming.started); }
+const bakeOnly = new URLSearchParams(location.search).has("gi-bake");
+function syncDiffuseRoom(room) {
+  // One bounded volume follows the observer; overlapping hall has no baked grid.
+  diffuseBounce?.setRoom(room || "hall");
+}
+async function loadDiffuseVariant(night, compile = true) {
+  if (!diffuseBounce || bakeOnly) return;
+  const room = ghostWalk ? observerRoom(ut.rooms,ct.position.toArray(),"all") : Wt;
+  syncDiffuseRoom("hall");
+  for (const data of bakedDiffuse.variants[night?"night":"day"] || []) diffuseBounce.install(data);
+  syncDiffuseRoom(room);
+  if (compile) await Ht.compileAsync(Ct,ct);
+  Oi();
+}
+let renderEffectTier = 0;
+let reflectionPauseDepth = 0;
+let bathMirror;
 let roomAtmosphere;
 import { OrbitControls as Mc } from "three/addons/controls/OrbitControls.js";
 import { RoundedBoxGeometry as ru } from "three/addons/geometries/RoundedBoxGeometry.js";
@@ -928,7 +957,7 @@ function Qg({ THREE: i, scene: e, model: t, registerVisual: n, mobile: s }) {
           (V.userData.sourceId = W?.f.id || null),
           (V.userData.roomId = W?.f.roomId || null),
           (V.userData.spaceIds = W?.f.spaceIds || (W ? [W.f.roomId] : [])),
-          (V.castShadow = F < g && !!W));
+          (V.castShadow = F < Math.max(0, g - Math.max(0, renderEffectTier - 1)) && !!W));
       }
     } else {
       let C = o
@@ -1253,7 +1282,7 @@ function tx({
     ((o = !0), (l ||= U), w());
   }
   function _() {
-    (clearTimeout(d), (d = 0), (c = !0), (f = 0), M(b), w());
+    (clearTimeout(d), (d = 0), (c = !0), (f = 0), w());
   }
   function A() {
     ((c = !1), E(), w());
@@ -1289,24 +1318,27 @@ function tx({
       ((h = !!J.active),
       (o ||= !!J.dirty),
       (l ||= !!J.shadow),
-      h && !B && (clearTimeout(d), (d = 0), M(b), (f = 0)),
+      h && !B && (clearTimeout(d), (d = 0), (f = 0)),
       B && !h && !c && E(),
       (c || h) && f)
     ) {
       let F = U - f;
       if (
-        F < 120 &&
+        Number.isFinite(F) && F > 0 &&
         (v.frameMs.push(F),
         v.frameMs.length > 600 && v.frameMs.shift(),
         (p = 0.9 * p + 0.1 * F),
         x++,
         x >= 20 && U - g > 1e3)
       ) {
-        let V = b;
-        (p > 38
-          ? (V = Math.max(0.75, b - 0.25))
-          : p < 23 && (V = Math.min(quality.interactionDpr, b + 0.25)),
-          V !== b && ((b = V), M(V), (g = U), (x = 0)));
+        // Sustained load sheds effects, never the main frame's resolution.
+        // The cadence includes GPU/vsync work; renderMs below is CPU submission only.
+        if (p > (s ? 42 : 28) && U - g > 10000 && renderEffectTier < 2) {
+          renderEffectTier++;
+          g = U;
+          r({ effectTier: renderEffectTier });
+        }
+        x = 0;
       }
     }
     ((f = U), o && L(U), (u = !1), (c || h || o) && w());
@@ -1337,7 +1369,12 @@ function tx({
     capture: O,
     getState: () => ({
       ...v,
+      resolutionPolicy: quality.resolutionPolicy,
       pixelRatio: y,
+      drawingBuffer: i.getDrawingBufferSize(new yi.Vector2()).toArray(),
+      effectTier: renderEffectTier,
+      frameP95Ms: [...v.frameMs].sort((a,b)=>a-b)[Math.floor(v.frameMs.length * 0.95)] ?? null,
+      cpuSubmissionOnly: true,
       interactionRatio: b,
       highPixelRatio: m,
       pending: !!a,
@@ -2483,6 +2520,10 @@ var QM = {},
     laundry: 0,
     tv: 0,
     sofa: 0,
+    activity: 0,
+    miniFridge: 0,
+    shower: 0,
+    foldingShelf: 0,
   },
   Dn = { ...an };
 var Za = null,
@@ -2514,7 +2555,7 @@ ut.cameras.forEach((i) => {
 var Vn = {};
 async function ew() {
   Object.assign(Vn, Jg(yi));
-  await refineMaterials(Vn, Ht);
+  await refineMaterials(Vn, Ht, { progressive: true, onTextureReady: () => Jt?.request({ shadow: true }) });
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
   configureRoomMaterials(Vn);
   prepareSalonMaterials(Vn);
@@ -2871,6 +2912,7 @@ function lw() {
           : [i.room],
       ),
       !(
+        buildLifeFurniture(e, i, Vn, lifeMotion) ||
         buildHomeFurniture(e, i, Vn, homeMotion) ||
         buildSalonFurniture(e, i, Vn, St) ||
         (i.type === "wall_storage" &&
@@ -3272,9 +3314,12 @@ function Fp(i) {
     (Ct.getObjectByName("sun").intensity = e.daylight ? 2.6 : 0.04),
     (Ct.environmentIntensity =
       moment?.environmentIntensity ?? (e.daylight ? 0.55 : 0.18)),
-    Ct.background.set(e.daylight ? "#e4e0d7" : "#383b35"),
+    Ct.background?.isColor && Ct.background.set(e.daylight ? "#e4e0d7" : "#383b35"),
     (Ht.toneMappingExposure = moment?.exposure ?? (e.daylight ? 0.95 : 1.12)),
     updateHomeLighting(homeMotion, e.daylight),
+    exteriorWorld?.setNight(!e.daylight),
+    (diffuseReady = loadDiffuseVariant(!e.daylight)),
+    roomRadiance?.refresh(!e.daylight).then(()=>Oi()),
     ($e("#lighting").textContent = e.daylight
       ? "\u591C\u95F4"
       : "\u65E5\u95F4"),
@@ -3289,7 +3334,7 @@ function Fp(i) {
     vx(false);
   }
   if (i === "guest-stay") vx(true);
-  if (i === "two-person-dining") ns({ dining: 1, gate: 1 });
+  if (i === "two-person-dining") setLivingMode("dining");
   if (
     !ghostWalk &&
     moment?.viewId &&
@@ -3416,14 +3461,16 @@ function bx() {
     tv: an.tv,
     sofa: an.sofa,
     diningRetreat: an.diningRetreat,
+    activity: an.activity,
   });
+  applyLifeMotion(lifeMotion, an);
   for (let i of St.kitchen)
     i.group.position.set(
       i.closed[0] + i.travel[0] * an.kitchen,
       0,
       i.closed[1] + i.travel[1] * an.kitchen,
     );
-  for (let i of St.fridge)
+  for (let i of St.fridge.filter(item=>!item.lifeManaged))
     ((i.pivot.rotation.y = i.hinge * i.max * an.fridge),
       (i.drawer.position.z = i.drawerClosedZ - i.travel * an.drawer));
   for (let i of St.chairs) {
@@ -3435,6 +3482,15 @@ function bx() {
       i.base.z + (e.z - i.base.z) * t,
     );
   }
+}
+function setTVAlternative(alternative) {
+  if (alternative && Dn.dining > 0) { Su("请先收起餐桌，再调整电视停靠位置"); return; }
+  ns({tv:alternative?1:0});
+}
+function setLivingMode(mode) {
+  if (!["relax","dining","activity"].includes(mode)) return;
+  ns({dining:mode==="dining"?1:0,activity:mode==="activity"?1:0,sofa:0,diningRetreat:0,gate:1,tv:0},1800);
+  const control=$e("#living-mode"); if(control)control.value=mode;
 }
 function zc() {
   for (let [i, e, t] of [
@@ -3544,9 +3600,15 @@ function fw() {
             $e("#keg-toggle").setAttribute("aria-pressed", String(!!s)));
         },
       ));
+  const modes = document.createElement("select");
+  modes.id="living-mode";modes.setAttribute("aria-label","客厅生活场景");
+  for(const [value,label] of [["relax","客厅 · 游戏休闲"],["dining","客厅 · 双人用餐"],["activity","客厅 · 开放活动"]]) {
+    const option=document.createElement("option");option.value=value;option.textContent=label;modes.append(option);
+  }
+  modes.onchange=()=>setLivingMode(modes.value);i.append(modes);
   e("dining-toggle", "展开餐桌", () => {
     const open = !Dn.dining;
-    ns({ dining: open ? 1 : 0, diningRetreat: 0, gate: 1 });
+    setLivingMode(open ? "dining" : "relax");
     $e("#dining-toggle").textContent = open ? "收起餐桌" : "展开餐桌";
   });
   e("dishwasher-toggle", "打开洗碗机", () => {
@@ -3554,8 +3616,8 @@ function fw() {
     ns({ dishwasher: open ? 1 : 0 });
     $e("#dishwasher-toggle").textContent = open ? "收起洗碗机" : "打开洗碗机";
   });
-  e("sofa-toggle", "拆分 / 拼合沙发", () => ns({ sofa: Dn.sofa ? 0 : 1 }));
-  e("tv-toggle", "电视换位", () => ns({ tv: Dn.tv ? 0 : 1 }));
+  e("sofa-toggle", "拆分 / 拼合沙发", () => ns({ sofa: Dn.sofa ? 0 : 1, dining:0, activity:0 }));
+  e("tv-toggle", "电视换位", () => setTVAlternative(!Dn.tv));
   e("laundry-toggle", "打开洗烘舱门", () =>
     ns({ laundry: Dn.laundry ? 0 : 1 }),
   );
@@ -3605,11 +3667,12 @@ function updateActionVisibility() {
     "entry-toggle": ["hall"],
     "gate-toggle": ["all", "bar", "hall"],
     "kitchen-toggle": ["kitchen"],
-    "fridge-toggle": ["kitchen"],
+    "fridge-toggle": ["kitchen","hall"],
     "drawer-toggle": ["kitchen"],
     "dishwasher-toggle": ["kitchen"],
     "chairs-toggle": ["master"],
-    "dining-toggle": ["all", "bar"],
+    "dining-toggle": ["all", "living"],
+    "living-mode": ["all", "living"],
     "keg-toggle": ["bar"],
     "laundry-toggle": ["balcony"],
     "storage-toggle": [
@@ -3741,8 +3804,11 @@ function walkTargets() {
     "kitchen-fridge",
     1.15,
     "fridge",
-    [-1, 0],
+    [1, 0],
   );
+  toggle("walk-drinks-fridge","开合饮料冰箱","guest-drinks-fridge",0.7,"miniFridge",[0,1]);
+  toggle("walk-shower","开合淋浴门","shower",1.1,"shower");
+  toggle("walk-folding-shelf","展开 / 收起叠衣板","laundry-folding-shelf",0.95,"foldingShelf",[0,-1]);
   toggle(
     "walk-dishwasher",
     "开合洗碗机",
@@ -3757,7 +3823,7 @@ function walkTargets() {
   const table = point("dining-table", 0.85);
   if (table)
     add("walk-table", "展开 / 收起餐桌", table, () =>
-      ns({ dining: Dn.dining ? 0 : 1, diningRetreat: 0, gate: 1 }),
+      setLivingMode(Dn.dining ? "relax" : "dining"),
     );
   const hatch = ut.homeDesign.hatch;
   add(
@@ -3868,6 +3934,8 @@ function enterGhostWalk(pose) {
       ) {
         _r?.setObserver?.(ct.position.toArray());
         lastWalkLightFocus = ct.position.clone();
+        roomRadiance?.setRoom(observerRoom(ut.rooms,ct.position.toArray(),"all"));
+        syncDiffuseRoom(observerRoom(ut.rooms,ct.position.toArray(),"all"));
         Jt?.request({ shadow: true });
       }
       Oi();
@@ -3911,6 +3979,8 @@ function Ka(i) {
       mode: themeMoments.some((m) => m.viewId === i.id) ? "current" : "all",
     }),
     _r?.setObserver?.(i.position),
+    roomRadiance?.setRoom(i.roomId),
+    syncDiffuseRoom(i.roomId),
     ($e("#view-title").textContent = i.label),
     Ax(),
     Oi());
@@ -4105,6 +4175,7 @@ function Oi() {
 function Bp() {
   return (
     kp ||
+    reflectionPauseDepth > 0 ||
     document.hidden ||
     matchMedia("(max-width:1024px) and (orientation:portrait)").matches
   );
@@ -4148,11 +4219,13 @@ function vw(i) {
 }
 async function bw() {
   try {
-    await initGeometry(
+    const geometryReady = initGeometry(
       `${import.meta.env.BASE_URL}transform.wasm`,
       new URLSearchParams(location.search).get("wasm") !== "0",
     );
     Ht = await createRenderer(kn);
+    await geometryReady;
+    startupStage("renderer");
     kn = Ht.domElement;
     await initAreaLighting(rendering.backend === "WebGPU" ? "webgpu" : "webgl");
     kn.dataset.renderer = rendering.backend;
@@ -4171,11 +4244,16 @@ async function bw() {
       (Ht.outputColorSpace = on),
       (Ct = new Xi()),
       (Ct.background = new ve("#e4e0d7")),
+      (exteriorWorld = createExteriorWorld(Ct, quality)),
       (ct = new Ut(40, 1, 0.1, 120)),
       (Nt = new Mc(ct, kn)),
       await ew(),
       ow(),
       lw(),
+      lifeMotion.fridges.filter(f=>f.id === "kitchen-fridge").forEach(f=>St.fridge.push({
+        object:ut.objects.find(o=>o.id===f.id),pivot:f.leaves[0].pivot,drawer:f.drawer,
+        lifeManaged:true,drawerClosedZ:f.drawerBase,hinge:1,max:Kn.degToRad(100),travel:0.48,
+      })),
       hx({
         THREE: yi,
         scene: Ct,
@@ -4207,7 +4285,14 @@ async function bw() {
         render: yw,
         step: vw,
         isSuspended: Bp,
-        onQualityChange: () => vi?.setPixelRatio(Ht.getPixelRatio()),
+        onQualityChange: ({effectTier} = {}) => {
+          vi?.setPixelRatio(Ht.getPixelRatio());
+          if (effectTier) {
+            gpuFinish?.setEconomy(effectTier);
+            if (Oc) Oc.enabled = false;
+            _r?.apply(Wp);
+          }
+        },
       })),
       fw(),
       (an.entry = Dn.entry = 1),
@@ -4234,11 +4319,17 @@ async function bw() {
       (vu = !0),
       enterGhostWalk(),
       Jt.pause());
+    startupStage("model");
     // Compile the actual entrance camera before exposing controls. WebGPU can
     // prepare independent material pipelines asynchronously instead of blocking
     // the first visible frame with synchronous shader compilation.
     $e("#loading-status").textContent = "准备光影与材质";
-    await Ht.compileAsync(Ct, ct);
+    diffuseBounce = await createDiffuseBounce({renderer:Ht,scene:Ct,model:ut,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
+    await loadDiffuseVariant(_u, false);
+    bathMirror = await createBathMirror({scene:Ct,renderer:Ht,model:ut,materials:Vn,mobile:quality.mobile,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
+    if (gpuFinish) await gpuFinish.compile();
+    else await Ht.compileAsync(Ct, ct);
+    startupStage("compiled");
     (
       (kn.dataset.wasmVertices = String(geometryState().transformedVertices)),
       $e("#loading").classList.add("done"),
@@ -4246,6 +4337,23 @@ async function bw() {
       (kn.style.cursor = "grab"),
       Jt.request({ shadow: !0 }),
       Jt.resume());
+    startupStage("interactive");
+    // Full-resolution images hydrate existing textures; they never block entry.
+    // Capture reflections only after those images and the first visible frame,
+    // so neither placeholder materials nor startup PMREM work are cached/shown.
+    visualEnhancementsReady = (async () => {
+      await whenMaterialTexturesReady();
+      startupStage("textures");
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      roomRadiance = await createRoomRadiance({renderer:Ht,scene:Ct,model:ut,materials:Vn,mobile:quality.mobile,environmentGenerator,
+        withRenderPaused: async work => { reflectionPauseDepth++; Jt.pause(); try { return await work(); } finally { reflectionPauseDepth--; if(!reflectionPauseDepth) { Jt.resume(); Jt.request({shadow:true}); } } }
+      });
+      await roomRadiance.refresh(_u);
+      roomRadiance.setRoom(ghostWalk ? observerRoom(ut.rooms,ct.position.toArray(),"hall") : Wt);
+      await roomRadiance.whenReady();
+      startupStage("complete");
+      Oi();
+    })();
   } catch (i) {
     (vu = false,
       wx(),
@@ -4406,6 +4514,16 @@ document.addEventListener("visibilitychange", () => {
   Bp() ? (atmosphere?.resetClock(), Jt?.pause()) : Jt?.resume();
 });
 window.homePresentation = {
+  whenVisualReady: async () => { await visualEnhancementsReady; await Promise.all([whenMaterialTexturesReady(), roomRadiance?.whenReady(), diffuseReady]); },
+  bakeDiffuseRoom: async (roomId) => {
+    if (!bakeOnly) throw new Error("Offline bake requires the developer gi-bake URL flag.");
+    await visualEnhancementsReady;
+    await roomRadiance?.whenReady();
+    Jt.pause();
+    const service = await createDiffuseBounce({renderer:Ht,scene:Ct,model:ut,backend:rendering.backend==="WebGPU"?"webgpu":"webgl"});
+    try { return await service.bakeRoom(roomId); }
+    finally { service.dispose(); Jt.resume(); Jt.request({shadow:true}); }
+  },
   startGhostWalk: (pose) => enterGhostWalk(pose),
   stopGhostWalk: () => exitGhostWalk(),
   getGhostWalkState: () => ghostWalk?.getState() || { active: false },
@@ -4451,15 +4569,20 @@ window.homePresentation = {
     states: { dining: an.dining, hatch: an.gate, dishwasher: an.dishwasher },
   }),
   setDiningOpen: (open) => {
-    ns({ dining: open ? 1 : 0, diningRetreat: 0, gate: 1 });
+    setLivingMode(open ? "dining" : "relax");
   },
   setDiningChairRetreat: (pulled) =>
-    ns({ dining: 1, diningRetreat: pulled ? 1 : 0, gate: 1 }),
+    ns({ dining: 1, diningRetreat: pulled ? 1 : 0, gate: 1, activity:0, sofa:0 }),
   setHatchOpen: (open) => {
     ns({ gate: open ? 1 : 0 });
   },
-  setSofaSeparated: (separated) => ns({ sofa: separated ? 1 : 0 }),
-  setMobileTVAlternative: (alternative) => ns({ tv: alternative ? 1 : 0 }),
+  setSofaSeparated: (separated) => ns({ sofa: separated ? 1 : 0, activity:0, dining:0 }),
+  setLivingMode,
+  getLivingMode: () => Dn.activity ? "activity" : Dn.dining ? "dining" : "relax",
+  setDrinksFridgeOpen: open => ns({miniFridge:open?1:0}),
+  setShowerOpen: open => ns({shower:open?1:0}),
+  setFoldingShelfOpen: open => ns({foldingShelf:open?1:0}),
+  setMobileTVAlternative: setTVAlternative,
   setLaundryOpen: (open) => {
     ns({ laundry: open ? 1 : 0 });
   },
@@ -4516,6 +4639,11 @@ window.homePresentation = {
   getPerformance: () => ({
     ...Jt?.getState(),
     materialDetail: materialDetailState(),
+    startup: { ...startupTiming, stages: { ...startupTiming.stages } },
+    exterior: exteriorWorld?.audit(),
+    roomRadiance: roomRadiance?.audit(),
+    diffuseBounce: diffuseBounce?.audit(),
+    mirror: bathMirror?.audit(),
     staticOcclusion,
     materials: auditMaterialSet(Vn),
     gpuFinish: gpuFinish?.audit() || {enabled:false,reason:quality.mobile?"mobile_budget":"compatible_direct_renderer"},
@@ -4569,6 +4697,10 @@ window.homePresentation = {
     laundryProgress: an.laundry,
     tvProgress: an.tv,
     sofaProgress: an.sofa,
+    activityProgress: an.activity,
+    drinksFridgeProgress: an.miniFridge,
+    showerProgress: an.shower,
+    foldingShelfProgress: an.foldingShelf,
     kitchenProgress: an.kitchen,
     fridgeAngle: St.fridge[0]?.pivot.rotation.y || 0,
     drawerProgress: an.drawer,
@@ -4625,7 +4757,7 @@ window.homePresentation = {
   getPreview: (i) => QM[i],
   getObjectFrames: () =>
     ut.objects
-      .filter((i) => i.type !== "door_leaf")
+      .filter((i) => i.type !== "door_leaf" && !i.rendererHidden)
       .map((i) => {
         let e = Ct?.getObjectByName(i.id);
         return [i.id, e?.position.toArray(), e?.rotation.y];
@@ -4643,7 +4775,7 @@ window.homePresentation = {
 window.homePresentation.getObjectBounds = () => (
   Ct.updateMatrixWorld(!0),
   ut.objects
-    .filter((i) => i.type !== "door_leaf")
+    .filter((i) => i.type !== "door_leaf" && !i.rendererHidden)
     .map((i) => {
       let e = Ct.getObjectByName(i.id);
       if (!e) return { id: i.id, missing: !0 };

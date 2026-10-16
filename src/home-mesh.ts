@@ -420,7 +420,8 @@ export function buildHomeFurniture(
   if (o.type === "folding_table") {
     const top = new THREE.Group();
     group.add(top);
-    disk(top, m, o.w / 2, 0.025, 0, "salonTimber");
+    if (o.shape === "rectangle") box(top,m,o.w,0.025,o.d,0,0,0,"salonTimber",0.02);
+    else disk(top, m, o.w / 2, 0.025, 0, "salonTimber");
     // Foldable crossed frames. Mechanism is a concept, not a certified product CAD.
     const legs: THREE.Group[] = [];
     for (const sign of [-1, 1]) {
@@ -438,21 +439,23 @@ export function buildHomeFurniture(
     return true;
   }
   if (o.type === "folding_chair") {
+    // Both frames hinge at seat height. Folded depth is a real 150mm budget,
+    // not a scaled-away normal chair; the seat remains 480 x 460mm.
     const seat = new THREE.Group();
-    seat.position.y = 0.45;
-    box(seat, m, 0.43, 0.045, 0.43, 0, 0, 0, "salonFabric", 0.015);
+    seat.position.set(0,0.45,0.16);
+    box(seat,m,0.48,0.045,0.46,0,0,-0.23,"salonFabric",0.018);
     group.add(seat);
-    const rear = new THREE.Group(),
-      front = new THREE.Group();
-    for (const x of [-0.2, 0.2]) {
-      rod(rear, m, [x, 0.025, 0.19], [x, 0.86, 0.14], 0.014, "salonTimber");
-      rod(front, m, [x, 0.025, -0.19], [x, 0.49, 0.19], 0.014, "salonTimber");
+    const rear = new THREE.Group(), front = new THREE.Group();
+    front.position.set(0,0.45,0.16);
+    for (const x of [-0.23,0.23]) {
+      rod(rear,m,[x,0.025,0.16],[x,0.87,0.16],0.015,"salonTimber");
+      rod(front,m,[x,-0.425,-0.34],[x,0,0],0.015,"salonTimber");
     }
-    box(rear, m, 0.43, 0.14, 0.028, 0, 0.765, 0.155, "salonTimber", 0.014);
-    rod(front, m, [-0.2, 0.17, -0.09], [0.2, 0.17, -0.09], 0.009, "bronze");
-    group.add(rear, front);
-    motion.chairs.push({ group, seat, legs: [front, rear], object: o });
-    group.userData.animated = true;
+    box(rear,m,0.48,0.15,0.035,0,0.78,0.16,"salonTimber",0.015);
+    rod(front,m,[-0.23,-0.30,-0.24],[0.23,-0.30,-0.24],0.01,"bronze");
+    group.add(front,rear);
+    motion.chairs.push({group,seat,legs:[front,rear],object:o});
+    group.userData.animated=true;
     return true;
   }
   if (o.type === "dishwasher") {
@@ -539,19 +542,6 @@ export function buildHomeArchitecture(
     });
     return a;
   }
-  const data = new Uint8Array(16 * 64 * 4);
-  for (let y = 0; y < 64; y++)
-    for (let x = 0; x < 16; x++) {
-      const f = y / 63,
-        i = (y * 16 + x) * 4;
-      data[i] = 210 - 28 * f;
-      data[i + 1] = 219 - 17 * f;
-      data[i + 2] = 207 + 9 * f;
-      data[i + 3] = 255;
-    }
-  const skyMap = new THREE.DataTexture(data, 16, 64);
-  skyMap.colorSpace = THREE.SRGBColorSpace;
-  skyMap.needsUpdate = true;
   // Local exterior projections keep the original floor polygons and structural wall intact.
   for (const bay of model.homeDesign?.bayWindows || []) {
     const opening = model.openings.find((o: any) => o.id === bay.windowId);
@@ -653,20 +643,6 @@ export function buildHomeArchitecture(
       "bronze",
     );
     g.add(glazing);
-    const skyMat = new THREE.MeshBasicMaterial({
-      map: skyMap,
-      color: "#eef3ef",
-      side: THREE.DoubleSide,
-      toneMapped: false,
-    });
-    const sky = new THREE.Mesh(
-      new THREE.PlaneGeometry(width, head - sill),
-      skyMat,
-    );
-    sky.position.set(cx + dx * (depth + 0.025), (head + sill) / 2, cz);
-    sky.rotation.y = Math.PI / 2;
-    g.add(sky);
-    motion.skies.push(skyMat);
     // A book and removable tray leave the real sill visible; no invented hollow structural storage.
     box(
       g,
@@ -995,13 +971,14 @@ export function applyHomeMotion(
     diningRetreat?: number;
     tv?: number;
     sofa?: number;
+    activity?: number;
   },
 ) {
   const model = motion.model,
     config = model?.homeDesign?.dining;
   if (motion.sofaModules.length && model?.homeDesign?.modularSofa) {
     const design = model.homeDesign.modularSofa,
-      t = smooth(state.sofa || 0);
+      t = smooth(state.sofa || 0), meal = smooth((state.dining || 0) / 0.15), activity = smooth(state.activity || 0);
     for (let index = 0; index < motion.sofaModules.length; index++) {
       const module = motion.sofaModules[index],
         parent = module.parent!,
@@ -1011,9 +988,9 @@ export function applyHomeMotion(
       module.position.copy(
         parent.worldToLocal(
           new THREE.Vector3(
-            THREE.MathUtils.lerp(a.x, b.x, t),
+            THREE.MathUtils.lerp(THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.x, b.x, t), design.meal?.[index]?.x ?? a.x, meal), design.activity?.[index]?.x ?? a.x, activity),
             0,
-            THREE.MathUtils.lerp(a.z, b.z, t),
+            THREE.MathUtils.lerp(THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.z, b.z, t), design.meal?.[index]?.z ?? a.z, meal), design.activity?.[index]?.z ?? a.z, activity),
           ),
         ),
       );
@@ -1022,14 +999,14 @@ export function applyHomeMotion(
       );
       module.rotation.y =
         -THREE.MathUtils.degToRad(
-          THREE.MathUtils.lerp(a.rotation, b.rotation, t),
+          THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.rotation, b.rotation, t), 180, Math.max(meal,activity)),
         ) - parentAngle;
     }
   }
   if (motion.mobileTV) {
     const poses = model?.homeDesign?.mobileTV?.poses;
     if (poses?.length === 2) {
-      const t = smooth(state.tv || 0),
+      const t = smooth(state.tv || 0) * (1-smooth(Math.max(state.dining||0,state.activity||0)/.15)),
         a = poses[0],
         b = poses[1];
       motion.mobileTV.group.position.set(
@@ -1045,8 +1022,8 @@ export function applyHomeMotion(
   if (motion.table) {
     const { group, top, legs, object } = motion.table;
     const p = state.dining,
-      move = smooth(p / 0.24),
-      unfold = smooth((p - 0.24) / 0.16);
+      move = smooth((p - 0.15) / 0.25),
+      unfold = smooth((p - 0.89) / 0.05);
     const parked = new THREE.Vector3(object.x, object.y || 0, object.z);
     const target = vector(config?.usePositions?.table, parked);
     if (config?.sequence?.tablePath?.length)
@@ -1058,7 +1035,7 @@ export function applyHomeMotion(
       -THREE.MathUtils.degToRad(useRotation),
       move,
     );
-    top.position.y = THREE.MathUtils.lerp(0.7, object.h - 0.0125, unfold);
+    top.position.y = THREE.MathUtils.lerp(0.74, object.h - 0.0125, unfold);
     top.rotation.x = ((1 - unfold) * Math.PI) / 2;
     for (const frame of legs) {
       frame.position.y = THREE.MathUtils.lerp(0.46, 0.37, unfold);
@@ -1070,11 +1047,10 @@ export function applyHomeMotion(
     const { group, seat, legs, object } = motion.chairs[index];
     const p = state.dining,
       move = smooth(
-        (p - (index === 0 ? 0.42 : 0.74)) / (index === 0 ? 0.24 : 0.16),
+        (p - (index === 0 ? 0.42 : 0.65)) / (index === 0 ? 0.20 : 0.23),
       ),
-      unfold = smooth(
-        (p - (index === 0 ? 0.66 : 0.9)) / (index === 0 ? 0.06 : 0.1),
-      );
+      unfold = smooth((p - 0.94) / 0.035),
+      tuck = smooth((p - 0.975) / 0.025);
     const parked = new THREE.Vector3(object.x, object.y || 0, object.z);
     const use = config?.usePositions?.chairs?.[index];
     const path = config?.sequence?.chairPaths?.[index];
@@ -1095,6 +1071,7 @@ export function applyHomeMotion(
         THREE.MathUtils.lerp(path[segment][1], path[segment + 1][1], t),
       );
     } else group.position.lerpVectors(parked, vector(use, parked), move);
+    if(path?.length) group.position.x += ((use?.x ?? path.at(-1)[0])-path.at(-1)[0])*tuck;
     const retreat =
       (state.diningRetreat || 0) *
       unfold *
@@ -1109,8 +1086,16 @@ export function applyHomeMotion(
       move,
     );
     seat.rotation.x = ((1 - unfold) * Math.PI) / 2;
-    legs[0].rotation.x = (1 - unfold) * -0.45;
-    legs[0].position.y = (1 - unfold) * 0.075;
+    legs[0].rotation.x = (1 - unfold) * -Math.atan2(0.34,0.425);
+    const legAngle = legs[0].rotation.x;
+    // A folded diagonal leg is longer vertically. Lift the carried chair by
+    // its real foot envelope instead of letting it sink 94mm into the floor.
+    group.position.y += Math.max(0, .425*Math.cos(legAngle)-.34*Math.sin(legAngle)-.435);
+    // Folded frames/seat lie at z=0.16; move the whole chair so model x/z
+    // remains its folded centre and the parking envelope is centred honestly.
+    const foldedCentre = (1-unfold)*0.16;
+    group.position.x -= Math.sin(group.rotation.y)*foldedCentre;
+    group.position.z -= Math.cos(group.rotation.y)*foldedCentre;
   }
   if (motion.hatch) {
     const p = state.gate,

@@ -9,8 +9,8 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() =>
     window.homePresentation.startGhostWalk({
-      position: [3.25, 1.74, 4.05],
-      target: [4.25, 1.15, 4.05],
+      position: [5.15, 1.74, 4.05],
+      target: [4.045, 1.15, 4.05],
     }),
   );
   await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
@@ -138,8 +138,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
   expect(audit.staticGroups).toEqual(expect.arrayContaining(["column-handdrawn","living-sofa","living-tv","dining-table"]));
   await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,3.2],target:[8,1.74,3.2]}));
   await page.keyboard.down("w");
-  await page.waitForTimeout(1600);
-  await page.keyboard.up("w");
+  try { await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:60000}).toBeGreaterThan(6.4); } finally { await page.keyboard.up("w"); }
   const wall=await page.evaluate(()=>window.homePresentation.getCamera().position);
   expect(wall[0]).toBeLessThanOrEqual(6.591);
   expect(wall[0]).toBeGreaterThan(6.4);

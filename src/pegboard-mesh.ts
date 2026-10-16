@@ -99,6 +99,14 @@ export function buildPegboard(
     );
     cable.position.set(w / 2 - 0.16, 0.18, -0.04);
     group.add(cable);
+    // Small, replaceable photo cards make the board a shared memory surface.
+    // These are original abstract placeholders, never private uploaded photos.
+    for (const [x, y, tint] of [[-0.38,0.33,"#b98b6b"],[-0.16,0.30,"#8c9d86"],[0.08,0.34,"#c2b99b"]] as const) {
+      const card=bar(0.15,0.18,0.004,x,y,-0.003,materials.cream||wood);
+      card.name="shared-photo-card";
+      bar(0.124,0.125,0.002,x,y+0.012,-0.006,new THREE.MeshStandardMaterial({color:tint,roughness:0.95}));
+      bar(0.018,0.025,0.008,x,y+0.10,-0.008,metal);
+    }
   } else {
     for (const x of [-0.25, -0.07, 0.12]) hook(x, h - 0.1);
     for (const x of [-0.25, -0.07]) {

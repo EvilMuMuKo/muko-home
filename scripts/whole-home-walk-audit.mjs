@@ -50,8 +50,8 @@ const report = {
 };
 
 const rooms = [
-  { id: "dining", label: "餐厅", goal: [3.2, 6.4], mainDirection: "north" },
-  { id: "kitchen", label: "厨房", goal: [3.2, 4.7], mainDirection: "east" },
+  { id: "dining", label: "阅读水吧", goal: [3.2, 6.4], mainDirection: "north" },
+  { id: "kitchen", label: "厨房", goal: [2.0, 4.8], mainDirection: "east" },
   { id: "hall", label: "走廊", goal: [5.8, 3.2], mainDirection: "north" },
   { id: "cinema", label: "影音室", goal: [2.8, 2.4], mainDirection: "east" },
   { id: "bath", label: "卫浴", goal: [5.6, 1.45], mainDirection: "north" },
@@ -336,6 +336,7 @@ try {
   await page.goto(baseURL, { waitUntil: "domcontentloaded", timeout: 120_000 });
   await page.waitForFunction(() => window.homePresentation?.getState().ready, null, { timeout: 180_000 });
   await page.waitForFunction(() => window.homePresentation?.getGhostWalkState()?.active, null, { timeout: 30_000 });
+  await page.evaluate(()=>window.homePresentation.whenVisualReady?.());
 
   const apiStatus = await page.evaluate(() => {
     const api = window.homePresentation;
@@ -460,6 +461,7 @@ try {
   };
 
   const walkTo = async (goal, label, roomRecord) => {
+    await page.evaluate(()=>window.homePresentation.whenVisualReady?.());
     const before = await cameraPosition();
     let settledStart = [before[0], before[2]];
     let fresh = normalizeSnapshot(await page.evaluate(() => window.homePresentation.getWalkNavigationSnapshot()));
@@ -589,13 +591,14 @@ try {
       const model = await page.evaluate(() => window.homePresentation.getModel());
       const fridge = model.objects.find((item) => item.id === "kitchen-fridge");
       if (fridge) {
+        const sign = fridge.accessFace === "+x" ? 1 : -1;
         const candidates = [
-          [fridge.x - 0.95, fridge.z],
-          [fridge.x - 0.9, fridge.z - 0.3],
-          [fridge.x - 0.9, fridge.z + 0.3],
+          [fridge.x + sign*0.95, fridge.z],
+          [fridge.x + sign*0.9, fridge.z - 0.3],
+          [fridge.x + sign*0.9, fridge.z + 0.3],
         ];
         const safeCandidates = candidates.filter((p) => planner.pointSafe(p));
-        let interactionPosition = safeCandidates.sort((a, b) => distance([roomRecord.actual[0], roomRecord.actual[2]], a) - distance([roomRecord.actual[0], roomRecord.actual[2]], b))[0] ?? planner.findNearestSafePoint([fridge.x - 0.95, fridge.z], 0.9);
+        let interactionPosition = safeCandidates.sort((a, b) => distance([roomRecord.actual[0], roomRecord.actual[2]], a) - distance([roomRecord.actual[0], roomRecord.actual[2]], b))[0] ?? planner.findNearestSafePoint([fridge.x + sign*0.95, fridge.z], 0.9);
         if (interactionPosition && await walkTo(interactionPosition, "kitchen-fridge-interaction-approach", roomRecord)) {
           await lookAt([fridge.x, 1.15, fridge.z]);
           try {

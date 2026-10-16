@@ -75,6 +75,11 @@ const FLOOR_TYPES = new Set([
   "door_leaf",
   "door_panel",
   "gate_panel",
+  "lounge_chair",
+  "record_console",
+  "ventilated_rail",
+  "counter_appliance",
+  "folding_shelf",
 ]);
 const DYNAMIC_OPENING_TYPES = new Set(["door", "sliding_door", "gate"]);
 
