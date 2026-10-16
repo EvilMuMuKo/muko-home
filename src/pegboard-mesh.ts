@@ -20,9 +20,9 @@ export function buildPegboard(
       shape.holes.push(hole);
       holeCount++;
     }
-  const paint = new THREE.MeshStandardMaterial({
+  // Matte powder-coated sheet: diffuse response avoids studio-environment pin highlights.
+  const paint = new THREE.MeshLambertMaterial({
     color: o.room === "hall" ? "#78816b" : "#c3baaa",
-    roughness: 0.79,
   });
   const panel = new THREE.Mesh(
     new THREE.ExtrudeGeometry(shape, {

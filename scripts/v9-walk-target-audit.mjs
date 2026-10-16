@@ -66,6 +66,13 @@ try {
   });
   for (const pose of poses) {
     await page.evaluate((p) => window.homePresentation.startGhostWalk(p), pose);
+    // The active scene scheduler refreshes proximity targets on its next frame.
+    // Wait briefly for that real update rather than reading the previous state.
+    await page.waitForFunction(
+      (expectedId) => window.homePresentation.getGhostWalkState()?.nearestId === expectedId,
+      pose.expectedId,
+      { timeout: 2_000 },
+    ).catch(() => {});
     const actual = await page.evaluate(() => ({
       state: window.homePresentation.getGhostWalkState(),
       selectedId: document.querySelector(".ghost-interact")?.dataset.targetId ?? null,

@@ -68,6 +68,7 @@ try {
     { id: "desktop", viewport: { width: 1440, height: 900 }, dpr: 1, touch: false },
     { id: "mobile-landscape", viewport: { width: 844, height: 390 }, dpr: 2, touch: true },
   ]) {
+    let welcomeCapture = null;
     const context = await browser.newContext({
       viewport: profile.viewport,
       deviceScaleFactor: profile.dpr,
@@ -78,7 +79,33 @@ try {
     const page = await context.newPage();
     const pageErrors = [];
     page.on("pageerror", (error) => pageErrors.push(error.message));
-    await page.goto(baseURL, { waitUntil: "networkidle" });
+    if (!performanceOnly) await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.goto(baseURL, { waitUntil: performanceOnly ? "networkidle" : "domcontentloaded" });
+    if (!performanceOnly) {
+      // On this same scene page, wait for the transient greeting before the
+      // software-WebGL ready checks can consume its short display interval.
+      await page.locator(".home-welcome").waitFor({ state: "visible", timeout: 120_000 });
+      await page.waitForFunction(() => {
+        const text = document.querySelector(".home-welcome p");
+        return text && Number.parseFloat(getComputedStyle(text).opacity) > 0.9;
+      }, { timeout: 5_000 });
+      const welcomeScreenshot = resolve(outputDir, `${label}-${profile.id}-welcome-entry.png`);
+      const welcomeText = await page.locator(".home-welcome p").textContent();
+      const ribbonCount = await page.locator(".home-welcome i").count();
+      await page.screenshot({ path: welcomeScreenshot });
+      await page.waitForFunction(() => window.homePresentation?.getState().ready, { timeout: 120_000 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      const expectedRibbons = profile.touch ? 24 : 40;
+      if (ribbonCount !== expectedRibbons)
+        throw new Error(`Welcome ribbon count mismatch for ${profile.id}: expected ${expectedRibbons}, got ${ribbonCount}`);
+      welcomeCapture = {
+        screenshot: welcomeScreenshot,
+        text: welcomeText,
+        ribbonCount,
+        camera: await page.evaluate(() => window.homePresentation.getCamera()),
+        pageErrors,
+      };
+    }
     await page.waitForFunction(() => window.homePresentation?.getState().ready, {
       timeout: 120_000,
     });
@@ -125,27 +152,7 @@ try {
       { id: "living-lounge", light: "game" },
       { id: "cinema-seat", light: "cinema" },
     ];
-    const profileRun = { profile: profile.id, runtime, design, captures: [], extraCaptures: [], pageErrors };
-
-    if (!performanceOnly) {
-      const welcomePage = await context.newPage();
-      const welcomeErrors = [];
-      welcomePage.on("pageerror", (error) => welcomeErrors.push(error.message));
-      await welcomePage.emulateMedia({ reducedMotion: "no-preference" });
-      await welcomePage.goto(baseURL, { waitUntil: "networkidle" });
-      await welcomePage.waitForFunction(() => window.homePresentation?.getState().ready, { timeout: 120_000 });
-      await welcomePage.locator(".home-welcome").waitFor({ state: "visible", timeout: 5_000 });
-      const welcomeScreenshot = resolve(outputDir, `${label}-${profile.id}-welcome-entry.png`);
-      await welcomePage.screenshot({ path: welcomeScreenshot, animations: "disabled" });
-      profileRun.welcomeCapture = {
-        screenshot: welcomeScreenshot,
-        text: await welcomePage.locator(".home-welcome p").textContent(),
-        ribbonCount: await welcomePage.locator(".home-welcome i").count(),
-        camera: await welcomePage.evaluate(() => window.homePresentation.getCamera()),
-        pageErrors: welcomeErrors,
-      };
-      await welcomePage.close();
-    }
+    const profileRun = { profile: profile.id, runtime, design, welcomeCapture, captures: [], extraCaptures: [], pageErrors };
 
     for (const view of views) {
       const viewReady = await page.evaluate(({ id, light }) => {
@@ -226,7 +233,11 @@ try {
 
     const captureExtra = async (id, prepare) => {
       await prepare();
-      await page.waitForTimeout(320);
+      await page.waitForFunction(
+        () => !window.homePresentation.getPerformance().pending,
+        { timeout: 10_000 },
+      );
+      await page.waitForTimeout(120);
       const screenshot = resolve(outputDir, `${label}-${profile.id}-extra-${id}.png`);
       await page.screenshot({ path: screenshot, animations: "disabled" });
       const snapshot = await page.evaluate(() => ({
@@ -238,6 +249,7 @@ try {
             viewMode: state.viewMode,
             activePoint: state.activePoint,
             lightScene: state.lightScene,
+            fridgeAngle: state.fridgeAngle,
             diningProgress: state.diningProgress,
             hatchProgress: state.hatchProgress,
             dishwasherProgress: state.dishwasherProgress,
@@ -277,17 +289,20 @@ try {
     };
     const overview = async () => {
       const panel = page.locator("#control-panel");
+      await page.evaluate(() => window.homePresentation.setLightingScene("day-public"));
       if (await panel.evaluate((node) => node.hidden))
         await page.locator("#panel-toggle").click();
       await page.locator("#tab-space").click();
       await page.locator("#overview-view").click();
+      if (!(await panel.evaluate((node) => node.hidden)))
+        await page.locator("#panel-close").click();
       await page.waitForTimeout(250);
     };
 
     // Geometry/state coverage beyond the three timed performance views.
     if (!performanceOnly) {
       await captureExtra("overview", overview);
-      await captureExtra("ghost-walk-fridge", async () => {
+      await captureExtra("ghost-fridge-interaction-open", async () => {
         await page.evaluate(() => window.homePresentation.startGhostWalk({
           position: [3.25, 1.74, 4.05],
           target: [4.25, 1.15, 4.05],
@@ -296,56 +311,93 @@ try {
           () => window.homePresentation.getGhostWalkState().nearestId === "walk-fridge",
           { timeout: 5_000 },
         );
+        await page.locator(".ghost-interact").click();
+        await page.waitForFunction(
+          () => Math.abs(window.homePresentation.getState().fridgeAngle) > 0.5,
+          { timeout: 5_000 },
+        );
+      });
+      await captureExtra("ghost-walk-fridge-open-retreated", async () => {
+        const start = await page.evaluate(
+          () => window.homePresentation.getGhostWalkState().position,
+        );
+        await page.keyboard.down("s");
+        try {
+          await page.waitForFunction(
+            (origin) => {
+              const position = window.homePresentation.getGhostWalkState().position;
+              return Math.hypot(position[0] - origin[0], position[2] - origin[2]) >= 0.45;
+            },
+            start,
+            { timeout: 5_000 },
+          );
+        } finally {
+          await page.keyboard.up("s");
+        }
+      });
+      await page.evaluate(() => window.homePresentation.stopGhostWalk());
+      await page.waitForTimeout(100);
+      await captureExtra("ghost-fridge-open-view", async () => {
+        await page.evaluate(() => window.homePresentation.startGhostWalk({
+          position: [2.1, 1.74, 4.05],
+          target: [4.25, 1.0, 4.05],
+        }));
+        await page.waitForFunction(
+          () => window.homePresentation.getGhostWalkState().active,
+          { timeout: 5_000 },
+        );
       });
       await page.evaluate(() => window.homePresentation.stopGhostWalk());
       await page.waitForTimeout(100);
       await captureExtra("hatch-closed", async () => {
+        await setView("two-entries");
         await page.evaluate(() => window.homePresentation.setHatchOpen(false));
         await waitProgress("hatchProgress", 0);
-        await setView("hall-view");
       });
       await captureExtra("hatch-open", async () => {
+        await setView("two-entries");
         await page.evaluate(() => window.homePresentation.setHatchOpen(true));
         await waitProgress("hatchProgress", 1);
-        await setView("hall-view");
       });
       await captureExtra("dining-stowed", async () => {
+        await setView("salon-bar-seat");
         await page.evaluate(() => window.homePresentation.setDiningOpen(false));
         await waitProgress("diningProgress", 0);
-        await setView("bar-main");
       });
       await captureExtra("dining-deployed", async () => {
+        await setView("salon-bar-seat");
         await page.evaluate(() => window.homePresentation.setDiningOpen(true));
         await waitProgress("diningProgress", 1);
-        await setView("bar-main");
       });
       await captureExtra("tv-default-pose", async () => {
+        await setView("living-main");
         await page.evaluate(() => window.homePresentation.setMobileTVAlternative(false));
         await waitProgress("tvProgress", 0);
-        await setView("living-main");
       });
       await captureExtra("tv-alternate-pose", async () => {
+        await setView("living-main");
         await page.evaluate(() => window.homePresentation.setMobileTVAlternative(true));
         await waitProgress("tvProgress", 1);
-        await setView("living-main");
       });
       await captureExtra("sofa-joined", async () => {
+        await setView("living-main");
         await page.evaluate(() => window.homePresentation.setSofaSeparated(false));
         await waitProgress("sofaProgress", 0);
-        await setView("living-main");
       });
       await captureExtra("sofa-separated", async () => {
+        await setView("living-main");
         await page.evaluate(() => window.homePresentation.setSofaSeparated(true));
         await waitProgress("sofaProgress", 1);
-        await setView("living-main");
       });
       for (const view of [
         ["master-main", "master"],
+        ["master-work", "master-work-pegboard"],
         ["kitchen-main", "kitchen"],
         ["bath-main", "bath"],
         ["balcony-main", "balcony"],
-        ["guest-reading", "bay-guest"],
-        ["master-main", "bay-master"],
+        ["guest-bay", "bay-guest"],
+        ["master-bay", "bay-master"],
+        ["entry-storage", "entry-pegboard"],
       ]) {
         await captureExtra(view[1], () => setView(view[0]));
       }

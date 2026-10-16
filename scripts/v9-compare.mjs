@@ -22,7 +22,7 @@ const [v8, v9] = await Promise.all(
 const key = (profile, capture) => `${profile}/${capture.view}/${capture.lighting}`;
 const flatten = (report) => new Map(
   report.runs.flatMap((run) =>
-    run.captures.map((capture) => [key(run.profile, capture), capture.performance]),
+    run.captures.map((capture) => [key(run.profile, capture), capture]),
   ),
 );
 const before = flatten(v8), after = flatten(v9);
@@ -66,7 +66,7 @@ const comparisons = [...new Set([...before.keys(), ...after.keys()])].sort().map
   const base = before.get(capture), candidate = after.get(capture);
   const cameraMatch = cameraEquivalence(base, candidate);
   const rows = Object.fromEntries(metrics.map((metric) => {
-    const baseline = getMetric(base, metric), current = getMetric(candidate, metric);
+    const baseline = getMetric(base?.performance, metric), current = getMetric(candidate?.performance, metric);
     return [metric, {
       v8: baseline ?? null,
       v9: current ?? null,

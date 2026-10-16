@@ -105,12 +105,13 @@ test("visible lighting choices preserve the current hatch and dining furniture s
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() => {
     const a = window.homePresentation;
-    a.setHatchOpen(false);
     a.setDiningOpen(true);
   });
   await page.waitForFunction(
     () => window.homePresentation.getState().diningProgress > 0.99,
   );
+  await page.evaluate(() => window.homePresentation.setHatchOpen(false));
+  await page.waitForFunction(() => window.homePresentation.getState().hatchProgress < .01);
   for (const scene of ["aperitif", "cinema", "day-public"]) {
     await page.evaluate(
       (s) => window.homePresentation.setLightingScene(s),
