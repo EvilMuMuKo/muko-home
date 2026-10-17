@@ -144,3 +144,148 @@ test("pot and soil use separate flat matte materials without room fabric or wood
   expect(soilMat.color.getHexString()).toBe("463c30");
   for (const material of Object.values(m)) material.dispose();
 });
+
+function textureMaps(material: THREE.Material) {
+  return Object.entries(material).filter(
+    ([key, value]) =>
+      (key === "map" || key.endsWith("Map")) &&
+      !!value &&
+      (value as { isTexture?: boolean }).isTexture,
+  );
+}
+
+function strandCount(geometry: THREE.BufferGeometry) {
+  const index = geometry.index!.array;
+  const parent = new Uint32Array(geometry.getAttribute("position").count);
+  for (let i = 0; i < parent.length; i++) parent[i] = i;
+  const find = (vertex: number): number => {
+    let root = vertex;
+    while (parent[root] !== root) root = parent[root];
+    while (parent[vertex] !== root) {
+      const next = parent[vertex];
+      parent[vertex] = root;
+      vertex = next;
+    }
+    return root;
+  };
+  const unite = (a: number, b: number) => {
+    const ra = find(a);
+    const rb = find(b);
+    if (ra !== rb) parent[rb] = ra;
+  };
+  for (let i = 0; i < index.length; i += 3) {
+    unite(index[i], index[i + 1]);
+    unite(index[i], index[i + 2]);
+  }
+  const roots = new Set<number>();
+  for (let i = 0; i < index.length; i++) roots.add(find(index[i]));
+  return roots.size;
+}
+
+test("foliage clears inherited maps when the mesh has no UV and keeps one tapered strand per leaf", () => {
+  const m = materials();
+  const sage = m.sage as THREE.MeshStandardMaterial;
+  const inherited = {
+    map: new THREE.Texture(),
+    normalMap: new THREE.Texture(),
+    bumpMap: new THREE.Texture(),
+    roughnessMap: new THREE.Texture(),
+    metalnessMap: new THREE.Texture(),
+    aoMap: new THREE.Texture(),
+    emissiveMap: new THREE.Texture(),
+    alphaMap: new THREE.Texture(),
+    lightMap: new THREE.Texture(),
+    displacementMap: new THREE.Texture(),
+  };
+  Object.assign(sage, inherited);
+  expect(textureMaps(sage).map(([key]) => key).sort()).toEqual(
+    Object.keys(inherited).sort(),
+  );
+  const group = new THREE.Group();
+  buildPlant(group, envelopes[0], m);
+  const leaves = group.children.find(
+    (node) => node.userData.plantPart === "leaves",
+  ) as THREE.Mesh;
+  const stems = group.children.find(
+    (node) => node.userData.plantPart === "stems",
+  ) as THREE.Mesh;
+  const leafletCount = leaves.geometry.userData.leafletCount as number;
+  expect(leafletCount).toBe(10);
+  expect(strandCount(stems.geometry)).toBe(1 + leafletCount);
+  expect(stems.geometry.getAttribute("position").count).toBeLessThan(400);
+  expect(leaves.geometry.getAttribute("position").count).toBeLessThan(500);
+
+  for (const mesh of [leaves, stems]) {
+    expect(mesh.geometry.getAttribute("uv")).toBeUndefined();
+    const material = mesh.material as THREE.MeshStandardMaterial;
+    expect(material).not.toBe(sage);
+    expect(material.transparent).toBe(false);
+    expect(material.opacity).toBe(1);
+    for (const key of Object.keys(inherited)) {
+      expect(material[key as keyof THREE.MeshStandardMaterial], key).toBeNull();
+    }
+    expect(textureMaps(material)).toEqual([]);
+  }
+  for (const [key, texture] of Object.entries(inherited)) {
+    expect(sage[key as keyof THREE.MeshStandardMaterial]).toBe(texture);
+    texture.dispose();
+  }
+
+  const leafMaterial = leaves.material as THREE.MeshStandardMaterial;
+  expect(leafMaterial.vertexColors).toBe(true);
+  expect(leafMaterial.color.getHexString()).toBe("ffffff");
+  const positions = leaves.geometry.getAttribute("position");
+  const rows = positions.count / leafletCount / 3;
+  expect(Number.isInteger(rows)).toBe(true);
+  let maxWidth = 0;
+  const penultimate: number[] = [];
+  for (let leaflet = 0; leaflet < leafletCount; leaflet++) {
+    const rowStart = leaflet * rows * 3;
+    const baseA = new THREE.Vector3().fromBufferAttribute(positions, rowStart);
+    const baseB = new THREE.Vector3().fromBufferAttribute(
+      positions,
+      rowStart + 2,
+    );
+    const baseWidth = baseA.distanceTo(baseB);
+    expect(baseWidth).toBeGreaterThan(0.0004);
+    const tip = rowStart + (rows - 1) * 3;
+    const tipA = new THREE.Vector3().fromBufferAttribute(positions, tip);
+    const tipB = new THREE.Vector3().fromBufferAttribute(positions, tip + 1);
+    const tipC = new THREE.Vector3().fromBufferAttribute(positions, tip + 2);
+    expect(tipA.distanceTo(tipB)).toBeLessThan(1e-6);
+    expect(tipA.distanceTo(tipC)).toBeLessThan(1e-6);
+    const beforeTip = tip - 3;
+    penultimate.push(
+      new THREE.Vector3()
+        .fromBufferAttribute(positions, beforeTip)
+        .distanceTo(
+          new THREE.Vector3().fromBufferAttribute(positions, beforeTip + 2),
+        ),
+    );
+    for (let row = 0; row < rows; row++) {
+      const left = new THREE.Vector3().fromBufferAttribute(
+        positions,
+        rowStart + row * 3,
+      );
+      const right = new THREE.Vector3().fromBufferAttribute(
+        positions,
+        rowStart + row * 3 + 2,
+      );
+      maxWidth = Math.max(maxWidth, left.distanceTo(right));
+    }
+    const stem = stems.geometry.getAttribute("position");
+    let nearest = Infinity;
+    const collar = baseA.clone().add(baseB).multiplyScalar(0.5);
+    for (let vertex = 0; vertex < stem.count; vertex++) {
+      nearest = Math.min(
+        nearest,
+        collar.distanceTo(
+          new THREE.Vector3().fromBufferAttribute(stem, vertex),
+        ),
+      );
+    }
+    expect(nearest).toBeLessThan(0.012);
+  }
+  expect(Math.max(...penultimate)).toBeLessThan(maxWidth * 0.45);
+  for (const material of Object.values(m)) material.dispose();
+});

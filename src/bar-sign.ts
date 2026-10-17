@@ -15,8 +15,7 @@ export function buildBarSign(g:THREE.Group,o:any,m:Record<string,THREE.Material>
     for(let y=0;y<c.height;y+=3) {ctx.fillStyle=`rgba(88,56,34,${.015+.012*Math.sin(y*.17)})`;ctx.fillRect(0,y,c.width,1);}
     ctx.strokeStyle='#876745';ctx.lineWidth=2;ctx.strokeRect(28,28,c.width-56,c.height-56);
     ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#322a24';
-    ctx.font='92px Georgia, serif';ctx.fillText('MuKo’s Bar',c.width/2,c.height*.48);
-    ctx.font='18px Georgia, serif';ctx.fillStyle='#65503b';ctx.fillText('COFFEE  ·  CRAFT  ·  TWO OF US',c.width/2,c.height*.76);
+    ctx.font='156px Georgia, serif';ctx.fillText('MuKo’s Bar',c.width/2,c.height*.52);
     const texture=new THREE.CanvasTexture(c);texture.colorSpace=THREE.SRGBColorSpace;
     texture.anisotropy=4;
     lettering=new THREE.MeshStandardMaterial({map:texture,roughness:.88,metalness:0,emissive:'#d6c4a3',emissiveMap:texture,emissiveIntensity:.08});
@@ -31,6 +30,7 @@ export function buildBarSign(g:THREE.Group,o:any,m:Record<string,THREE.Material>
     const rod=new THREE.Mesh(new THREE.CylinderGeometry(.005,.005,rodH,8),m.bronze||m.steel);
     rod.position.set(x,o.h+rodH/2,0);g.add(rod);
   }
-  g.userData.signAudit={text:'MuKo’s Bar',lowerEdgeM:o.y,glazingClearanceM:.145,concept:true};
+  g.userData.signAudit={text:'MuKo’s Bar',lowerEdgeM:o.y,primaryAudience:o.presentation?.primaryAudience,
+    lettering:'single large line; warm shielded wash',concept:true};
   return true;
 }

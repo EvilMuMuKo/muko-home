@@ -33,7 +33,7 @@ import {
 } from "./room-finish";
 import { buildInteriorDetails, mountMomentControls } from "./interior-detail";
 import { mountStoragePanel } from "./storage-panel";
-import { refineMaterials, whenMaterialTexturesReady, materialDetailState, auditMaterialSet } from "./material-detail";
+import { refineMaterials, whenMaterialTexturesReady, materialDetailState, auditMaterialSet, auditSceneSurfaces } from "./material-detail";
 import { storageCapacity } from "./storage-design";
 import { buildStorageUnit } from "./storage-mesh";
 import { metricUV } from "./texture-mapping";
@@ -3289,6 +3289,7 @@ function cw() {
     e.shadow.camera.layers.enable(1),
     (e.shadow.bias = -3e-4),
     (e.shadow.normalBias = 0.014),
+    (e.shadow.radius = quality.sunShadowRadius),
     Ct.add(e));
   e.target.position.set(6, 0.8, 4.5);
   Ct.add(e.target);
@@ -4637,6 +4638,8 @@ window.homePresentation = {
   setWalkDoorOpen,
   getWalkDoorStates: () => Object.fromEntries(ut.openings.filter((o) => o.type === "door").map((o) => [o.id, Ct.getObjectByName("opening:" + o.id)?.rotation.y])),
   getModelAudit: () => auditSceneModel(Ct, ut),
+  getSurfaceAudit: () => auditSceneSurfaces(Ct),
+  getR4Revision: () => structuredClone(ut.homeDesign.r4Revision),
   getModel: () => structuredClone(ut),
   getHomeDesign: () => ({
     ...ut.homeDesign,

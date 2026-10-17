@@ -18,6 +18,7 @@ export const quality = {
   shadowLights: mobile ? 1 : 2,
   shadowSize: mobile ? 512 : 1024,
   sunShadowSize: mobile ? 1024 : 2048,
+  sunShadowRadius: mobile ? 1.25 : 2,
   maxDpr: Math.min(devicePixelRatio, mobile ? (economical ? 1.25 : 1.5) : 2, cap),
   // Preserve texture and silhouette clarity while walking. Interaction is not
   // a separate resolution tier; effects may be shed without resizing the frame.

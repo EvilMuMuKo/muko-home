@@ -79,6 +79,12 @@ export function buildLifeFurniture(g:THREE.Group,o:any,m:M,motion:LifeMotion):bo
     for(let i=0;i<10;i++)box(g,m,.018,.18,.27,-.50+i*.026,.55,0,i%3?"salonPaper":"charcoal",.001);
     box(g,m,.43,.05,.30,-.15,h+.025,0,"salonTimber",.009);
     const platter=new THREE.Mesh(new THREE.CylinderGeometry(.115,.115,.009,48),m.charcoal);platter.position.set(-.19,h+.056,0);g.add(platter);
+    // Recessed record label, spindle and isolated feet on the existing turntable.
+    const label=new THREE.Mesh(new THREE.CircleGeometry(.027,20),m.salonPaper);
+    label.rotation.x=-Math.PI/2;label.position.set(-.19,h+.061,0);g.add(label);
+    bar(g,m,[-.19,h+.059,0],[-.19,h+.067,0],.0025,"steel");
+    for(const x of [-.33,.03])for(const z of [-.12,.12])box(g,m,.024,.008,.024,x,h+.004,z,"charcoal",.002);
+    box(g,m,.026,.012,.013,-.035,h+.065,-.07,"charcoal",.002);
     bar(g,m,[.015,h+.08,.1],[.04,h+.08,-.09],.004,"steel");bar(g,m,[.04,h+.08,-.09],[-.035,h+.065,-.07],.004,"steel");
     // Compact audio unit lives in the ventilated upper cubby, below the window sill.
     box(g,m,.20,.18,.22,.30,.55,0,"charcoal",.01);circle(g,m,.045,.30,.54,-d/2-.002,"linen");

@@ -104,6 +104,23 @@ export function auditMaterialSet(materials: Record<string, THREE.Material>) {
     };
   });
 }
+/** On-demand invariant check; never runs inside the animation loop. */
+export function auditSceneSurfaces(scene: THREE.Object3D) {
+  const missingUV: {node: string; material: string}[] = [];
+  let meshes = 0;
+  scene.traverse(node => {
+    if (!(node instanceof THREE.Mesh)) return;
+    meshes++;
+    const materials = Array.isArray(node.material) ? node.material : [node.material];
+    for (const material of materials) {
+      const m = material as THREE.MeshStandardMaterial;
+      if ([m.map,m.normalMap,m.roughnessMap,m.metalnessMap,m.aoMap,m.emissiveMap,m.bumpMap]
+        .some(Boolean) && !node.geometry.hasAttribute('uv'))
+        missingUV.push({node:node.name || node.parent?.name || 'unnamed',material:m.name || m.type});
+    }
+  });
+  return {meshes,missingUV};
+}
 export const materialDetailState = () => ({
   ...textureState,
   failed: [...textureState.failed],
@@ -529,11 +546,17 @@ export async function refineMaterials(
       "bookCream",
     ]) {
       const m = materials[name] as THREE.MeshStandardMaterial;
-      const family = name === "cabinetInterior" ? maps[0] : maps[2];
-      m.normalMap = family.normalMap;
-      m.normalScale.setScalar(0.06);
-      m.roughnessMap = family.roughnessMap;
-      m.roughness = 1;
+      // Printed book jackets are coated paper, not scaled-up linen weave.
+      if (name === "cabinetInterior") {
+        m.normalMap = maps[0].normalMap;
+        m.normalScale.setScalar(0.06);
+        m.roughnessMap = maps[0].roughnessMap;
+        m.roughness = 1;
+      } else {
+        m.normalMap = null;
+        m.roughnessMap = micro;
+        m.roughness = 0.9;
+      }
     }
     for (const [name, material] of Object.entries(materials)) {
       const priorRole = material.userData.materialAudit?.role as

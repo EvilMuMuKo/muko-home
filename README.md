@@ -16,9 +16,9 @@ npm test
 npm run benchmark
 ```
 
-当前版本为 R3 / 13.0.0，见 [R3设计与边界](docs/r3-design.md) 和 [本轮验证](docs/r3/validation.json)。R2及更早记录是历史快照。
+当前版本为 R4 / 14.0.0，见 [R4设计与边界](docs/r4-design.md) 和 [本轮验证](docs/r4/validation.json)。R3空间关系继承，历史测试仅适用于对应模型。
 
-`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/r2-design.ts` 和 `src/r3-design.ts` 在历史覆盖层上生成现行R3方案，`src/final-design.ts` 在构建时合成唯一 `src/generated-layout.json`；`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
+`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/r2-design.ts` 、`src/r3-design.ts` 和 `src/r4-design.ts` 在历史覆盖层上生成现行R4方案，`src/final-design.ts` 在构建时合成唯一 `src/generated-layout.json`；`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
 
 `npm run build` 先导出最终模型、生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
 
