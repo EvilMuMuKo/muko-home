@@ -93,6 +93,7 @@
   right: max(18px, env(safe-area-inset-right));
 }
 .ghost-joystick--floating {
+  pointer-events: none; /* Canvas owns captures; overlapping stick graphics must not steal another finger. */
   transform: translate(-50%, -50%);
   z-index: 1;
 }

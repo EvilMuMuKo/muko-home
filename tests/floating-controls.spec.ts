@@ -223,3 +223,16 @@ declare global {
     };
   }
 }
+
+
+test("a floating stick near the center cannot steal the second finger from the other half", async ({page}) => {
+  const cdp=await page.context().newCDPSession(page);
+  const {width,height}=page.viewportSize()!;
+  const left={x:width/2-10,y:height*.55,id:81}, right={x:width/2+10,y:height*.55,id:82};
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[left]});
+  await expect(page.locator(".ghost-joystick--floating:not(.ghost-look-joystick)")).toBeVisible();
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[left,right]});
+  await expect(page.locator(".ghost-look-joystick.ghost-joystick--floating")).toBeVisible();
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
+  await expect(page.locator(".ghost-joystick--floating")).toHaveCount(0);
+});

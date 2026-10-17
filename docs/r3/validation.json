@@ -2,7 +2,7 @@
   "model": "13.0.0",
   "capturedAt": "2026-10-17T10:33:47.086Z",
   "scope": "unmeasured unified concept geometry; browser functionality and simulated performance only",
-  "status": "PASS_local_scoped_checks_CI_pending",
+  "status": "PASS_local_scoped_checks",
   "checks": {
     "build": "PASS",
     "typescript": "PASS",
@@ -154,7 +154,22 @@
       ]
     },
     "ci": {
-      "status": "NOT RUN_pending_push"
+      "status": "NOT RUN",
+      "scope": "snapshot captured before final CI; live status is recorded by pull request checks",
+      "url": "https://github.com/EvilMuMuKo/muko-home/pull/14/checks"
+    },
+    "touchOverlap": {
+      "status": "PASS",
+      "scope": "sequential near-midline fingers cannot be stolen by overlapping stick graphics"
+    },
+    "finalTouchAndWalkRerun": {
+      "status": "PASS",
+      "startTime": "2026-10-17T10:36:34.866Z",
+      "duration": 16001.509,
+      "expected": 10,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
     }
   },
   "rejectedCandidates": [
