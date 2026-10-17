@@ -152,6 +152,20 @@ export function buildHomeFurniture(
   m: Materials,
   motion: HomeMotion,
 ) {
+  if (o.type === "counter_stool") {
+    group.userData.animated = true;
+    const seat = o.seatHeight ?? 0.65;
+    box(group,m,o.w-0.02,0.055,o.d-0.02,0,seat-0.0275,0,"oliveFabric",0.025);
+    for (const x of [-0.17,0.17]) for (const z of [-0.17,0.17])
+      rod(group,m,[x*1.12,0.02,z*1.12],[x,seat-0.055,z],0.014,"salonTimber");
+    for (const x of [-0.17,0.17])
+      rod(group,m,[x,0.23,-0.17],[x,0.23,0.17],0.01,"bronze");
+    rod(group,m,[-0.17,0.23,-0.17],[0.17,0.23,-0.17],0.012,"bronze");
+    for (const x of [-0.17,0.17])
+      rod(group,m,[x,seat-0.04,0.17],[x,0.88,0.17],0.013,"salonTimber");
+    box(group,m,o.w-0.04,0.16,0.045,0,0.82,0.17,"oliveFabric",0.018);
+    return true;
+  }
   if (o.type === "pegboard") return buildPegboard(group, o, m);
   if (o.type === "ps5" && o.accessoryRole === "mobile_console_only") {
     for (const x of [-0.14, 0.14])
@@ -729,6 +743,7 @@ export function buildHomeArchitecture(
     box(rack, m, 0.7, 0.012, 0.009, 2.31, 2.422, z, "bronze", 0.002);
 
   const hatchConfig = model.homeDesign?.hatch || {};
+  if (hatchConfig.enabled !== false) {
   const hx =
       hatchConfig.hinge?.x ??
       model.objects.find((o: any) => o.id === "s02-entry-return")?.x ??
@@ -877,6 +892,8 @@ export function buildHomeArchitecture(
     stool,
     stop,
   };
+
+  }
 
   // One continuous, restrained cinema ceiling datum, not disconnected decorative vaults.
   const cinema = group("home:cinema-composition", ["guest"]);

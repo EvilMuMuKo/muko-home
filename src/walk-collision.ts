@@ -42,6 +42,7 @@ const BODY_HEIGHT = 1.88;
 const MAX_STEP = 0.055;
 const FLOOR_TYPES = new Set([
   "column",
+  "counter_stool",
   "cabinet_frame",
   "wall_storage",
   "fridge",

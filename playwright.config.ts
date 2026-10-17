@@ -1,6 +1,7 @@
 import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
+  testIgnore: / 2\./,
   workers: 1,
   timeout: 120000,
   use: {

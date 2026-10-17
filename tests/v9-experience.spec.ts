@@ -8,7 +8,7 @@ async function ready(page) {
   );
 }
 
-test("V10 household controls expose version 10 and complete reversible travel", async ({
+test("V11 household controls expose version 11 and complete reversible travel", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -24,10 +24,10 @@ test("V10 household controls expose version 10 and complete reversible travel", 
       performance: api.getPerformance(),
     };
   });
-  expect(initial.state.version).toBe("10.0.0");
+  expect(initial.state.version).toBe("11.0.0");
   expect(initial.design.version).toBe(1);
   expect(initial.design.selectedLivingLayout).toBe("mobile-tv-flexible");
-  expect(initial.model.version).toBe("10.0.0");
+  expect(initial.model.version).toBe("11.0.0");
   expect(initial.model.homeDesign.version).toBe(initial.design.version);
   expect(initial.state.renderer).toBe("WebGL2");
   expect(initial.performance.drawCalls).toBeGreaterThan(0);
@@ -36,7 +36,8 @@ test("V10 household controls expose version 10 and complete reversible travel", 
   expect(initial.design.dining.defaultState).toBe("stowed");
   expect(initial.state.diningProgress).toBe(0);
   // The counter starts concealed in the cabinet, leaving the passage open.
-  expect(initial.state.hatchProgress).toBe(1);
+  expect(initial.state.hatchProgress).toBe(0);
+  expect(initial.state.hatchAvailable).toBe(false);
   expect(initial.state.dishwasherProgress).toBe(0);
   expect(
     initial.model.objects.some(
@@ -59,7 +60,7 @@ test("V10 household controls expose version 10 and complete reversible travel", 
     h: 0.74,
     rotation: 0,
   });
-  expect(initial.design.dining.role).toBe("living_normal_height_daily_dining");
+  expect(initial.design.dining.role).toBe("occasional_backup_table");
   expect(initial.design.dining.stateEnvelopes.deployed).toMatchObject({
     shape: "rectangle",
     w: 1.1,
@@ -116,8 +117,8 @@ test("V10 household controls expose version 10 and complete reversible travel", 
   const kitchen = initial.model.rooms.find((room) => room.id === "kitchen");
   expect(fridge).toMatchObject({
     room: "hall",
-    x: 4.045,
-    z: 4.05,
+    x: initial.design.spatialRevision.selectedKitchenSideX + 0.5,
+    z: 3.7,
     w: 0.91,
     d: 0.75,
     rotation: 90,
@@ -199,37 +200,16 @@ test("V10 household controls expose version 10 and complete reversible travel", 
   expect(foldedTable.max[2] - foldedTable.min[2]).toBeLessThanOrEqual(0.2);
 
   const transitions = [
-    { name: "hatch", setter: "setHatchOpen", state: "hatchProgress" },
-    {
-      name: "dishwasher",
-      setter: "setDishwasherOpen",
-      state: "dishwasherProgress",
-    },
+    {name:"dishwasher",setter:"setDishwasherOpen",state:"dishwasherProgress"},
   ] as const;
   for (const transition of transitions) {
-    if (transition.name === "hatch") {
-      await page.evaluate(() => window.homePresentation.setHatchOpen(false));
-      await page.waitForFunction(
-        () => window.homePresentation.getState().hatchProgress <= 0.001,
-      );
-    }
     await page.evaluate((setter) => window.homePresentation[setter](true), transition.setter);
     await page.waitForFunction(
       (key) => window.homePresentation.getState()[key] >= 0.999,
       transition.state,
     );
-    if (transition.name === "hatch") {
-      const counter = await page.evaluate(() => ({
-        angle: window.homePresentation.getState().gateAngle,
-        design: window.homePresentation.getHomeDesign().hatch,
-        bounds: window.homePresentation.getHomeDesign().motionBounds.find(item => item.id === "opening:hall-gate"),
-      }));
-      expect(counter.angle).toBe(0); // No horizontal or upward gate remains.
-      expect(counter.design.kind).toBe("two_leaf_drawer_pullout");
-      expect(counter.design.depthM).toBeCloseTo(0.405, 3);
-      expect(counter.bounds.min[2]).toBeGreaterThanOrEqual(counter.design.drawerFrontZ - 0.04);
-      expect(counter.bounds.max[2]).toBeLessThanOrEqual(counter.design.drawerFrontZ + counter.design.cabinetClearDepthM + 0.02);
-    } else {
+    {
+
       const open = await page.evaluate(
         () => window.homePresentation.getHomeDesign().motionBounds.find((item) => item.id === "kitchen-dishwasher"),
       );
@@ -312,7 +292,7 @@ test("V10 operating states remain renderable and capture clean screenshots", asy
       performance: window.homePresentation.getPerformance(),
       camera: window.homePresentation.getCamera(),
     }));
-    expect(report.state.version).toBe("10.0.0");
+    expect(report.state.version).toBe("11.0.0");
     expect(report.performance.drawCalls).toBeGreaterThan(0);
     expect(report.performance.triangles).toBeGreaterThan(0);
     expect(report.camera.verticalFov).toBeGreaterThan(0);

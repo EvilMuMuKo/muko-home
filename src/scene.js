@@ -10,6 +10,7 @@ import { buildPlant } from "./plant-mesh";
 import { daylightStudy, sunDirection } from "./daylight";
 import { createHomeDesign } from "./home-design";
 import { createLifeDesign } from "./life-design";
+import { createSpaceRevision } from "./space-revision";
 import { createLifeMotion, buildLifeFurniture, applyLifeMotion } from "./life-mesh";
 import { createExteriorWorld } from "./exterior-world";
 import { createRoomRadiance } from "./room-radiance";
@@ -71,9 +72,9 @@ import {
   Color as ve,
 } from "three";
 import baseModel from "./model.js";
-const pt = createLifeDesign(createHomeDesign(
+const pt = createSpaceRevision(createLifeDesign(createHomeDesign(
   createSalonDesign(createAtmosphereDesign(createStorageDesign(baseModel))),
-));
+)));
 const homeMotion = createHomeMotion();
 const lifeMotion = createLifeMotion();
 const currentStorage = () =>
@@ -2528,6 +2529,7 @@ var QM = {},
     storage: 0,
     keg: 0,
     dining: 0,
+    counterSeats: 0,
     diningRetreat: 0,
     dishwasher: 0,
     laundry: 0,
@@ -3455,6 +3457,10 @@ function ns(i, e = 600) {
     Jt?.request({ shadow: !0 }));
 }
 function bx() {
+  for (const seat of ut.homeDesign.entryIslandDining?.seats || []) {
+    const root = Ct.getObjectByName(seat.id);
+    if (root) { root.position.x = seat.center[0] - 0.4 * an.counterSeats; root.userData.animated = true; }
+  }
   for (let i of St.storage) {
     const progress = localStorageProgress.get(i.unitId) ?? an.storage;
     if (i.axis === "x") i.pivot.rotation.x = i.openAngle * progress;
@@ -3513,7 +3519,7 @@ function zc() {
     ["fridge-toggle", "fridge", "\u51B0\u7BB1\u95E8"],
     ["drawer-toggle", "drawer", "\u62BD\u5C49"],
     ["chairs-toggle", "chairs", "工位退椅"],
-    ["dining-toggle", "dining", "餐桌展开"],
+    ["dining-toggle", "dining", "备用餐桌"],
     ["dishwasher-toggle", "dishwasher", "洗碗机"],
     ["laundry-toggle", "laundry", "洗烘舱门"],
     ["sofa-toggle", "sofa", "沙发"],
@@ -3832,6 +3838,7 @@ function walkTargets() {
     [0, 1],
   );
   toggle("walk-laundry", "开合洗烘机门", "washer", 0.65, "laundry", [0, 1]);
+  toggle("walk-counter-seats", "拉出 / 收回餐凳", "entry-counter-stool-0", 0.65, "counterSeats");
   toggle("walk-keg", "开合精酿柜", "kegerator", 0.65, "keg", [0, -1]);
   toggle("walk-sofa", "拼合 / 拆分沙发", "living-sofa", 0.65, "sofa");
   const table = point("dining-table", 0.85);
@@ -3840,7 +3847,7 @@ function walkTargets() {
       setLivingMode(Dn.dining ? "relax" : "dining"),
     );
   const hatch = ut.homeDesign.hatch;
-  add(
+  if (hatch.enabled !== false) add(
     "walk-hatch",
     "拉出 / 收回台面",
     [hatch.centerX ?? ut.objects.find((o) => o.id === "s02-entry-return").x, hatch.worktopTopM ?? 0.88, hatch.drawerFrontZ ?? hatch.hinge?.z ?? 7.425],
@@ -4307,7 +4314,7 @@ async function bw() {
       (staticOcclusion = bakeStaticFloorOcclusion(Ct,ut,{size:quality.mobile?256:512})),
       homeMotion.sofaModules.forEach(root => attachDynamicContact(root, {w:0.98,d:0.86,y:0.003,strength:0.16})),
       attachDynamicContact(Ct.getObjectByName("living-tv"), {w:0.7,d:0.5,y:0.003,strength:0.12}),
-      St.gate.push({
+      homeMotion.hatch && St.gate.push({
         group: homeMotion.hatch.group,
         axis: "x",
         base: 0,
@@ -4629,11 +4636,14 @@ window.homePresentation = {
   setDiningChairRetreat: (pulled) =>
     ns({ dining: 1, diningRetreat: pulled ? 1 : 0, gate: 1, activity:0, sofa:0 }),
   setHatchOpen: (open) => {
-    ns({ gate: open ? 1 : 0 });
+    if (ut.homeDesign.hatch.enabled !== false) ns({ gate: open ? 1 : 0 });
+    return { available: ut.homeDesign.hatch.enabled !== false };
   },
+  getSpatialRevision: () => ut.homeDesign.spatialRevision,
   setSofaSeparated: (separated) => ns({ sofa: separated ? 1 : 0, activity:0, dining:0 }),
   setLivingMode,
   getLivingMode: () => Dn.activity ? "activity" : Dn.dining ? "dining" : "relax",
+  setCounterSeatsPulled: (pulled) => ns({counterSeats:pulled?1:0}),
   setDrinksFridgeOpen: open => ns({miniFridge:open?1:0}),
   setShowerOpen: open => ns({shower:open?1:0}),
   setFoldingShelfOpen: open => ns({foldingShelf:open?1:0}),
@@ -4745,7 +4755,9 @@ window.homePresentation = {
     bedProgress: yu[0]?.progress || 0,
     entryAngle: St.entry[0]?.group.rotation.y || 0,
     gateAngle: homeMotion.hatch?.group.rotation.x || 0,
-    hatchProgress: an.gate,
+    hatchProgress: ut.homeDesign.hatch.enabled === false ? 0 : an.gate,
+    hatchAvailable: ut.homeDesign.hatch.enabled !== false,
+    counterSeatsProgress: an.counterSeats,
     diningProgress: an.dining,
     diningRetreatProgress: an.diningRetreat,
     dishwasherProgress: an.dishwasher,
