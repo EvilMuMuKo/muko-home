@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#e6e2d8" />
+    <meta
+      name="description"
+      content="YAN’s Home · 两人住宅空间初稿，三维漫游、咖啡餐厅与单机位游戏室。"
+    />
+    <title>YAN’s Home — 空间初稿</title>
+    <link rel="icon" href="./favicon.svg" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <canvas id="scene" aria-label="YAN’s Home 三维住宅"></canvas>
+    <div id="loading">
+      <div class="wordmark">YAN’s Home</div>
+      <p>正在打开家里的空间…</p>
+      <div class="loading-line"></div>
+    </div>
+    <div id="fallback" hidden>
+      <div class="wordmark">YAN’s Home</div>
+      <p>当前浏览器未能启动三维画面。</p>
+      <a href="?renderer=webgl">尝试兼容模式</a>
+      <p>或使用新版 Safari / Chrome 打开。</p>
+    </div>
+    <header id="topbar">
+      <button id="overview" title="全屋概览" aria-label="全屋概览">
+        ⌂ <span>全屋</span>
+      </button>
+      <div id="location">入户玄关</div>
+      <button id="panel-toggle" aria-label="打开空间控制" aria-expanded="false">
+        ☷
+      </button>
+    </header>
+    <aside id="panel" hidden>
+      <div class="panel-title">
+        <span>空间与生活</span
+        ><button id="panel-close" aria-label="关闭面板">×</button>
+      </div>
+      <nav id="tabs">
+        <button class="selected" data-tab="rooms">空间</button
+        ><button data-tab="light">日夜</button
+        ><button data-tab="actions">家具</button>
+      </nav>
+      <section id="tab-rooms">
+        <p class="eyebrow">EXPLORE THE HOME</p>
+        <div id="room-list"></div>
+        <button id="walk-start" class="wide">从这里开始漫游 ↗</button
+        ><button id="export" class="wide subtle">保存当前画面</button>
+      </section>
+      <section id="tab-light" hidden>
+        <p class="eyebrow">LIGHT & ATMOSPHERE</p>
+        <button class="wide light-choice selected" data-light="day">
+          日间 · 自然采光</button
+        ><button class="wide light-choice" data-light="evening">
+          夜间 · 温暖灯光</button
+        ><button class="wide light-choice" data-light="quiet">
+          静夜 · 低照度
+        </button>
+      </section>
+      <section id="tab-actions" hidden>
+        <p class="eyebrow">DETAILS IN USE</p>
+        <div id="action-list"></div>
+      </section>
+    </aside>
+    <footer id="caption">
+      <div class="wordmark">YAN’s Home</div>
+      <div class="subline">空间设计初稿 <span>01</span></div>
+    </footer>
+    <div id="walk-hint">
+      左半屏移动 · 右半屏转向<span>WASD 移动 / 拖动转向</span>
+    </div>
+    <button id="interaction" hidden></button
+    ><button id="leave-walk" title="退出漫游">退出漫游</button>
+    <div id="stick-move" class="stick" aria-hidden="true"><span></span></div>
+    <div id="stick-look" class="stick" aria-hidden="true"><span></span></div>
+    <div id="toast" role="status"></div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

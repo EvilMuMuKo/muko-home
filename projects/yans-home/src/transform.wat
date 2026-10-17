@@ -1,0 +1,18 @@
+(module
+  (memory (export "memory") 1)
+  (func (export "transform") (param $count i32)
+    (local $p i32) (local $end i32) (local $x f64) (local $y f64) (local $z f64) (local $w f64)
+    (local.set $p (i32.const 128))
+    (local.set $end (i32.add (i32.const 128) (i32.mul (local.get $count) (i32.const 12))))
+    (block $done (loop $next
+      (br_if $done (i32.ge_u (local.get $p) (local.get $end)))
+      (local.set $x (f64.promote_f32 (f32.load offset=0 (local.get $p))))
+      (local.set $y (f64.promote_f32 (f32.load offset=4 (local.get $p))))
+      (local.set $z (f64.promote_f32 (f32.load offset=8 (local.get $p))))
+      (local.set $w (f64.div (f64.const 1) (f64.add (f64.add (f64.add (f64.mul (f64.load offset=24 (i32.const 0)) (local.get $x)) (f64.mul (f64.load offset=56 (i32.const 0)) (local.get $y))) (f64.mul (f64.load offset=88 (i32.const 0)) (local.get $z))) (f64.load offset=120 (i32.const 0)))))
+      (f32.store offset=0 (local.get $p) (f32.demote_f64 (f64.mul (f64.add (f64.add (f64.add (f64.mul (f64.load offset=0 (i32.const 0)) (local.get $x)) (f64.mul (f64.load offset=32 (i32.const 0)) (local.get $y))) (f64.mul (f64.load offset=64 (i32.const 0)) (local.get $z))) (f64.load offset=96 (i32.const 0))) (local.get $w))))
+      (f32.store offset=4 (local.get $p) (f32.demote_f64 (f64.mul (f64.add (f64.add (f64.add (f64.mul (f64.load offset=8 (i32.const 0)) (local.get $x)) (f64.mul (f64.load offset=40 (i32.const 0)) (local.get $y))) (f64.mul (f64.load offset=72 (i32.const 0)) (local.get $z))) (f64.load offset=104 (i32.const 0))) (local.get $w))))
+      (f32.store offset=8 (local.get $p) (f32.demote_f64 (f64.mul (f64.add (f64.add (f64.add (f64.mul (f64.load offset=16 (i32.const 0)) (local.get $x)) (f64.mul (f64.load offset=48 (i32.const 0)) (local.get $y))) (f64.mul (f64.load offset=80 (i32.const 0)) (local.get $z))) (f64.load offset=112 (i32.const 0))) (local.get $w))))
+      (local.set $p (i32.add (local.get $p) (i32.const 12)))
+      (br $next))))
+)

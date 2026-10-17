@@ -1,0 +1,256 @@
+{
+  "route": "/yans-home/",
+  "errors": [],
+  "title": "YAN’s Home — 空间初稿",
+  "state": {
+    "ready": true,
+    "version": "1.0.0",
+    "name": "YAN’s Home",
+    "room": "lift-lobby",
+    "lighting": "day",
+    "walking": true,
+    "overview": false,
+    "position": [
+      2.55,
+      1.62,
+      4.4
+    ],
+    "renderer": "WebGL2",
+    "sticks": {
+      "move": {
+        "pointer": null,
+        "origin": [
+          0,
+          0
+        ],
+        "vector": [
+          0,
+          0
+        ],
+        "visible": false
+      },
+      "look": {
+        "pointer": null,
+        "origin": [
+          0,
+          0
+        ],
+        "vector": [
+          0,
+          0
+        ],
+        "visible": false
+      }
+    },
+    "actions": [
+      {
+        "id": "entry-door",
+        "name": "入户门",
+        "value": 1,
+        "target": 1,
+        "room": "entry"
+      },
+      {
+        "id": "guest-door",
+        "name": "南次卧新门",
+        "value": 1,
+        "target": 1,
+        "room": "guest"
+      },
+      {
+        "id": "utility-door",
+        "name": "设备平台门",
+        "value": 1,
+        "target": 1,
+        "room": "utility"
+      },
+      {
+        "id": "kitchen-door",
+        "name": "厨房玻璃门",
+        "value": 1,
+        "target": 1,
+        "room": "kitchen"
+      },
+      {
+        "id": "south-balcony-door",
+        "name": "南阳台玻璃门",
+        "value": 1,
+        "target": 1,
+        "room": "south-balcony"
+      },
+      {
+        "id": "gaming-door",
+        "name": "游戏室门",
+        "value": 1,
+        "target": 1,
+        "room": "gaming"
+      },
+      {
+        "id": "bath-door",
+        "name": "公卫门",
+        "value": 1,
+        "target": 1,
+        "room": "bath"
+      },
+      {
+        "id": "ensuite-door",
+        "name": "主卫门",
+        "value": 1,
+        "target": 1,
+        "room": "ensuite"
+      },
+      {
+        "id": "master-door",
+        "name": "主卧套间门",
+        "value": 1,
+        "target": 1,
+        "room": "master"
+      },
+      {
+        "id": "lobby-bike-wall",
+        "name": "电梯厅收纳柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "entry-coats-0",
+        "name": "原门位玄关通顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "entry-shoes-0",
+        "name": "储藏区玄关柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "coffee-upper-0",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "coffee-upper-2",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "coffee-upper-3",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "living-library-1",
+        "name": "客厅通顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-library1",
+        "name": "客厅通顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "master-wardrobe-0",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-1",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-2",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-3",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "guest-wardrobe-0",
+        "name": "次卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "guest-wardrobe-1",
+        "name": "次卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "gaming-library-0",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-library-1",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "kitchen-upper-0",
+        "name": "厨房上柜",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "fridge-1",
+        "name": "冰箱门",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "fridge1",
+        "name": "冰箱门",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "laundry-cabinet-0",
+        "name": "洗烘顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "balcony"
+      }
+    ]
+  },
+  "textures": {
+    "loaded": 12,
+    "requested": 12,
+    "failed": []
+  }
+}

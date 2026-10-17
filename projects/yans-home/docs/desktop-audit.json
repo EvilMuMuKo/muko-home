@@ -1,0 +1,36 @@
+{
+  "platform": "Linux Chromium / SwiftShader, desktop 1280x800; not hardware performance evidence",
+  "errors": [],
+  "textures": {
+    "loaded": 12,
+    "requested": 12,
+    "failed": []
+  },
+  "geometry": {
+    "backend": "wasm",
+    "transformedVertices": 292826,
+    "batches": 351,
+    "reason": ""
+  },
+  "batching": {
+    "sources": 553,
+    "batches": 87,
+    "reduced": 466
+  },
+  "screenshots": [
+    "lift-lobby",
+    "entry",
+    "dining",
+    "living",
+    "gaming",
+    "master",
+    "guest",
+    "kitchen",
+    "bath",
+    "ensuite",
+    "balcony",
+    "south-balcony",
+    "utility",
+    "overview"
+  ]
+}
