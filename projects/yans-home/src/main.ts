@@ -80,7 +80,6 @@ const lightPositions: Record<string, [number, number, number]> = {
   bath: [9.6, 2.55, 4.4],
   ensuite: [10, 2.55, 6.2],
   balcony: [5.3, 2.55, 11.7],
-  "south-balcony": [8.4, 2.5, 1],
   utility: [5.3, 2.5, 0.8],
 };
 function allocateLights() {

@@ -2,7 +2,11 @@ import type { BufferGeometry } from "three";
 /** Local metric UVs: a texture tile always covers the same number of metres.
  * Dominant-face projection keeps rounded box bevels compatible with PBR maps.
  */
-export function metricUV(geometry: BufferGeometry, grain?: "horizontal") {
+export function metricUV(
+  geometry: BufferGeometry,
+  grain?: "horizontal",
+  origin: [number, number, number] = [0, 0, 0],
+) {
   const p = geometry.getAttribute("position"),
     n = geometry.getAttribute("normal"),
     uv = geometry.getAttribute("uv");
@@ -11,9 +15,10 @@ export function metricUV(geometry: BufferGeometry, grain?: "horizontal") {
     const x = Math.abs(n.getX(i)),
       y = Math.abs(n.getY(i)),
       z = Math.abs(n.getZ(i));
-    if (y >= x && y >= z) uv.setXY(i, p.getX(i), p.getZ(i));
-    else if (x > z) uv.setXY(i, p.getZ(i), p.getY(i));
-    else uv.setXY(i, p.getX(i), p.getY(i));
+    if (y >= x && y >= z)
+      uv.setXY(i, p.getX(i) + origin[0], p.getZ(i) + origin[2]);
+    else if (x > z) uv.setXY(i, p.getZ(i) + origin[2], p.getY(i) + origin[1]);
+    else uv.setXY(i, p.getX(i) + origin[0], p.getY(i) + origin[1]);
   }
   if (grain === "horizontal")
     for (let i = 0; i < uv.count; i++) uv.setXY(i, uv.getY(i), uv.getX(i));
