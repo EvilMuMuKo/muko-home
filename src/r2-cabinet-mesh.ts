@@ -343,7 +343,7 @@ export function buildR2Cabinet(
           {
             x: innerX + (n === 0 ? -innerW * 0.18 : innerW * 0.18),
             y: bay.y + 0.1 + n * 0.02,
-            z: -D / 2 + 0.16,
+            z: Math.min(-D / 2 + 0.16, D / 2 - T - 0.005 - Math.min(0.22, D * 0.45) / 2),
             w: Math.min(0.28, innerW * 0.42),
             h: 0.12,
             d: Math.min(0.22, D * 0.45),

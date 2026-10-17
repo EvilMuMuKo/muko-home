@@ -1,0 +1,8 @@
+item,endpoints,unit,model_parameter,affected_function,status
+Entry notch,Entry right jamb to step return finished inner face,mm,shell + step.x=7.10,entry bench and TV alcove,BLOCKED
+Entry door,Actual hinge axis and complete leaf handle sweep,mm,entry-door.hinge/width/openAngle,full inward swing beside island,BLOCKED
+Island,Finished width depth top and real seated knee mockup,mm,entryIsland + r3-entry-island-base,two daily seats and closed shallow storage,BLOCKED
+Guest door,Open free end to cabinet near corner,mm,guest-door + r2-guest-wardrobe,600mm body and turning clearance,BLOCKED
+Glass,Fridge side to column and peninsula corner finished faces,mm,kitchen-door.r3Corner,external stack rail and sealing end,BLOCKED
+Suspended cabinet,Wall substrate and mounting rail at height1400,mm,r2-living-deep.y/h/d,anchor load and furniture parking,BLOCKED
+Bedroom bays,Projection width sill height reveal window opening,mm,bayWindows.*,removable cushion shelf curtain clearance and load,BLOCKED

@@ -8,7 +8,7 @@ async function ready(page) {
   );
 }
 
-test("R2 household controls expose version 12 and complete reversible travel", async ({
+test("R3 household controls expose version 13 and complete reversible travel", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -24,10 +24,18 @@ test("R2 household controls expose version 12 and complete reversible travel", a
       performance: api.getPerformance(),
     };
   });
-  expect(initial.state.version).toBe("12.0.0");
+  expect(initial.state.version).toBe("13.0.0");
   expect(initial.design.version).toBe(1);
   expect(initial.design.selectedLivingLayout).toBe("mobile-tv-flexible");
-  expect(initial.model.version).toBe("12.0.0");
+  expect(initial.model.version).toBe("13.0.0");
+  expect(initial.model.shell).toContainEqual([7.1, 9.35]);
+  const dailyIsland = initial.model.objects.find((object) => object.id === "s02-entry-return");
+  expect(dailyIsland).toMatchObject({ x: 4.95, z: 7.525, w: 0.5, d: 1.6 });
+  expect(initial.design.entryIslandDining).toMatchObject({ pullbackM: 0.4, dailyMainDining: true });
+  expect(initial.design.entryIslandDining.seats.map((seat) => seat.center[0])).toEqual([4.4, 4.4]);
+  const entryCabinet = initial.model.objects.find((object) => object.id === "r2-entry");
+  expect(entryCabinet).toMatchObject({ x: 6.73, w: 0.56 });
+  expect(entryCabinet.r2Cabinet.bays.find((bay) => bay.purpose === "bench").w).toBe(0.56);
   expect(initial.model.homeDesign.version).toBe(initial.design.version);
   expect(initial.state.renderer).toBe("WebGL2");
   expect(initial.performance.drawCalls).toBeGreaterThan(0);
@@ -60,7 +68,7 @@ test("R2 household controls expose version 12 and complete reversible travel", a
     h: 0.74,
     rotation: 0,
   });
-  expect(initial.design.dining.role).toBe("occasional_backup_table");
+  expect(initial.design.dining.role).toBe("backup_normal_height_table");
   expect(initial.design.dining.stateEnvelopes.deployed).toMatchObject({
     shape: "rectangle",
     w: 1.1,
@@ -285,7 +293,7 @@ test("V10 operating states remain renderable and capture clean screenshots", asy
       performance: window.homePresentation.getPerformance(),
       camera: window.homePresentation.getCamera(),
     }));
-    expect(report.state.version).toBe("12.0.0");
+    expect(report.state.version).toBe("13.0.0");
     expect(report.performance.drawCalls).toBeGreaterThan(0);
     expect(report.performance.triangles).toBeGreaterThan(0);
     expect(report.camera.verticalFov).toBeGreaterThan(0);

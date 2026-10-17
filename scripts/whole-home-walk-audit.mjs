@@ -325,6 +325,7 @@ try {
     reducedMotion: "reduce",
   });
   const page = await context.newPage();
+  const cdp = await context.newCDPSession(page);
   page.on("pageerror", (error) => report.pageErrors.push(error.message));
   page.on("console", (message) => {
     if (message.type() === "error") report.pageErrors.push(`console: ${message.text()}`);
@@ -517,17 +518,17 @@ try {
           const remaining = Math.hypot(target[0] - position[0], target[1] - position[2]);
           if (remaining < 0.03) {
             await page.keyboard.up("w");
-            if (fineJoystick) await page.mouse.up();
             break;
           }
           if (remaining < 0.2 && !fineJoystick) {
             await page.keyboard.up("w");
-            const bounds = await page.locator(".ghost-joystick:not(.ghost-look-joystick)").boundingBox();
-            const cx = bounds.x + bounds.width / 2, cy = bounds.y + bounds.height / 2;
-            await page.mouse.move(cx, cy); await page.mouse.down();
-            await page.mouse.move(cx, cy - bounds.width * 0.1);
+            const cx = 180, cy = 400, id = 77;
+            await cdp.send("Input.dispatchTouchEvent", {type:"touchStart",touchPoints:[{x:cx,y:cy,id}]});
+            const bounds = await page.locator(".ghost-joystick--floating:not(.ghost-look-joystick)").boundingBox();
+            if(!bounds) throw new Error("floating movement stick did not appear at the touch point");
+            await cdp.send("Input.dispatchTouchEvent", {type:"touchMove",touchPoints:[{x:cx,y:cy-bounds.width*.1,id}]});
             fineJoystick = true;
-            segment.finalApproach = "real joystick at 20 percent travel";
+            segment.finalApproach = "real floating touch joystick at 20 percent travel";
           }
           if (remaining < bestDistance - 0.015) {
             bestDistance = remaining;
@@ -546,7 +547,7 @@ try {
         segment.failure = String(error);
       } finally {
         await page.keyboard.up("w");
-        if (fineJoystick) await page.mouse.up();
+        if (fineJoystick) await cdp.send("Input.dispatchTouchEvent", {type:"touchEnd",touchPoints:[]});
       }
       segment.elapsedMs = Date.now() - began;
       segment.actual = await cameraPosition();

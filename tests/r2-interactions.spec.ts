@@ -5,7 +5,7 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("http://localhost:4173/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready, undefined, { timeout: 90_000 });
-  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("12.0.0");
+  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("13.0.0");
   expect(await page.evaluate(() => window.homePresentation.getR2Revision().version)).toBe(12);
   await page.evaluate(() => window.homePresentation.startGhostWalk());
 

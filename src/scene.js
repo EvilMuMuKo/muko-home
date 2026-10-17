@@ -70,6 +70,7 @@ import {
 import pt from "./generated-layout.json";
 import {buildR2Cabinet} from "./r2-cabinet-mesh";
 import {buildBarSign} from "./bar-sign";
+import {buildBayLife} from "./bay-life";
 import {buildR2Glazing} from "./r2-glazing";
 const homeMotion = createHomeMotion();
 const lifeMotion = createLifeMotion();
@@ -3465,12 +3466,12 @@ function ns(i, e = 600) {
 function bx() {
   for (const seat of ut.homeDesign.entryIslandDining?.seats || []) {
     const root = Ct.getObjectByName(seat.id);
-    if (root) { root.position.x = seat.center[0] - 0.4 * an.counterSeats; root.userData.animated = true; }
+    if (root) { root.position.x = seat.center[0] - (ut.homeDesign.entryIslandDining.pullbackM ?? 0.4) * an.counterSeats; root.userData.animated = true; }
   }
   for (let i of St.storage) {
     let progress = localStorageProgress.get(i.unitId) ?? an.storage;
     // Clear the real lower cabinet doors before the stored furniture leaves its bay.
-    if (i.unitId==='r2-living-deep' && i.pivot.name.includes(':door:0:')) {
+    if (!ut.homeDesign.r3Revision && i.unitId==='r2-living-deep' && i.pivot.name.includes(':door:0:')) {
       const p=Kn.clamp(an.dining/.12,0,1);
       progress=Math.max(progress,p*p*(3-2*p));
     }
@@ -4341,6 +4342,7 @@ async function bw() {
       finishFurniture(Ct, ut.objects, Vn),
       (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
       (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
+      (spatialDesign.bayLife = buildBayLife(Ct, ut, Vn, Mu)),
       (staticOcclusion = bakeStaticFloorOcclusion(Ct,ut,{size:quality.mobile?256:512})),
       homeMotion.sofaModules.forEach(root => attachDynamicContact(root, {w:0.98,d:0.86,y:0.003,strength:0.16})),
       attachDynamicContact(Ct.getObjectByName("living-tv"), {w:0.7,d:0.5,y:0.003,strength:0.12}),
@@ -4757,6 +4759,7 @@ window.homePresentation = {
   }),
   getStorage: () => storageCapacity(currentStorage()),
   getR2Revision: () => structuredClone(ut.homeDesign.r2Revision),
+  getR3Revision: () => structuredClone(ut.homeDesign.r3Revision),
   setStorageOpen: (open) => {
     ns({ storage: open ? 1 : 0 }, 0);
     $e("#storage-toggle")?.setAttribute("aria-pressed", String(open));

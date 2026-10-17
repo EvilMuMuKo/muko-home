@@ -39,6 +39,7 @@ function setup() {
     { get: (target, key) => target[String(key)] || material },
   );
   const cab = model.objects.find((o: any) => o.id === "r2-living-deep");
+  expect(cab).toMatchObject({ y: 1.4, h: 1.3, d: 0.35 });
   const cabinet = new THREE.Group();
   cabinet.name = cab.id;
   cabinet.position.set(cab.x, cab.y || 0, cab.z);
@@ -73,13 +74,6 @@ function setup() {
     surroundings.push(g);
   }
   const set = (p: number) => {
-    const q = THREE.MathUtils.clamp(p / 0.12, 0, 1),
-      progress = q * q * (3 - 2 * q);
-    for (const d of doors) {
-      const value = d.pivot.name.includes(":door:0:") ? progress : 0;
-      d.pivot.rotation.y = ((-d.sign * Math.PI) / 2) * value;
-      if (d.insideGroup) d.insideGroup.visible = value > 0.04;
-    }
     applyMotion(motion, {
       dining: p,
       gate: 0,
@@ -131,7 +125,7 @@ function conflicts(a: THREE.Mesh[], b: THREE.Mesh[]) {
     }
   return null;
 }
-test("folded furniture parked above the plinth has no actual cabinet-panel or peer intersection", () => {
+test("folded furniture in the lower zone clears the suspended cabinet and peers", () => {
   const f = setup();
   f.set(0);
   const cabinet = meshes(f.cabinet);
@@ -148,7 +142,7 @@ test("folded furniture parked above the plinth has no actual cabinet-panel or pe
     );
   }
 });
-test("101 extraction and return samples preserve real 2mm cabinet-door and furniture clearances", () => {
+test("101 extraction and return samples preserve real 2mm clearance beneath the closed suspended cabinet", () => {
   const f = setup(),
     failures: any[] = [];
   for (const direction of ["extract", "return"])

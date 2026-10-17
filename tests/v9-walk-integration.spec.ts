@@ -13,7 +13,9 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
       target: [3.4, 1.15, 3.935],
     }),
   );
-  await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)")).toHaveCount(2);
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(0)).toBeHidden();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(1)).toBeHidden();
   await expect(page.locator(".ghost-interact")).toHaveAttribute(
     "data-target-id",
     "walk-fridge",
@@ -133,7 +135,10 @@ test("arrival is directly walkable and real wall/closed door block while an open
   await page.goto("/?renderer=webgl");
   await page.waitForFunction(()=>window.homePresentation?.getState().ready);
   expect(await page.evaluate(()=>window.homePresentation.getGhostWalkState().active)).toBe(true);
-  await expect(page.locator(".ghost-look-joystick")).toBeVisible();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)")).toHaveCount(2);
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(0)).toBeHidden();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(1)).toBeHidden();
+  await expect(page.locator(".ghost-look-joystick:not(.ghost-joystick--floating)")).toBeHidden();
   const audit=await page.evaluate(()=>window.homePresentation.getWalkCollisionAudit());
   expect(audit.missingGroups).toEqual([]);
   expect(audit.staticGroups).toEqual(expect.arrayContaining(["column-handdrawn","living-sofa","living-tv","dining-table"]));
@@ -175,7 +180,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
   expect(errors).toEqual([]);
 });
 
-test("portrait keeps the landscape gate and rotating restores both walk sticks", async ({page})=>{
+test("portrait keeps the landscape gate and rotating restores walking with sticks hidden until touch", async ({page})=>{
   await page.setViewportSize({width:390,height:844});
   await page.goto("/?renderer=webgl");
   await page.waitForFunction(()=>window.homePresentation?.getState().ready);
@@ -183,7 +188,31 @@ test("portrait keeps the landscape gate and rotating restores both walk sticks",
   await expect(page.locator(".ghost-walk-controls")).toBeHidden();
   await page.setViewportSize({width:844,height:390});
   await expect(page.locator("#orientation-gate")).toBeHidden();
-  await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
-  await expect(page.locator(".ghost-look-joystick")).toBeVisible();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)")).toHaveCount(2);
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(0)).toBeHidden();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(1)).toBeHidden();
   expect(await page.evaluate(()=>window.homePresentation.getGhostWalkState().active)).toBe(true);
+
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Emulation.setTouchEmulationEnabled", {enabled:true,maxTouchPoints:2});
+  const left = {x:190,y:250,id:41}, right = {x:650,y:150,id:42};
+  const before = await page.evaluate(()=>window.homePresentation.getGhostWalkState());
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchStart",touchPoints:[left,right]});
+  await expect(page.locator(".ghost-joystick--floating")).toHaveCount(2);
+  await expect(page.locator(".ghost-joystick--floating:not(.ghost-look-joystick)")).toBeVisible();
+  await expect(page.locator(".ghost-joystick--floating.ghost-look-joystick")).toBeVisible();
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchMove",touchPoints:[
+    {x:left.x,y:left.y-55,id:left.id},{x:right.x+50,y:right.y-30,id:right.id},
+  ]});
+  await expect.poll(async()=>page.evaluate((origin)=>{
+    const state=window.homePresentation.getGhostWalkState();
+    return Math.hypot(state.position[0]-origin.position[0],state.position[2]-origin.position[2]);
+  },before),{timeout:5000}).toBeGreaterThan(0.01);
+  const moved=await page.evaluate(()=>window.homePresentation.getGhostWalkState());
+  expect(moved.yaw).not.toBeCloseTo(before.yaw,2);
+  expect(moved.pitch).not.toBeCloseTo(before.pitch,2);
+  await cdp.send("Input.dispatchTouchEvent",{type:"touchEnd",touchPoints:[]});
+  await expect(page.locator(".ghost-joystick--floating")).toHaveCount(0);
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(0)).toBeHidden();
+  await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(1)).toBeHidden();
 });

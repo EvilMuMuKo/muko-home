@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "scope": "CPU and viewport emulation are not actual phone or GPU performance.",
+  "cpuRate": 4,
+  "viewport": {
+    "width": 844,
+    "height": 390,
+    "deviceScaleFactor": 3
+  },
+  "quality": {
+    "qualityProfile": {
+      "mobile": true,
+      "economical": false,
+      "lightSlots": 4,
+      "shadowLights": 1,
+      "shadowSize": 512,
+      "sunShadowSize": 1024,
+      "maxDpr": 1.5,
+      "interactionDpr": 1.5,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 33.333333333333336,
+      "roomReflections": false,
+      "liveMirrors": false,
+      "reflectionStrategy": "shared-environment",
+      "physicsHz": 30,
+      "postprocessing": false
+    },
+    "rendering": {
+      "requested": "webgpu",
+      "backend": "WebGPU",
+      "deviceLossEvents": 0,
+      "fallbackReason": ""
+    },
+    "pixelRatio": 1.5
+  },
+  "errors": [],
+  "requestFailures": [],
+  "phases": [
+    {
+      "name": "l20",
+      "elapsedMs": 20044.89999999106,
+      "raf": {
+        "p95": 16.799999999999272,
+        "worst": 133.30000000000018,
+        "over250": 0,
+        "samples": 1173
+      },
+      "renderedFps": 29.43392084771005,
+      "longtasks": [
+        {
+          "start": 5290.5999999940395,
+          "duration": 82
+        },
+        {
+          "start": 6153.5,
+          "duration": 65
+        },
+        {
+          "start": 6351.899999991059,
+          "duration": 66
+        },
+        {
+          "start": 6418.399999991059,
+          "duration": 130
+        },
+        {
+          "start": 6935.399999991059,
+          "duration": 58
+        },
+        {
+          "start": 6994.20000000298,
+          "duration": 135
+        }
+      ],
+      "renderFrameP95Ms": 33.400000000001455,
+      "drawCalls": 416,
+      "drawingBuffer": [
+        1266,
+        585
+      ],
+      "pixelRatio": 1.5
+    },
+    {
+      "name": "wl-sj",
+      "elapsedMs": 16055.29999999702,
+      "raf": {
+        "p95": 16.799999999995634,
+        "worst": 33.400000000001455,
+        "over250": 0,
+        "samples": 960
+      },
+      "renderedFps": 29.896669635577606,
+      "longtasks": [],
+      "renderFrameP95Ms": 33.400000000001455,
+      "drawCalls": 589,
+      "drawingBuffer": [
+        1266,
+        585
+      ],
+      "pixelRatio": 1.5
+    }
+  ]
+}

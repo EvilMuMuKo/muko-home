@@ -24,6 +24,9 @@
   pointer-events: auto;
   cursor: grab;
 }
+.ghost-joystick:not(.ghost-joystick--floating) {
+  display: none;
+}
 .ghost-joystick:active {
   cursor: grabbing;
 }
@@ -120,7 +123,4 @@
     -webkit-backdrop-filter: none;
   }
   .ghost-joystick { background: #25332d99; }
-}
-@media (pointer: coarse) {
-  .ghost-joystick:not(.ghost-joystick--floating) { display: none; }
 }
