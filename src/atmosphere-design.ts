@@ -1,10 +1,11 @@
 import type { DesignInput } from "./storage-design";
 export const roomPalette = {
   paper: "#eeece5",
+  masterPaper: "#f1ece2",
   clay: "#ad7359",
   moss: "#6d7967",
-  masterSage: "#74806e",
-  masterMushroom: "#8d877b",
+  masterSage: "#6f796d",
+  masterMushroom: "#81796e",
   tobacco: "#bda68f",
   oat: "#deddd5",
   media: "#aaa99f",
@@ -153,9 +154,11 @@ export const themeMoments: ThemeScene[] = [
     label: "晚饮",
     daylight: false,
     levels: baseLevels,
-    roomLevels: { bar: { ambient: 0.35, accent: 0.72, task: 0.12, decor: 1 } },
+    // Keep the bar intimate, but let the existing counter task light read as usable.
+    // A neutral-warm task channel carries the worktop instead of lifting global exposure.
+    roomLevels: { bar: { ambient: 0.42, accent: 0.48, task: 0.25, decor: 0.85 } },
     fixtureKelvin: {
-      "bar-task": 2700,
+      "bar-task": 3000,
       "dining-offset-1": 2700,
       "dining-offset-2": 2700,
     },
@@ -330,7 +333,7 @@ export function wallColour(room: string | undefined, wallId: string) {
     return wallId === "guest-west"
       ? roomPalette.cinemaFront
       : roomPalette.cinema;
-  if (room === "bar" && wallId === "north") return "#d2c2aa";
+  if (room === "bar" && wallId === "north") return "#cec4b2";
   if (room === "bar" && wallId === "west-left") return roomPalette.moss;
   if (room === "master") return wallId === "east" ? roomPalette.masterSage : roomPalette.masterMushroom;
   if (room === "living")

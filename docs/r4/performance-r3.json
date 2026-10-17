@@ -1,0 +1,365 @@
+{
+  "scope": "Same macOS browser/GPU; mobile is viewport/touch emulation, not phone hardware; HTTP cache cleared, shader cache not cleared",
+  "runs": [
+    {
+      "mobile": false,
+      "interactiveMs": 2962,
+      "visualMs": 3975,
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "deviceLossEvents": 0,
+        "fallbackReason": ""
+      },
+      "version": "13.0.0",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "maxDpr": 1.5,
+        "interactionDpr": 1.5,
+        "resolutionPolicy": "stable_per_profile",
+        "targetFrameMs": 16.666666666666668,
+        "roomReflections": true,
+        "liveMirrors": true,
+        "reflectionStrategy": "room-capture",
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "p95Raf": 16.80000000000109,
+      "renderedFps": 58.082365293940626,
+      "beforeCalls": 589,
+      "afterCalls": 211,
+      "triangles": 200468,
+      "dprs": [
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        }
+      ],
+      "errors": [],
+      "warnings": [
+        "THREE.AttributeNode: Vertex attribute \"uv\" not found on geometry."
+      ]
+    },
+    {
+      "mobile": true,
+      "interactiveMs": 1330,
+      "visualMs": 1831,
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "deviceLossEvents": 0,
+        "fallbackReason": ""
+      },
+      "version": "13.0.0",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 4,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "maxDpr": 1.5,
+        "interactionDpr": 1.5,
+        "resolutionPolicy": "stable_per_profile",
+        "targetFrameMs": 33.333333333333336,
+        "roomReflections": false,
+        "liveMirrors": false,
+        "reflectionStrategy": "shared-environment",
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "p95Raf": 16.700000000000728,
+      "renderedFps": 30.154604824676884,
+      "beforeCalls": 149,
+      "afterCalls": 134,
+      "triangles": 84361,
+      "dprs": [
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        }
+      ],
+      "errors": [],
+      "warnings": [
+        "THREE.AttributeNode: Vertex attribute \"uv\" not found on geometry."
+      ]
+    }
+  ]
+}

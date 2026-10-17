@@ -1,0 +1,363 @@
+{
+  "scope": "Same macOS browser/GPU; mobile is viewport/touch emulation, not phone hardware; HTTP cache cleared, shader cache not cleared",
+  "runs": [
+    {
+      "mobile": false,
+      "interactiveMs": 3057,
+      "visualMs": 3992,
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "deviceLossEvents": 0,
+        "fallbackReason": ""
+      },
+      "version": "14.0.0",
+      "quality": {
+        "mobile": false,
+        "economical": false,
+        "lightSlots": 12,
+        "shadowLights": 2,
+        "shadowSize": 1024,
+        "sunShadowSize": 2048,
+        "sunShadowRadius": 2,
+        "maxDpr": 1.5,
+        "interactionDpr": 1.5,
+        "resolutionPolicy": "stable_per_profile",
+        "targetFrameMs": 16.666666666666668,
+        "roomReflections": true,
+        "liveMirrors": true,
+        "reflectionStrategy": "room-capture",
+        "physicsHz": 60,
+        "postprocessing": true
+      },
+      "p95Raf": 33.29999999999927,
+      "renderedFps": 56.73534336960134,
+      "beforeCalls": 573,
+      "afterCalls": 191,
+      "triangles": 188654,
+      "dprs": [
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            2160,
+            1350
+          ]
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "mobile": true,
+      "interactiveMs": 1306,
+      "visualMs": 1831,
+      "backend": {
+        "requested": "webgpu",
+        "backend": "WebGPU",
+        "deviceLossEvents": 0,
+        "fallbackReason": ""
+      },
+      "version": "14.0.0",
+      "quality": {
+        "mobile": true,
+        "economical": false,
+        "lightSlots": 4,
+        "shadowLights": 1,
+        "shadowSize": 512,
+        "sunShadowSize": 1024,
+        "sunShadowRadius": 1.25,
+        "maxDpr": 1.5,
+        "interactionDpr": 1.5,
+        "resolutionPolicy": "stable_per_profile",
+        "targetFrameMs": 33.333333333333336,
+        "roomReflections": false,
+        "liveMirrors": false,
+        "reflectionStrategy": "shared-environment",
+        "physicsHz": 30,
+        "postprocessing": false
+      },
+      "p95Raf": 16.700000000000728,
+      "renderedFps": 30.1488286097991,
+      "beforeCalls": 149,
+      "afterCalls": 130,
+      "triangles": 83797,
+      "dprs": [
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        },
+        {
+          "dpr": 1.5,
+          "buffer": [
+            1266,
+            585
+          ]
+        }
+      ],
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

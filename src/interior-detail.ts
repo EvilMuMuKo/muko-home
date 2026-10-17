@@ -184,12 +184,15 @@ export function buildInteriorDetails(
   );
   print.position.z = 0.011;
   frame.add(print);
-  // Glazed espresso cups, small tray and a dripper instead of repeated shelf props.
+  // Two glazed espresso cups on a small tray; keep the surrounding counter clear.
   box(bar, 0.4, 0.012, 0.22, 1.94, 0.961, 7.9, "barWood");
   const ceramic = new THREE.MeshStandardMaterial({
     color: "#e9d8b5",
     roughness: 0.28,
   });
+  // Coffee is a dark dielectric liquid, never the stone/wood material from the tray.
+  const espresso = new THREE.MeshStandardMaterial({color:'#25170e',roughness:0.23,metalness:0});
+  m.espressoSurface = espresso;
   m.ceramic = ceramic;
   for (const x of [1.83, 2.03]) {
     const cup = new THREE.Mesh(
@@ -198,6 +201,33 @@ export function buildInteriorDetails(
     );
     cup.position.set(x, 1.001, 7.9);
     bar.add(cup);
+    // Fine rolled lip and a small foot ring stay inside the existing cup envelope.
+    for (const [major, minor, y] of [
+      [0.0345, 0.0015, 1.033],
+      [0.0285, 0.0015, 0.969],
+    ]) {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(major, minor, 6, 16),
+        ceramic,
+      );
+      ring.rotation.x = Math.PI / 2;
+      ring.position.set(x, y, 7.9);
+      ring.castShadow = false;
+      bar.add(ring);
+    }
+    const bottom = new THREE.Mesh(new THREE.CircleGeometry(0.028, 20), ceramic);
+    bottom.rotation.x = -Math.PI / 2;
+    bottom.position.set(x, 0.969, 7.9);
+    bar.add(bottom);
+    if (espresso) {
+      const coffee = new THREE.Mesh(
+        new THREE.CircleGeometry(0.027, 20),
+        espresso,
+      );
+      coffee.rotation.x = -Math.PI / 2;
+      coffee.position.set(x, 1.026, 7.9);
+      bar.add(coffee);
+    }
     const handle = new THREE.Mesh(
       new THREE.TorusGeometry(0.018, 0.005, 6, 16),
       ceramic,
@@ -294,7 +324,7 @@ export function buildInteriorDetails(
   treatment.add(blackout);
   const poster = artwork(true),
     screens: { material: THREE.MeshStandardMaterial; room: string }[] = [];
-  for (const id of ["guest-tv", "living-tv"]) {
+  for (const id of ["guest-tv", "living-tv", "pc-monitor", "macbook"]) {
     const g = scene.getObjectByName(id)!;
     g.traverse((n) => {
       if (n instanceof THREE.Mesh && n.material === m.screen) {
@@ -320,14 +350,17 @@ export function buildInteriorDetails(
         n.material = material;
         screens.push({
           material,
-          room: id.startsWith("guest") ? "guest" : "living",
+          room: id.startsWith("guest") ? "guest" : ["pc-monitor", "macbook"].includes(id) ? "master" : "living",
         });
       }
     });
   }
   for (const id of ["guest-sofa-bed", "living-sofa"]) {
     const group = scene.getObjectByName(id)!;
-    for (const child of [...group.children])
+    const upholstery: THREE.Mesh[] = [];
+    group.traverse(child => { if (child instanceof THREE.Mesh) upholstery.push(child); });
+    // Module seats are nested; a direct-children pass missed both living cushions.
+    for (const child of upholstery)
       if (
         child instanceof THREE.Mesh &&
         [m.linen, m.livingFabric, m.cinemaFabric, m.salonFabric].includes(
@@ -356,7 +389,7 @@ export function buildInteriorDetails(
     blackout.visible = id === "cinema" || id === "guest-stay";
     setDoorOpen(id !== "cinema" && id !== "guest-stay");
     for (const screen of screens) {
-      const active = screen.room === "guest" ? id === "cinema" : id === "game";
+      const active = screen.room === "guest" ? id === "cinema" : screen.room === "master" ? id === "dual-workstations" : id === "game";
       screen.material.map = screen.material.emissiveMap = active
         ? poster
         : null;

@@ -34,9 +34,9 @@ export function configureRoomMaterials(m: Materials) {
   const walls = clone("roomPlaster", "plaster", "#ffffff", 0.96);
   // Wall vertex tint and subtle plaster maps are independent layers.
   walls.vertexColors = true;
-  const wallpaper = clone("masterWallcover", "linen", "#ffffff", 1);
+  const wallpaper = clone("masterWallcover", "linen", roomPalette.masterPaper, 1);
   wallpaper.vertexColors = true;
-  wallpaper.normalScale.setScalar(0.055);
+  wallpaper.normalScale.setScalar(0.04);
   if (wallpaper instanceof THREE.MeshPhysicalMaterial) {
     wallpaper.sheen = 0.12; wallpaper.sheenRoughness = 0.95;
   }
@@ -153,7 +153,7 @@ export function finishArchitecture(
       colors = new Float32Array(normals.count * 3);
     for (let i = 0; i < normals.count; i++)
       new THREE.Color(
-        normals.getZ(i) > 0.5 ? roomPalette.cinema : roomPalette.paper,
+        normals.getZ(i) < -0.5 ? roomPalette.cinema : roomPalette.paper,
       ).toArray(colors, i * 3);
     g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     n.geometry = g;

@@ -1,0 +1,107 @@
+{
+  "model": "14.0.0",
+  "baseCommit": "d332cbaeb4aec2311186548d9c39f424b1945643",
+  "capturedAt": "2026-10-17T13:58:17.504360+00:00",
+  "scope": "unmeasured concept geometry and same-Mac native Chromium; mobile emulation is not a physical phone",
+  "checks": {
+    "build": "PASS",
+    "typescript": "PASS",
+    "nativeRegression": {
+      "status": "PASS",
+      "tests": 189,
+      "failures": 0,
+      "log": "完整回归日志.txt in local outputs"
+    },
+    "geometry": {
+      "status": "PASS",
+      "unchanged": {
+        "shell": true,
+        "rooms": true,
+        "walls": true,
+        "openings": true
+      },
+      "changedObjects": [
+        "r2-bar-sign"
+      ],
+      "inheritsR3DoorGlass101StateTests": true
+    },
+    "visual": {
+      "status": "PASS_scoped_changes",
+      "screenshots": 24,
+      "missingModelObjects": 0,
+      "missingUV": [],
+      "errors": [],
+      "warnings": [],
+      "limitations": [
+        "sun-shadow aliasing remains visible on near bay ledges despite broader PCF filter",
+        "concept outdoor buildings/trees remain stylized",
+        "bath preset cannot show all fittings through its inward door; use walk to inspect vanity",
+        "user aesthetic acceptance remains pending"
+      ]
+    },
+    "walk": {
+      "status": "PASS",
+      "rooms": 8,
+      "screenshots": 42,
+      "interaction": {
+        "id": "walk-fridge",
+        "label": "使用：开合冰箱门",
+        "pass": true,
+        "interactionDistanceM": 1.152640636829952,
+        "maximumTargetDistanceM": 1.6,
+        "before": {
+          "fridgeAngle": 0,
+          "position": [
+            2.7700405746851247,
+            1.74,
+            4.90026243070406
+          ]
+        },
+        "after": {
+          "fridgeAngle": 1.7453292519943295,
+          "position": [
+            2.7335854030712,
+            1.74,
+            4.959230251417696
+          ]
+        }
+      },
+      "geometryEvidenceReusedAfterCameraAndFilterOnlyChange": true
+    },
+    "performance": [
+      {
+        "mobileEmulation": false,
+        "baselineRenderedFps": 58.082365293940626,
+        "renderedFps": 56.73534336960134,
+        "rAFp95Ms": 33.29999999999927,
+        "baselineInteractiveMs": 2962,
+        "interactiveMs": 3057,
+        "stableDpr": true,
+        "warnings": [],
+        "status": "FAIL_steady_60fps_target"
+      },
+      {
+        "mobileEmulation": true,
+        "baselineRenderedFps": 30.154604824676884,
+        "renderedFps": 30.1488286097991,
+        "rAFp95Ms": 16.700000000000728,
+        "baselineInteractiveMs": 1330,
+        "interactiveMs": 1306,
+        "stableDpr": true,
+        "warnings": [],
+        "status": "PASS_emulation_30fps_target"
+      }
+    ],
+    "realPhone": "NOT RUN",
+    "siteAndHardware": "BLOCKED"
+  },
+  "review": {
+    "grok": "implemented connected untextured plant geometry and regression; independent review found inverted guest door faces and stone material on coffee; both fixed",
+    "independentAgent": "R3 shell/rooms/walls/openings/furniture footprints preserved except sign; no private source content in reviewed R4 files",
+    "notClaimed": [
+      "AAA game quality",
+      "physical phone performance",
+      "surveyed fit or construction approval"
+    ]
+  }
+}
