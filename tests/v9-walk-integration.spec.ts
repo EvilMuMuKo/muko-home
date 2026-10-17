@@ -9,8 +9,8 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() =>
     window.homePresentation.startGhostWalk({
-      position: [5.15, 1.74, 4.05],
-      target: [4.045, 1.15, 4.05],
+      position: [5.75, 1.74, 3.7],
+      target: [4.7, 1.15, 3.7],
     }),
   );
   await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();
@@ -93,7 +93,7 @@ test("whole-model geometry inventory has no missing object or nonfinite data", a
   expect(report.checkedGeometryCount).toBeGreaterThan(100);
   expect(
     report.objects.find((o) => o.id === "s02-entry-return").accessFace,
-  ).toBe("+x");
+  ).toBe("-x");
   await writeFile(
     test.info().outputPath("whole-model-audit.json"),
     JSON.stringify(report, null, 2),
@@ -144,8 +144,8 @@ test("arrival is directly walkable and real wall/closed door block while an open
   expect(wall[0]).toBeLessThanOrEqual(6.591);
   expect(wall[0]).toBeGreaterThan(6.4);
   await page.evaluate(()=>window.homePresentation.setWalkDoorOpen("master-door",false));
-  await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()["master-door"]+Math.PI/2)<.001);
-  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
+  await page.waitForFunction(()=>Math.abs(window.homePresentation.getWalkDoorStates()["master-door"]-Math.PI/2)<.001);
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,3.65],target:[8,1.74,3.65]}));
   await page.keyboard.down("w");await page.waitForTimeout(1600);await page.keyboard.up("w");
   expect((await page.evaluate(()=>window.homePresentation.getCamera().position))[0]).toBeLessThan(6.75);
   await page.evaluate(()=>window.homePresentation.setWalkDoorOpen("master-door",true));
@@ -158,7 +158,7 @@ test("arrival is directly walkable and real wall/closed door block while an open
     frames: window.homePresentation.getPerformance().frames,
     door: window.homePresentation.getWalkDoorStates()["master-door"],
   }));
-  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,2.325],target:[8,1.74,2.325]}));
+  await page.evaluate(()=>window.homePresentation.startGhostWalk({position:[6.35,1.74,3.65],target:[8,1.74,3.65]}));
   await page.keyboard.down("w");
   try {
     await expect.poll(async()=> (await page.evaluate(()=>window.homePresentation.getCamera().position))[0],{timeout:60000}).toBeGreaterThan(7.05);

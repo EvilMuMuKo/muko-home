@@ -1,0 +1,33 @@
+{
+  "body": {
+    "diameterM": 0.6,
+    "heightM": 1.88
+  },
+  "cookPairClearanceM": 0.12801098892805185,
+  "cookSolidClearancesM": [
+    {
+      "name": "sink-side cook",
+      "nearestSolidClearanceM": 0.025000000000000078
+    },
+    {
+      "name": "hob-side cook",
+      "nearestSolidClearanceM": 0.06000000000000005
+    }
+  ],
+  "prepSolidClearanceM": 0.05500000000000016,
+  "seatedPairClearanceM": 0.1000000000000002,
+  "pulledPairClearanceM": 0.1000000000000002,
+  "bartenderToSeatedClearanceM": 0.8269723192830332,
+  "bartenderToPulledClearanceM": 0.4277402395547237,
+  "retreatToRearBarClearancesM": [
+    0.40754858490424445,
+    0.07500000000000001
+  ],
+  "occupiedMainRouteClearancesM": [
+    0.037377439199098084,
+    1.4303940504246948,
+    1.6588713996153035,
+    1.0378339354159203,
+    1.3137659209004642
+  ]
+}

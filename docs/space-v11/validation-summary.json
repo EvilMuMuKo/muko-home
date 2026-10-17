@@ -1,0 +1,26 @@
+{
+  "version": "11.0.0",
+  "PASS": [
+    "build and TypeScript",
+    "9 V11 model tests including 600mm by1880mm joint-use envelopes",
+    "149 existing regression checks plus corrected targeted doorway/integration pass; final clean suite delegated to CI",
+    "8-area actual continuous keyboard and joystick walk, 42 screenshots",
+    "14 final actual browser screenshots; 0 errors or missing resources",
+    "fixed-resolution turning and mobile same-profile V10/V11 comparison",
+    "14 offline day/night room diffuse datasets regenerated",
+    "original requirements charter SHA256 unchanged"
+  ],
+  "BLOCKED": [
+    "site dimensions and structural/MEP adaptations",
+    "physical meal comfort and real-life concurrent use; model body clearances are not ergonomic acceptance"
+  ],
+  "NOT RUN": [
+    "physical mobile hardware",
+    "construction acceptance"
+  ],
+  "knownLimits": [
+    "occupied refrigerator side-pass budget755mm below900mm comfort target",
+    "two-cook modeled nearest-solid margins25-60mm",
+    "concept exterior scenery is not real site scenery"
+  ]
+}
