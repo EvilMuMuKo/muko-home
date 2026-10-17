@@ -170,6 +170,17 @@
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
+    },
+    "startupReadyAndMotion": {
+      "status": "PASS",
+      "startTime": "2026-10-17T10:45:25.791Z",
+      "duration": 16926.663,
+      "expected": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "changes": "ready now requires actual interactive stage; motion test awaits visual preparation and allows slower software-rendered endpoints",
+      "ciFailure": "previous CI shard3 timed out while background reflection capture paused the renderer before motion baseline"
     }
   },
   "rejectedCandidates": [

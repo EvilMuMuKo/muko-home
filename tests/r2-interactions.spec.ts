@@ -5,6 +5,8 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("http://localhost:4173/?renderer=webgl");
   await page.waitForFunction(() => window.homePresentation?.getState().ready, undefined, { timeout: 90_000 });
+  // Verify motion after startup/reflection preparation, not while the software renderer is paused for captures.
+  await page.evaluate(() => window.homePresentation.whenVisualReady());
   expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("13.0.0");
   expect(await page.evaluate(() => window.homePresentation.getR2Revision().version)).toBe(12);
   await page.evaluate(() => window.homePresentation.startGhostWalk());
@@ -14,7 +16,7 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   expect(audit?.movingOpenings).toContain("opening:kitchen-pass-window");
 
   await page.evaluate(() => window.homePresentation.setWalkDoorOpen("kitchen-door", false));
-  await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress < 0.01, undefined, { timeout: 5_000 });
+  await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress < 0.01, undefined, { timeout: 30_000 });
   const closed = await page.evaluate(() => ({
     progress: window.homePresentation.getState().kitchenProgress,
     leaves: window.homePresentation.getMovingPartTransforms().kitchen,
@@ -23,7 +25,7 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
 
   await page.evaluate(() => window.homePresentation.setWalkDoorOpen("kitchen-door", true));
   const intermediate = await sampleIntermediateKitchen(page);
-  await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress > 0.99, undefined, { timeout: 5_000 });
+  await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress > 0.99, undefined, { timeout: 30_000 });
   const opened = await snapshotKitchen(page);
 
   expect(closed.leaves).toHaveLength(7);
@@ -46,14 +48,14 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.waitForFunction(() => {
     const angles = window.homePresentation.getStorageDoors().filter((door) => door.unitId === "r2-waterbar").map((door) => door.angle);
     return angles.length > 0 && angles.every((angle) => Math.abs(angle) < 0.01);
-  }, undefined, { timeout: 5_000 });
+  }, undefined, { timeout: 30_000 });
   const closedCabinet = await page.evaluate(() => window.homePresentation.getStorageDoors()
     .filter((door) => door.unitId === "r2-waterbar").map((door) => door.angle));
   await page.evaluate(() => window.homePresentation.setStorageOpen(true));
   await page.waitForFunction(() => {
     const angles = window.homePresentation.getStorageDoors().filter((door) => door.unitId === "r2-waterbar").map((door) => door.angle);
     return angles.length > 0 && angles.every((angle) => Math.abs(angle) > 1.45);
-  }, undefined, { timeout: 5_000 });
+  }, undefined, { timeout: 30_000 });
   const openCabinet = await page.evaluate(() => window.homePresentation.getStorageDoors()
     .filter((door) => door.unitId === "r2-waterbar").map((door) => door.angle));
   expect(openCabinet.length).toBeGreaterThan(0);

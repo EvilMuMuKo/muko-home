@@ -4806,7 +4806,7 @@ window.homePresentation = {
     fridgeAngle: St.fridge[0]?.pivot.rotation.y || 0,
     drawerProgress: an.drawer,
     scenario: Za,
-    ready: vu,
+    ready: vu && !!startupTiming.stages.interactive,
     renderer: vu ? rendering.backend : "unavailable",
     quality: gpuFinish ? "WebGPU PBR + TSL glow" : vi ? "PBR + GTAO" : "PBR",
     objectCount: ut.objects.length,
