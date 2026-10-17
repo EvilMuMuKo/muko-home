@@ -22,12 +22,7 @@ let renderer: Renderer,
   orbit: OrbitControls;
 const scene = new T.Scene();
 scene.background = new T.Color("#d3dedc");
-const camera = new T.PerspectiveCamera(
-  72,
-  innerWidth / innerHeight,
-  0.035,
-  150,
-);
+const camera = new T.PerspectiveCamera(72, innerWidth / innerHeight, 0.08, 80);
 let ready = false,
   visualReady: Promise<void> = Promise.resolve(),
   walking = true,
@@ -48,9 +43,9 @@ const keys = new Set<string>(),
 const eye = new T.Vector3(2.2, 1.62, 5.65);
 camera.position.copy(eye);
 const materials = createMaterials();
-const ambient = new T.HemisphereLight("#edf1e9", "#c4b49d", 2.1);
+const ambient = new T.HemisphereLight("#f1eee9", "#9a8e81", 1.05);
 scene.add(ambient);
-const sun = new T.DirectionalLight("#fff0d6", 3.0);
+const sun = new T.DirectionalLight("#fff0de", 2.4);
 sun.position.set(5, 12, -6);
 sun.target.position.set(6, 0, 6);
 sun.castShadow = true;
@@ -83,20 +78,30 @@ const lightPositions: Record<string, [number, number, number]> = {
   utility: [5.3, 2.5, 0.8],
 };
 function allocateLights() {
+  const center = lightPositions[currentRoom];
   const ids = [
     currentRoom,
-    ...Object.keys(lightPositions).filter((id) => id !== currentRoom),
+    ...Object.keys(lightPositions)
+      .filter((id) => id !== currentRoom)
+      .sort((a, b) => {
+        const pa = lightPositions[a],
+          pb = lightPositions[b];
+        return (
+          Math.hypot(pa[0] - center[0], pa[2] - center[2]) -
+          Math.hypot(pb[0] - center[0], pb[2] - center[2])
+        );
+      }),
   ].slice(0, quality.lightSlots);
   lightPool.forEach((light, i) => {
     const id = ids[i],
       p = lightPositions[id];
     light.position.set(...p);
     light.target.position.set(p[0], 0, p[2]);
-    light.color.set(id === "gaming" ? "#d6e6eb" : "#ffe4bc");
-    light.intensity = lighting === "day" ? 1.3 : lighting === "quiet" ? 3 : 5.5;
-    if (currentRoom === "gaming" && id === "gaming")
-      light.intensity = lighting === "day" ? 1.5 : 4.2;
+    light.color.set(id === "gaming" ? "#f0e7da" : "#ffe4c2");
+    light.intensity = lighting === "day" ? 8 : lighting === "quiet" ? 7 : 15;
+    light.shadow.needsUpdate = true;
   });
+  dirtyShadow = true;
 }
 function schedule(shadow = false) {
   dirtyShadow ||= shadow;
@@ -191,10 +196,11 @@ function setLight(mode: string) {
   lighting = mode;
   const day = mode === "day";
   scene.background = new T.Color(day ? "#d3dedc" : "#172529");
-  ambient.intensity = day ? 2.1 : mode === "quiet" ? 0.22 : 0.42;
-  scene.environmentIntensity = day ? 0.55 : mode === "quiet" ? 0.08 : 0.16;
-  sun.intensity = day ? 3.0 : 0.06;
-  materials.glow.emissiveIntensity = day ? 0.5 : 1;
+  ambient.intensity = day ? 1.05 : mode === "quiet" ? 0.18 : 0.28;
+  scene.environmentIntensity = day ? 0.36 : mode === "quiet" ? 0.09 : 0.14;
+  sun.intensity = day ? 2.4 : 0.035;
+  materials.glow.emissiveIntensity = day ? 0.8 : 1.6;
+  materials.coveWash.emissiveIntensity = day ? 0.28 : 0.72;
   materials.paper.emissiveIntensity = day ? 0.1 : 0.38;
   materials.screen.emissiveIntensity = day ? 0.24 : 0.55;
   finish?.setNight(mode !== "day");
@@ -375,6 +381,8 @@ function frame(now: number) {
   if ("needsUpdate" in renderer.shadowMap)
     renderer.shadowMap.needsUpdate = dirtyShadow;
   sun.shadow.needsUpdate = dirtyShadow;
+  for (const light of lightPool)
+    if (light.castShadow) light.shadow.needsUpdate = dirtyShadow;
   dirtyShadow = false;
   if (finish) finish.render();
   else renderer.render(scene, camera);
@@ -410,7 +418,7 @@ async function boot() {
   const roomEnv = new RoomEnvironment();
   const env = envGen.fromScene(roomEnv, 0.055);
   scene.environment = env.texture;
-  scene.environmentIntensity = 0.55;
+  scene.environmentIntensity = 0.36;
   roomEnv.dispose();
   envGen.dispose();
   // Exterior is a quiet schematic garden, not a claim about the real property's surroundings.
@@ -437,7 +445,13 @@ async function boot() {
   }
   for (let i = 0; i < quality.lightSlots; i++) {
     const light = new T.SpotLight("#ffe4bc", 4, 8, Math.PI * 0.38, 0.75, 1.35);
-    light.castShadow = false;
+    light.castShadow = i < quality.shadowLights;
+    light.shadow.mapSize.set(quality.shadowSize, quality.shadowSize);
+    light.shadow.camera.near = 0.1;
+    light.shadow.camera.far = 8;
+    light.shadow.normalBias = 0.025;
+    light.shadow.bias = -0.00015;
+    light.shadow.autoUpdate = false;
     lightPool.push(light);
     scene.add(light, light.target);
   }
@@ -586,6 +600,12 @@ async function boot() {
       geometry: geometryState(),
       textures: textureStatus,
       batching: home.batching,
+      contact: home.contact,
+      lighting: {
+        slots: lightPool.length,
+        shadowLights: lightPool.filter((l) => l.castShadow).length,
+        localIntensity: lightPool[0]?.intensity,
+      },
       clock: clockStats,
       finish: finish?.audit() ?? { kind: "native AA + shared PBR environment" },
       drawCalls: renderer.info.render.calls,

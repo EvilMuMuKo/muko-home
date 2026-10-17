@@ -1,6 +1,7 @@
 import * as T from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { shadeFloors } from "./contact-shading";
 import { metricUV } from "./texture-mapping";
 import { transformGeometry } from "./geometry";
 import {
@@ -34,7 +35,9 @@ export function buildHome(scene: T.Scene, m: Materials) {
   const colliders: Collider[] = [],
     actions: Action[] = [],
     wallTops: T.Object3D[] = [],
+    cutWalls: T.Object3D[] = [],
     roofs: T.Object3D[] = [],
+    floors: T.Mesh[] = [],
     bounds: Record<string, { min: number[]; max: number[] }> = {};
   const all = new T.Group();
   scene.add(all);
@@ -246,23 +249,28 @@ export function buildHome(scene: T.Scene, m: Materials) {
   for (const room of rooms) {
     const rectangles = room.floorRects ?? [room.rect];
     for (const [a, b, c, d] of rectangles) {
-      box(
+      const floor = mesh(
         fixed,
-        c - a,
-        0.018,
-        d - b,
+        new T.PlaneGeometry(
+          c - a,
+          d - b,
+          Math.ceil((c - a) * 8),
+          Math.ceil((d - b) * 8),
+        ),
+        room.material + "Contact",
         (a + c) / 2,
-        0.009,
+        0.018,
         (b + d) / 2,
-        room.material,
-        0,
       );
+      floor.rotation.x = -Math.PI / 2;
+      floor.castShadow = false;
+      floors.push(floor);
       if (room.material !== "floor")
-        for (let x = a + 0.6; x < c; x += 0.6)
-          box(fixed, 0.003, 0.001, d - b, x, 0.019, (b + d) / 2, "paint", 0);
+        for (let x = Math.ceil(a / 1.2) * 1.2; x < c; x += 1.2)
+          box(fixed, 0.003, 0.001, d - b, x, 0.019, (b + d) / 2, "grout", 0);
       if (room.material !== "floor")
-        for (let z = b + 0.6; z < d; z += 0.6)
-          box(fixed, c - a, 0.001, 0.003, (a + c) / 2, 0.019, z, "paint", 0);
+        for (let z = Math.ceil(b / 1.2) * 1.2; z < d; z += 1.2)
+          box(fixed, c - a, 0.001, 0.003, (a + c) / 2, 0.019, z, "grout", 0);
       const roof = box(
         fixed,
         c - a,
@@ -300,21 +308,35 @@ export function buildHome(scene: T.Scene, m: Materials) {
         width = axisX ? end - start : 0.16,
         depth = axisX ? 0.16 : end - start;
       const o = box(fixed, width, y1 - y0, depth, x, (y0 + y1) / 2, z, mat, 0);
-      if (y1 > 1.05) wallTops.push(o);
+      if (y1 > 1.05) {
+        wallTops.push(o);
+        if (y0 < 1.05) {
+          const cutTop = Math.min(y1, 1.05);
+          const cut = box(
+            fixed,
+            width,
+            cutTop - y0,
+            depth,
+            x,
+            (y0 + cutTop) / 2,
+            z,
+            mat,
+            0,
+          );
+          cut.visible = false;
+          cutWalls.push(cut);
+        }
+      }
       if (y0 < 1.7) colliderRect(w.id, x, z, width, depth, y1);
     }
     let cursor = 0;
     for (const opening of [...(w.openings ?? [])].sort((a, b) => a.at - b.at)) {
       const left = opening.at - opening.width / 2,
         right = opening.at + opening.width / 2;
-      part(cursor, left, 0, 1.05);
-      part(cursor, left, 1.05, HEIGHT);
+      part(cursor, left, 0, HEIGHT);
       const y0 = opening.type === "window" ? (opening.sill ?? 0.8) : 0,
         y1 = y0 + (opening.height ?? (opening.type === "window" ? 1.6 : 2.22));
-      if (y0) {
-        part(left, right, 0, Math.min(y0, 1.05));
-        if (y0 > 1.05) part(left, right, 1.05, y0);
-      }
+      if (y0) part(left, right, 0, y0);
       part(left, right, y1, HEIGHT);
       const [x, z] = position(opening.at);
       if (opening.type === "window") {
@@ -456,7 +478,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
             opening.width - 0.13,
             1.03,
             0.045,
-            "bronze",
+            "metal",
           );
           movingCollider(opening.id!, leaf);
           const sign = 1;
@@ -475,8 +497,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
       }
       cursor = right;
     }
-    part(cursor, len, 0, 1.05);
-    part(cursor, len, 1.05, HEIGHT);
+    part(cursor, len, 0, HEIGHT);
     // Thin wall base. Openings remain genuine holes in both mesh and collider.
   }
   walls.forEach(wall);
@@ -494,7 +515,8 @@ export function buildHome(scene: T.Scene, m: Materials) {
     all.add(g);
     objectGroups.set(o.id, g);
     const { w, d, h } = o;
-    const wood = o.material ?? "oak";
+    const wood =
+      o.material ?? (["coffee", "kitchen"].includes(o.type) ? "paint" : "oak");
     function bodyObstacle(height = h) {
       colliderRect(
         o.id,
@@ -505,69 +527,130 @@ export function buildHome(scene: T.Scene, m: Materials) {
         height,
       );
     }
-    function cabinet(bottom = 0, media = false) {
-      const cols = Math.max(1, Math.round(w / 0.58)),
+    function cabinet(bottom = 0) {
+      const cols =
+          o.id === "guest-east-wardrobe"
+            ? 2
+            : Math.max(1, Math.round(w / 0.58)),
         cw = w / cols;
-      box(g, w, 0.08, d, 0, bottom + 0.06, 0, wood);
+      box(g, w, 0.08, d, 0, bottom + 0.06, 0, "charcoal");
       box(g, w, 0.035, d, 0, bottom + h - 0.02, 0, wood);
       for (const x of [-w / 2 + 0.012, w / 2 - 0.012])
         box(g, 0.022, h, d, x, bottom + h / 2, 0, wood);
-      box(g, w, h, 0.018, 0, bottom + h / 2, -d / 2 + 0.01, "oak");
-      for (let j = 0; j < cols; j++) {
-        const x = -w / 2 + cw * (j + 0.5);
-        if (j) box(g, 0.018, h, d, x - cw / 2, bottom + h / 2, 0, "oak");
-        for (let level = 0.52; level < h - 0.15; level += 0.52)
-          box(g, cw, 0.018, d - 0.03, x, bottom + level, 0, "oak");
-        const openBay =
-          (o.id === "coffee-upper" && j === 1) ||
-          (media && j > 0 && j < cols - 1);
-        if (openBay) {
-          if (!media)
-            for (let row = 0.48; row < h; row += 0.43)
-              for (let k = 0; k < 2; k++)
-                cup(g, x - 0.12 + k * 0.22, bottom + row + 0.01, d / 2 - 0.12);
-          continue;
-        }
+      box(g, w, h, 0.018, 0, bottom + h / 2, -d / 2 + 0.055, "charcoal");
+      const front = (j: number, low: number, high: number, suffix = "") => {
+        const x = -w / 2 + cw * (j + 0.5),
+          sliding = o.id === "guest-east-wardrobe";
         const pivot = new T.Group();
-        pivot.position.set(x - cw / 2 + 0.012, bottom, d / 2);
+        pivot.position.set(
+          x - cw / 2 + 0.012,
+          bottom + low,
+          d / 2 + (sliding ? j * 0.025 : 0),
+        );
+        pivot.userData.moving = true;
         g.add(pivot);
-        const front = box(
+        const leaf = box(
           pivot,
-          cw - 0.025,
-          h - 0.1,
+          cw - 0.018,
+          high - low - 0.022,
           0.024,
-          (cw - 0.025) / 2,
-          h / 2 + 0.02,
+          (cw - 0.018) / 2,
+          (high - low) / 2,
           0.006,
           wood,
-          0.004,
-        );
-        box(
-          pivot,
-          0.012,
-          0.17,
-          0.028,
-          cw - 0.07,
-          Math.min(h - 0.12, 1.13),
-          0.032,
-          "bronze",
           0.003,
         );
+        if (sliding || o.id === "master-wardrobe")
+          box(
+            pivot,
+            0.008,
+            Math.min(0.34, (high - low) * 0.4),
+            0.012,
+            cw - 0.045,
+            (high - low) * 0.5,
+            0.024,
+            "metal",
+            0.002,
+          );
         g.updateWorldMatrix(true, true);
-        const at = new T.Vector3(
-          x,
-          bottom + Math.min(h / 2, 1.3),
-          d / 2 + 0.15,
-        ).applyMatrix4(g.matrixWorld);
-        act(`${o.id}-${j}`, o.label ?? "收纳柜", o.room, at, (t) => {
-          pivot.rotation.y = -t * Math.PI * 0.49;
-        });
-        // Door leaf never participates in static furniture batching.
-        pivot.userData.moving = true;
-        if (bottom < 1.7) movingCollider(`${o.id}-leaf-${j}`, front);
+        act(
+          `${o.id}-${j}${suffix}`,
+          o.label ?? "收纳柜",
+          o.room,
+          new T.Vector3(
+            x,
+            bottom + low + Math.min((high - low) / 2, 1.3),
+            d / 2 + 0.15,
+          ).applyMatrix4(g.matrixWorld),
+          (t) => {
+            if (sliding)
+              pivot.position.x =
+                x - cw / 2 + 0.012 + (j ? -1 : 1) * t * (cw - 0.07);
+            else pivot.rotation.y = -t * Math.PI * 0.49;
+          },
+        );
+        if (bottom + low < 1.7)
+          movingCollider(`${o.id}-leaf-${j}${suffix}`, leaf);
+      };
+      for (let j = 0; j < cols; j++) {
+        const x = -w / 2 + cw * (j + 0.5),
+          niche = o.id === "living-back" && (j === 1 || j === 2);
+        if (j) box(g, 0.018, h, d, x - cw / 2, bottom + h / 2, 0, wood);
+        const levels = niche
+          ? [0.87, 1.77, 2.3]
+          : o.id === "guest-east-wardrobe"
+            ? [0.28, 2.12]
+            : [0.52, 1.04, 1.56, 2.08, 2.6];
+        for (const level of levels)
+          if (level < h - 0.1)
+            box(g, cw, 0.018, d - 0.03, x, bottom + level, 0, wood);
+        if (o.id === "guest-east-wardrobe")
+          line(
+            g,
+            [x - cw * 0.4, 2.02, 0],
+            [x + cw * 0.4, 2.02, 0],
+            0.009,
+            "metal",
+          );
+        if (niche) {
+          front(j, 0.08, 0.86, "-lower");
+          front(j, 1.79, h - 0.02, "-upper");
+          box(g, cw - 0.02, 0.012, 0.02, x, 1.75, -d / 2 + 0.05, "glow", 0.002);
+          if (j === 1) {
+            book(g, x - 0.06, 0.89, 0, 0.06, 0.27, 0.19);
+            book(g, x + 0.03, 0.89, 0, 0.07, 0.23, 0.19);
+          } else {
+            cyl(g, 0.07, 0.045, 0.28, x, 1.03, 0, "ceramic");
+            line(g, [x, 1.16, 0], [x + 0.1, 1.45, 0], 0.003, "darkwood");
+          }
+        } else if (o.id === "coffee-upper" && j === 1) {
+          for (const row of [0.53, 1.05])
+            if (row < h)
+              for (const k of [0, 1])
+                cup(g, x - 0.12 + k * 0.22, bottom + row + 0.01, d / 2 - 0.12);
+        } else front(j, 0.08, h - 0.02);
       }
-      box(g, w, 0.025, d + 0.015, 0, bottom + h + 0.012, 0, wood);
-      if (bottom < 1.7) bodyObstacle(bottom + h);
+      // Inset shadow plinth, aligned flush fronts and a single restrained light seam.
+      box(
+        g,
+        w - 0.06,
+        0.012,
+        0.02,
+        0,
+        bottom + 0.115,
+        d / 2 - 0.04,
+        "glow",
+        0.002,
+      );
+      if (bottom > 0) {
+        const width = (o.rotation ?? 0) % 180 ? d : w,
+          depth = (o.rotation ?? 0) % 180 ? w : d;
+        colliders.push({
+          id: o.id,
+          min: new T.Vector3(o.x - width / 2, bottom, o.z - depth / 2),
+          max: new T.Vector3(o.x + width / 2, bottom + h, o.z + depth / 2),
+        });
+      } else bodyObstacle(h);
     }
     if (o.type === "low-cabinet") {
       cabinet();
@@ -619,7 +702,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
             cw / 2,
             height - 0.05,
             0.019,
-            "bronze",
+            "metal",
             0.002,
           );
           g.updateWorldMatrix(true, true);
@@ -649,14 +732,14 @@ export function buildHome(scene: T.Scene, m: Materials) {
           [x, 1.83, -d / 2 + 0.065],
           [x, 1.83, -d / 2 + 0.14],
           0.008,
-          "bronze",
+          "metal",
         );
         line(
           g,
           [x, 1.83, -d / 2 + 0.14],
           [x, 1.875, -d / 2 + 0.14],
           0.008,
-          "bronze",
+          "metal",
         );
       }
       box(g, 0.34, 0.025, 0.14, -0.31, 1.22, -d / 2 + 0.125, "oak", 0.004);
@@ -685,14 +768,14 @@ export function buildHome(scene: T.Scene, m: Materials) {
     if (o.type === "bike-wall") {
       box(g, w, h, 0.025, 0, h / 2, -d / 2 + 0.02, "paint");
       box(g, 0.43, h, d, -w / 2 + 0.22, h / 2, 0, "paint");
-      box(g, w - 0.46, 0.4, d + 0.1, 0.23, 0.21, 0.04, "oak", 0.018);
+      box(g, w - 0.46, 0.4, d + 0.1, 0.23, 0.21, 0.04, "charcoal", 0.018);
       box(g, w - 0.46, 0.41, d, 0.23, h - 0.205, 0, "paint");
       const pivot = new T.Group();
       pivot.position.set(-w / 2 + 0.015, 0, d / 2 + 0.015);
       g.add(pivot);
       pivot.userData.moving = true;
       const leaf = box(pivot, 0.4, h - 0.08, 0.025, 0.2, h / 2, 0, "paint");
-      box(pivot, 0.012, 0.16, 0.026, 0.34, 1.1, 0.026, "bronze");
+      box(pivot, 0.012, 0.16, 0.026, 0.34, 1.1, 0.026, "metal");
       g.updateWorldMatrix(true, true);
       act(
         o.id,
@@ -838,16 +921,16 @@ export function buildHome(scene: T.Scene, m: Materials) {
     }
     if (o.type === "cabinet") cabinet(cabinetBottom(o.id));
     if (o.type === "media") {
-      box(g, w, h, 0.025, 0, h / 2, -d / 2 + 0.02, "paint");
+      box(g, w, h, 0.025, 0, h / 2, -d / 2 + 0.02, "charcoal");
       for (const side of [-1, 1]) {
         const x = side * (w / 2 - 0.27);
-        box(g, 0.52, h, d, x, h / 2, 0, "oak");
+        box(g, 0.52, h, d, x, h / 2, 0, "paint");
         const pivot = new T.Group();
         pivot.position.set(x - 0.25, 0, d / 2 + 0.015);
         g.add(pivot);
         pivot.userData.moving = true;
-        const leaf = box(pivot, 0.49, h - 0.1, 0.024, 0.245, h / 2, 0, "oak");
-        box(pivot, 0.012, 0.18, 0.025, 0.44, 1.1, 0.025, "bronze");
+        const leaf = box(pivot, 0.49, h - 0.1, 0.024, 0.245, h / 2, 0, "paint");
+        box(pivot, 0.012, 0.18, 0.025, 0.44, 1.1, 0.025, "metal");
         g.updateWorldMatrix(true, true);
         act(
           o.id + side,
@@ -859,7 +942,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
         movingCollider(o.id + "leaf" + side, leaf);
       }
       const inner = w - 1.1;
-      box(g, inner, 0.44, d, 0, 0.24, 0, "oak");
+      box(g, inner, 0.44, d, 0, 0.24, 0, "paint");
       box(g, inner, 0.035, d, 0, 0.475, 0, "stone");
       box(g, inner, 0.48, d, 0, h - 0.24, 0, "paint");
       for (let x = -inner / 2 + 0.4; x < inner / 2; x += 0.65)
@@ -876,6 +959,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
         box(g, 0.13, 0.28, 0.16, x, 0.64, 0.02, "black");
         box(g, 0.1, 0.25, 0.012, x, 0.64, 0.11, "linen");
       }
+      box(g, inner - 0.08, 0.012, 0.03, 0, 0.1, d / 2 - 0.025, "glow", 0.002);
       bodyObstacle(h);
     }
     if (["coffee", "kitchen", "console"].includes(o.type)) {
@@ -894,7 +978,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
           wood,
           0.004,
         );
-        box(g, 0.15, 0.012, 0.026, x, h - 0.15, d / 2 + 0.03, "bronze");
+        box(g, 0.15, 0.012, 0.026, x, h - 0.15, d / 2 + 0.03, "metal");
       }
       box(g, w + 0.03, 0.045, d + 0.025, 0, h, 0, "stone", 0.012);
       bodyObstacle(h);
@@ -913,7 +997,9 @@ export function buildHome(scene: T.Scene, m: Materials) {
         cup(g, 0.57, h + 0.025, 0.12);
         box(g, 0.48, 0.024, 0.27, 0.62, h + 0.035, -0.02, "oak", 0.025);
         cyl(g, 0.075, 0.06, 0.15, 0.65, h + 0.12, -0.04, "ceramic");
-        box(g, w, 0.35, 0.018, 0, 1.15, -d / 2 - 0.005, "stone");
+        box(g, w - 0.04, 0.65, 0.022, 0, 1.28, -d / 2 + 0.1, "charcoal");
+        for (const x of [-w / 2 + 0.012, w / 2 - 0.012])
+          box(g, 0.024, 2.76, d - 0.04, x, 1.38, -0.02, "paint", 0.003);
         box(g, w - 0.12, 0.012, 0.035, 0, 1.585, -0.04, "glow");
       }
       if (o.type === "kitchen") {
@@ -974,7 +1060,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
       bodyObstacle(0.85);
     }
     if (o.type === "sofa") {
-      box(g, w - 0.14, 0.17, d - 0.08, 0, 0.2, 0, "oak", 0.09);
+      box(g, w - 0.14, 0.17, d - 0.08, 0, 0.2, 0, "clay", 0.09);
       for (const x of [-0.62, 0.62])
         box(g, 1.2, 0.21, 0.81, x, 0.425, -0.065, "linen", 0.09);
       box(g, w - 0.08, 0.38, 0.22, 0, 0.6, 0.34, "linen", 0.1);
@@ -997,9 +1083,33 @@ export function buildHome(scene: T.Scene, m: Materials) {
       bodyObstacle(0.82);
     }
     if (o.type === "bed") {
-      box(g, w + 0.04, 0.22, d, 0, 0.2, 0, "oak", 0.06);
+      box(g, w + 0.04, 0.22, d, 0, 0.2, 0, "sage", 0.06);
+      // Upholstered storage base with real drawer fronts and recessed toe space.
+      for (const side of o.room === "guest" ? [1] : [-1, 1])
+        for (const z of [-d * 0.23, d * 0.23])
+          box(
+            g,
+            0.018,
+            0.14,
+            d * 0.43,
+            side * (w / 2 + 0.026),
+            0.21,
+            z,
+            "sage",
+            0.008,
+          );
       box(g, w, 0.26, d - 0.06, 0, 0.43, 0, "linen", 0.075);
-      box(g, w + 0.18, 1.08, 0.12, 0, 0.55, -d / 2 + 0.04, "clay", 0.055);
+      box(
+        g,
+        w + (o.room === "guest" ? 0.04 : 0.18),
+        1.08,
+        0.12,
+        0,
+        0.55,
+        -d / 2 + 0.04,
+        "sage",
+        0.055,
+      );
       box(g, w - 0.04, 0.1, d * 0.68, 0, 0.6, 0.25, "linen", 0.07);
       for (const x of [-w * 0.24, w * 0.24]) {
         const p = box(
@@ -1016,10 +1126,48 @@ export function buildHome(scene: T.Scene, m: Materials) {
         p.rotation.x = -0.1;
       }
       box(g, w + 0.035, 0.035, 0.46, 0, 0.66, d * 0.32, "sage", 0.018);
+      if (o.room === "guest")
+        box(
+          g,
+          w - 0.14,
+          0.025,
+          0.08,
+          0,
+          1.11,
+          -d / 2 + 0.065,
+          "darkwood",
+          0.004,
+        );
       bodyObstacle(0.8);
     }
     if (o.type === "bench") {
-      box(g, w, 0.34, d, 0, 0.19, 0, "oak", 0.025);
+      box(g, w, 0.025, d - 0.03, 0, 0.04, -0.015, "paint", 0.003);
+      box(g, w, 0.025, d - 0.03, 0, 0.35, -0.015, "paint", 0.003);
+      box(g, w, 0.3, 0.02, 0, 0.19, -d / 2 + 0.015, "charcoal", 0.003);
+      for (const x of [-w / 2 + 0.012, w / 2 - 0.012])
+        box(g, 0.024, 0.3, d, x, 0.19, 0, "paint", 0.003);
+      const cols = Math.max(2, Math.round(w / 0.6));
+      for (let col = 0; col < cols; col++) {
+        const cw = w / cols,
+          x = -w / 2 + cw * (col + 0.5);
+        const lid = new T.Group();
+        lid.position.set(x, 0.19, d / 2);
+        lid.userData.moving = true;
+        g.add(lid);
+        const leaf = box(lid, cw - 0.014, 0.28, 0.023, 0, 0, 0, "paint", 0.003);
+        box(lid, cw - 0.08, 0.008, 0.012, 0, 0.1, 0.018, "metal", 0.002);
+        g.updateWorldMatrix(true, true);
+        act(
+          o.id + "-drawer-" + col,
+          "窗边收纳抽屉",
+          o.room,
+          new T.Vector3(x, 0.3, d / 2 + 0.1).applyMatrix4(g.matrixWorld),
+          (t) => {
+            lid.position.z = d / 2 + t * Math.min(0.26, d * 0.75);
+          },
+        );
+        movingCollider(o.id + "-drawer-leaf-" + col, leaf);
+      }
       box(g, w, 0.09, d, 0, 0.405, 0, "linen", 0.035);
       bodyObstacle(0.5);
     }
@@ -1069,7 +1217,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
         [windowEnd + 0.035, w / 2],
       ])
         if (b - a > 0.18) {
-          pegboard(g, a, b, 1.46, 2.46, -d / 2 + 0.02);
+          pegboard(g, a, b, 1.46, 2.23, -d / 2 + 0.02);
           box(
             g,
             b - a,
@@ -1183,12 +1331,41 @@ export function buildHome(scene: T.Scene, m: Materials) {
       bodyObstacle(h);
     }
     if (o.type === "vanity") {
-      box(g, w, 0.51, d, 0, 0.55, 0, "oak", 0.015);
+      box(g, w, 0.51, d, 0, 0.55, 0, "paint", 0.015);
       box(g, w + 0.02, 0.06, d + 0.02, 0, 0.84, 0, "stone", 0.012);
       const sink = sphere(g, 0, 0.88, 0.02, 0.25, 0.045, 0.17, "ceramic");
       cyl(g, 0.009, 0.009, 0.16, 0.14, 0.94, -0.17, "steel");
       line(g, [0.14, 1.02, -0.17], [0.14, 1.02, -0.04], 0.009, "steel");
-      box(g, w - 0.04, 0.92, 0.025, 0, 1.61, -d / 2 - 0.02, "mirror", 0.04);
+      // A shallow, usable mirror cabinet rather than a painted mirror rectangle.
+      box(g, w - 0.02, 0.94, 0.14, 0, 1.62, -d / 2 + 0.05, "charcoal", 0.008);
+      for (const side of [-1, 1]) {
+        const pivot = new T.Group();
+        pivot.position.set(side * (w / 2 - 0.02), 1.16, -d / 2 + 0.125);
+        pivot.userData.moving = true;
+        g.add(pivot);
+        const leaf = box(
+          pivot,
+          w / 2 - 0.03,
+          0.9,
+          0.018,
+          -side * (w / 4 - 0.015),
+          0.45,
+          0,
+          "mirror",
+          0.006,
+        );
+        g.updateWorldMatrix(true, true);
+        movingCollider(o.id + "-mirror-leaf-" + side, leaf);
+        act(
+          o.id + "-mirror-" + side,
+          "镜柜",
+          o.room,
+          new T.Vector3(0, 1.6, d / 2 + 0.08).applyMatrix4(g.matrixWorld),
+          (t) => {
+            pivot.rotation.y = side * t * Math.PI * 0.42;
+          },
+        );
+      }
       for (const x of [-w / 2 - 0.025, w / 2 + 0.025])
         box(g, 0.022, 0.7, 0.025, x, 1.59, -d / 2 + 0.03, "glow");
       bodyObstacle(0.9);
@@ -1237,8 +1414,8 @@ export function buildHome(scene: T.Scene, m: Materials) {
       colliderRect(o.id, o.x - w / 2, o.z, 0.035, d, 2.3);
     }
     if (o.type === "lamp") {
-      cyl(g, 0.18, 0.18, 0.025, 0, 0.018, 0, "bronze");
-      cyl(g, 0.012, 0.012, 1.1, 0, 0.58, 0, "bronze");
+      cyl(g, 0.18, 0.18, 0.025, 0, 0.018, 0, "metal");
+      cyl(g, 0.012, 0.012, 1.1, 0, 0.58, 0, "metal");
       sphere(g, 0, 1.3, 0, 0.2, 0.25, 0.2, "paper");
       bodyObstacle(0.6);
     }
@@ -1333,10 +1510,127 @@ export function buildHome(scene: T.Scene, m: Materials) {
     t.colorSpace = T.SRGBColorSpace;
     return t;
   }
+  // Architectural coves share one gradient and one emissive material. No extra lights per strip.
+  const covePaths: [number, number][][] = [
+    [
+      [4.92, 4.56],
+      [7.43, 4.56],
+      [7.43, 10.6],
+      [3.58, 10.6],
+      [3.58, 7.2],
+      [4.92, 7.2],
+    ],
+    [
+      [0.25, 8.04],
+      [2.15, 8.04],
+      [2.15, 10.87],
+      [0.25, 10.87],
+    ],
+    [
+      [8.22, 7.98],
+      [11.55, 7.98],
+      [11.55, 11.05],
+      [8.22, 11.05],
+    ],
+    [
+      [7.25, 0.76],
+      [9.38, 0.76],
+      [9.38, 3.25],
+      [7.25, 3.25],
+    ],
+    [
+      [2.25, 3.95],
+      [3.25, 3.95],
+      [3.25, 5.55],
+      [2.25, 5.55],
+    ],
+  ];
+  for (const path of covePaths) {
+    const cove = new T.Group();
+    fixed.add(cove);
+    roofs.push(cove);
+    for (let i = 0; i < path.length; i++) {
+      const a = path[i],
+        b = path[(i + 1) % path.length],
+        dx = b[0] - a[0],
+        dz = b[1] - a[1],
+        len = Math.hypot(dx, dz),
+        angle = Math.atan2(dz, dx),
+        nx = -dz / len,
+        nz = dx / len,
+        x = (a[0] + b[0]) / 2,
+        z = (a[1] + b[1]) / 2;
+      const baffle = box(
+        cove,
+        len + 0.035,
+        0.06,
+        0.045,
+        x,
+        2.735,
+        z,
+        "wall",
+        0.002,
+      );
+      baffle.rotation.y = -angle;
+      const seam = box(
+        cove,
+        len,
+        0.008,
+        0.018,
+        x + nx * 0.035,
+        2.773,
+        z + nz * 0.035,
+        "glow",
+        0.001,
+      );
+      seam.rotation.y = -angle;
+      seam.castShadow = false;
+      // Miter adjacent gradient strips so their coplanar corner triangles never overlap.
+      const offsetAt = (index: number, distance: number) => {
+        const prev = path[(index + path.length - 1) % path.length],
+          p = path[index],
+          next = path[(index + 1) % path.length];
+        const l1 = Math.hypot(p[0] - prev[0], p[1] - prev[1]),
+          l2 = Math.hypot(next[0] - p[0], next[1] - p[1]);
+        const n1 = [-(p[1] - prev[1]) / l1, (p[0] - prev[0]) / l1],
+          n2 = [-(next[1] - p[1]) / l2, (next[0] - p[0]) / l2];
+        const scale = distance / (1 + n1[0] * n2[0] + n1[1] * n2[1]);
+        return [
+          p[0] + (n1[0] + n2[0]) * scale,
+          2.794,
+          p[1] + (n1[1] + n2[1]) * scale,
+        ];
+      };
+      const nextIndex = (i + 1) % path.length;
+      const geometry = new T.BufferGeometry();
+      geometry.setAttribute(
+        "position",
+        new T.Float32BufferAttribute(
+          [
+            ...offsetAt(i, 0.04),
+            ...offsetAt(nextIndex, 0.04),
+            ...offsetAt(nextIndex, 0.48),
+            ...offsetAt(i, 0.48),
+          ],
+          3,
+        ),
+      );
+      geometry.setAttribute(
+        "uv",
+        new T.Float32BufferAttribute([0, 1, 1, 1, 1, 0, 0, 0], 2),
+      );
+      geometry.setIndex([0, 1, 2, 0, 2, 3]);
+      geometry.computeVertexNormals();
+      cove.add(new T.Mesh(geometry, m.coveWash));
+    }
+  }
+  // A restrained upholstered head wall leaves both continuous corner windows exposed.
+  box(fixed, 0.035, 2.35, 2.28, 8.075, 1.33, 9.3, "clay", 0.008);
+  for (const z of [8.18, 10.42])
+    box(fixed, 0.012, 2.15, 0.012, 8.1, 1.36, z, "glow", 0.002);
   // Pendant shapes and visible strips have physical locations; only a bounded light pool is allocated at runtime.
   for (const [id, x, z, w] of [
     ["dining", 6.35, 5.95, 1.1],
-    ["living", 5.65, 9.1, 1.5],
     ["kitchen", 5.5, 2.8, 0.8],
     ["entry", 2.4, 5.8, 0.5],
   ] as const) {
@@ -1350,12 +1644,51 @@ export function buildHome(scene: T.Scene, m: Materials) {
   }
   // Master bedside shades and a kitchen rail make the close views useful, rather than filling every niche with generic books.
   for (const z of [8.04, 10.55]) {
-    cyl(fixed, 0.06, 0.06, 0.014, 8.32, 0.72, z, "bronze");
+    cyl(fixed, 0.06, 0.06, 0.014, 8.32, 0.72, z, "metal");
     sphere(fixed, 8.32, 0.86, z, 0.11, 0.13, 0.11, "paper");
   }
   all.updateMatrixWorld(true);
-  let sources = 0,
+  const contact = shadeFloors(floors, colliders);
+  // Batch the whole hideable ceiling layer separately: coves need three draws, not one per strip.
+  const ceilingMeshes: T.Mesh[] = [];
+  for (const roof of roofs)
+    roof.traverse((node) => {
+      if (node instanceof T.Mesh) ceilingMeshes.push(node);
+    });
+  const ceilingBuckets = new Map<string, T.Mesh[]>();
+  for (const mesh of ceilingMeshes) {
+    const key = `${(mesh.material as T.Material).uuid}:${mesh.castShadow}`;
+    if (!ceilingBuckets.has(key)) ceilingBuckets.set(key, []);
+    ceilingBuckets.get(key)!.push(mesh);
+  }
+  const ceilingLayer = new T.Group();
+  fixed.add(ceilingLayer);
+  let sources = ceilingMeshes.length,
     batches = 0;
+  for (const meshes of ceilingBuckets.values()) {
+    const geometries = meshes.map((mesh) => {
+      let geo = mesh.geometry.clone();
+      transformGeometry(geo, mesh.matrixWorld);
+      if (geo.index) {
+        const flat = geo.toNonIndexed();
+        geo.dispose();
+        geo = flat;
+      }
+      return geo;
+    });
+    const geometry = mergeGeometries(geometries);
+    geometries.forEach((g) => g.dispose());
+    if (!geometry) throw new Error("Incompatible ceiling geometry");
+    const batch = new T.Mesh(geometry, meshes[0].material);
+    batch.castShadow = meshes[0].castShadow;
+    batch.receiveShadow = true;
+    ceilingLayer.add(batch);
+    batches++;
+  }
+  for (const roof of roofs) roof.removeFromParent();
+  ceilingMeshes.forEach((mesh) => mesh.geometry.dispose());
+  roofs.splice(0, roofs.length, ceilingLayer);
+
   const buckets = new Map<string, T.Mesh[]>();
   all.traverse((n) => {
     if (!(n instanceof T.Mesh) || wallTops.includes(n) || roofs.includes(n))
@@ -1365,6 +1698,8 @@ export function buildHome(scene: T.Scene, m: Materials) {
       if (
         parent.userData.moving ||
         wallTops.includes(parent) ||
+        cutWalls.includes(parent) ||
+        roofs.includes(parent) ||
         (parent.type === "Group" &&
           parent.parent?.parent === all &&
           parent.parent?.name === "")
@@ -1412,9 +1747,11 @@ export function buildHome(scene: T.Scene, m: Materials) {
     actions,
     bounds,
     objectGroups,
+    contact,
     batching: { sources, batches, reduced: sources - batches },
     setOverview(on: boolean) {
       wallTops.forEach((o) => (o.visible = !on));
+      cutWalls.forEach((o) => (o.visible = on));
       roofs.forEach((o) => (o.visible = !on));
     },
   };

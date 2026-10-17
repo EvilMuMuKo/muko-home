@@ -174,7 +174,11 @@ test("all twelve areas are connected to the entrance with a 520mm walking body",
         }
       }
     }
-    return a.getModel().rooms.map((r: any) => ({
+    return [
+      ...a.getModel().rooms,
+      { id: "guest-wardrobe-access", spawn: [2.0, 9.55] },
+      { id: "guest-window-access", spawn: [1.2, 10.76] },
+    ].map((r: any) => ({
       id: r.id,
       reachable: [...seen].some(
         (k) =>
@@ -362,4 +366,95 @@ test("revision joins the gaming balcony, recesses entry storage and clears the l
   expect(actual.clearAcrossFormerWall).toBe(true);
   expect(actual.cornerPosts).toEqual([]);
   expect(actual.staleBalconyDoor).toBe(false);
+});
+
+test("revision 03 keeps storage useful, window clear and the new guest bedside accessible", async ({
+  page,
+}) => {
+  await ready(page);
+  const result = await page.evaluate(() => {
+    const a = (window as any).homePresentation,
+      m = a.getModel(),
+      b = a.getBounds();
+    return {
+      version: m.version,
+      livingAisle: b["living-back"].min[0] - b["central-sofa"].max[0],
+      guestAisle: b["guest-east-wardrobe"].min[0] - b["guest-bed"].max[0],
+      guestFoot: b["guest-window-seat"].min[2] - b["guest-bed"].max[2],
+      bedside: a.clearAt(2.0, 9.55),
+      foot: a.clearAt(1.2, 10.76),
+      gameUpperStart: b["gaming-upper"].min[2],
+      uppers: [
+        "fridge-upper",
+        "lobby-upper",
+        "gaming-upper",
+        "bath-wc-upper",
+        "suite-wc-upper",
+      ].map((id) => ({
+        id,
+        min: b[id].min[1],
+        max: b[id].max[1],
+      })),
+      contact: a.getPerformance().contact,
+    };
+  });
+  expect(result.version).toBe("1.2.0");
+  expect(result.livingAisle).toBeGreaterThan(1.0);
+  expect(result.guestAisle).toBeGreaterThan(0.56);
+  expect(result.guestFoot).toBeGreaterThan(0.6);
+  expect(result.bedside).toBe(true);
+  expect(result.foot).toBe(true);
+  // The existing side-window ends at z=1.47; the upper cabinet is on solid wall.
+  expect(result.gameUpperStart).toBeGreaterThan(1.5);
+  for (const c of result.uppers) {
+    expect(c.min, c.id).toBeGreaterThan(1.5);
+    expect(c.max, c.id).toBeCloseTo(2.76, 1);
+  }
+  expect(result.contact.floors).toBeGreaterThanOrEqual(12);
+  expect(result.contact.dynamicExcluded).toBe(true);
+  // Sliding guest doors do not swing into the narrow bedside aisle.
+  await page.evaluate(() =>
+    (window as any).homePresentation.interact("guest-east-wardrobe-0"),
+  );
+  await page.waitForFunction(
+    () =>
+      (window as any).homePresentation
+        .getState()
+        .actions.find((a: any) => a.id === "guest-east-wardrobe-0").value === 1,
+  );
+  expect(
+    await page.evaluate(() =>
+      (window as any).homePresentation.clearAt(2.0, 9.55),
+    ),
+  ).toBe(true);
+});
+
+test("revision 03 mobile lighting stays bounded and night switching settles without a render loop", async ({
+  page,
+}) => {
+  await ready(page);
+  await page.evaluate(() => {
+    const a = (window as any).homePresentation;
+    a.setRoom("dining");
+    a.setLightingScene("evening");
+  });
+  await page.waitForFunction(
+    () => !(window as any).homePresentation.getPerformance().pending,
+  );
+  const p = await page.evaluate(() =>
+    (window as any).homePresentation.getPerformance(),
+  );
+  expect(p.quality.mobile).toBe(true);
+  expect(p.lighting.slots).toBeLessThanOrEqual(4);
+  expect(p.lighting.shadowLights).toBe(1);
+  expect(p.finish.kind).not.toContain("GTAO");
+  expect(p.canvas[0] * p.canvas[1]).toBeLessThanOrEqual(1_000_000);
+  await page.waitForTimeout(400);
+  expect(
+    (
+      await page.evaluate(() =>
+        (window as any).homePresentation.getPerformance(),
+      )
+    ).renders,
+  ).toBe(p.renders);
 });
