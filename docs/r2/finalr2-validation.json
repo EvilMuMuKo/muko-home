@@ -1,0 +1,138 @@
+{
+  "modelVersion": "12.0.0",
+  "modelSha256": "62feb1a887eef6ddfda6ffe7dfaeaf38b7b401afc98eed9084d0579140322f4a",
+  "capturedAt": "2026-10-17T09:18:03.213Z",
+  "dimensionStatus": "virtual_not_surveyed",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "command": "npm run build; TypeScript + WASM + model export + Vite + Pages sync"
+    },
+    "nativeFull": {
+      "status": "PASS",
+      "expected": 177,
+      "unexpected": 0,
+      "skipped": 0,
+      "evidence": "native-tests.json"
+    },
+    "cabinetAndFurniture": {
+      "status": "PASS",
+      "scope": "actual panel/sink openings, cabinet access, support, 101 extraction+101 return samples; unchanged 2mm tolerance; not human ergonomics"
+    },
+    "firstPerson": {
+      "status": "PASS",
+      "rooms": [
+        {
+          "id": "dining",
+          "status": "PASS"
+        },
+        {
+          "id": "kitchen",
+          "status": "PASS"
+        },
+        {
+          "id": "hall",
+          "status": "PASS"
+        },
+        {
+          "id": "cinema",
+          "status": "PASS"
+        },
+        {
+          "id": "bath",
+          "status": "PASS"
+        },
+        {
+          "id": "master",
+          "status": "PASS"
+        },
+        {
+          "id": "living",
+          "status": "PASS"
+        },
+        {
+          "id": "balcony",
+          "status": "PASS"
+        }
+      ],
+      "interaction": "PASS",
+      "evidence": "whole-home-walk.json"
+    },
+    "visual": {
+      "status": "PASS",
+      "screenshots": 16,
+      "errors": [],
+      "scope": "real desktop Chromium WebGPU plus mobile viewport/touch emulation; not physical phone"
+    },
+    "floatingControls": {
+      "status": "PASS",
+      "tests": "floating-controls.spec.ts; independent multi-touch; release/cancel/blur/resize clearing"
+    },
+    "physicalPhone": {
+      "status": "NOT RUN"
+    },
+    "surveyedFit": {
+      "status": "BLOCKED",
+      "reason": "no measured structure, utilities and actual product installation evidence"
+    },
+    "allCabinetDoorsJointUse": {
+      "status": "NOT RUN",
+      "reason": "selected mechanisms and folded furniture sampled; not a claim every cabinet can open simultaneously"
+    },
+    "hardwareAndSmoke": {
+      "status": "BLOCKED",
+      "reason": "gas conditions, seals, structure, rails, anchorage, load and full-scale use need site verification"
+    },
+    "compatibilityCI": {
+      "status": "NOT RUN",
+      "reason": "CI runs against published PR head; see GitHub check results for the exact final commit, not this local native result"
+    }
+  },
+  "performance": {
+    "status": "PASS",
+    "environment": "CPU and viewport emulation are not actual phone or GPU performance.",
+    "cpuRate": 4,
+    "viewport": {
+      "width": 844,
+      "height": 390,
+      "deviceScaleFactor": 3
+    },
+    "backend": "WebGPU",
+    "pixelRatio": 1.5,
+    "baselineStartupMs": 5064,
+    "r2StartupMs": 4564,
+    "phases": [
+      {
+        "name": "l20",
+        "renderedFps": 29.437445428464514,
+        "renderFrameP95Ms": 33.400000000001455,
+        "drawCalls": 435,
+        "triangles": 155969,
+        "drawingBuffer": [
+          1266,
+          585
+        ]
+      },
+      {
+        "name": "wl-sj",
+        "renderedFps": 29.88847861416533,
+        "renderFrameP95Ms": 33.400000000001455,
+        "drawCalls": 589,
+        "triangles": 181971,
+        "drawingBuffer": [
+          1266,
+          585
+        ]
+      }
+    ],
+    "interpretation": "single same-machine comparison; startup 5064→4564ms is not a public network or phone guarantee; new layout draw calls can rise; fixed 30Hz policy retained"
+  },
+  "sourcePrivacy": {
+    "charterSha256": "2c50cd7dcb3daf1b3bf9b533d87eb6987c1481a460aaa08dfe0dd5f2cc0d14f4",
+    "privatePhotosAdded": false,
+    "xhsPublicNoteOnly": "69671635000000000e03c4fd"
+  },
+  "rollback": {
+    "baselineCommit": "213983124a3e58de7c81c8a3d50e52d17d742943"
+  }
+}

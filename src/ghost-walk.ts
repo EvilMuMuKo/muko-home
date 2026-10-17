@@ -105,6 +105,8 @@ export function createGhostWalk({
   let joystickPointer: number | null = null;
   let dragPointer: number | null = null;
   let lookPointer: number | null = null;
+  let floatingMovePointer: number | null = null;
+  let floatingLookPointer: number | null = null;
   let lookX = 0;
   let lookY = 0;
   let lastDragX = 0;
@@ -142,7 +144,7 @@ export function createGhostWalk({
   }
 
   function hasInput() {
-    return joystickPointer !== null || lookPointer !== null || dragPointer !== null || keys.size > 0;
+    return joystickPointer !== null || lookPointer !== null || floatingMovePointer !== null || floatingLookPointer !== null || dragPointer !== null || keys.size > 0;
   }
 
   function syncMotion() {
@@ -312,6 +314,29 @@ export function createGhostWalk({
   }
 
   function onCanvasDown(event: PointerEvent) {
+    if (event.pointerType === "touch") {
+      if (!active || overlay.contains(event.target as Node)) return;
+      const bounds = canvas.getBoundingClientRect();
+      const middle = bounds.left + bounds.width / 2;
+      const stick = event.clientX < middle ? joystick : lookJoystick;
+      if (stick === joystick ? floatingMovePointer !== null : floatingLookPointer !== null) return;
+      if (stick === joystick) floatingMovePointer = event.pointerId;
+      else floatingLookPointer = event.pointerId;
+      const overlayBounds = overlay.getBoundingClientRect();
+      stick.hidden = false;
+      stick.classList.add("ghost-joystick--floating");
+      stick.style.left = `${event.clientX - overlayBounds.left}px`;
+      stick.style.top = `${event.clientY - overlayBounds.top}px`;
+      stick.style.right = "auto";
+      stick.style.bottom = "auto";
+      try { canvas.setPointerCapture?.(event.pointerId); } catch { /* capture may be unavailable */ }
+      if (stick === joystick) updateJoystick(event);
+      else updateLookJoystick(event);
+      syncMotion();
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     if (!active || dragPointer !== null || event.button !== 0 || event.pointerType === "touch") return;
     dragPointer = event.pointerId;
     lastDragX = event.clientX;
@@ -327,6 +352,18 @@ export function createGhostWalk({
   }
 
   function onCanvasMove(event: PointerEvent) {
+    if (event.pointerId === floatingMovePointer) {
+      updateJoystick(event);
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    if (event.pointerId === floatingLookPointer) {
+      updateLookJoystick(event);
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     if (dragPointer !== event.pointerId || !active) return;
     const dx = event.clientX - lastDragX;
     const dy = event.clientY - lastDragY;
@@ -345,6 +382,29 @@ export function createGhostWalk({
   }
 
   function releaseCanvas(event: PointerEvent) {
+    if (event.pointerId === floatingMovePointer || event.pointerId === floatingLookPointer) {
+      const move = event.pointerId === floatingMovePointer;
+      const stick = move ? joystick : lookJoystick;
+      if (move) {
+        floatingMovePointer = null;
+        axisX = axisY = 0;
+        thumb.style.transform = "translate(0, 0)";
+      } else {
+        floatingLookPointer = null;
+        lookX = lookY = 0;
+        lookThumb.style.transform = "translate(0, 0)";
+      }
+      stick.hidden = true;
+      stick.classList.remove("ghost-joystick--floating");
+      stick.style.left = "";
+      stick.style.top = "";
+      stick.style.right = "";
+      stick.style.bottom = "";
+      try { if (canvas.hasPointerCapture?.(event.pointerId)) canvas.releasePointerCapture(event.pointerId); } catch { /* capture may already be gone */ }
+      syncMotion();
+      event.preventDefault?.();
+      return;
+    }
     if (dragPointer !== event.pointerId) return;
     dragPointer = null;
     try {
@@ -421,12 +481,23 @@ export function createGhostWalk({
     const joystickId = joystickPointer;
     const canvasId = dragPointer;
     const lookId = lookPointer;
+    const floatingMoveId = floatingMovePointer;
+    const floatingLookId = floatingLookPointer;
     joystickPointer = dragPointer = lookPointer = null;
+    floatingMovePointer = floatingLookPointer = null;
     lookX = lookY = 0;
     lookThumb.style.transform = "translate(0, 0)";
     keys.clear();
     axisX = axisY = 0;
     thumb.style.transform = "translate(0, 0)";
+    for (const [stick, pointerId] of [[joystick, floatingMoveId], [lookJoystick, floatingLookId]] as const) {
+      stick.hidden = pointerId !== null;
+      stick.classList.remove("ghost-joystick--floating");
+      stick.style.left = "";
+      stick.style.top = "";
+      stick.style.right = "";
+      stick.style.bottom = "";
+    }
     try {
       if (joystickId !== null && joystick.hasPointerCapture?.(joystickId))
         joystick.releasePointerCapture(joystickId);
@@ -443,6 +514,9 @@ export function createGhostWalk({
       if (lookId !== null && lookJoystick.hasPointerCapture?.(lookId))
         lookJoystick.releasePointerCapture(lookId);
     } catch { /* capture can already be lost */ }
+    for (const pointerId of [floatingMoveId, floatingLookId]) {
+      try { if (pointerId !== null && canvas.hasPointerCapture?.(pointerId)) canvas.releasePointerCapture(pointerId); } catch { /* capture may already be gone */ }
+    }
     syncMotion();
   }
 

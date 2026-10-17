@@ -8,9 +8,6 @@ import { createWalkCollision } from "./walk-collision";
 import { auditSceneModel } from "./model-audit";
 import { buildPlant } from "./plant-mesh";
 import { daylightStudy, sunDirection } from "./daylight";
-import { createHomeDesign } from "./home-design";
-import { createLifeDesign } from "./life-design";
-import { createSpaceRevision } from "./space-revision";
 import { createLifeMotion, buildLifeFurniture, applyLifeMotion } from "./life-mesh";
 import { createExteriorWorld } from "./exterior-world";
 import { createRoomRadiance } from "./room-radiance";
@@ -25,10 +22,9 @@ import {
   homeMotionBounds,
   updateHomeLighting,
 } from "./home-mesh";
-import { createSalonDesign } from "./salon-design";
 import { prepareSalonMaterials } from "./salon-materials";
 import { buildSalonFurniture } from "./salon-mesh";
-import { createAtmosphereDesign, themeMoments } from "./atmosphere-design";
+import { themeMoments } from "./atmosphere-design";
 import {
   configureRoomMaterials,
   finishWall,
@@ -38,7 +34,7 @@ import {
 import { buildInteriorDetails, mountMomentControls } from "./interior-detail";
 import { mountStoragePanel } from "./storage-panel";
 import { refineMaterials, whenMaterialTexturesReady, materialDetailState, auditMaterialSet } from "./material-detail";
-import { createStorageDesign, storageCapacity } from "./storage-design";
+import { storageCapacity } from "./storage-design";
 import { buildStorageUnit } from "./storage-mesh";
 import { metricUV } from "./texture-mapping";
 import { batchFurniture } from "./batching";
@@ -71,10 +67,10 @@ import {
   Scene as Xi,
   Color as ve,
 } from "three";
-import baseModel from "./model.js";
-const pt = createSpaceRevision(createLifeDesign(createHomeDesign(
-  createSalonDesign(createAtmosphereDesign(createStorageDesign(baseModel))),
-)));
+import pt from "./generated-layout.json";
+import {buildR2Cabinet} from "./r2-cabinet-mesh";
+import {buildBarSign} from "./bar-sign";
+import {buildR2Glazing} from "./r2-glazing";
 const homeMotion = createHomeMotion();
 const lifeMotion = createLifeMotion();
 const currentStorage = () =>
@@ -265,7 +261,7 @@ function Kg({
 }) {
   let o = t.rooms.map((_) => ({
     ..._,
-    polygon:
+    polygon: t.homeDesign?.r2Revision ? _.polygon :
       _.id === "hall"
         ? [
             [4.8, 1.65],
@@ -350,7 +346,7 @@ function Kg({
       [_.id],
       "floor:" + _.id,
     );
-  f(
+  if (!t.homeDesign?.r2Revision) f(
     [
       [3.5, 4.8],
       [4.8, 4.8],
@@ -606,6 +602,10 @@ function Kg({
         e.add(R),
         r(R, _.id === "entry-door" ? ["hall"] : L, "opening"),
         _.id === "entry-door" && a.entry.push({ group: R, base: O, angle: U }));
+    }
+    if (_.type === "sliding_door" && _.r2Glazing) {
+      buildR2Glazing(e, _, n, r, a.kitchen);
+      continue;
     }
     if (_.type === "sliding_door") {
       if (A) {
@@ -1064,7 +1064,7 @@ var NM = {
   guest: "秘密影音室",
   bath: "\u536B\u6D74",
   master: "\u4E3B\u5367",
-  kitchen: "\u5C01\u95ED\u53A8\u623F",
+  kitchen: "半开放厨房",
   bar: "\u9910\u53A8\u6C34\u5427",
   hall: "\u7384\u5173\u4E0E\u8FC7\u9053",
   living: "\u5BA2\u5385",
@@ -2057,17 +2057,21 @@ function cx({
     );
   }
   if (t.type === "sink" || t.type === "study_basin") {
-    let c = t.type === "study_basin" ? t.w : 0.4,
-      h = t.type === "study_basin" ? t.d : 0.5,
+    let c = t.type === "study_basin" ? t.w : Math.min(.4,t.w-.08),
+      h = t.type === "study_basin" ? t.d : Math.min(.5,t.d-.08),
       u = 0.008,
-      d = -0.1,
-      f = 0.14;
+      d = -0.08,
+      f = 0.16;
     return (
       l(c, u, h, 0, d - f / 2, 0, "steel", 0),
       l(u, f, h, -c / 2, d, 0, "steel", 0),
       l(u, f, h, c / 2, d, 0, "steel", 0),
       l(c, f, u, 0, d, -h / 2, "steel", 0),
       l(c, f, u, 0, d, h / 2, "steel", 0),
+      l(c+.024,.006,.014,0,.003,-h/2,"steel",0),
+      l(c+.024,.006,.014,0,.003,h/2,"steel",0),
+      l(.014,.006,h,-c/2,.003,0,"steel",0),
+      l(.014,.006,h,c/2,.003,0,"steel",0),
       r(e, 0.011, 0.22, t.w / 2 - 0.04, 0.11, t.d / 2 - 0.04, "steel"),
       l(0.02, 0.02, 0.16, t.w / 2 - 0.04, 0.22, t.d / 2 - 0.12, "steel"),
       !0
@@ -2499,7 +2503,7 @@ var Lc = matchMedia("(max-width:1000px), (pointer:coarse)").matches,
       "\u628A\u5BB6\u52A1\uFF0C\u5B89\u653E\u5728\u5411\u5149\u7684\u4E00\u4FA7\u3002",
     ],
     kitchen: [
-      "\u5C01\u95ED\u53A8\u623F",
+      "半开放厨房",
       "\u70DF\u706B\u65E5\u5E38\uFF0C\u8BA4\u771F\u5BF9\u5F85\u3002",
     ],
     bath: [
@@ -2522,7 +2526,7 @@ var QM = {},
   an = {
     entry: 1,
     gate: 0,
-    kitchen: 0,
+    kitchen: pt.homeDesign.r2Revision ? 1 : 0,
     fridge: 0,
     drawer: 0,
     chairs: 0,
@@ -2927,6 +2931,8 @@ function lw() {
           : [i.room],
       ),
       !(
+        buildBarSign(e,i,Vn) ||
+        buildR2Cabinet(e, i, Vn, St.storage) ||
         buildLifeFurniture(e, i, Vn, lifeMotion) ||
         buildHomeFurniture(e, i, Vn, homeMotion) ||
         buildSalonFurniture(e, i, Vn, St) ||
@@ -3462,7 +3468,13 @@ function bx() {
     if (root) { root.position.x = seat.center[0] - 0.4 * an.counterSeats; root.userData.animated = true; }
   }
   for (let i of St.storage) {
-    const progress = localStorageProgress.get(i.unitId) ?? an.storage;
+    let progress = localStorageProgress.get(i.unitId) ?? an.storage;
+    // Clear the real lower cabinet doors before the stored furniture leaves its bay.
+    if (i.unitId==='r2-living-deep' && i.pivot.name.includes(':door:0:')) {
+      const p=Kn.clamp(an.dining/.12,0,1);
+      progress=Math.max(progress,p*p*(3-2*p));
+    }
+    if (i.insideGroup) i.insideGroup.visible = progress > 0.04;
     if (i.axis === "x") i.pivot.rotation.x = i.openAngle * progress;
     else i.pivot.rotation.y = ((-i.sign * Math.PI) / 2) * progress;
   }
@@ -3515,7 +3527,7 @@ function zc() {
   for (let [i, e, t] of [
     ["entry-toggle", "entry", "\u5165\u6237\u95E8"],
     ["gate-toggle", "gate", "抽拉台面"],
-    ["kitchen-toggle", "kitchen", "\u53A8\u623F\u95E8"],
+    ["kitchen-toggle", "kitchen", "餐厨玻璃"],
     ["fridge-toggle", "fridge", "\u51B0\u7BB1\u95E8"],
     ["drawer-toggle", "drawer", "\u62BD\u5C49"],
     ["chairs-toggle", "chairs", "工位退椅"],
@@ -3567,12 +3579,12 @@ function fw() {
     s.setAttribute("aria-pressed", String(!!Dn.gate));
   }
   (St.kitchen.length &&
-    e("kitchen-toggle", "\u53A8\u623F\u95E8\uFF08\u5DF2\u5173\uFF09", () => {
+    e("kitchen-toggle", "餐厨玻璃\uFF08\u5DF2\u5173\uFF09", () => {
       let s = Dn.kitchen ? 0 : 1;
       (ns({ kitchen: s }),
         ($e("#kitchen-toggle").textContent = s
-          ? "\u53A8\u623F\u95E8\uFF08\u5DF2\u5F00\uFF09"
-          : "\u53A8\u623F\u95E8\uFF08\u5DF2\u5173\uFF09"),
+          ? "餐厨玻璃\uFF08\u5DF2\u5F00\uFF09"
+          : "餐厨玻璃\uFF08\u5DF2\u5173\uFF09"),
         $e("#kitchen-toggle").setAttribute("aria-pressed", String(!!s)));
     }),
     St.fridge.length &&
@@ -3815,7 +3827,12 @@ function walkTargets() {
     return group ? group.getWorldPosition(new P()).setY(y).toArray() : null;
   };
   const toggle = (id, label, objectId, y, key, normal) => {
-    const p = point(objectId, y);
+    const group = Ct.getObjectByName(objectId), p = point(objectId, y);
+    // Access follows the live object orientation, including rearranged R2 appliances.
+    if (normal && group) {
+      const v = new P(0,0,-1).applyQuaternion(group.getWorldQuaternion(new yi.Quaternion()));
+      normal=[v.x,v.z];
+    }
     if (p) add(id, label, p, () => ns({ [key]: Dn[key] ? 0 : 1 }), normal);
   };
   toggle(
@@ -3868,7 +3885,7 @@ function walkTargets() {
   if (kitchen)
     add(
       "walk-kitchen-door",
-      "开合厨房门",
+      "开合餐厨玻璃",
       [kitchen.center[0], 1.15, kitchen.center[1]],
       () => ns({ kitchen: Dn.kitchen ? 0 : 1 }),
     );
@@ -3893,18 +3910,31 @@ function walkTargets() {
   for (const unit of currentStorage()) {
     const a = Kn.degToRad(unit.rotation || 0),
       normal = [Math.sin(a), -Math.cos(a)];
+    if(unit.r2Cabinet) {
+      // Aim at a real solid door, never the open fridge/coffee/bench recess.
+      for(const [index,bay] of unit.r2Cabinet.bays.entries()) {
+        if(bay.door!=='solid')continue;
+        add('walk-storage:'+unit.id+':'+index,'开合收纳柜',[
+          unit.x+Math.cos(a)*bay.x+normal[0]*(unit.d/2+.02),
+          (unit.y||0)+bay.y+bay.h/2,
+          unit.z+Math.sin(a)*bay.x+normal[1]*(unit.d/2+.02),
+        ],()=>toggleNearbyCabinet(unit.id),normal);
+      }
+      continue;
+    }
     add(
       "walk-storage:" + unit.id,
       "开合收纳柜",
       [
         unit.x + normal[0] * (unit.d / 2 + 0.02),
-        Math.min(1.75, unit.y + 0.25),
+        Math.min(1.4, (unit.y||0) + unit.h*.45),
         unit.z + normal[1] * (unit.d / 2 + 0.02),
       ],
       () => toggleNearbyCabinet(unit.id),
       normal,
     );
   }
+  if (ut.homeDesign.r2Revision) add('walk-kitchen-pass-window','开合餐厨玻璃',[1.96,1.5,5.85],()=>setWalkDoorOpen('kitchen-door',!Dn.kitchen));
   const walls = Gp.filter((node) => node.userData.kind === "wall");
   const ray = new yi.Raycaster();
   return targets.filter((target) => {
@@ -4726,6 +4756,7 @@ window.homePresentation = {
     architectureBatching: _x,
   }),
   getStorage: () => storageCapacity(currentStorage()),
+  getR2Revision: () => structuredClone(ut.homeDesign.r2Revision),
   setStorageOpen: (open) => {
     ns({ storage: open ? 1 : 0 }, 0);
     $e("#storage-toggle")?.setAttribute("aria-pressed", String(open));

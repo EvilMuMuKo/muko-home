@@ -26,22 +26,22 @@ test.beforeEach(async ({ page }) => {
   await page.waitForFunction(() => Boolean(window.ghostWalkHarness));
 });
 
-test("touch joystick and keyboard move at eye height within the ghost bounds", async ({ page }) => {
-  const joystick = page.locator(".ghost-joystick:not(.ghost-look-joystick)");
-  const box = await joystick.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.width).toBe(120);
-  expect(box!.height).toBe(120);
-
-  await page.mouse.move(box!.x + box!.width / 2, box!.y + box!.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(box!.x + box!.width / 2 + 22, box!.y + box!.height / 2);
+test("floating touch joystick and keyboard move at eye height within the ghost bounds", async ({ page }) => {
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: 180, y: 260, id: 31 }] });
+  const joystick = page.locator(".ghost-joystick--floating:not(.ghost-look-joystick)");
+  await expect(joystick).toBeVisible();
+  const stickBox = (await joystick.boundingBox())!;
+  expect(stickBox.x + stickBox.width / 2).toBeCloseTo(180, 0);
+  expect(stickBox.y + stickBox.height / 2).toBeCloseTo(260, 0);
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: 202, y: 260, id: 31 }] });
   await page.evaluate(() => window.ghostWalkHarness.step());
   const joystickState = await page.evaluate(() => window.ghostWalkHarness.walk.getState());
   expect(joystickState.position[0]).toBeGreaterThan(6);
   expect(joystickState.position[1]).toBe(1.74);
   expect(joystickState.active).toBe(true);
-  await page.mouse.up();
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await expect(joystick).toBeHidden();
   expect(await page.evaluate(() => window.ghostWalkHarness.events.motion)).toEqual([true, false]);
 
   await page.keyboard.down("ArrowRight");
@@ -115,14 +115,14 @@ test("canvas drag rotates view and a nearby forward target is the only interacti
 });
 
 test("dual touch sticks move and turn independently, release and blur stop both", async ({ page }) => {
-  const left = (await page.locator(".ghost-joystick:not(.ghost-look-joystick)").boundingBox())!;
-  const right = (await page.locator(".ghost-look-joystick").boundingBox())!;
-  const x1 = left.x + left.width / 2, y1 = left.y + left.height / 2;
-  const x2 = right.x + right.width / 2, y2 = right.y + right.height / 2;
+  const x1 = 180, y1 = 260;
+  const x2 = 720, y2 = 260;
   const cdp = await page.context().newCDPSession(page);
   await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [
     { x: x1, y: y1, id: 1 }, { x: x2, y: y2, id: 2 },
   ] });
+  await expect(page.locator(".ghost-joystick--floating:not(.ghost-look-joystick)")).toBeVisible();
+  await expect(page.locator(".ghost-look-joystick.ghost-joystick--floating")).toBeVisible();
   await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [
     { x: x1, y: y1 - 35, id: 1 }, { x: x2 + 34, y: y2 - 15, id: 2 },
   ] });

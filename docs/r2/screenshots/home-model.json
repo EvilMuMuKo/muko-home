@@ -1,0 +1,8069 @@
+{
+  "version": "12.0.0",
+  "project": {
+    "name": "MuKo Home"
+  },
+  "shell": [
+    [
+      0,
+      0
+    ],
+    [
+      11.65,
+      0
+    ],
+    [
+      11.65,
+      4.4
+    ],
+    [
+      12.85,
+      4.4
+    ],
+    [
+      12.85,
+      9.35
+    ],
+    [
+      7.95,
+      9.35
+    ],
+    [
+      7.95,
+      8.45
+    ],
+    [
+      0,
+      8.45
+    ]
+  ],
+  "rooms": [
+    {
+      "id": "guest",
+      "polygon": [
+        [
+          0,
+          0
+        ],
+        [
+          4.8,
+          0
+        ],
+        [
+          4.8,
+          3.4
+        ],
+        [
+          0,
+          3.4
+        ]
+      ]
+    },
+    {
+      "id": "bath",
+      "polygon": [
+        [
+          4.8,
+          0
+        ],
+        [
+          6.9,
+          0
+        ],
+        [
+          6.9,
+          2
+        ],
+        [
+          4.8,
+          2
+        ]
+      ]
+    },
+    {
+      "id": "master",
+      "polygon": [
+        [
+          6.9,
+          0
+        ],
+        [
+          11.65,
+          0
+        ],
+        [
+          11.65,
+          4.4
+        ],
+        [
+          6.9,
+          4.4
+        ]
+      ]
+    },
+    {
+      "id": "kitchen",
+      "polygon": [
+        [
+          0,
+          3.4
+        ],
+        [
+          3.92,
+          3.4
+        ],
+        [
+          3.92,
+          5.85
+        ],
+        [
+          0,
+          5.85
+        ]
+      ],
+      "name": "半开放厨房"
+    },
+    {
+      "id": "bar",
+      "polygon": [
+        [
+          0,
+          5.85
+        ],
+        [
+          4.9,
+          5.85
+        ],
+        [
+          4.9,
+          8.45
+        ],
+        [
+          0,
+          8.45
+        ]
+      ]
+    },
+    {
+      "id": "hall",
+      "polygon": [
+        [
+          4.8,
+          2
+        ],
+        [
+          6.9,
+          2
+        ],
+        [
+          6.9,
+          7.3
+        ],
+        [
+          7.95,
+          7.3
+        ],
+        [
+          7.95,
+          8.45
+        ],
+        [
+          4.9,
+          8.45
+        ],
+        [
+          4.9,
+          5.85
+        ],
+        [
+          3.92,
+          5.85
+        ],
+        [
+          3.92,
+          3.4
+        ],
+        [
+          4.8,
+          3.4
+        ]
+      ]
+    },
+    {
+      "id": "living",
+      "polygon": [
+        [
+          6.9,
+          4.4
+        ],
+        [
+          11.65,
+          4.4
+        ],
+        [
+          11.65,
+          9.35
+        ],
+        [
+          7.95,
+          9.35
+        ],
+        [
+          7.95,
+          7.3
+        ],
+        [
+          6.9,
+          7.3
+        ]
+      ]
+    },
+    {
+      "id": "balcony",
+      "polygon": [
+        [
+          11.65,
+          4.4
+        ],
+        [
+          12.85,
+          4.4
+        ],
+        [
+          12.85,
+          9.35
+        ],
+        [
+          11.65,
+          9.35
+        ]
+      ]
+    }
+  ],
+  "walls": [
+    {
+      "id": "east",
+      "a": [
+        0,
+        0
+      ],
+      "b": [
+        11.65,
+        0
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "north",
+      "a": [
+        0,
+        0
+      ],
+      "b": [
+        0,
+        8.45
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "south-master",
+      "a": [
+        11.65,
+        0
+      ],
+      "b": [
+        11.65,
+        4.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "balcony-east",
+      "a": [
+        11.65,
+        4.4
+      ],
+      "b": [
+        12.85,
+        4.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "balcony-south",
+      "a": [
+        12.85,
+        4.4
+      ],
+      "b": [
+        12.85,
+        9.35
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "balcony-west",
+      "a": [
+        12.85,
+        9.35
+      ],
+      "b": [
+        7.95,
+        9.35
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "step",
+      "a": [
+        7.95,
+        9.35
+      ],
+      "b": [
+        7.95,
+        8.45
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "west-left",
+      "a": [
+        0,
+        8.45
+      ],
+      "b": [
+        5.2,
+        8.45
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "west-right",
+      "a": [
+        6.35,
+        8.45
+      ],
+      "b": [
+        7.95,
+        8.45
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "guest-west",
+      "a": [
+        0,
+        3.4
+      ],
+      "b": [
+        4.8,
+        3.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "guest-side",
+      "a": [
+        4.8,
+        0
+      ],
+      "b": [
+        4.8,
+        3.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "bath-side",
+      "a": [
+        6.9,
+        0
+      ],
+      "b": [
+        6.9,
+        2
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "bath-west",
+      "a": [
+        4.8,
+        2
+      ],
+      "b": [
+        6.9,
+        2
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "master-side",
+      "a": [
+        6.9,
+        2
+      ],
+      "b": [
+        6.9,
+        4.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "master-bearing",
+      "a": [
+        6.9,
+        4.4
+      ],
+      "b": [
+        11.65,
+        4.4
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "balcony-inner",
+      "a": [
+        11.65,
+        4.4
+      ],
+      "b": [
+        11.65,
+        9.35
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "kitchen-west",
+      "a": [
+        0,
+        5.85
+      ],
+      "b": [
+        3.92,
+        5.85
+      ],
+      "thickness": 0.18,
+      "height": 2.7
+    },
+    {
+      "id": "kitchen-side",
+      "a": [
+        3.92,
+        3.4
+      ],
+      "b": [
+        3.92,
+        5.85
+      ],
+      "thickness": 0.18,
+      "height": 2.7,
+      "structuralStatus": "partition_change_requires_site_confirmation",
+      "candidate": {
+        "selectedX": 4.2,
+        "jambReferenceX": 4.8,
+        "status": "concept_safe_candidate_pending_photo_survey"
+      }
+    }
+  ],
+  "openings": [
+    {
+      "id": "guest-door",
+      "type": "door",
+      "wallId": "guest-west",
+      "center": [
+        4.35,
+        3.4
+      ],
+      "width": 0.86,
+      "height": 2.08,
+      "hinge": [
+        3.92,
+        3.4
+      ],
+      "rotation": 0,
+      "openAngle": 90,
+      "spatialNote": "R2 west-facing doorway relationship; jamb dimensions and wall alteration unverified"
+    },
+    {
+      "id": "master-door",
+      "type": "door",
+      "wallId": "master-side",
+      "center": [
+        6.9,
+        3.65
+      ],
+      "width": 0.88,
+      "height": 2.08,
+      "hinge": [
+        6.9,
+        4.09
+      ],
+      "rotation": -90,
+      "openAngle": 90,
+      "spatialNote": "existing_master_door_restored_not_a_new_bearing_opening"
+    },
+    {
+      "id": "bath-door",
+      "type": "door",
+      "wallId": "bath-west",
+      "center": [
+        5.9,
+        2
+      ],
+      "width": 0.8,
+      "height": 2.08,
+      "hinge": [
+        6.3,
+        2
+      ],
+      "rotation": 180,
+      "openAngle": -90
+    },
+    {
+      "id": "entry-door",
+      "type": "door",
+      "wallId": "west-left",
+      "center": [
+        5.775,
+        8.45
+      ],
+      "width": 1.1,
+      "height": 2.08,
+      "hinge": [
+        6.35,
+        8.45
+      ],
+      "rotation": 180,
+      "openAngle": -90,
+      "standalone": true
+    },
+    {
+      "id": "guest-window",
+      "type": "window",
+      "wallId": "north",
+      "center": [
+        0,
+        1.5
+      ],
+      "width": 2.1,
+      "height": 1.75,
+      "sill": 0.6,
+      "coordinateStatus": "virtual_generic_not_measured"
+    },
+    {
+      "id": "bar-window",
+      "type": "window",
+      "wallId": "north",
+      "center": [
+        0,
+        6.5
+      ],
+      "width": 1.4,
+      "height": 1.45,
+      "sill": 0.9
+    },
+    {
+      "id": "bath-window",
+      "type": "window",
+      "wallId": "east",
+      "center": [
+        5.85,
+        0
+      ],
+      "width": 0.85,
+      "height": 1.45,
+      "sill": 0.9
+    },
+    {
+      "id": "master-window",
+      "type": "window",
+      "wallId": "south-master",
+      "center": [
+        11.65,
+        2
+      ],
+      "width": 2.1,
+      "height": 1.75,
+      "sill": 0.6,
+      "coordinateStatus": "virtual_generic_not_measured"
+    },
+    {
+      "id": "balcony-window",
+      "type": "window",
+      "wallId": "balcony-south",
+      "center": [
+        12.85,
+        6.85
+      ],
+      "width": 3.6,
+      "height": 1.45,
+      "sill": 0.9
+    },
+    {
+      "id": "balcony-opening",
+      "type": "open",
+      "wallId": "balcony-inner",
+      "center": [
+        11.65,
+        6.85
+      ],
+      "width": 4.05,
+      "height": 2.3
+    },
+    {
+      "id": "kitchen-window",
+      "type": "window",
+      "wallId": "north",
+      "center": [
+        0,
+        4.7
+      ],
+      "width": 1.25,
+      "height": 1.35,
+      "sill": 0.95,
+      "coordinateStatus": "concept_window_relation_confirmed_dimensions_unmeasured"
+    },
+    {
+      "id": "kitchen-glass-boundary",
+      "type": "open",
+      "wallId": "kitchen-side",
+      "center": [
+        3.92,
+        4.625
+      ],
+      "width": 2.45,
+      "height": 2.7
+    },
+    {
+      "id": "kitchen-counter-boundary",
+      "type": "open",
+      "wallId": "kitchen-west",
+      "center": [
+        1.96,
+        5.85
+      ],
+      "width": 3.92,
+      "height": 2.7
+    },
+    {
+      "id": "kitchen-door",
+      "type": "sliding_door",
+      "standalone": true,
+      "r2Glazing": "side",
+      "center": [
+        3.92,
+        5.08
+      ],
+      "width": 1.54,
+      "height": 2.7,
+      "thickness": 0.025,
+      "panelClosedCenter": [
+        3.92,
+        5.08
+      ],
+      "travel": [
+        0,
+        -0.97
+      ]
+    },
+    {
+      "id": "kitchen-pass-window",
+      "type": "sliding_door",
+      "standalone": true,
+      "r2Glazing": "counter",
+      "center": [
+        1.96,
+        5.85
+      ],
+      "width": 3.92,
+      "height": 1.75,
+      "sill": 0.95,
+      "thickness": 0.025,
+      "panelClosedCenter": [
+        1.96,
+        5.85
+      ],
+      "travel": [
+        0,
+        0
+      ]
+    }
+  ],
+  "objects": [
+    {
+      "id": "column-handdrawn",
+      "type": "column",
+      "room": "hall",
+      "x": 5.15,
+      "z": 4.5600000000000005,
+      "w": 0.5,
+      "d": 0.5,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 0,
+      "material": "plaster",
+      "spatialRevision": {
+        "userConfirmedRelation": "column -z face meets master-bearing top face, wall.a[1] - thickness/2",
+        "bearingTopZ": 4.3100000000000005,
+        "virtualCenterZ": 4.5600000000000005,
+        "coordinateStatus": "virtual_derived_not_surveyed"
+      }
+    },
+    {
+      "id": "kitchen-fridge",
+      "type": "fridge",
+      "room": "hall",
+      "x": 3.4,
+      "z": 3.935,
+      "w": 0.91,
+      "d": 0.75,
+      "h": 1.85,
+      "y": 0,
+      "rotation": 180,
+      "material": "steel",
+      "articulation": {
+        "kind": "fridge",
+        "hinge": "left",
+        "maxAngle": 110,
+        "doorBottom": 0.65,
+        "doorHeight": 1.25,
+        "drawerHeight": 0.65,
+        "drawerTravel": 0.55,
+        "doorThickness": 0.04
+      },
+      "label": "餐厨共享双门冰箱",
+      "doorLayout": "french_double",
+      "accessFace": "+z",
+      "useEnvelope": {
+        "x": 4.305,
+        "z": 3.935,
+        "w": 0.9,
+        "d": 1.2
+      },
+      "dimensionStatus": "generic_full_size_appliance_budget_not_selected_product",
+      "opening": {
+        "maxAngle": 100,
+        "hinge": "double",
+        "drawerTravel": 0.48
+      }
+    },
+    {
+      "id": "kitchen-hob",
+      "type": "hob",
+      "room": "kitchen",
+      "x": 1.25,
+      "z": 3.815,
+      "w": 0.75,
+      "d": 0.52,
+      "h": 0.065,
+      "y": 0.95,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "kitchen-hood",
+      "type": "hood",
+      "room": "kitchen",
+      "x": 1.25,
+      "z": 3.815,
+      "w": 0.8,
+      "d": 0.5,
+      "h": 0.25,
+      "y": 1.65,
+      "rotation": 0,
+      "material": "steel"
+    },
+    {
+      "id": "kitchen-sink",
+      "type": "sink",
+      "room": "kitchen",
+      "x": 0.415,
+      "z": 4.7,
+      "w": 0.5,
+      "d": 0.65,
+      "h": 0.07,
+      "y": 0.95,
+      "rotation": 90,
+      "material": "steel"
+    },
+    {
+      "id": "kitchen-dishwasher",
+      "type": "dishwasher",
+      "room": "kitchen",
+      "x": 1.1,
+      "z": 5.525,
+      "w": 0.6,
+      "d": 0.6,
+      "h": 0.82,
+      "y": 0.075,
+      "rotation": 0,
+      "material": "steel"
+    },
+    {
+      "id": "kitchen-bin",
+      "type": "bin",
+      "room": "kitchen",
+      "x": 0.34,
+      "z": 4.65,
+      "w": 0.36,
+      "d": 0.35,
+      "h": 0.54,
+      "y": 0,
+      "rotation": 90,
+      "material": "sage"
+    },
+    {
+      "id": "coffee-machine",
+      "type": "coffee",
+      "room": "bar",
+      "x": 1.02,
+      "z": 7.98,
+      "w": 0.357,
+      "d": 0.53,
+      "h": 0.377,
+      "y": 0.95,
+      "rotation": 0,
+      "material": "cream"
+    },
+    {
+      "id": "grinder",
+      "type": "grinder",
+      "room": "bar",
+      "x": 1.46,
+      "z": 7.98,
+      "w": 0.19,
+      "d": 0.28,
+      "h": 0.43,
+      "y": 0.95,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "kegerator",
+      "type": "kegerator",
+      "room": "bar",
+      "x": 2.69,
+      "z": 7.9,
+      "w": 0.6,
+      "d": 0.61,
+      "h": 0.85,
+      "y": 0,
+      "rotation": 0,
+      "material": "steel",
+      "installation": {
+        "rearClearance": 0.1,
+        "sideClearance": 0.075,
+        "status": "built_in_manual_clearance_pending"
+      }
+    },
+    {
+      "id": "beer-font",
+      "type": "beer_font",
+      "room": "bar",
+      "x": 2.69,
+      "z": 7.9,
+      "w": 0.12,
+      "d": 0.17,
+      "h": 0.4,
+      "y": 0.95,
+      "rotation": 0,
+      "material": "steel"
+    },
+    {
+      "id": "keg",
+      "type": "keg",
+      "room": "bar",
+      "x": 2.56,
+      "z": 7.9,
+      "w": 0.23,
+      "d": 0.23,
+      "h": 0.4,
+      "y": 0.1,
+      "rotation": 0,
+      "material": "steel"
+    },
+    {
+      "id": "co2-cylinder",
+      "type": "co2",
+      "room": "bar",
+      "x": 2.91,
+      "z": 8,
+      "w": 0.1,
+      "d": 0.1,
+      "h": 0.42,
+      "y": 0.1,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "dining-table",
+      "type": "folding_table",
+      "room": "living",
+      "x": 8.64,
+      "z": 8.82,
+      "w": 1.1,
+      "d": 0.7,
+      "h": 0.74,
+      "y": 0.12,
+      "rotation": 0,
+      "material": "oak",
+      "state": "stowed",
+      "defaultState": "stowed",
+      "shape": "rectangle"
+    },
+    {
+      "id": "dining-chair-left",
+      "type": "folding_chair",
+      "room": "living",
+      "x": 8.64,
+      "z": 9,
+      "w": 0.5,
+      "d": 0.55,
+      "h": 0.88,
+      "y": 0.12,
+      "rotation": 0,
+      "material": "sage",
+      "retreat": {
+        "x": 8.15,
+        "z": 7.55,
+        "distanceM": 0.35
+      },
+      "state": "stowed",
+      "defaultState": "stowed"
+    },
+    {
+      "id": "dining-chair-right",
+      "type": "folding_chair",
+      "room": "living",
+      "x": 8.64,
+      "z": 9.16,
+      "w": 0.5,
+      "d": 0.55,
+      "h": 0.88,
+      "y": 0.12,
+      "rotation": 0,
+      "material": "sage",
+      "retreat": {
+        "x": 10.45,
+        "z": 7.55,
+        "distanceM": 0.35
+      },
+      "state": "stowed",
+      "defaultState": "stowed"
+    },
+    {
+      "id": "master-bed",
+      "type": "cabinet_frame",
+      "room": "master",
+      "x": 9.5,
+      "z": 1.145,
+      "w": 1.9,
+      "d": 2.08,
+      "h": 0.9,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 8.585,
+          "z": 1.145,
+          "w": 0.07,
+          "d": 2.08,
+          "y": 0.18,
+          "h": 0.19,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 10.415,
+          "z": 1.145,
+          "w": 0.07,
+          "d": 2.08,
+          "y": 0.18,
+          "h": 0.19,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 9.5,
+          "z": 0.1399999999999999,
+          "w": 1.9,
+          "d": 0.07,
+          "y": 0.18,
+          "h": 0.19,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 9.5,
+          "z": 2.1500000000000004,
+          "w": 1.9,
+          "d": 0.07,
+          "y": 0.18,
+          "h": 0.19,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 8.67,
+          "z": 0.235,
+          "w": 0.065,
+          "d": 0.065,
+          "y": 0,
+          "h": 0.18,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 8.67,
+          "z": 2.055,
+          "w": 0.065,
+          "d": 0.065,
+          "y": 0,
+          "h": 0.18,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 10.33,
+          "z": 0.235,
+          "w": 0.065,
+          "d": 0.065,
+          "y": 0,
+          "h": 0.18,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 10.33,
+          "z": 2.055,
+          "w": 0.065,
+          "d": 0.065,
+          "y": 0,
+          "h": 0.18,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 9.5,
+          "z": 0.545,
+          "w": 1.7599999999999998,
+          "d": 0.07,
+          "y": 0.3,
+          "h": 0.055,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 9.5,
+          "z": 1.145,
+          "w": 1.7599999999999998,
+          "d": 0.07,
+          "y": 0.3,
+          "h": 0.055,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 9.5,
+          "z": 1.745,
+          "w": 1.7599999999999998,
+          "d": 0.07,
+          "y": 0.3,
+          "h": 0.055,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 9.5,
+          "z": 0.135,
+          "w": 1.9,
+          "d": 0.08,
+          "y": 0,
+          "h": 0.87,
+          "rotation": 0,
+          "material": "linen"
+        }
+      ]
+    },
+    {
+      "id": "master-mattress",
+      "type": "mattress",
+      "room": "master",
+      "x": 9.5,
+      "z": 1.145,
+      "w": 1.8,
+      "d": 2,
+      "h": 0.23,
+      "y": 0.37,
+      "rotation": 0,
+      "material": "linen"
+    },
+    {
+      "id": "pc-desk",
+      "type": "desk",
+      "room": "master",
+      "x": 8.6,
+      "z": 3.98,
+      "w": 1.4,
+      "d": 0.75,
+      "h": 0.76,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 8.6,
+          "z": 3.98,
+          "w": 1.4,
+          "d": 0.75,
+          "y": 0.705,
+          "h": 0.055
+        },
+        {
+          "x": 7.96,
+          "z": 3.665,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 7.96,
+          "z": 4.295,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 9.24,
+          "z": 3.665,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 9.24,
+          "z": 4.295,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        }
+      ]
+    },
+    {
+      "id": "pc-chair",
+      "type": "office_chair",
+      "room": "master",
+      "x": 8.6,
+      "z": 3.34,
+      "w": 0.67,
+      "d": 0.65,
+      "h": 1.06,
+      "y": 0,
+      "rotation": 180,
+      "material": "charcoal",
+      "collisionParts": [
+        {
+          "x": 8.6,
+          "z": 3.34,
+          "w": 0.51,
+          "d": 0.47,
+          "y": 0.42,
+          "h": 0.1
+        },
+        {
+          "x": 8.6,
+          "z": 3.11,
+          "w": 0.5,
+          "d": 0.065,
+          "y": 0.535,
+          "h": 0.53
+        },
+        {
+          "x": 8.6,
+          "z": 3.34,
+          "w": 0.67,
+          "d": 0.65,
+          "y": 0,
+          "h": 0.12
+        }
+      ],
+      "retreat": {
+        "x": 8.6,
+        "z": 2.99,
+        "distanceM": 0.35
+      }
+    },
+    {
+      "id": "pc-monitor",
+      "type": "monitor",
+      "room": "master",
+      "x": 8.6,
+      "z": 4.1,
+      "w": 0.64,
+      "d": 0.1,
+      "h": 0.43,
+      "y": 0.8,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "mac-desk",
+      "type": "desk",
+      "room": "master",
+      "x": 9.9,
+      "z": 3.98,
+      "w": 1.2,
+      "d": 0.75,
+      "h": 0.76,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 9.9,
+          "z": 3.98,
+          "w": 1.2,
+          "d": 0.75,
+          "y": 0.705,
+          "h": 0.055
+        },
+        {
+          "x": 9.36,
+          "z": 3.665,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 9.36,
+          "z": 4.295,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 10.440000000000001,
+          "z": 3.665,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        },
+        {
+          "x": 10.440000000000001,
+          "z": 4.295,
+          "w": 0.045,
+          "d": 0.045,
+          "y": 0,
+          "h": 0.705
+        }
+      ]
+    },
+    {
+      "id": "mac-chair",
+      "type": "office_chair",
+      "room": "master",
+      "x": 9.9,
+      "z": 3.34,
+      "w": 0.67,
+      "d": 0.65,
+      "h": 1.06,
+      "y": 0,
+      "rotation": 180,
+      "material": "charcoal",
+      "collisionParts": [
+        {
+          "x": 9.9,
+          "z": 3.34,
+          "w": 0.51,
+          "d": 0.47,
+          "y": 0.42,
+          "h": 0.1
+        },
+        {
+          "x": 9.9,
+          "z": 3.11,
+          "w": 0.5,
+          "d": 0.065,
+          "y": 0.535,
+          "h": 0.53
+        },
+        {
+          "x": 9.9,
+          "z": 3.34,
+          "w": 0.67,
+          "d": 0.65,
+          "y": 0,
+          "h": 0.12
+        }
+      ],
+      "retreat": {
+        "x": 9.9,
+        "z": 2.99,
+        "distanceM": 0.35
+      }
+    },
+    {
+      "id": "macbook",
+      "type": "laptop",
+      "room": "master",
+      "x": 9.9,
+      "z": 4.1,
+      "w": 0.35,
+      "d": 0.26,
+      "h": 0.2,
+      "y": 0.8,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "pc-tower",
+      "type": "pc",
+      "room": "master",
+      "x": 7.95,
+      "z": 3.9850000000000003,
+      "w": 0.22,
+      "d": 0.45,
+      "h": 0.46,
+      "y": 0,
+      "rotation": 0,
+      "material": "charcoal"
+    },
+    {
+      "id": "nightstand",
+      "type": "cabinet_frame",
+      "room": "master",
+      "x": 10.85,
+      "z": 0.8,
+      "w": 0.42,
+      "d": 0.42,
+      "h": 0.5,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 10.649,
+          "z": 0.8,
+          "w": 0.018,
+          "d": 0.42,
+          "y": 0.08,
+          "h": 0.42,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 11.051,
+          "z": 0.8,
+          "w": 0.018,
+          "d": 0.42,
+          "y": 0.08,
+          "h": 0.42,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 10.85,
+          "z": 1.0010000000000001,
+          "w": 0.384,
+          "d": 0.018,
+          "y": 0.08,
+          "h": 0.38,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 10.85,
+          "z": 0.8,
+          "w": 0.384,
+          "d": 0.39999999999999997,
+          "y": 0.08,
+          "h": 0.022,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 10.85,
+          "z": 0.8,
+          "w": 0.42,
+          "d": 0.42,
+          "y": 0.46499999999999997,
+          "h": 0.035,
+          "rotation": 0,
+          "material": "barStone"
+        },
+        {
+          "x": 10.85,
+          "z": 0.8,
+          "w": 0.384,
+          "d": 0.38,
+          "y": 0.22,
+          "h": 0.018,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 10.745,
+          "z": 0.6000000000000001,
+          "w": 0.19799999999999998,
+          "d": 0.018,
+          "y": 0.1,
+          "h": 0.35,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        },
+        {
+          "x": 10.955,
+          "z": 0.6000000000000001,
+          "w": 0.19799999999999998,
+          "d": 0.018,
+          "y": 0.1,
+          "h": 0.35,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        }
+      ]
+    },
+    {
+      "id": "guest-sofa-bed",
+      "type": "sofa_bed",
+      "room": "guest",
+      "x": 2.05,
+      "z": 0.67,
+      "w": 1.54,
+      "d": 1.03,
+      "h": 0.77,
+      "y": 0,
+      "rotation": 0,
+      "material": "linen",
+      "mechanism": {
+        "bedWidth": 1.4,
+        "bedLength": 2
+      }
+    },
+    {
+      "id": "guest-tv",
+      "type": "tv",
+      "room": "guest",
+      "x": 2.05,
+      "z": 3.2,
+      "w": 1.84,
+      "d": 0.12,
+      "h": 1.035,
+      "y": 0.67,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "guest-tv-console",
+      "type": "cabinet_frame",
+      "room": "guest",
+      "x": 1.7,
+      "z": 3.15,
+      "w": 2.8,
+      "d": 0.3,
+      "h": 0.45,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 0.30899999999999994,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.3,
+          "y": 0.06,
+          "h": 0.39,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 3.091,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.3,
+          "y": 0.06,
+          "h": 0.39,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.7,
+          "z": 3.291,
+          "w": 2.764,
+          "d": 0.018,
+          "y": 0.06,
+          "h": 0.39,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.7,
+          "z": 3.15,
+          "w": 2.8,
+          "d": 0.3,
+          "y": 0.06,
+          "h": 0.022,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.7,
+          "z": 3.15,
+          "w": 2.8,
+          "d": 0.3,
+          "y": 0.42000000000000004,
+          "h": 0.03,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.7,
+          "z": 3.165,
+          "w": 2.6999999999999997,
+          "d": 0.21999999999999997,
+          "y": 0,
+          "h": 0.06,
+          "rotation": 0,
+          "material": "darkoak"
+        },
+        {
+          "x": 1.7,
+          "z": 3.15,
+          "w": 2.764,
+          "d": 0.264,
+          "y": 0.2,
+          "h": 0.018,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 0.5333333333333334,
+          "z": 3.009,
+          "w": 0.4586666666666666,
+          "d": 0.018,
+          "y": 0.06999999999999999,
+          "h": 0.34,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        },
+        {
+          "x": 0.5333333333333334,
+          "z": 2.9979999999999998,
+          "w": 0.1,
+          "d": 0.004,
+          "y": 0.34,
+          "h": 0.008,
+          "rotation": 0,
+          "material": "bronze"
+        },
+        {
+          "x": 0.7666666666666667,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.264,
+          "y": 0.06,
+          "h": 0.36,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1,
+          "z": 3.009,
+          "w": 0.4586666666666666,
+          "d": 0.018,
+          "y": 0.06999999999999999,
+          "h": 0.34,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        },
+        {
+          "x": 1,
+          "z": 2.9979999999999998,
+          "w": 0.1,
+          "d": 0.004,
+          "y": 0.34,
+          "h": 0.008,
+          "rotation": 0,
+          "material": "bronze"
+        },
+        {
+          "x": 1.2333333333333334,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.264,
+          "y": 0.06,
+          "h": 0.36,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.4666666666666666,
+          "z": 3.009,
+          "w": 0.4586666666666666,
+          "d": 0.018,
+          "y": 0.06999999999999999,
+          "h": 0.34,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        },
+        {
+          "x": 1.4666666666666666,
+          "z": 2.9979999999999998,
+          "w": 0.1,
+          "d": 0.004,
+          "y": 0.34,
+          "h": 0.008,
+          "rotation": 0,
+          "material": "bronze"
+        },
+        {
+          "x": 1.6999999999999997,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.264,
+          "y": 0.06,
+          "h": 0.36,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 1.9333333333333331,
+          "z": 3.009,
+          "w": 0.4586666666666666,
+          "d": 0.018,
+          "y": 0.06999999999999999,
+          "h": 0.34,
+          "rotation": 0,
+          "material": "cabinetPaint"
+        },
+        {
+          "x": 1.9333333333333331,
+          "z": 2.9979999999999998,
+          "w": 0.1,
+          "d": 0.004,
+          "y": 0.34,
+          "h": 0.008,
+          "rotation": 0,
+          "material": "bronze"
+        },
+        {
+          "x": 2.1666666666666665,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.264,
+          "y": 0.06,
+          "h": 0.36,
+          "rotation": 0,
+          "material": "oak"
+        },
+        {
+          "x": 2.6333333333333333,
+          "z": 3.15,
+          "w": 0.018,
+          "d": 0.264,
+          "y": 0.06,
+          "h": 0.36,
+          "rotation": 0,
+          "material": "oak"
+        }
+      ]
+    },
+    {
+      "id": "living-sofa",
+      "type": "modular_sofa",
+      "room": "living",
+      "x": 9.3,
+      "z": 6.6,
+      "w": 2.55,
+      "d": 1.05,
+      "h": 0.76,
+      "y": 0,
+      "rotation": 180,
+      "material": "linen"
+    },
+    {
+      "id": "living-tv",
+      "type": "mobile_tv",
+      "room": "living",
+      "x": 10.15,
+      "z": 8.9,
+      "w": 1.65,
+      "d": 0.66,
+      "h": 1.73,
+      "y": 0,
+      "rotation": 180,
+      "material": "black"
+    },
+    {
+      "id": "ps5",
+      "type": "ps5",
+      "room": "living",
+      "x": 10.15,
+      "z": 8.99,
+      "w": 0.36,
+      "d": 0.22,
+      "h": 0.1,
+      "y": 0.53,
+      "rotation": 180,
+      "material": "cream",
+      "accessoryRole": "mobile_console_only"
+    },
+    {
+      "id": "side-table",
+      "type": "side_table",
+      "room": "living",
+      "x": 7.55,
+      "z": 7.6,
+      "w": 0.38,
+      "d": 0.38,
+      "h": 0.46,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "living-lamp",
+      "type": "floor_lamp",
+      "room": "living",
+      "x": 10.95,
+      "z": 8.85,
+      "w": 0.41,
+      "d": 0.41,
+      "h": 1.6,
+      "y": 0,
+      "rotation": 0,
+      "material": "bronze"
+    },
+    {
+      "id": "living-rug",
+      "type": "rug",
+      "room": "living",
+      "x": 9.3,
+      "z": 6.6,
+      "w": 2.65,
+      "d": 2.35,
+      "h": 0.01,
+      "y": 0,
+      "rotation": 0,
+      "material": "linen"
+    },
+    {
+      "id": "washer",
+      "type": "washer",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 5,
+      "w": 0.6,
+      "d": 0.7,
+      "h": 0.85,
+      "y": 0,
+      "rotation": 180,
+      "material": "cream"
+    },
+    {
+      "id": "dryer",
+      "type": "dryer",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 5,
+      "w": 0.6,
+      "d": 0.7,
+      "h": 0.85,
+      "y": 0.9,
+      "rotation": 180,
+      "material": "cream"
+    },
+    {
+      "id": "drying-rack",
+      "type": "drying_rack",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 7,
+      "w": 0.6,
+      "d": 1.2,
+      "h": 0.06,
+      "y": 2.35,
+      "rotation": 0,
+      "material": "steel"
+    },
+    {
+      "id": "shower",
+      "type": "shower",
+      "room": "bath",
+      "x": 5.4,
+      "z": 0.66,
+      "w": 0.9,
+      "d": 1.05,
+      "h": 2.35,
+      "y": 0,
+      "rotation": 0,
+      "material": "glass",
+      "enclosure": {
+        "kind": "bevel_corner",
+        "cutM": 0.5,
+        "doorClearWidthM": 0.65,
+        "hingedInward": true,
+        "heightM": 2.05
+      }
+    },
+    {
+      "id": "toilet",
+      "type": "toilet",
+      "room": "bath",
+      "x": 5.24,
+      "z": 1.4,
+      "w": 0.38,
+      "d": 0.65,
+      "h": 0.75,
+      "y": 0,
+      "rotation": 90,
+      "material": "cream",
+      "smartProvision": {
+        "socketRequired": true,
+        "wetZoneAndCircuit": "site_electrician_confirmation"
+      }
+    },
+    {
+      "id": "vanity",
+      "type": "cabinet_frame",
+      "room": "bath",
+      "x": 6.58,
+      "z": 1.45,
+      "w": 0.65,
+      "d": 0.42,
+      "h": 0.86,
+      "y": 0,
+      "rotation": -90,
+      "material": "oak",
+      "collisionParts": [
+        {
+          "x": 6.58,
+          "z": 1.766,
+          "w": 0.018,
+          "d": 0.42,
+          "y": 0.08,
+          "h": 0.745,
+          "material": "oak",
+          "rotation": -90
+        },
+        {
+          "x": 6.58,
+          "z": 1.134,
+          "w": 0.018,
+          "d": 0.42,
+          "y": 0.08,
+          "h": 0.745,
+          "material": "oak",
+          "rotation": -90
+        },
+        {
+          "x": 6.781,
+          "z": 1.45,
+          "w": 0.614,
+          "d": 0.018,
+          "y": 0.08,
+          "h": 0.745,
+          "material": "oak",
+          "rotation": -90
+        },
+        {
+          "x": 6.58,
+          "z": 1.45,
+          "w": 0.614,
+          "d": 0.384,
+          "y": 0.2,
+          "h": 0.022,
+          "material": "oak",
+          "rotation": -90
+        },
+        {
+          "x": 6.58,
+          "z": 1.45,
+          "w": 0.65,
+          "d": 0.42,
+          "y": 0.825,
+          "h": 0.035,
+          "material": "barStone",
+          "rotation": -90
+        },
+        {
+          "x": 6.3790000000000004,
+          "z": 1.6125,
+          "w": 0.307,
+          "d": 0.018,
+          "y": 0.1,
+          "h": 0.71,
+          "material": "cabinetPaint",
+          "rotation": -90
+        },
+        {
+          "x": 6.3790000000000004,
+          "z": 1.2874999999999999,
+          "w": 0.307,
+          "d": 0.018,
+          "y": 0.1,
+          "h": 0.71,
+          "material": "cabinetPaint",
+          "rotation": -90
+        }
+      ]
+    },
+    {
+      "id": "key-tray",
+      "type": "key_tray",
+      "room": "hall",
+      "x": 6.75,
+      "z": 8.18,
+      "w": 0.28,
+      "d": 0.16,
+      "h": 0.05,
+      "y": 1.13,
+      "rotation": 0,
+      "material": "bronze"
+    },
+    {
+      "id": "robot-dock",
+      "type": "robot",
+      "room": "living",
+      "x": 11.34,
+      "z": 9.05,
+      "w": 0.36,
+      "d": 0.42,
+      "h": 0.42,
+      "y": 0,
+      "rotation": 0,
+      "material": "cream"
+    },
+    {
+      "id": "vacuum",
+      "type": "vacuum",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 9,
+      "w": 0.2,
+      "d": 0.18,
+      "h": 1.1,
+      "y": 0,
+      "rotation": 0,
+      "material": "black"
+    },
+    {
+      "id": "plant-master",
+      "type": "plant",
+      "room": "master",
+      "x": 11.15,
+      "z": 2.48,
+      "w": 0.32,
+      "d": 0.32,
+      "h": 0.8,
+      "y": 0,
+      "rotation": 0,
+      "material": "sage"
+    },
+    {
+      "id": "plant-living",
+      "type": "plant",
+      "room": "living",
+      "x": 9.1,
+      "z": 4.66,
+      "w": 0.2,
+      "d": 0.2,
+      "h": 0.32,
+      "y": 0.859,
+      "rotation": 0,
+      "material": "sage"
+    },
+    {
+      "id": "guest-door-leaf",
+      "type": "door_leaf",
+      "room": "hall",
+      "x": 4.8,
+      "z": 2.42,
+      "w": 0.04,
+      "d": 0.04,
+      "h": 2.08,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "master-door-leaf",
+      "type": "door_leaf",
+      "room": "hall",
+      "x": 6.9,
+      "z": 4.09,
+      "w": 0.04,
+      "d": 0.04,
+      "h": 2.08,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "bath-door-leaf",
+      "type": "door_leaf",
+      "room": "hall",
+      "x": 6.3,
+      "z": 1.65,
+      "w": 0.04,
+      "d": 0.04,
+      "h": 2.08,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "kitchen-door-leaf",
+      "type": "door_leaf",
+      "room": "hall",
+      "x": 2.75,
+      "z": 5.68,
+      "w": 0.04,
+      "d": 0.04,
+      "h": 2.08,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "entry-door-leaf",
+      "type": "door_leaf",
+      "room": "hall",
+      "x": 6.35,
+      "z": 8.45,
+      "w": 0.04,
+      "d": 0.04,
+      "h": 2.08,
+      "y": 0,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "s02-entry-return",
+      "type": "cabinet_frame",
+      "room": "bar",
+      "x": 5.15,
+      "z": 7.5249999999999995,
+      "w": 0.5,
+      "d": 1.6,
+      "h": 0.95,
+      "y": 0,
+      "rotation": 0,
+      "collisionParts": [
+        {
+          "x": 5.15,
+          "z": 7.5249999999999995,
+          "w": 0.5,
+          "d": 1.6,
+          "y": 0.9149999999999999,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 5.3100000000000005,
+          "z": 8.315999999999999,
+          "w": 0.18,
+          "d": 0.018,
+          "y": 0,
+          "h": 0.9149999999999999,
+          "material": "oak"
+        },
+        {
+          "x": 5.3100000000000005,
+          "z": 6.734,
+          "w": 0.18,
+          "d": 0.018,
+          "y": 0,
+          "h": 0.9149999999999999,
+          "material": "oak"
+        },
+        {
+          "x": 5.36,
+          "z": 7.5249999999999995,
+          "w": 0.03,
+          "d": 1.56,
+          "y": 0.86,
+          "h": 0.04,
+          "material": "steel"
+        }
+      ],
+      "accessFace": "-x",
+      "useEnvelope": {
+        "x": 4.6000000000000005,
+        "z": 7.5249999999999995,
+        "w": 0.6,
+        "d": 1.6,
+        "y": 0,
+        "h": 0.95,
+        "source": "concept_bar_side_dining_reach_not_entry_corridor"
+      },
+      "diningFace": "-x",
+      "kneeVoid": {
+        "fromFace": "-x",
+        "faceX": 4.9,
+        "depthM": 0.32,
+        "continuous": true,
+        "collision": false
+      }
+    },
+    {
+      "id": "s02-vanity-basin",
+      "type": "study_basin",
+      "room": "bath",
+      "x": 6.58,
+      "z": 1.45,
+      "w": 0.42,
+      "d": 0.27,
+      "h": 0.14,
+      "y": 0.86,
+      "rotation": -90
+    },
+    {
+      "id": "s02-pc-desk-cable-tray",
+      "type": "cabinet_frame",
+      "room": "master",
+      "x": 8.6,
+      "z": 4.265000000000001,
+      "w": 1.15,
+      "d": 0.07,
+      "h": 0.04,
+      "y": 0.65,
+      "rotation": 0,
+      "collisionParts": [
+        {
+          "x": 8.6,
+          "z": 4.265000000000001,
+          "w": 1.15,
+          "d": 0.07,
+          "y": 0.65,
+          "h": 0.04,
+          "rotation": 0,
+          "material": "charcoal"
+        }
+      ]
+    },
+    {
+      "id": "s02-mac-desk-cable-tray",
+      "type": "cabinet_frame",
+      "room": "master",
+      "x": 9.9,
+      "z": 4.265000000000001,
+      "w": 0.95,
+      "d": 0.07,
+      "h": 0.04,
+      "y": 0.65,
+      "rotation": 0,
+      "collisionParts": [
+        {
+          "x": 9.9,
+          "z": 4.265000000000001,
+          "w": 0.95,
+          "d": 0.07,
+          "y": 0.65,
+          "h": 0.04,
+          "rotation": 0,
+          "material": "charcoal"
+        }
+      ]
+    },
+    {
+      "id": "upper-kitchen-left",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "label": "灶台左侧吊柜",
+      "x": 0.475,
+      "z": 3.665,
+      "y": 1.6,
+      "w": 0.65,
+      "d": 0.32,
+      "h": 1.1,
+      "rotation": 180,
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [
+        0.48
+      ],
+      "purpose": "调味与轻餐具",
+      "access": "mixed",
+      "material": "upperPaint"
+    },
+    {
+      "id": "upper-kitchen-prep",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "label": "备餐区吊柜",
+      "x": 2.275,
+      "z": 3.665,
+      "y": 1.6,
+      "w": 1.15,
+      "d": 0.32,
+      "h": 1.1,
+      "rotation": 180,
+      "fronts": [
+        "solid",
+        "solid"
+      ],
+      "shelves": [
+        0.48
+      ],
+      "purpose": "备餐用品与食品",
+      "access": "mixed",
+      "material": "upperPaint"
+    },
+    {
+      "id": "upper-master-work",
+      "type": "wall_storage",
+      "room": "master",
+      "label": "双人工作区收纳",
+      "x": 9.2,
+      "z": 4.16,
+      "y": 2.05,
+      "w": 2.6,
+      "d": 0.3,
+      "h": 0.65,
+      "rotation": 0,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ],
+      "shelves": [
+        0.45599999999999996
+      ],
+      "purpose": "文件、设备配件与书籍",
+      "access": "mixed",
+      "contents": "books",
+      "material": "upperPaint"
+    },
+    {
+      "id": "upper-guest-media",
+      "type": "wall_storage",
+      "room": "guest",
+      "label": "影音客房收纳墙",
+      "x": 1.75,
+      "z": 3.13,
+      "y": 1.83,
+      "w": 2.8,
+      "d": 0.3,
+      "h": 0.77,
+      "rotation": 0,
+      "fronts": [
+        "solid",
+        "open",
+        "solid"
+      ],
+      "shelves": [
+        0.3696
+      ],
+      "purpose": "客用备品、影音与展示",
+      "access": "mixed",
+      "contents": "books",
+      "material": "cinemaPaint",
+      "caseMaterial": "cinemaWood",
+      "insideMaterial": "cinemaInterior",
+      "concealedDisplay": true
+    },
+    {
+      "id": "upper-guest-bed-left",
+      "type": "wall_storage",
+      "room": "guest",
+      "label": "沙发床左侧浅柜",
+      "x": 0.94,
+      "z": 0.24,
+      "y": 1.86,
+      "w": 0.56,
+      "d": 0.26,
+      "h": 0.74,
+      "rotation": 180,
+      "fronts": [
+        "open"
+      ],
+      "shelves": [
+        0.35519999999999996
+      ],
+      "purpose": "阅读与小件展示",
+      "access": "mixed",
+      "contents": "books",
+      "material": "cinemaPaint",
+      "caseMaterial": "cinemaWood",
+      "insideMaterial": "cinemaInterior",
+      "concealedDisplay": false
+    },
+    {
+      "id": "upper-guest-bed-right",
+      "type": "wall_storage",
+      "room": "guest",
+      "label": "沙发床右侧浅柜",
+      "x": 3.16,
+      "z": 0.24,
+      "y": 1.86,
+      "w": 0.56,
+      "d": 0.26,
+      "h": 0.74,
+      "rotation": 180,
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [
+        0.35519999999999996
+      ],
+      "purpose": "轻型客用备品",
+      "access": "mixed",
+      "material": "cinemaPaint",
+      "caseMaterial": "cinemaWood",
+      "insideMaterial": "cinemaInterior",
+      "concealedDisplay": false
+    },
+    {
+      "id": "upper-bath-mirror",
+      "type": "wall_storage",
+      "room": "bath",
+      "label": "洗手台镜柜",
+      "x": 6.7,
+      "z": 1.45,
+      "y": 1.16,
+      "w": 0.65,
+      "d": 0.18,
+      "h": 1.12,
+      "rotation": -90,
+      "fronts": [
+        "mirror"
+      ],
+      "shelves": [
+        0.5376000000000001
+      ],
+      "purpose": "日用洗护用品",
+      "access": "mixed",
+      "material": "upperPaint"
+    },
+    {
+      "id": "upper-bath-toilet",
+      "type": "wall_storage",
+      "room": "bath",
+      "label": "马桶上方浅柜",
+      "x": 5,
+      "z": 1.5,
+      "y": 1.52,
+      "w": 0.52,
+      "d": 0.22,
+      "h": 1.04,
+      "rotation": 90,
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [
+        0.4992
+      ],
+      "purpose": "纸品与清洁备品",
+      "access": "mixed",
+      "material": "upperPaint"
+    },
+    {
+      "id": "laundry-basket",
+      "type": "basket",
+      "room": "balcony",
+      "x": 12.12,
+      "z": 8.93,
+      "y": 0.12,
+      "w": 0.3,
+      "d": 0.5,
+      "h": 0.5,
+      "rotation": 0,
+      "material": "linen",
+      "accessFrom": "housekeeping_cabinet_left_bay"
+    },
+    {
+      "id": "master-work-pegboard",
+      "type": "pegboard",
+      "room": "master",
+      "x": 9.2,
+      "z": 4.24,
+      "y": 0.97,
+      "w": 2.2,
+      "h": 0.56,
+      "d": 0.14,
+      "rotation": 0,
+      "material": "cream",
+      "purpose": "headphones_cables_stationery_shared_photos",
+      "accessFace": "-z"
+    },
+    {
+      "id": "entry-pegboard",
+      "type": "pegboard",
+      "room": "hall",
+      "x": 6.8,
+      "z": 8.27,
+      "y": 0.95,
+      "w": 0.6,
+      "h": 0.85,
+      "d": 0.14,
+      "rotation": 0,
+      "material": "sage",
+      "purpose": "keys_bag_daily_items",
+      "accessFace": "-z"
+    },
+    {
+      "id": "kitchen-airfryer",
+      "type": "counter_appliance",
+      "room": "kitchen",
+      "x": 1.85,
+      "z": 5.53,
+      "y": 0.95,
+      "w": 0.34,
+      "d": 0.4,
+      "h": 0.34,
+      "rotation": 0,
+      "material": "charcoal",
+      "appliance": "airfryer"
+    },
+    {
+      "id": "kitchen-oven",
+      "type": "counter_appliance",
+      "room": "kitchen",
+      "x": 2.15,
+      "z": 5.52,
+      "y": 0.16,
+      "w": 0.6,
+      "d": 0.55,
+      "h": 0.6,
+      "rotation": 0,
+      "material": "charcoal",
+      "appliance": "oven"
+    },
+    {
+      "id": "kitchen-prep-board",
+      "type": "tray",
+      "room": "kitchen",
+      "x": 2.36,
+      "z": 5.53,
+      "y": 0.955,
+      "w": 0.34,
+      "d": 0.4,
+      "h": 0.025,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "reading-chair",
+      "type": "lounge_chair",
+      "room": "bar",
+      "x": 1.05,
+      "z": 6.7,
+      "y": 0,
+      "w": 0.86,
+      "d": 0.88,
+      "h": 0.82,
+      "rotation": -90,
+      "material": "salonClay"
+    },
+    {
+      "id": "reading-records",
+      "type": "record_console",
+      "room": "bar",
+      "x": 0.29,
+      "z": 6.5,
+      "y": 0,
+      "w": 1.2,
+      "d": 0.34,
+      "h": 0.68,
+      "rotation": 90,
+      "material": "salonDarkTimber",
+      "recordCountBudget": 45,
+      "accessFace": "+x",
+      "placement": "below_bar_window",
+      "windowSillM": 0.9,
+      "highestEquipmentTopM": 0.765
+    },
+    {
+      "id": "reading-side",
+      "type": "side_table",
+      "room": "bar",
+      "x": 1.75,
+      "z": 6.9,
+      "y": 0,
+      "w": 0.38,
+      "d": 0.38,
+      "h": 0.5,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "reading-lamp",
+      "type": "floor_lamp",
+      "room": "bar",
+      "x": 0.58,
+      "z": 7.35,
+      "y": 0,
+      "w": 0.3,
+      "d": 0.3,
+      "h": 1.55,
+      "rotation": 0,
+      "material": "bronze"
+    },
+    {
+      "id": "s02-bottle-0-0",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.81,
+      "z": 7.92,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-0-1",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.96,
+      "z": 7.92,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-0-2",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 2.11,
+      "z": 7.92,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-0-3",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.81,
+      "z": 8.05,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-0-4",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.96,
+      "z": 8.05,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-0-5",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 2.11,
+      "z": 8.05,
+      "y": 1.818,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-0",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.81,
+      "z": 7.92,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-1",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.96,
+      "z": 7.92,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-2",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 2.11,
+      "z": 7.92,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-3",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.81,
+      "z": 8.05,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-4",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 1.96,
+      "z": 8.05,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "s02-bottle-1-5",
+      "type": "study_bottle",
+      "room": "bar",
+      "x": 2.11,
+      "z": 8.05,
+      "y": 2.138,
+      "w": 0.075,
+      "d": 0.075,
+      "h": 0.3,
+      "rotation": 0,
+      "material": "glass"
+    },
+    {
+      "id": "guest-drinks-fridge",
+      "type": "fridge",
+      "room": "guest",
+      "x": 4.28,
+      "z": 0.575,
+      "y": 0,
+      "w": 0.48,
+      "d": 0.52,
+      "h": 0.85,
+      "rotation": -90,
+      "doorLayout": "single_drinks",
+      "accessFace": "-x",
+      "ventilation": {
+        "sideM": 0.05,
+        "rearM": 0.06,
+        "topM": 0.1
+      },
+      "opening": {
+        "hinge": "left",
+        "maxAngle": 95,
+        "drawerTravel": 0
+      },
+      "material": "charcoal"
+    },
+    {
+      "id": "master-speaker-left",
+      "type": "speaker",
+      "room": "master",
+      "x": 8.03,
+      "z": 4.13,
+      "y": 0.78,
+      "w": 0.13,
+      "d": 0.15,
+      "h": 0.23,
+      "rotation": 0,
+      "material": "charcoal"
+    },
+    {
+      "id": "master-speaker-right",
+      "type": "speaker",
+      "room": "master",
+      "x": 10.37,
+      "z": 4.13,
+      "y": 0.78,
+      "w": 0.13,
+      "d": 0.15,
+      "h": 0.23,
+      "rotation": 0,
+      "material": "charcoal"
+    },
+    {
+      "id": "bath-heater",
+      "type": "ceiling_equipment",
+      "room": "bath",
+      "x": 5.8,
+      "z": 0.75,
+      "y": 2.62,
+      "w": 0.6,
+      "d": 0.3,
+      "h": 0.055,
+      "rotation": 0,
+      "material": "cream",
+      "purpose": "浴霸与排风；风管、潮湿分区及电路待核"
+    },
+    {
+      "id": "laundry-folding-shelf",
+      "type": "folding_shelf",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 8.595,
+      "y": 0.92,
+      "w": 0.62,
+      "d": 0.42,
+      "h": 0.025,
+      "rotation": 0,
+      "material": "oak"
+    },
+    {
+      "id": "entry-counter-stool-0",
+      "type": "counter_stool",
+      "room": "bar",
+      "x": 4.35,
+      "z": 7.075,
+      "y": 0,
+      "w": 0.46,
+      "d": 0.46,
+      "h": 0.91,
+      "seatHeight": 0.65,
+      "rotation": 90,
+      "material": "oak"
+    },
+    {
+      "id": "entry-counter-stool-1",
+      "type": "counter_stool",
+      "room": "bar",
+      "x": 4.35,
+      "z": 7.775,
+      "y": 0,
+      "w": 0.46,
+      "d": 0.46,
+      "h": 0.91,
+      "seatHeight": 0.65,
+      "rotation": 90,
+      "material": "oak"
+    },
+    {
+      "id": "r2-kitchen-back",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "x": 1.485,
+      "z": 3.79,
+      "w": 2.79,
+      "d": 0.6,
+      "h": 0.915,
+      "y": 0,
+      "rotation": 180,
+      "label": "后排操作收纳",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "后排操作收纳",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -0.9,
+            "w": 0.99,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "utensils",
+            "shelves": []
+          },
+          {
+            "x": 0.47,
+            "w": 1.75,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "+z",
+      "useEnvelope": {
+        "x": 1.485,
+        "z": 4.39,
+        "w": 2.79,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 180,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-kitchen-sink-base",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "x": 0.415,
+      "z": 4.645,
+      "w": 1.11,
+      "d": 0.65,
+      "h": 0.915,
+      "y": 0,
+      "rotation": 90,
+      "label": "窗下水槽柜",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "窗下水槽柜",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": 0,
+            "w": 1.11,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior",
+        "cutouts": [
+          {
+            "x": 0.055,
+            "z": 0,
+            "w": 0.408,
+            "d": 0.508,
+            "y0": 0.74,
+            "y1": 1
+          }
+        ]
+      },
+      "accessFace": "+x",
+      "useEnvelope": {
+        "x": 1.04,
+        "z": 4.645,
+        "w": 1.11,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 90,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-back-worktop",
+      "type": "cabinet_frame",
+      "room": "kitchen",
+      "x": 1.485,
+      "z": 3.79,
+      "w": 2.79,
+      "d": 0.6,
+      "y": 0.915,
+      "h": 0.035,
+      "rotation": 0,
+      "material": "barStone",
+      "collisionParts": [
+        {
+          "x": 1.485,
+          "z": 3.79,
+          "w": 2.79,
+          "d": 0.6,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        }
+      ]
+    },
+    {
+      "id": "r2-sink-worktop",
+      "type": "cabinet_frame",
+      "room": "kitchen",
+      "x": 0.415,
+      "z": 4.645,
+      "w": 0.65,
+      "d": 1.11,
+      "y": 0.915,
+      "h": 0.035,
+      "rotation": 0,
+      "material": "barStone",
+      "sinkCutout": {
+        "x": 0.415,
+        "z": 4.7,
+        "w": 0.508,
+        "d": 0.408
+      },
+      "collisionParts": [
+        {
+          "x": 0.12549999999999997,
+          "z": 4.645,
+          "w": 0.07100000000000001,
+          "d": 1.1099999999999994,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 0.7045,
+          "z": 4.645,
+          "w": 0.07099999999999995,
+          "d": 1.1099999999999994,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 0.41500000000000004,
+          "z": 4.293,
+          "w": 0.508,
+          "d": 0.4060000000000006,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 0.41500000000000004,
+          "z": 5.052,
+          "w": 0.508,
+          "d": 0.2959999999999994,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        }
+      ]
+    },
+    {
+      "id": "r2-kitchen-peninsula",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "x": 1.395,
+      "z": 5.525,
+      "w": 2.61,
+      "d": 0.65,
+      "h": 0.915,
+      "y": 0,
+      "rotation": 0,
+      "label": "半岛备餐与出品",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "半岛备餐与出品",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -0.96,
+            "w": 0.69,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "utensils",
+            "shelves": []
+          },
+          {
+            "x": -0.295,
+            "w": 0.64,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": 0.665,
+            "w": 1.28,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 1.395,
+        "z": 4.9,
+        "w": 2.61,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-main-countertop",
+      "type": "cabinet_frame",
+      "room": "kitchen",
+      "x": 1.395,
+      "z": 5.525,
+      "w": 2.61,
+      "d": 0.65,
+      "y": 0.915,
+      "h": 0.035,
+      "rotation": 0,
+      "material": "barStone",
+      "collisionParts": [
+        {
+          "x": 1.395,
+          "z": 5.525,
+          "w": 2.61,
+          "d": 0.65,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        }
+      ]
+    },
+    {
+      "id": "r2-shallow-peninsula",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "x": 3.31,
+      "z": 5.675,
+      "w": 1.22,
+      "d": 0.35,
+      "h": 0.915,
+      "y": 0,
+      "rotation": 0,
+      "label": "冰箱前浅备物台",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "冰箱前浅备物台",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": 0,
+            "w": 1.22,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "utensils",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 3.31,
+        "z": 5.2,
+        "w": 1.22,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-shallow-countertop",
+      "type": "cabinet_frame",
+      "room": "kitchen",
+      "x": 3.31,
+      "z": 5.675,
+      "w": 1.22,
+      "d": 0.35,
+      "y": 0.915,
+      "h": 0.035,
+      "rotation": 0,
+      "material": "barStone",
+      "collisionParts": [
+        {
+          "x": 3.31,
+          "z": 5.675,
+          "w": 1.22,
+          "d": 0.35,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        }
+      ]
+    },
+    {
+      "id": "r2-fridge-cabinet",
+      "type": "wall_storage",
+      "room": "kitchen",
+      "x": 3.4,
+      "z": 3.9,
+      "w": 1.04,
+      "d": 0.82,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 180,
+      "label": "冰箱通顶柜位",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "冰箱通顶柜位",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": 0,
+            "w": 1.04,
+            "y": 0.09,
+            "h": 1.86,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": 0,
+            "w": 1.04,
+            "y": 1.95,
+            "h": 0.75,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "+z",
+      "useEnvelope": {
+        "x": 3.4,
+        "z": 4.609999999999999,
+        "w": 1.04,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 180,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-waterbar",
+      "type": "wall_storage",
+      "room": "bar",
+      "x": 1.845,
+      "z": 7.985,
+      "w": 3.51,
+      "d": 0.75,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 0,
+      "label": "咖啡精酿与酒具通顶柜",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "咖啡精酿与酒具通顶柜",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -1.4549999999999998,
+            "w": 0.6,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": -1.4549999999999998,
+            "w": 0.6,
+            "y": 0.95,
+            "h": 0.75,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": -1.4549999999999998,
+            "w": 0.6,
+            "y": 1.7,
+            "h": 1,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": [
+              0.48
+            ]
+          },
+          {
+            "x": -0.6299999999999998,
+            "w": 1.05,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": -0.6299999999999998,
+            "w": 1.05,
+            "y": 0.95,
+            "h": 0.75,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": -0.6299999999999998,
+            "w": 1.05,
+            "y": 1.7,
+            "h": 1,
+            "door": "solid",
+            "purpose": "appliance",
+            "shelves": [
+              0.48
+            ]
+          },
+          {
+            "x": 0.17000000000000026,
+            "w": 0.55,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "display",
+            "shelves": []
+          },
+          {
+            "x": 0.17000000000000026,
+            "w": 0.55,
+            "y": 0.95,
+            "h": 0.75,
+            "door": "open",
+            "purpose": "display",
+            "shelves": []
+          },
+          {
+            "x": 0.17000000000000026,
+            "w": 0.55,
+            "y": 1.7,
+            "h": 1,
+            "door": "open",
+            "purpose": "display",
+            "shelves": [
+              0.1,
+              0.42,
+              0.74
+            ]
+          },
+          {
+            "x": 0.8450000000000003,
+            "w": 0.8,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "open",
+            "purpose": "beer",
+            "shelves": []
+          },
+          {
+            "x": 0.8450000000000003,
+            "w": 0.8,
+            "y": 0.95,
+            "h": 0.75,
+            "door": "open",
+            "purpose": "beer",
+            "shelves": []
+          },
+          {
+            "x": 0.8450000000000003,
+            "w": 0.8,
+            "y": 1.7,
+            "h": 1,
+            "door": "solid",
+            "purpose": "beer",
+            "shelves": [
+              0.48
+            ]
+          },
+          {
+            "x": 1.5000000000000004,
+            "w": 0.51,
+            "y": 0.09,
+            "h": 0.825,
+            "door": "solid",
+            "purpose": "supplies",
+            "shelves": []
+          },
+          {
+            "x": 1.5000000000000004,
+            "w": 0.51,
+            "y": 0.95,
+            "h": 0.75,
+            "door": "solid",
+            "purpose": "supplies",
+            "shelves": []
+          },
+          {
+            "x": 1.5000000000000004,
+            "w": 0.51,
+            "y": 1.7,
+            "h": 1,
+            "door": "solid",
+            "purpose": "supplies",
+            "shelves": [
+              0.48
+            ]
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior",
+        "cutouts": [
+          {
+            "x": -1.455,
+            "z": -0.004999999999999893,
+            "w": 0.388,
+            "d": 0.348,
+            "y0": 0.74,
+            "y1": 1.01
+          }
+        ]
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 1.845,
+        "z": 7.3100000000000005,
+        "w": 3.51,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-bar-niche-counter",
+      "type": "cabinet_frame",
+      "room": "bar",
+      "x": 1.845,
+      "z": 7.985,
+      "w": 3.47,
+      "d": 0.71,
+      "y": 0.915,
+      "h": 0.035,
+      "rotation": 0,
+      "material": "barStone",
+      "sinkCutout": {
+        "x": 0.39,
+        "z": 7.98,
+        "w": 0.388,
+        "d": 0.348
+      },
+      "collisionParts": [
+        {
+          "x": 0.15299999999999994,
+          "z": 7.985,
+          "w": 0.08600000000000013,
+          "d": 0.7099999999999991,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 2.082,
+          "z": 7.985,
+          "w": 2.996,
+          "d": 0.7099999999999991,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 0.39,
+          "z": 7.718,
+          "w": 0.38800000000000007,
+          "d": 0.17599999999999927,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        },
+        {
+          "x": 0.39,
+          "z": 8.247,
+          "w": 0.38800000000000007,
+          "d": 0.18599999999999994,
+          "y": 0.915,
+          "h": 0.035,
+          "material": "barStone"
+        }
+      ]
+    },
+    {
+      "id": "r2-bar-sink",
+      "type": "sink",
+      "room": "bar",
+      "x": 0.39,
+      "z": 7.98,
+      "y": 0.95,
+      "w": 0.46,
+      "d": 0.42,
+      "h": 0.07,
+      "rotation": 0
+    },
+    {
+      "id": "r2-entry",
+      "type": "wall_storage",
+      "room": "hall",
+      "x": 7.155,
+      "z": 8.085,
+      "w": 1.41,
+      "d": 0.55,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 0,
+      "label": "换鞋洞洞板与次净衣整合柜",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "换鞋洞洞板与次净衣整合柜",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -0.355,
+            "w": 0.7,
+            "y": 0.09,
+            "h": 0.35,
+            "door": "open",
+            "purpose": "bench",
+            "shelves": []
+          },
+          {
+            "x": -0.355,
+            "w": 0.7,
+            "y": 0.44,
+            "h": 1.61,
+            "door": "open",
+            "purpose": "pegboard",
+            "shelves": []
+          },
+          {
+            "x": -0.355,
+            "w": 0.7,
+            "y": 2.05,
+            "h": 0.65,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          },
+          {
+            "x": 0.35,
+            "w": 0.71,
+            "y": 0.09,
+            "h": 1.96,
+            "door": "solid",
+            "purpose": "wardrobe",
+            "shelves": []
+          },
+          {
+            "x": 0.35,
+            "w": 0.71,
+            "y": 2.05,
+            "h": 0.65,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 7.155,
+        "z": 7.510000000000001,
+        "w": 1.41,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-living-shallow",
+      "type": "wall_storage",
+      "room": "living",
+      "x": 9.05,
+      "z": 4.65,
+      "w": 3.8,
+      "d": 0.32,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 180,
+      "label": "客厅通顶浅收纳",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "客厅通顶浅收纳",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -1.425,
+            "w": 0.95,
+            "y": 0.09,
+            "h": 2.61,
+            "door": "solid",
+            "purpose": "books",
+            "shelves": [
+              0.4,
+              0.8,
+              1.2,
+              1.6,
+              2.05
+            ]
+          },
+          {
+            "x": 1.425,
+            "w": 0.95,
+            "y": 0.09,
+            "h": 2.61,
+            "door": "solid",
+            "purpose": "books",
+            "shelves": [
+              0.4,
+              0.8,
+              1.2,
+              1.6,
+              2.05
+            ]
+          },
+          {
+            "x": 0,
+            "w": 1.9,
+            "y": 0.09,
+            "h": 0.76,
+            "door": "solid",
+            "purpose": "small-items",
+            "shelves": []
+          },
+          {
+            "x": 0,
+            "w": 1.9,
+            "y": 0.85,
+            "h": 0.95,
+            "door": "open",
+            "purpose": "books",
+            "shelves": [
+              0.475
+            ]
+          },
+          {
+            "x": 0,
+            "w": 1.9,
+            "y": 1.8,
+            "h": 0.9,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": [
+              0.45
+            ]
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "+z",
+      "useEnvelope": {
+        "x": 9.05,
+        "z": 5.11,
+        "w": 3.8,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 180,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-living-deep",
+      "type": "wall_storage",
+      "room": "living",
+      "x": 8.64,
+      "z": 8.96,
+      "w": 1.2,
+      "d": 0.6,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 0,
+      "label": "备用桌椅或行李整仓",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "备用桌椅或行李整仓",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": 0,
+            "w": 1.2,
+            "y": 0.09,
+            "h": 1.86,
+            "door": "solid",
+            "purpose": "folded-storage",
+            "shelves": []
+          },
+          {
+            "x": 0,
+            "w": 1.2,
+            "y": 1.95,
+            "h": 0.75,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 8.64,
+        "z": 8.360000000000001,
+        "w": 1.2,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-guest-wardrobe",
+      "type": "wall_storage",
+      "room": "guest",
+      "x": 4.3,
+      "z": 1.2,
+      "w": 1.9,
+      "d": 0.6,
+      "h": 2.7,
+      "y": 0,
+      "rotation": -90,
+      "label": "客房床品与可选饮料冰箱柜",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "客房床品与可选饮料冰箱柜",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -0.325,
+            "w": 1.25,
+            "y": 0.09,
+            "h": 2.16,
+            "door": "solid",
+            "purpose": "linen",
+            "shelves": [
+              0.35,
+              0.7,
+              1.05,
+              1.4,
+              1.75
+            ]
+          },
+          {
+            "x": 0.625,
+            "w": 0.65,
+            "y": 0.09,
+            "h": 0.91,
+            "door": "open",
+            "purpose": "appliance",
+            "shelves": []
+          },
+          {
+            "x": 0.625,
+            "w": 0.65,
+            "y": 1,
+            "h": 1.25,
+            "door": "solid",
+            "purpose": "wardrobe",
+            "shelves": []
+          },
+          {
+            "x": 0,
+            "w": 1.9,
+            "y": 2.25,
+            "h": 0.45,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-x",
+      "useEnvelope": {
+        "x": 3.6999999999999997,
+        "z": 1.2,
+        "w": 1.9,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": -90,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-master-wardrobe",
+      "type": "wall_storage",
+      "room": "master",
+      "x": 7.3,
+      "z": 1.46,
+      "w": 2.6,
+      "d": 0.6,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 90,
+      "label": "主卧衣柜整合到顶",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "主卧衣柜整合到顶",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": -0.975,
+            "w": 0.65,
+            "y": 0.09,
+            "h": 2.06,
+            "door": "solid",
+            "purpose": "wardrobe",
+            "shelves": []
+          },
+          {
+            "x": -0.325,
+            "w": 0.65,
+            "y": 0.09,
+            "h": 2.06,
+            "door": "solid",
+            "purpose": "wardrobe",
+            "shelves": []
+          },
+          {
+            "x": 0.325,
+            "w": 0.65,
+            "y": 0.09,
+            "h": 2.06,
+            "door": "solid",
+            "purpose": "linen",
+            "shelves": [
+              0.35,
+              0.7,
+              1.05,
+              1.4
+            ]
+          },
+          {
+            "x": 0.975,
+            "w": 0.65,
+            "y": 0.09,
+            "h": 2.06,
+            "door": "solid",
+            "purpose": "linen",
+            "shelves": [
+              0.5,
+              1,
+              1.5
+            ]
+          },
+          {
+            "x": 0,
+            "w": 2.6,
+            "y": 2.15,
+            "h": 0.55,
+            "door": "solid",
+            "purpose": "seasonal",
+            "shelves": []
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "+x",
+      "useEnvelope": {
+        "x": 7.8999999999999995,
+        "z": 1.46,
+        "w": 2.6,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 90,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-housekeeping",
+      "type": "wall_storage",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 8.93,
+      "w": 0.62,
+      "d": 0.65,
+      "h": 2.7,
+      "y": 0,
+      "rotation": 0,
+      "label": "阳台长物与顶部耗材柜",
+      "fronts": [
+        "solid"
+      ],
+      "shelves": [],
+      "purpose": "阳台长物与顶部耗材柜",
+      "access": "mixed",
+      "material": "cabinetPaint",
+      "caseMaterial": "oak",
+      "insideMaterial": "cabinetInterior",
+      "coordinateStatus": "R2_virtual_budget_not_surveyed",
+      "r2Cabinet": {
+        "bays": [
+          {
+            "x": 0,
+            "w": 0.62,
+            "y": 0.09,
+            "h": 1.86,
+            "door": "solid",
+            "purpose": "utility",
+            "shelves": []
+          },
+          {
+            "x": 0,
+            "w": 0.62,
+            "y": 1.95,
+            "h": 0.75,
+            "door": "solid",
+            "purpose": "supplies",
+            "shelves": [
+              0.35
+            ]
+          }
+        ],
+        "frameMaterial": "oak",
+        "frontMaterial": "cabinetPaint",
+        "backMaterial": "cabinetInterior"
+      },
+      "accessFace": "-z",
+      "useEnvelope": {
+        "x": 12.25,
+        "z": 8.305,
+        "w": 0.62,
+        "d": 0.6,
+        "h": 1.88,
+        "y": 0,
+        "rotation": 0,
+        "coordinateFrame": "oriented_world",
+        "source": "R2_operator_budget_not_joint_acceptance"
+      }
+    },
+    {
+      "id": "r2-bar-sign",
+      "type": "bar_sign",
+      "room": "bar",
+      "x": 1.8,
+      "z": 6.03,
+      "y": 2.26,
+      "w": 1.2,
+      "h": 0.28,
+      "d": 0.04,
+      "rotation": 0,
+      "text": "MuKo’s Bar"
+    }
+  ],
+  "lighting": {
+    "fixtures": [
+      {
+        "id": "entry-shoe-low",
+        "roomId": "hall",
+        "spaceIds": [
+          "hall"
+        ],
+        "position": [
+          6.8,
+          0.12,
+          7.83
+        ],
+        "target": [
+          6.8,
+          0.02,
+          7.55
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 110,
+        "type": "line",
+        "length": 0.5,
+        "axis": "x",
+        "beamAngle": 110,
+        "range": 0.85,
+        "shadowPriority": 0,
+        "installation": "concealed shoe cabinet plinth profile",
+        "anchor": "r2-entry",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "entry-wash",
+        "roomId": "hall",
+        "spaceIds": [
+          "hall"
+        ],
+        "position": [
+          7,
+          2.58,
+          7.1
+        ],
+        "target": [
+          7,
+          0.8,
+          7.45
+        ],
+        "group": "accent",
+        "kelvin": 3000,
+        "lumens": 550,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 48,
+        "range": 2.5,
+        "shadowPriority": 3,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "corridor-wash",
+        "roomId": "hall",
+        "spaceIds": [
+          "hall"
+        ],
+        "position": [
+          5.8,
+          2.58,
+          2.65
+        ],
+        "target": [
+          5.05,
+          1.2,
+          2.6
+        ],
+        "group": "ambient",
+        "kelvin": 3000,
+        "lumens": 300,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 80,
+        "range": 2.6,
+        "shadowPriority": 0,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "corridor-guide",
+        "roomId": "hall",
+        "spaceIds": [
+          "hall"
+        ],
+        "position": [
+          6.8,
+          0.2,
+          4.15
+        ],
+        "target": [
+          6.35,
+          0.015,
+          4.15
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 80,
+        "type": "line",
+        "length": 0.25,
+        "axis": "z",
+        "beamAngle": 100,
+        "range": 0.9,
+        "shadowPriority": 0,
+        "installation": "wall recess with downward shield",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "dining-offset-1",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          9.02,
+          2.55,
+          7.55
+        ],
+        "target": [
+          9.02,
+          0.75,
+          7.55
+        ],
+        "group": "accent",
+        "kelvin": 3000,
+        "lumens": 200,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 58,
+        "range": 2.65,
+        "shadowPriority": 5,
+        "installation": "surface compact shielded fitting",
+        "anchor": "dining-table",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "dining-offset-2",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          9.58,
+          2.55,
+          7.55
+        ],
+        "target": [
+          9.58,
+          0.75,
+          7.55
+        ],
+        "group": "accent",
+        "kelvin": 3000,
+        "lumens": 200,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 58,
+        "range": 2.65,
+        "shadowPriority": 4,
+        "installation": "surface compact shielded fitting",
+        "anchor": "dining-table",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bar-task",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          1.23,
+          1.63,
+          7.86
+        ],
+        "target": [
+          1.23,
+          1,
+          7.95
+        ],
+        "group": "task",
+        "kelvin": 3500,
+        "lumens": 520,
+        "type": "line",
+        "length": 0.88,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 1.15,
+        "shadowPriority": 0,
+        "installation": "surface profile below the actual coffee cabinet, forward/downward shield; concept position",
+        "anchor": "r2-waterbar",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "display-level-1",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          2.015,
+          2.08,
+          8.18
+        ],
+        "target": [
+          2.015,
+          1.85,
+          7.93
+        ],
+        "group": "decor",
+        "kelvin": 2700,
+        "lumens": 55,
+        "type": "line",
+        "length": 0.43,
+        "axis": "x",
+        "beamAngle": 95,
+        "range": 0.42,
+        "shadowPriority": 0,
+        "installation": "underside of existing shelf/profile; exactly three illuminated shelf levels",
+        "anchor": "r2-waterbar",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "display-level-2",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          2.015,
+          2.4000000000000004,
+          8.18
+        ],
+        "target": [
+          2.015,
+          2.17,
+          7.93
+        ],
+        "group": "decor",
+        "kelvin": 2700,
+        "lumens": 55,
+        "type": "line",
+        "length": 0.43,
+        "axis": "x",
+        "beamAngle": 95,
+        "range": 0.42,
+        "shadowPriority": 0,
+        "installation": "underside of existing shelf/profile; exactly three illuminated shelf levels",
+        "anchor": "r2-waterbar",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "display-level-3",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          2.015,
+          2.66,
+          8.18
+        ],
+        "target": [
+          2.015,
+          2.4899999999999998,
+          7.93
+        ],
+        "group": "decor",
+        "kelvin": 2700,
+        "lumens": 55,
+        "type": "line",
+        "length": 0.43,
+        "axis": "x",
+        "beamAngle": 95,
+        "range": 0.42,
+        "shadowPriority": 0,
+        "installation": "underside of existing shelf/profile; exactly three illuminated shelf levels",
+        "anchor": "r2-waterbar",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bar-wall-wash",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          0.45,
+          2.55,
+          7.48
+        ],
+        "target": [
+          0.12,
+          1.4,
+          7.48
+        ],
+        "group": "ambient",
+        "kelvin": 3000,
+        "lumens": 300,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 80,
+        "range": 2.2,
+        "shadowPriority": 0,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "kitchen-base-1",
+        "roomId": "kitchen",
+        "spaceIds": [
+          "kitchen"
+        ],
+        "position": [
+          1.58,
+          2.58,
+          4.48
+        ],
+        "target": [
+          1.58,
+          0.85,
+          4.23
+        ],
+        "group": "basic",
+        "kelvin": 3000,
+        "lumens": 700,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 65,
+        "range": 2.8,
+        "shadowPriority": 4,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "kitchen-base-2",
+        "roomId": "kitchen",
+        "spaceIds": [
+          "kitchen"
+        ],
+        "position": [
+          3.15,
+          2.58,
+          4.35
+        ],
+        "target": [
+          3.15,
+          0.85,
+          4.1
+        ],
+        "group": "basic",
+        "kelvin": 3000,
+        "lumens": 700,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 65,
+        "range": 2.8,
+        "shadowPriority": 2,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "kitchen-prep-profile",
+        "roomId": "kitchen",
+        "spaceIds": [
+          "kitchen"
+        ],
+        "position": [
+          2.275,
+          1.585,
+          3.79
+        ],
+        "target": [
+          2.2,
+          0.94,
+          3.855
+        ],
+        "group": "task",
+        "kelvin": 3500,
+        "lumens": 650,
+        "type": "line",
+        "length": 0.8250000000000003,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 1.2,
+        "shadowPriority": 0,
+        "installation": "visible shallow aluminium surface wall channel; no assumed upper cabinet",
+        "anchor": "upper-kitchen-prep",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "kitchen-sink-task",
+        "roomId": "kitchen",
+        "spaceIds": [
+          "kitchen"
+        ],
+        "position": [
+          0.55,
+          2.52,
+          4.7
+        ],
+        "target": [
+          0.45,
+          0.93,
+          4.7
+        ],
+        "group": "task",
+        "kelvin": 3500,
+        "lumens": 350,
+        "type": "spot",
+        "length": 0.1,
+        "axis": "x",
+        "beamAngle": 95,
+        "range": 1.1,
+        "shadowPriority": 0,
+        "installation": "ceiling task fitting leaves the sink window clear",
+        "anchor": "kitchen-sink",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "living-wall-cove",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          9.4,
+          2.47,
+          9.16
+        ],
+        "target": [
+          9.4,
+          2.61,
+          9.2
+        ],
+        "group": "ambient",
+        "kelvin": 2700,
+        "lumens": 600,
+        "type": "line",
+        "length": 3.15,
+        "axis": "x",
+        "beamAngle": 115,
+        "range": 1.6,
+        "shadowPriority": 0,
+        "installation": "concealed architectural cornice uplight; cornice and ceiling detail require site confirmation",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "living-wall-accent",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          7.48,
+          2.58,
+          6.5
+        ],
+        "target": [
+          7.02,
+          1,
+          6.5
+        ],
+        "group": "accent",
+        "kelvin": 3000,
+        "lumens": 480,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 45,
+        "range": 2.2,
+        "shadowPriority": 5,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "living-reading-lamp",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          10.95,
+          1.265,
+          8.85
+        ],
+        "target": [
+          10.1,
+          0.7,
+          7
+        ],
+        "group": "reading",
+        "kelvin": 2700,
+        "lumens": 500,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 90,
+        "range": 2,
+        "shadowPriority": 0,
+        "installation": "existing floor lamp underside of fabric shade",
+        "anchor": "living-lamp",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-headboard",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          9.5,
+          0.875,
+          0.185
+        ],
+        "target": [
+          9.5,
+          1.25,
+          0.12
+        ],
+        "group": "ambient",
+        "kelvin": 2700,
+        "lumens": 460,
+        "type": "line",
+        "length": 1.7,
+        "axis": "x",
+        "beamAngle": 115,
+        "range": 1.25,
+        "shadowPriority": 0,
+        "installation": "concealed upper headboard profile",
+        "anchor": "master-bed",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-underbed",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          9.5,
+          0.12,
+          2.165
+        ],
+        "target": [
+          9.5,
+          0.015,
+          2.585
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 100,
+        "type": "line",
+        "length": 1.65,
+        "axis": "x",
+        "beamAngle": 110,
+        "range": 0.85,
+        "shadowPriority": 0,
+        "installation": "recessed foot end under-bed profile",
+        "anchor": "master-bed",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-reading-1",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          8.47,
+          1.12,
+          0.18
+        ],
+        "target": [
+          8.270000000000001,
+          0.56,
+          0.5249999999999999
+        ],
+        "group": "reading",
+        "kelvin": 2700,
+        "lumens": 130,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 45,
+        "range": 1.15,
+        "shadowPriority": 0,
+        "installation": "small shielded adjustable bedhead reader",
+        "anchor": "master-bed",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-reading-2",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          10.53,
+          1.12,
+          0.18
+        ],
+        "target": [
+          10.729999999999999,
+          0.56,
+          0.5249999999999999
+        ],
+        "group": "reading",
+        "kelvin": 2700,
+        "lumens": 130,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 45,
+        "range": 1.15,
+        "shadowPriority": 0,
+        "installation": "small shielded adjustable bedhead reader",
+        "anchor": "master-bed",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-wardrobe-face",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          7.8,
+          2.57,
+          1
+        ],
+        "target": [
+          7.61,
+          1.1,
+          1
+        ],
+        "group": "basic",
+        "kelvin": 3000,
+        "lumens": 480,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 48,
+        "range": 2.45,
+        "shadowPriority": 0,
+        "installation": "surface compact shielded fitting",
+        "anchor": "r2-master-wardrobe",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "pc-desk-task",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          8.45,
+          1.635,
+          4.065
+        ],
+        "target": [
+          8.45,
+          0.78,
+          3.985
+        ],
+        "group": "work",
+        "kelvin": 3500,
+        "lumens": 500,
+        "type": "line",
+        "length": 0.42,
+        "axis": "x",
+        "beamAngle": 90,
+        "range": 0.95,
+        "shadowPriority": 0,
+        "installation": "desk clamp task lamp with diffuser and shield; does not occupy chair/leg space",
+        "anchor": "upper-master-work",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "mac-desk-task",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          9.9,
+          1.635,
+          4.065
+        ],
+        "target": [
+          9.9,
+          0.78,
+          3.985
+        ],
+        "group": "work",
+        "kelvin": 3500,
+        "lumens": 500,
+        "type": "line",
+        "length": 0.42,
+        "axis": "x",
+        "beamAngle": 90,
+        "range": 0.95,
+        "shadowPriority": 0,
+        "installation": "desk clamp task lamp with diffuser and shield; does not occupy chair/leg space",
+        "anchor": "upper-master-work",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "master-wall-wash",
+        "roomId": "master",
+        "spaceIds": [
+          "master"
+        ],
+        "position": [
+          10.85,
+          2.55,
+          0.8
+        ],
+        "target": [
+          11.52,
+          1.25,
+          0.75
+        ],
+        "group": "ambient",
+        "kelvin": 3000,
+        "lumens": 300,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 80,
+        "range": 2.45,
+        "shadowPriority": 0,
+        "installation": "surface compact shielded fitting",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "guest-screen-bias",
+        "roomId": "guest",
+        "spaceIds": [
+          "guest"
+        ],
+        "position": [
+          2.05,
+          1.19,
+          3.255
+        ],
+        "target": [
+          2.05,
+          1.19,
+          3.32
+        ],
+        "group": "screen",
+        "kelvin": 2700,
+        "lumens": 120,
+        "type": "line",
+        "length": 1.45,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 0.4,
+        "shadowPriority": 0,
+        "installation": "screen rear bias strip",
+        "anchor": "guest-tv",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "guest-wall-cove",
+        "roomId": "guest",
+        "spaceIds": [
+          "guest"
+        ],
+        "position": [
+          0.15,
+          2.48,
+          1.2
+        ],
+        "target": [
+          0.1,
+          2.62,
+          1.2
+        ],
+        "group": "ambient",
+        "kelvin": 2700,
+        "lumens": 720,
+        "type": "line",
+        "length": 1.8,
+        "axis": "z",
+        "beamAngle": 115,
+        "range": 1.55,
+        "shadowPriority": 0,
+        "installation": "concealed wall cornice uplight; site detail pending",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "guest-reader",
+        "roomId": "guest",
+        "spaceIds": [
+          "guest"
+        ],
+        "position": [
+          0.95,
+          1.2,
+          0.25
+        ],
+        "target": [
+          1.5,
+          0.55,
+          0.7
+        ],
+        "group": "reading",
+        "kelvin": 2700,
+        "lumens": 220,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 55,
+        "range": 1.3,
+        "shadowPriority": 0,
+        "installation": "wall adjustable reader clear of opening bed",
+        "anchor": "guest-sofa-bed",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "guest-night-guide",
+        "roomId": "guest",
+        "spaceIds": [
+          "guest"
+        ],
+        "position": [
+          4.62,
+          0.18,
+          2.05
+        ],
+        "target": [
+          4.2,
+          0.015,
+          2.05
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 65,
+        "type": "line",
+        "length": 0.2,
+        "axis": "z",
+        "beamAngle": 95,
+        "range": 0.8,
+        "shadowPriority": 0,
+        "installation": "low wall recessed downward light",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bath-mirror-side-1",
+        "roomId": "bath",
+        "spaceIds": [
+          "bath"
+        ],
+        "position": [
+          6.57,
+          1.72,
+          1.08
+        ],
+        "target": [
+          6.1,
+          1.5,
+          1.08
+        ],
+        "group": "task",
+        "kelvin": 3000,
+        "lumens": 250,
+        "type": "line",
+        "length": 0.6,
+        "axis": "y",
+        "beamAngle": 105,
+        "range": 1.15,
+        "shadowPriority": 0,
+        "installation": "diffused mirror-side wall profile; moisture rating/zone to confirm",
+        "anchor": "upper-bath-mirror",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bath-mirror-side-2",
+        "roomId": "bath",
+        "spaceIds": [
+          "bath"
+        ],
+        "position": [
+          6.57,
+          1.72,
+          1.82
+        ],
+        "target": [
+          6.1,
+          1.5,
+          1.82
+        ],
+        "group": "task",
+        "kelvin": 3000,
+        "lumens": 250,
+        "type": "line",
+        "length": 0.6,
+        "axis": "y",
+        "beamAngle": 105,
+        "range": 1.15,
+        "shadowPriority": 0,
+        "installation": "diffused mirror-side wall profile; moisture rating/zone to confirm",
+        "anchor": "upper-bath-mirror",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bath-shower",
+        "roomId": "bath",
+        "spaceIds": [
+          "bath"
+        ],
+        "position": [
+          6.4,
+          2.58,
+          0.6
+        ],
+        "target": [
+          6.4,
+          0.45,
+          0.6
+        ],
+        "group": "basic",
+        "kelvin": 3000,
+        "lumens": 650,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 60,
+        "range": 2.8,
+        "shadowPriority": 2,
+        "installation": "sealed ceiling downlight; damp-area electrical/IP suitability pending",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "bath-night",
+        "roomId": "bath",
+        "spaceIds": [
+          "bath"
+        ],
+        "position": [
+          5.32,
+          0.2,
+          0.5
+        ],
+        "target": [
+          5.7,
+          0.015,
+          0.5
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 60,
+        "type": "line",
+        "length": 0.25,
+        "axis": "z",
+        "beamAngle": 95,
+        "range": 0.85,
+        "shadowPriority": 0,
+        "installation": "vanity underside concealed profile",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "balcony-laundry",
+        "roomId": "balcony",
+        "spaceIds": [
+          "balcony"
+        ],
+        "position": [
+          12.25,
+          2.5,
+          8.58
+        ],
+        "target": [
+          12.12,
+          0.62,
+          8.93
+        ],
+        "group": "task",
+        "kelvin": 3500,
+        "lumens": 750,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 50,
+        "range": 2.8,
+        "shadowPriority": 3,
+        "installation": "surface shielded ceiling task fitting aimed at laundry basket zone; concept position",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "balcony-storage",
+        "roomId": "balcony",
+        "spaceIds": [
+          "balcony"
+        ],
+        "position": [
+          12.22,
+          2.58,
+          8.2
+        ],
+        "target": [
+          12.25,
+          1.1,
+          8.88
+        ],
+        "group": "basic",
+        "kelvin": 3500,
+        "lumens": 450,
+        "type": "spot",
+        "length": 0.12,
+        "axis": "x",
+        "beamAngle": 50,
+        "range": 2.35,
+        "shadowPriority": 0,
+        "installation": "surface compact shielded fitting",
+        "anchor": "r2-housekeeping",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "balcony-low",
+        "roomId": "balcony",
+        "spaceIds": [
+          "balcony"
+        ],
+        "position": [
+          12.25,
+          0.18,
+          8.67
+        ],
+        "target": [
+          12.25,
+          0.015,
+          8.22
+        ],
+        "group": "night",
+        "kelvin": 2700,
+        "lumens": 70,
+        "type": "line",
+        "length": 0.4,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 0.9,
+        "shadowPriority": 0,
+        "installation": "utility cabinet plinth light",
+        "anchor": null,
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_budget_not_photometric_acceptance"
+      },
+      {
+        "id": "storage-living-task",
+        "roomId": "living",
+        "spaceIds": [
+          "living"
+        ],
+        "position": [
+          9.05,
+          1.77,
+          4.75
+        ],
+        "target": [
+          9.05,
+          1.2,
+          4.7
+        ],
+        "group": "decor",
+        "kelvin": 3000,
+        "lumens": 320,
+        "type": "line",
+        "length": 1.42,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 1.5,
+        "shadowPriority": 0,
+        "anchor": "r2-living-shallow"
+      },
+      {
+        "id": "storage-guest-task",
+        "roomId": "guest",
+        "spaceIds": [
+          "guest"
+        ],
+        "position": [
+          1.75,
+          1.815,
+          3.18
+        ],
+        "target": [
+          1.75,
+          0.5,
+          3.13
+        ],
+        "group": "task",
+        "kelvin": 3000,
+        "lumens": 240,
+        "type": "line",
+        "length": 2.35,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 1.5,
+        "shadowPriority": 0,
+        "anchor": "upper-guest-media"
+      },
+      {
+        "id": "storage-entry-task",
+        "roomId": "hall",
+        "spaceIds": [
+          "hall"
+        ],
+        "position": [
+          6.75,
+          1.84,
+          8.23
+        ],
+        "target": [
+          6.75,
+          1.15,
+          8.1
+        ],
+        "group": "decor",
+        "kelvin": 3000,
+        "lumens": 150,
+        "type": "line",
+        "length": 0.56,
+        "axis": "x",
+        "beamAngle": 100,
+        "range": 1,
+        "shadowPriority": 0,
+        "anchor": "entry-pegboard"
+      },
+      {
+        "id": "reading-local-task",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar"
+        ],
+        "position": [
+          1.9,
+          1.35,
+          5.98
+        ],
+        "target": [
+          1.6,
+          0.8,
+          6.65
+        ],
+        "group": "task",
+        "kelvin": 3000,
+        "lumens": 230,
+        "type": "spot",
+        "beamAngle": 65,
+        "range": 1.8,
+        "shadowPriority": 0,
+        "anchor": "reading-lamp",
+        "installation": "shielded reading standard lamp"
+      },
+      {
+        "id": "entry-island-dining-task",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar",
+          "hall"
+        ],
+        "position": [
+          5.15,
+          2.58,
+          7.5
+        ],
+        "target": [
+          5.1,
+          0.95,
+          7.5
+        ],
+        "group": "task",
+        "kelvin": 3000,
+        "lumens": 330,
+        "type": "line",
+        "length": 1.1,
+        "axis": "z",
+        "beamAngle": 85,
+        "range": 2,
+        "shadowPriority": 0,
+        "installation": "shielded linear task light over counter, never across passage",
+        "dimensionStatus": "concept_not_photometric_acceptance"
+      },
+      {
+        "id": "r2-bar-sign-light",
+        "roomId": "bar",
+        "spaceIds": [
+          "bar",
+          "hall"
+        ],
+        "position": [
+          1.8,
+          2.62,
+          6.22
+        ],
+        "target": [
+          1.8,
+          2.4,
+          6.03
+        ],
+        "group": "decor",
+        "kelvin": 2700,
+        "lumens": 110,
+        "type": "spot",
+        "beamAngle": 65,
+        "range": 1.2,
+        "shadowPriority": 0,
+        "installation": "small shielded sign wash",
+        "anchor": "r2-bar-sign",
+        "dimensionStatus": "concept_budget_not_surveyed",
+        "fluxStatus": "concept_not_photometric_acceptance"
+      }
+    ],
+    "scenes": [
+      {
+        "id": "day-public",
+        "label": "白天 · 公共生活",
+        "daylight": true,
+        "levels": {
+          "ambient": 0.42,
+          "basic": 0.12,
+          "accent": 0.08,
+          "task": 0.25,
+          "decor": 0.12,
+          "screen": 0.08,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0
+        },
+        "roomLevels": {
+          "bar": {
+            "ambient": 0.22,
+            "task": 0.42,
+            "decor": 0.16,
+            "night": 0
+          },
+          "living": {
+            "ambient": 0.22,
+            "reading": 0.18,
+            "screen": 0.08,
+            "night": 0
+          }
+        },
+        "ambientIntensity": 1.05,
+        "environmentIntensity": 0.34,
+        "exposure": 1.08,
+        "viewId": "salon-living-seat",
+        "fixtureLevels": {
+          "reading-local-task": 0.25,
+          "master-headboard": 0,
+          "master-reading-1": 0,
+          "master-reading-2": 0,
+          "master-wall-wash": 0
+        }
+      },
+      {
+        "id": "two-person-dining",
+        "label": "两人用餐",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.3,
+          "basic": 0.12,
+          "accent": 0.16,
+          "task": 0.32,
+          "decor": 0.3,
+          "screen": 0.04,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0.15
+        },
+        "roomLevels": {
+          "bar": {
+            "ambient": 0.34,
+            "task": 0.48,
+            "decor": 0.3
+          }
+        },
+        "fixtureKelvin": {
+          "bar-task": 3000,
+          "dining-offset-1": 2700,
+          "dining-offset-2": 2700
+        },
+        "ambientIntensity": 0.66,
+        "environmentIntensity": 0.28,
+        "exposure": 1.12,
+        "viewId": "living-seated",
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "dual-workstations",
+        "label": "双人工位",
+        "daylight": true,
+        "levels": {
+          "ambient": 0.3,
+          "basic": 0.18,
+          "accent": 0.04,
+          "task": 0.14,
+          "decor": 0.05,
+          "screen": 0.15,
+          "reading": 0.18,
+          "work": 0.62,
+          "night": 0
+        },
+        "roomLevels": {
+          "master": {
+            "ambient": 0.24,
+            "basic": 0.12,
+            "work": 0.82,
+            "reading": 0.16,
+            "night": 0
+          }
+        },
+        "fixtureLevels": {
+          "pc-desk-task": 0.88,
+          "mac-desk-task": 0.88,
+          "reading-local-task": 0.25
+        },
+        "fixtureKelvin": {
+          "pc-desk-task": 3500,
+          "mac-desk-task": 3500
+        },
+        "ambientIntensity": 0.78,
+        "environmentIntensity": 0.32,
+        "exposure": 1.08,
+        "viewId": "master-work"
+      },
+      {
+        "id": "night-navigation",
+        "label": "夜间通行",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.12,
+          "basic": 0.04,
+          "accent": 0.03,
+          "task": 0,
+          "decor": 0.03,
+          "screen": 0.04,
+          "reading": 0,
+          "work": 0,
+          "night": 0.44
+        },
+        "roomLevels": {
+          "hall": {
+            "night": 0.58,
+            "ambient": 0.08
+          },
+          "master": {
+            "night": 0.38,
+            "ambient": 0.04
+          },
+          "guest": {
+            "night": 0.38,
+            "ambient": 0.04
+          },
+          "bar": {
+            "night": 0.24,
+            "ambient": 0.06
+          },
+          "living": {
+            "night": 0.24,
+            "ambient": 0.06
+          }
+        },
+        "ambientIntensity": 0.46,
+        "environmentIntensity": 0.18,
+        "exposure": 1.1,
+        "viewId": "hall-view",
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "coffee",
+        "label": "早咖啡",
+        "daylight": true,
+        "levels": {
+          "ambient": 0,
+          "basic": 0.2,
+          "accent": 0,
+          "task": 0.5,
+          "decor": 0.12,
+          "screen": 0,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0
+        },
+        "viewId": "salon-bar-seat",
+        "fixtureKelvin": {
+          "bar-task": 3500
+        },
+        "ambientIntensity": 1.1,
+        "environmentIntensity": 0.5,
+        "exposure": 0.98,
+        "fixtureLevels": {
+          "reading-local-task": 0.25
+        }
+      },
+      {
+        "id": "aperitif",
+        "label": "晚饮",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.55,
+          "basic": 0.2,
+          "accent": 0.45,
+          "task": 0.25,
+          "decor": 0.45,
+          "screen": 0.15,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0.15
+        },
+        "roomLevels": {
+          "bar": {
+            "ambient": 0.35,
+            "accent": 0.72,
+            "task": 0.36,
+            "decor": 1
+          }
+        },
+        "fixtureKelvin": {
+          "bar-task": 2700,
+          "dining-offset-1": 2700,
+          "dining-offset-2": 2700
+        },
+        "viewId": "salon-bar-seat",
+        "ambientIntensity": 0.36,
+        "environmentIntensity": 0.17,
+        "exposure": 1.12,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "game",
+        "label": "客厅 · 游戏与追剧",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.55,
+          "basic": 0.2,
+          "accent": 0.45,
+          "task": 0,
+          "decor": 0.45,
+          "screen": 0.15,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0.15
+        },
+        "roomLevels": {
+          "living": {
+            "ambient": 0.32,
+            "accent": 0.16,
+            "reading": 0.7,
+            "decor": 0.24,
+            "screen": 0.45
+          }
+        },
+        "fixtureKelvin": {},
+        "viewId": "salon-living-seat",
+        "ambientIntensity": 0.36,
+        "environmentIntensity": 0.17,
+        "exposure": 1.15,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "cinema",
+        "label": "私人影院",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.15,
+          "basic": 0.2,
+          "accent": 0.08,
+          "task": 0,
+          "decor": 0.08,
+          "screen": 0.15,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0.15
+        },
+        "roomLevels": {
+          "guest": {
+            "ambient": 0.04,
+            "accent": 0.02,
+            "task": 0,
+            "decor": 0,
+            "reading": 0,
+            "screen": 0.18,
+            "night": 0.36
+          }
+        },
+        "fixtureKelvin": {
+          "guest-screen-bias": 6500
+        },
+        "viewId": "salon-cinema-vault",
+        "ambientIntensity": 0.28,
+        "environmentIntensity": 0.13,
+        "exposure": 1.3,
+        "fixtureLevels": {
+          "storage-guest-task": 0,
+          "guest-wall-cove": 0,
+          "reading-local-task": 0
+        }
+      },
+      {
+        "id": "guest-stay",
+        "label": "影音室 · 客住",
+        "daylight": false,
+        "levels": {
+          "ambient": 0.55,
+          "basic": 0.2,
+          "accent": 0.45,
+          "task": 0.25,
+          "decor": 0.45,
+          "screen": 0.15,
+          "reading": 0.3,
+          "work": 0.1,
+          "night": 0.15
+        },
+        "roomLevels": {
+          "guest": {
+            "ambient": 0.9,
+            "task": 0.45,
+            "decor": 0.18,
+            "reading": 0.86,
+            "screen": 0,
+            "night": 0.42
+          }
+        },
+        "viewId": "salon-cinema-vault",
+        "ambientIntensity": 0.78,
+        "environmentIntensity": 0.3,
+        "exposure": 1.16,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "day",
+        "label": "柔和日间",
+        "levels": {
+          "ambient": 0,
+          "basic": 0,
+          "accent": 0,
+          "task": 0.3,
+          "decor": 0.15,
+          "screen": 0,
+          "reading": 0,
+          "work": 0.25,
+          "night": 0
+        },
+        "daylight": true,
+        "fixtureLevels": {
+          "reading-local-task": 0.25
+        }
+      },
+      {
+        "id": "warm",
+        "label": "温馨晚间",
+        "levels": {
+          "ambient": 0.8,
+          "basic": 0.38,
+          "accent": 0.72,
+          "task": 0.35,
+          "decor": 0.6,
+          "screen": 0.6,
+          "reading": 0.4,
+          "work": 0.1,
+          "night": 0.24
+        },
+        "daylight": false,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "work",
+        "label": "双人工作",
+        "levels": {
+          "ambient": 0.5,
+          "basic": 0.5,
+          "accent": 0.3,
+          "task": 0.35,
+          "decor": 0.2,
+          "screen": 0.2,
+          "reading": 0,
+          "work": 1,
+          "night": 0.2
+        },
+        "daylight": false,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "night",
+        "label": "夜起",
+        "levels": {
+          "ambient": 0,
+          "basic": 0,
+          "accent": 0,
+          "task": 0,
+          "decor": 0,
+          "screen": 0.08,
+          "reading": 0,
+          "work": 0,
+          "night": 0.85
+        },
+        "daylight": false,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      },
+      {
+        "id": "clean",
+        "label": "清洁",
+        "levels": {
+          "ambient": 1,
+          "basic": 1,
+          "accent": 0.8,
+          "task": 1,
+          "decor": 0.4,
+          "screen": 0,
+          "reading": 0.8,
+          "work": 1,
+          "night": 0.25
+        },
+        "daylight": false,
+        "fixtureLevels": {
+          "reading-local-task": 0.8
+        }
+      }
+    ],
+    "defaultScene": "day-public",
+    "shadowBudget": {
+      "desktop": 4,
+      "mobile": 2
+    },
+    "previewIntensityScale": 0.025,
+    "units": {
+      "position": "m",
+      "kelvin": "K",
+      "lumens": "concept lm",
+      "beamAngle": "degrees"
+    }
+  },
+  "presentation": {
+    "defaultMode": "interior",
+    "defaultView": "entry-view",
+    "ceiling": {
+      "height": 2.7,
+      "thickness": 0.08
+    },
+    "interiorViews": [
+      {
+        "id": "entry-view",
+        "roomId": "bar",
+        "label": "入户望向水吧",
+        "position": [
+          5.78,
+          1.74,
+          8.17
+        ],
+        "target": [
+          2.2,
+          1.45,
+          6.05
+        ],
+        "horizontalFov": 90
+      },
+      {
+        "id": "bar-main",
+        "roomId": "bar",
+        "label": "水吧与餐厅",
+        "position": [
+          3.85,
+          1.62,
+          6.85
+        ],
+        "target": [
+          2.2,
+          1.5,
+          8
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "hall-view",
+        "roomId": "bar",
+        "label": "客厅通往水吧",
+        "position": [
+          6.15,
+          1.65,
+          5.75
+        ],
+        "target": [
+          2.5,
+          1.15,
+          6.05
+        ],
+        "horizontalFov": 92
+      },
+      {
+        "id": "dining-kitchen",
+        "roomId": "bar",
+        "label": "餐厅望向厨房",
+        "position": [
+          2.55,
+          1.62,
+          7.1
+        ],
+        "target": [
+          2.35,
+          1.3,
+          4.7
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "two-entries",
+        "roomId": "bar",
+        "label": "水吧开放通口",
+        "position": [
+          2.6,
+          1.62,
+          6.95
+        ],
+        "target": [
+          4.9,
+          1.2,
+          6.95
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "dining-seated",
+        "roomId": "bar",
+        "label": "入口岛台餐位",
+        "position": [
+          2.44,
+          1.18,
+          6.35
+        ],
+        "target": [
+          1.45,
+          1.1,
+          7.8
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "master-main",
+        "roomId": "master",
+        "label": "主卧全景",
+        "position": [
+          7.65,
+          1.62,
+          2.6
+        ],
+        "target": [
+          9.6,
+          1.15,
+          1.2
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "master-work",
+        "roomId": "master",
+        "label": "双人工作区",
+        "position": [
+          10.95,
+          1.58,
+          2.8
+        ],
+        "target": [
+          9.2,
+          1.15,
+          4.05
+        ],
+        "horizontalFov": 94
+      },
+      {
+        "id": "guest-main",
+        "roomId": "guest",
+        "label": "影音客房",
+        "position": [
+          3.6,
+          1.62,
+          2.65
+        ],
+        "target": [
+          2.1,
+          1,
+          0.7
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "guest-seated",
+        "roomId": "guest",
+        "label": "观影坐姿",
+        "position": [
+          2.05,
+          1.18,
+          0.75
+        ],
+        "target": [
+          2.05,
+          1.1,
+          3.2
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "living-main",
+        "roomId": "living",
+        "label": "客厅空间",
+        "position": [
+          10.95,
+          1.4,
+          6.05
+        ],
+        "target": [
+          9.3,
+          1.15,
+          8.9
+        ],
+        "horizontalFov": 100
+      },
+      {
+        "id": "living-seated",
+        "roomId": "living",
+        "label": "沙发观影视角",
+        "position": [
+          9.3,
+          1.18,
+          6.75
+        ],
+        "target": [
+          9.4,
+          1.25,
+          8.9
+        ],
+        "horizontalFov": 82
+      },
+      {
+        "id": "balcony-main",
+        "roomId": "balcony",
+        "label": "生活阳台",
+        "position": [
+          12.25,
+          1.62,
+          7.95
+        ],
+        "target": [
+          12.25,
+          1.05,
+          5.05
+        ],
+        "horizontalFov": 72
+      },
+      {
+        "id": "kitchen-main",
+        "roomId": "kitchen",
+        "label": "半开放厨房",
+        "position": [
+          3.35,
+          1.65,
+          5.08
+        ],
+        "target": [
+          1.35,
+          1.05,
+          4.35
+        ],
+        "horizontalFov": 91
+      },
+      {
+        "id": "bath-main",
+        "roomId": "bath",
+        "label": "卫浴空间",
+        "position": [
+          5.83,
+          1.65,
+          2.65
+        ],
+        "target": [
+          5.85,
+          0.95,
+          0.85
+        ],
+        "horizontalFov": 92
+      },
+      {
+        "id": "kitchen-fridge",
+        "roomId": "kitchen",
+        "label": "冰箱与高柜",
+        "position": [
+          3.25,
+          1.65,
+          5.15
+        ],
+        "target": [
+          3.4,
+          1.3,
+          3.95
+        ],
+        "horizontalFov": 82
+      },
+      {
+        "id": "s02-rack",
+        "roomId": "bar",
+        "label": "酒具与设备收纳",
+        "position": [
+          3.5,
+          1.65,
+          6.7
+        ],
+        "target": [
+          2,
+          1.9,
+          7.98
+        ],
+        "horizontalFov": 85
+      },
+      {
+        "id": "guest-storage",
+        "roomId": "guest",
+        "label": "影音与收纳",
+        "position": [
+          3.65,
+          1.58,
+          1.95
+        ],
+        "target": [
+          1.9,
+          1.05,
+          3.12
+        ],
+        "horizontalFov": 86
+      },
+      {
+        "id": "guest-reading",
+        "roomId": "guest",
+        "label": "窗下阅读角",
+        "position": [
+          2.8,
+          1.58,
+          2.6
+        ],
+        "target": [
+          0.55,
+          1.1,
+          1.25
+        ],
+        "horizontalFov": 80
+      },
+      {
+        "id": "living-storage",
+        "roomId": "living",
+        "label": "外围生活收纳",
+        "position": [
+          8,
+          1.5,
+          6
+        ],
+        "target": [
+          9.4,
+          0.8,
+          4.7
+        ],
+        "horizontalFov": 85
+      },
+      {
+        "id": "living-media",
+        "roomId": "living",
+        "label": "移动电视与游戏托座",
+        "position": [
+          7.6,
+          1.45,
+          7.4
+        ],
+        "target": [
+          9.4,
+          0.95,
+          8.9
+        ],
+        "horizontalFov": 85
+      },
+      {
+        "id": "kitchen-upper-review",
+        "roomId": "kitchen",
+        "label": "厨房上柜",
+        "position": [
+          2.9,
+          1.72,
+          4.9
+        ],
+        "target": [
+          1.5,
+          1.95,
+          3.7
+        ],
+        "horizontalFov": 96
+      },
+      {
+        "id": "bath-upper-review",
+        "roomId": "bath",
+        "label": "卫浴镜柜与储物",
+        "position": [
+          5.75,
+          1.6,
+          0.88
+        ],
+        "target": [
+          5,
+          1.85,
+          0.85
+        ],
+        "horizontalFov": 92
+      },
+      {
+        "id": "laundry-upper-review",
+        "roomId": "balcony",
+        "label": "洗烘机顶柜",
+        "position": [
+          12.25,
+          1.7,
+          6.25
+        ],
+        "target": [
+          12.25,
+          2.03,
+          4.82
+        ],
+        "horizontalFov": 74
+      },
+      {
+        "id": "housekeeping-upper-review",
+        "roomId": "balcony",
+        "label": "家政柜顶柜",
+        "position": [
+          12.25,
+          1.7,
+          7.95
+        ],
+        "target": [
+          12.25,
+          2.05,
+          8.93
+        ],
+        "horizontalFov": 74
+      },
+      {
+        "id": "master-upper-review",
+        "roomId": "master",
+        "label": "工作区上柜",
+        "position": [
+          9.2,
+          1.75,
+          2.65
+        ],
+        "target": [
+          9.2,
+          2.05,
+          4.1
+        ],
+        "horizontalFov": 86
+      },
+      {
+        "id": "guest-upper-review",
+        "roomId": "guest",
+        "label": "影音收纳墙",
+        "position": [
+          1.75,
+          1.65,
+          1.05
+        ],
+        "target": [
+          1.75,
+          2.02,
+          3.13
+        ],
+        "horizontalFov": 84
+      },
+      {
+        "id": "living-upper-review",
+        "roomId": "living",
+        "label": "后墙收纳与展示",
+        "position": [
+          9.55,
+          1.68,
+          7.75
+        ],
+        "target": [
+          9.6,
+          2.03,
+          9.09
+        ],
+        "horizontalFov": 84
+      },
+      {
+        "id": "bar-upper-review",
+        "roomId": "bar",
+        "label": "水吧上柜与展示",
+        "position": [
+          2.65,
+          1.7,
+          6.35
+        ],
+        "target": [
+          2.65,
+          2,
+          8.17
+        ],
+        "horizontalFov": 100
+      },
+      {
+        "id": "hall-storage-review",
+        "roomId": "hall",
+        "label": "玄关收纳",
+        "position": [
+          6.85,
+          1.65,
+          6.65
+        ],
+        "target": [
+          7.1,
+          1.9,
+          8.2
+        ],
+        "horizontalFov": 76
+      },
+      {
+        "id": "bar-ritual",
+        "roomId": "bar",
+        "label": "早 C 晚 A · 水吧",
+        "position": [
+          4.12,
+          1.5,
+          5.95
+        ],
+        "target": [
+          1.7,
+          1.42,
+          7.65
+        ],
+        "horizontalFov": 88
+      },
+      {
+        "id": "living-lounge",
+        "roomId": "living",
+        "label": "客厅 · 柔光娱乐",
+        "position": [
+          10.95,
+          1.4,
+          6.05
+        ],
+        "target": [
+          9.3,
+          1.15,
+          8.9
+        ],
+        "horizontalFov": 100
+      },
+      {
+        "id": "cinema-seat",
+        "roomId": "guest",
+        "label": "秘密影音室 · 观影位",
+        "position": [
+          2.05,
+          1.15,
+          0.7
+        ],
+        "target": [
+          2.05,
+          1.5,
+          3.12
+        ],
+        "horizontalFov": 88
+      },
+      {
+        "id": "cinema-entry",
+        "roomId": "guest",
+        "label": "秘密影音室 · 客住",
+        "position": [
+          4.15,
+          1.5,
+          2.8
+        ],
+        "target": [
+          1.8,
+          1.45,
+          1.2
+        ],
+        "horizontalFov": 96
+      },
+      {
+        "id": "cinema-door-review",
+        "roomId": "hall",
+        "label": "走廊 · 隐蔽门",
+        "position": [
+          5.8,
+          1.55,
+          3.25
+        ],
+        "target": [
+          4.8,
+          1.15,
+          2.8
+        ],
+        "horizontalFov": 78
+      },
+      {
+        "id": "salon-bar-seat",
+        "roomId": "bar",
+        "label": "咖啡水吧与入口餐位",
+        "position": [
+          3.95,
+          1.65,
+          6.65
+        ],
+        "target": [
+          1.7,
+          1.4,
+          7.99
+        ],
+        "horizontalFov": 94
+      },
+      {
+        "id": "salon-living-seat",
+        "roomId": "living",
+        "label": "客厅 · 围坐与停留",
+        "position": [
+          9.3,
+          1.18,
+          6.75
+        ],
+        "target": [
+          9.4,
+          1.25,
+          8.9
+        ],
+        "horizontalFov": 82
+      },
+      {
+        "id": "salon-cinema-vault",
+        "roomId": "guest",
+        "label": "影音室 · 弧顶内室",
+        "position": [
+          3.45,
+          1.5,
+          2.75
+        ],
+        "target": [
+          1.8,
+          1.6,
+          1.1
+        ],
+        "horizontalFov": 94
+      },
+      {
+        "id": "entry-storage",
+        "roomId": "bar",
+        "label": "玄关随手收纳",
+        "position": [
+          6.8,
+          1.6,
+          6.9
+        ],
+        "target": [
+          7.05,
+          1.35,
+          8.16
+        ],
+        "horizontalFov": 74
+      },
+      {
+        "id": "master-bay",
+        "roomId": "master",
+        "label": "主卧飘窗",
+        "position": [
+          10.6,
+          1.48,
+          2.8
+        ],
+        "target": [
+          11.95,
+          1.25,
+          2
+        ],
+        "horizontalFov": 82
+      },
+      {
+        "id": "guest-bay",
+        "roomId": "guest",
+        "label": "客房飘窗",
+        "position": [
+          1.2,
+          1.5,
+          2.4
+        ],
+        "target": [
+          -0.25,
+          1.3,
+          1.5
+        ],
+        "horizontalFov": 82
+      }
+    ]
+  },
+  "cameras": [
+    {
+      "id": "all",
+      "label": "全屋",
+      "target": [
+        6.5,
+        4.45
+      ],
+      "distance": 20,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "bar",
+      "label": "餐厨水吧",
+      "target": [
+        2.6,
+        6.95
+      ],
+      "distance": 7.8,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "master",
+      "label": "主卧",
+      "target": [
+        9.3,
+        2.1
+      ],
+      "distance": 8,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "guest",
+      "label": "影音客房",
+      "target": [
+        2.4,
+        1.6
+      ],
+      "distance": 7.5,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "living",
+      "label": "客厅",
+      "target": [
+        9.35,
+        6.8
+      ],
+      "distance": 9,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "balcony",
+      "label": "生活阳台",
+      "target": [
+        12.3,
+        6.95
+      ],
+      "distance": 7,
+      "azimuth": -0.45,
+      "polar": 0.62
+    },
+    {
+      "id": "kitchen",
+      "label": "封闭厨房",
+      "target": [
+        2.25,
+        4.5
+      ],
+      "distance": 6,
+      "azimuth": 1.05,
+      "polar": 0.62
+    },
+    {
+      "id": "bath",
+      "label": "卫浴",
+      "target": [
+        5.9,
+        1.1
+      ],
+      "distance": 5.3,
+      "azimuth": -0.45,
+      "polar": 0.62
+    }
+  ],
+  "detailCameras": [
+    {
+      "id": "entry-view",
+      "roomId": "bar",
+      "label": "入户望向水吧",
+      "position": [
+        5.85,
+        1.62,
+        7.25
+      ],
+      "target": [
+        2.1,
+        1.15,
+        7.25
+      ]
+    },
+    {
+      "id": "hall-view",
+      "roomId": "bar",
+      "label": "绕柱进入餐厅",
+      "position": [
+        4.1,
+        1.62,
+        5.75
+      ],
+      "target": [
+        1.9,
+        1.15,
+        7.85
+      ]
+    },
+    {
+      "id": "dining-kitchen",
+      "roomId": "bar",
+      "label": "餐厅望向厨房",
+      "position": [
+        2.55,
+        1.62,
+        7.1
+      ],
+      "target": [
+        2.35,
+        1.3,
+        4.7
+      ]
+    },
+    {
+      "id": "two-entries",
+      "roomId": "bar",
+      "label": "餐桌看双入口",
+      "position": [
+        2.6,
+        1.62,
+        6.95
+      ],
+      "target": [
+        4.9,
+        1.2,
+        6.95
+      ]
+    }
+  ],
+  "presentationScenarios": [
+    {
+      "id": "guest-convert",
+      "label": "沙发床转换",
+      "durationS": 6,
+      "people": [
+        {
+          "id": "path-user",
+          "points": [
+            [
+              4.55,
+              2.9000000000000004
+            ],
+            [
+              3.5500000000000003,
+              2.75
+            ],
+            [
+              3.35,
+              2.1
+            ]
+          ],
+          "radius": 0.3,
+          "height": 1.7,
+          "durationS": 6
+        }
+      ],
+      "room": "guest",
+      "states": {
+        "entryOpen": true,
+        "guestDoorOpen": true,
+        "guestBedOpen": true
+      },
+      "geometryCheck": "full-route-check; see path candidate validation details"
+    },
+    {
+      "id": "guest-stay",
+      "label": "留宿关门与离床",
+      "durationS": 6,
+      "people": [
+        {
+          "id": "path-user",
+          "points": [
+            [
+              3.4000000000000004,
+              1.9000000000000001
+            ],
+            [
+              3.5,
+              2.7
+            ],
+            [
+              4.55,
+              2.9000000000000004
+            ]
+          ],
+          "radius": 0.3,
+          "height": 1.7,
+          "durationS": 6
+        }
+      ],
+      "room": "guest",
+      "states": {
+        "entryOpen": true,
+        "guestDoorOpen": true,
+        "guestBedOpen": true
+      },
+      "geometryCheck": "full-route-check; see path candidate validation details"
+    },
+    {
+      "id": "ps5-balcony",
+      "label": "双人PS5与去阳台",
+      "durationS": 8,
+      "people": [
+        {
+          "id": "path-user",
+          "points": [
+            [
+              7.5,
+              5.4
+            ],
+            [
+              11.15,
+              5.4
+            ],
+            [
+              11.15,
+              7.45
+            ],
+            [
+              12.1,
+              7.45
+            ]
+          ],
+          "radius": 0.45,
+          "height": 1.7,
+          "durationS": 8
+        }
+      ],
+      "room": "living",
+      "states": {
+        "entryOpen": true,
+        "guestDoorOpen": false,
+        "guestBedOpen": false
+      },
+      "geometryCheck": "V9 static layout candidate; avatar radius preserved at 0.45m; occupied-sofa and physical acceptance not verified"
+    },
+    {
+      "id": "guest-bench-exit-bed-open",
+      "label": "长凳起身、绕床脚离开",
+      "durationS": 8,
+      "people": [
+        {
+          "id": "bench-user",
+          "points": [
+            [
+              0.795,
+              1.4
+            ],
+            [
+              0.83,
+              1.4
+            ],
+            [
+              0.83,
+              2.6
+            ],
+            [
+              3.5,
+              2.6
+            ],
+            [
+              4.2,
+              2.9
+            ]
+          ],
+          "radius": 0.3,
+          "height": 1.7,
+          "durationS": 8
+        }
+      ],
+      "room": "guest",
+      "states": {
+        "guestDoorOpen": true,
+        "guestBedOpen": true
+      },
+      "geometryCheck": "full-route-check; seated support self-collision excluded; see validation JSON"
+    }
+  ],
+  "states": {
+    "day": {},
+    "night": {},
+    "sofaFolded": {},
+    "sofaExpanded": {
+      "x": 2.05,
+      "z": 1.21,
+      "w": 1.54,
+      "d": 2.1
+    }
+  },
+  "homeDesign": {
+    "version": 1,
+    "defaultState": "stowed",
+    "sharedColumnFinishedWidthM": 0.5,
+    "entryIsland": {
+      "id": "s02-entry-return",
+      "center": [
+        5.15,
+        7.5249999999999995
+      ],
+      "crossSectionWidthM": 0.5,
+      "lengthM": 1.6,
+      "xBounds": [
+        4.9,
+        5.4
+      ],
+      "alignedWithColumnId": "column-handdrawn",
+      "status": "virtual_final_candidate_not_surveyed",
+      "heightM": 0.95,
+      "counterThicknessM": 0.035,
+      "zBounds": [
+        6.725,
+        8.325
+      ],
+      "rearEndZ": 8.325,
+      "diningFace": "-x",
+      "entryCorridorConsumed": false,
+      "kneeVoidDepthM": 0.32
+    },
+    "selectedLivingLayout": "mobile-tv-flexible",
+    "layoutComparison": {
+      "preferred": "mobile-tv-flexible",
+      "alternatives": [
+        {
+          "id": "mobile-tv-flexible",
+          "label": "可锁轮电视＋双模块可合并沙发；低柜回外围",
+          "tv": {
+            "id": "living-tv",
+            "type": "mobile_tv",
+            "room": "living",
+            "x": 9.4,
+            "z": 8.9,
+            "w": 1.65,
+            "d": 0.66,
+            "h": 1.73,
+            "y": 0,
+            "rotation": 180,
+            "material": "black"
+          },
+          "console": {
+            "id": "living-tv-console",
+            "type": "cabinet_frame",
+            "room": "living",
+            "x": 9.4,
+            "z": 4.7,
+            "w": 2.6,
+            "d": 0.4,
+            "h": 0.4,
+            "y": 0,
+            "rotation": 180,
+            "material": "oak",
+            "collisionParts": [
+              {
+                "x": 10.691,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.4,
+                "y": 0.06,
+                "h": 0.34,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 8.109,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.4,
+                "y": 0.06,
+                "h": 0.34,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.509000000000001,
+                "w": 2.564,
+                "d": 0.018,
+                "y": 0.06,
+                "h": 0.34,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.7,
+                "w": 2.6,
+                "d": 0.4,
+                "y": 0.06,
+                "h": 0.022,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.7,
+                "w": 2.6,
+                "d": 0.4,
+                "y": 0.37,
+                "h": 0.03,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.685,
+                "w": 2.5,
+                "d": 0.32,
+                "y": 0,
+                "h": 0.06,
+                "rotation": 180,
+                "material": "darkoak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.7,
+                "w": 2.564,
+                "d": 0.36400000000000005,
+                "y": 0.2,
+                "h": 0.018,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 10.440000000000001,
+                "z": 4.890999999999999,
+                "w": 0.512,
+                "d": 0.018,
+                "y": 0.06999999999999999,
+                "h": 0.29000000000000004,
+                "rotation": 180,
+                "material": "cabinetPaint"
+              },
+              {
+                "x": 10.440000000000001,
+                "z": 4.902,
+                "w": 0.1,
+                "d": 0.004,
+                "y": 0.29000000000000004,
+                "h": 0.008,
+                "rotation": 180,
+                "material": "bronze"
+              },
+              {
+                "x": 10.18,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.36400000000000005,
+                "y": 0.06,
+                "h": 0.31000000000000005,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.92,
+                "z": 4.890999999999999,
+                "w": 0.512,
+                "d": 0.018,
+                "y": 0.06999999999999999,
+                "h": 0.29000000000000004,
+                "rotation": 180,
+                "material": "cabinetPaint"
+              },
+              {
+                "x": 9.92,
+                "z": 4.902,
+                "w": 0.1,
+                "d": 0.004,
+                "y": 0.29000000000000004,
+                "h": 0.008,
+                "rotation": 180,
+                "material": "bronze"
+              },
+              {
+                "x": 9.66,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.36400000000000005,
+                "y": 0.06,
+                "h": 0.31000000000000005,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 9.4,
+                "z": 4.890999999999999,
+                "w": 0.512,
+                "d": 0.018,
+                "y": 0.06999999999999999,
+                "h": 0.29000000000000004,
+                "rotation": 180,
+                "material": "cabinetPaint"
+              },
+              {
+                "x": 9.4,
+                "z": 4.902,
+                "w": 0.1,
+                "d": 0.004,
+                "y": 0.29000000000000004,
+                "h": 0.008,
+                "rotation": 180,
+                "material": "bronze"
+              },
+              {
+                "x": 9.14,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.36400000000000005,
+                "y": 0.06,
+                "h": 0.31000000000000005,
+                "rotation": 180,
+                "material": "oak"
+              },
+              {
+                "x": 8.620000000000001,
+                "z": 4.7,
+                "w": 0.018,
+                "d": 0.36400000000000005,
+                "y": 0.06,
+                "h": 0.31000000000000005,
+                "rotation": 180,
+                "material": "oak"
+              }
+            ],
+            "label": "客厅日用低柜",
+            "purpose": "书、桌游、游戏盒、备用线材与便携充电用品；不承放电视和PS5",
+            "equipmentRole": "peripheral_daily_storage"
+          },
+          "sofa": {
+            "id": "living-sofa",
+            "x": 9.3,
+            "y": 0,
+            "z": 6.6,
+            "w": 2.55,
+            "h": 0.76,
+            "d": 1.05,
+            "rotation": 180
+          },
+          "coffeeTablesRemoved": true,
+          "balconyRoute": {
+            "points": [
+              [
+                7.5,
+                5.4
+              ],
+              [
+                11.15,
+                5.4
+              ],
+              [
+                11.15,
+                7.45
+              ],
+              [
+                12.1,
+                7.45
+              ]
+            ],
+            "radiusM": 0.45,
+            "measuredClearances": [
+              {
+                "segment": "behind-sofa",
+                "clearanceM": 0.675,
+                "obstacle": "sofa rear envelope"
+              },
+              {
+                "segment": "sofa-east-side",
+                "clearanceM": 0.575,
+                "obstacle": "sofa east envelope"
+              },
+              {
+                "segment": "balcony-opening-approach",
+                "clearanceM": 0.5,
+                "obstacle": "opening west edge"
+              }
+            ],
+            "evidenceLevel": "static_candidate"
+          },
+          "pros": [
+            "阳台路由在沙发后方并从东侧入阳台",
+            "屏幕与观看路径分离"
+          ],
+          "conflicts": [
+            "z=9.35 外墙可否安装/供电尚未现场确认",
+            "通道仅按静态家具包络核算"
+          ],
+          "noWallMountRequired": true,
+          "deviceSupport": "lockable mobile stand with PS5 shelf"
+        },
+        {
+          "id": "tv-east-wall",
+          "label": "电视移至 z=9.35 实墙，沙发翻面，阳台路由置于沙发后方",
+          "tv": {
+            "id": "living-tv",
+            "x": 9.4,
+            "y": 0.8,
+            "z": 9.2,
+            "w": 1.65,
+            "h": 0.93,
+            "d": 0.09,
+            "rotation": 180
+          },
+          "console": {
+            "id": "living-tv-console",
+            "x": 9.4,
+            "y": 0,
+            "z": 9.02,
+            "w": 2.6,
+            "h": 0.4,
+            "d": 0.4,
+            "rotation": 0,
+            "minX": 8.1
+          },
+          "sofa": {
+            "id": "living-sofa",
+            "x": 9.3,
+            "y": 0,
+            "z": 6.6,
+            "w": 2.55,
+            "h": 0.76,
+            "d": 1.05,
+            "rotation": 180
+          },
+          "coffeeTablesRemoved": true,
+          "balconyRoute": {
+            "points": [
+              [
+                7.5,
+                5.4
+              ],
+              [
+                11.15,
+                5.4
+              ],
+              [
+                11.15,
+                7.45
+              ],
+              [
+                12.1,
+                7.45
+              ]
+            ],
+            "radiusM": 0.45,
+            "measuredClearances": [
+              {
+                "segment": "behind-sofa",
+                "clearanceM": 0.675,
+                "obstacle": "sofa rear envelope"
+              },
+              {
+                "segment": "sofa-east-side",
+                "clearanceM": 0.575,
+                "obstacle": "sofa east envelope"
+              },
+              {
+                "segment": "balcony-opening-approach",
+                "clearanceM": 0.5,
+                "obstacle": "opening west edge"
+              }
+            ],
+            "evidenceLevel": "static_candidate"
+          },
+          "pros": [
+            "阳台路由在沙发后方并从东侧入阳台",
+            "屏幕与观看路径分离"
+          ],
+          "conflicts": [
+            "z=9.35 外墙可否安装/供电尚未现场确认",
+            "通道仅按静态家具包络核算"
+          ]
+        },
+        {
+          "id": "tv-bearing-wall",
+          "label": "保留电视在 z=4.55 主卧承重墙侧，沙发朝向不变",
+          "tv": {
+            "id": "living-tv",
+            "x": 9.35,
+            "y": 0.8,
+            "z": 4.55,
+            "w": 1.65,
+            "h": 0.93,
+            "d": 0.09,
+            "rotation": 0
+          },
+          "console": {
+            "id": "living-tv-console",
+            "x": 9.35,
+            "y": 0,
+            "z": 4.7,
+            "w": 2.6,
+            "h": 0.4,
+            "d": 0.4,
+            "rotation": 180
+          },
+          "sofa": {
+            "id": "living-sofa",
+            "x": 9.25,
+            "y": 0,
+            "z": 7,
+            "w": 2.55,
+            "h": 0.76,
+            "d": 1.05,
+            "rotation": 0
+          },
+          "coffeeTablesRemoved": true,
+          "balconyRoute": {
+            "points": [
+              [
+                7.5,
+                5.4
+              ],
+              [
+                7.5,
+                8.05
+              ],
+              [
+                11.15,
+                8.05
+              ],
+              [
+                11.15,
+                7.45
+              ],
+              [
+                12.1,
+                7.45
+              ]
+            ],
+            "radiusM": 0.45,
+            "measuredClearances": [
+              {
+                "segment": "west-end-turn",
+                "clearanceM": 0.475,
+                "obstacle": "sofa west envelope"
+              },
+              {
+                "segment": "behind-sofa",
+                "clearanceM": 0.525,
+                "obstacle": "sofa rear envelope"
+              },
+              {
+                "segment": "sofa-east-side",
+                "clearanceM": 0.625,
+                "obstacle": "sofa east envelope"
+              },
+              {
+                "segment": "balcony-opening-approach",
+                "clearanceM": 0.5,
+                "obstacle": "opening west edge"
+              }
+            ],
+            "evidenceLevel": "static_candidate"
+          },
+          "pros": [
+            "保留现有内墙电视位置",
+            "观看距离与旧布局接近"
+          ],
+          "conflicts": [
+            "需要绕沙发西端再走到沙发后方",
+            "承重墙开孔/固定仍需结构确认"
+          ]
+        }
+      ]
+    },
+    "bayWindows": [
+      {
+        "roomId": "guest",
+        "wallId": "north",
+        "windowId": "guest-window",
+        "center": [
+          0,
+          1.5
+        ],
+        "outward": [
+          -1,
+          0
+        ],
+        "widthM": 2.1,
+        "projectionM": 0.75,
+        "sillHeightM": 0.6,
+        "headHeightM": 2.35,
+        "ledgeUse": "ledge_only",
+        "retainedWalkingPolygon": true,
+        "status": "concept_adjustable",
+        "coordinateStatus": "virtual_generic_not_measured"
+      },
+      {
+        "roomId": "master",
+        "wallId": "south-master",
+        "windowId": "master-window",
+        "center": [
+          11.65,
+          2
+        ],
+        "outward": [
+          1,
+          0
+        ],
+        "widthM": 2.1,
+        "projectionM": 0.75,
+        "sillHeightM": 0.6,
+        "headHeightM": 2.35,
+        "ledgeUse": "ledge_only",
+        "retainedWalkingPolygon": true,
+        "status": "concept_adjustable",
+        "coordinateStatus": "virtual_generic_not_measured"
+      }
+    ],
+    "hatch": {
+      "id": "hall-gate",
+      "kind": "none",
+      "spanM": 0.895,
+      "depthM": 0.405,
+      "thicknessM": 0.018,
+      "leafCount": 2,
+      "leafLengthM": 0.4475,
+      "railDepthMinM": 0.54,
+      "railStageCount": 3,
+      "railStageStrokeM": 0.4475,
+      "perStageTravelM": 0.4475,
+      "slideStrokeM": 0.895,
+      "entryEnd": "-z",
+      "drawerFrontZ": 7.425,
+      "worktopTopM": 0.875,
+      "worktopThicknessM": 0.018,
+      "cabinetClearWidthM": 0.464,
+      "cabinetClearDepthM": 0.864,
+      "cabinetClearHeightM": 0.277,
+      "requiredClearHeightM": 0.12,
+      "storedLeafStackDepthM": 0.4475,
+      "storagePocketMinDepthM": 0.54,
+      "upperBayUse": "enclosed_mechanism_only",
+      "lowerOpenStorageBays": 2,
+      "referenceUrl": "https://www.salice.com/ww/en/products/trasformabili/zero/lunch",
+      "storagePocketYBoundsM": [
+        0.638,
+        0.915
+      ],
+      "hardware": "concept_two_leaf_foldout_slide_reference_salice_atim_lunch_450",
+      "foldSequence": "pull_stacked_pair_to_far_end_then_unfold_inboard_leaf_toward_cabinet",
+      "status": "retired_open_passage",
+      "rendererOwner": "main-agent",
+      "enabled": false
+    },
+    "dining": {
+      "role": "occasional_backup_table",
+      "defaultState": "stowed",
+      "temporarySeatAvailable": false,
+      "barRole": "entry_island_two_person_dining; rear_bar_preparation_and_storage",
+      "table": {
+        "id": "dining-table",
+        "type": "folding_table",
+        "use": {
+          "x": 9.3,
+          "z": 7.55,
+          "widthM": 1.1,
+          "depthM": 0.7,
+          "heightM": 0.74
+        },
+        "parkedEnvelope": {
+          "x": 8.64,
+          "z": 8.82,
+          "w": 1.1,
+          "d": 0.18,
+          "h": 1.12,
+          "rotation": 0,
+          "coordinateFrame": "world_aabb"
+        },
+        "provenance": "Full-size rectangular folding-table concept; hardware and transport require product selection",
+        "foldedPositionStatus": "R2 deep cabinet; manual carry mechanism and effort pending"
+      },
+      "chairs": [
+        {
+          "id": "dining-chair-left",
+          "use": {
+            "x": 8.5,
+            "z": 7.55,
+            "w": 0.5,
+            "d": 0.55,
+            "pullbackM": 0.35,
+            "rotation": 90
+          },
+          "park": {
+            "x": 8.64,
+            "z": 9,
+            "rotation": 0,
+            "foldedDepthM": 0.15,
+            "foldedHeightM": 0.99
+          }
+        },
+        {
+          "id": "dining-chair-right",
+          "use": {
+            "x": 10.1,
+            "z": 7.55,
+            "w": 0.5,
+            "d": 0.55,
+            "pullbackM": 0.35,
+            "rotation": -90
+          },
+          "park": {
+            "x": 8.64,
+            "z": 9.16,
+            "rotation": 0,
+            "foldedDepthM": 0.15,
+            "foldedHeightM": 0.99
+          }
+        }
+      ],
+      "usePositions": {
+        "table": {
+          "x": 9.3,
+          "z": 7.55,
+          "rotation": 0
+        },
+        "chairs": [
+          {
+            "x": 8.5,
+            "z": 7.55,
+            "w": 0.5,
+            "d": 0.55,
+            "pullbackM": 0.35,
+            "rotation": 90,
+            "id": "dining-chair-left"
+          },
+          {
+            "x": 10.1,
+            "z": 7.55,
+            "w": 0.5,
+            "d": 0.55,
+            "pullbackM": 0.35,
+            "rotation": -90,
+            "id": "dining-chair-right"
+          }
+        ]
+      },
+      "sequence": {
+        "description": "先开柜门，直立抬出桌椅；右椅保持朝向绕过折桌与柜门，再转向展开并入位",
+        "tablePath": [
+          [
+            8.64,
+            8.82
+          ],
+          [
+            8.64,
+            7.95
+          ],
+          [
+            9.3,
+            7.55
+          ]
+        ],
+        "chairPaths": [
+          [
+            [
+              8.64,
+              9
+            ],
+            [
+              8.64,
+              7.85
+            ],
+            [
+              8.1,
+              7.55
+            ]
+          ],
+          [
+            [
+              8.64,
+              9.16
+            ],
+            [
+              8.64,
+              7.85
+            ],
+            [
+              10.5,
+              7.85
+            ],
+            [
+              10.5,
+              7.55
+            ]
+          ]
+        ],
+        "chairRetreatM": 0.35,
+        "temporarySeatAvailable": false,
+        "mechanismStatus": "manual_carry_and_reposition_demo_not_automatic_hardware",
+        "chairTransitRotationDeg": 0,
+        "chairTurnProgress": [
+          0.89,
+          0.935
+        ],
+        "chairUnfoldProgress": [
+          0.94,
+          0.975
+        ],
+        "chairTuckProgress": [
+          0.975,
+          1
+        ],
+        "temporaryChairCenters": [
+          [
+            8.1,
+            7.55
+          ],
+          [
+            10.5,
+            7.55
+          ]
+        ],
+        "carryHeightRule": "retain parked lift until folded envelope passes cabinet front, then lower outside",
+        "validationBoundary": "mesh collision sampling; carrying effort, people and product mechanism not accepted"
+      },
+      "stateEnvelopes": {
+        "deployed": {
+          "shape": "rectangle",
+          "w": 1.1,
+          "d": 0.7,
+          "h": 0.74
+        },
+        "folded": {
+          "shape": "upright_folded_table",
+          "w": 1.1,
+          "d": 0.18,
+          "h": 1.12
+        }
+      },
+      "operationClearanceM": 0.35
+    },
+    "barOperationCounter": {
+      "id": "r2-waterbar",
+      "role": "equipment_niches_plus_kitchen_peninsula_service",
+      "noHighEquipmentAtWindow": true
+    },
+    "masterBedroom": {
+      "mattress": {
+        "id": "master-mattress",
+        "w": 1.8,
+        "d": 2,
+        "retained": true,
+        "rotationDeg": 0,
+        "center": [
+          9.5,
+          1.145
+        ]
+      },
+      "selectedLayout": "inline-opposite-bed",
+      "retainedDeskSizes": {
+        "pc": [
+          1.4,
+          0.75
+        ],
+        "mac": [
+          1.2,
+          0.75
+        ]
+      },
+      "alternatives": [
+        {
+          "id": "inline-side-by-side",
+          "status": "historical_comparison_not_selected",
+          "geometry": {
+            "deskEdgeGapM": 0,
+            "pulledChairToBedFrameGapM": 0.435,
+            "chairCenterSpacingM": 1.3,
+            "chairPairClearWidthM": 0.63
+          },
+          "reason": "两桌边缘相接；椅后仅435mm，不能作为双人离席通道",
+          "evidenceLevel": "static_candidate"
+        },
+        {
+          "id": "L-workstations-fixed-bed",
+          "status": "historical_comparison_not_selected",
+          "geometry": {
+            "pcChairToBedFrameGapM": 0.435,
+            "pcChairMacChairXGapM": 0.51
+          },
+          "reason": "桌椅相互错开但床脚前仍只有435mm",
+          "evidenceLevel": "static_candidate"
+        },
+        {
+          "id": "rotated-bed-plus-east-side-mac-desk",
+          "status": "historical_comparison_not_selected",
+          "geometry": {
+            "bedBounds": {
+              "minX": 8.36,
+              "maxX": 10.44,
+              "minZ": 0.2,
+              "maxZ": 2.1
+            },
+            "wardrobeToBedGapM": 0.76,
+            "eastWallToBedGapM": 1.21,
+            "pcPulledChairToBedGapM": 0.565,
+            "macPulledChairToPcPulledChairXGapM": 0.51,
+            "deskFootprintsSeparated": true
+          },
+          "reason": "曾作为V9候选；用户不喜欢床转90度，现恢复原朝向并保留床对面一字双工位",
+          "evidenceLevel": "static_candidate"
+        },
+        {
+          "id": "inline-opposite-bed",
+          "status": "selected_static_candidate",
+          "geometry": {
+            "deskRunWidthM": 2.6,
+            "deskDepthM": 0.75,
+            "chairCentersSpacingM": 1.3,
+            "chairPairClearWidthM": 0.63,
+            "pulledChairToBedFrameGapM": 0.48
+          },
+          "reason": "按最新偏好恢复床对面的一字工作台，保留完整床与两把正常电脑椅，不作转角延伸",
+          "evidenceLevel": "static_candidate"
+        }
+      ],
+      "geometry": {
+        "bedNorthEdgeZ": 2.185,
+        "pcChairSouthEdgeZAtPullback": 2.665,
+        "pcChairToBedFrameGapM": 0.48,
+        "macChairToPCChairGapM": 0.63,
+        "wardrobeToBedGapM": 0.95,
+        "eastWallToBedGapM": 1.55,
+        "evidenceLevel": "static_candidate"
+      },
+      "qualification": "静态候选，非PASS；需同尺度人体、床品展开、衣柜开门、卧室门扇及两人同时离席/通行联合验证",
+      "workbench": {
+        "xBounds": [
+          7.9,
+          10.5
+        ],
+        "zBounds": [
+          3.605,
+          4.355
+        ],
+        "heightM": 0.76,
+        "zones": [
+          {
+            "id": "pc-desk",
+            "widthM": 1.4
+          },
+          {
+            "id": "mac-desk",
+            "widthM": 1.2
+          }
+        ],
+        "continuousInline": true,
+        "cornerReturn": false,
+        "windowExtension": false,
+        "reason": "窗侧保留飘窗与窗帘维护，不额外占用"
+      }
+    },
+    "storage": {
+      "removedWallStorageIds": [
+        "upper-master-bed-left",
+        "upper-master-bed-right",
+        "upper-laundry"
+      ],
+      "removedTvWallStorageIds": [
+        "living-rear-storage"
+      ],
+      "addedObjects": [
+        "laundry-basket"
+      ],
+      "loweredBarStorageIds": [
+        "upper-bar-coffee",
+        "upper-bar-display",
+        "upper-bar-service"
+      ],
+      "userHeightCm": 188,
+      "accessStatus": "reach_envelope_requires_user_validation",
+      "removedForMobility": [
+        "living-rear-storage"
+      ]
+    },
+    "guestBed": {
+      "id": "guest-sofa-bed",
+      "foldedEnvelope": {
+        "x": 2.05,
+        "z": 0.67,
+        "w": 1.54,
+        "d": 1.03
+      },
+      "openEnvelope": {
+        "x": 2.05,
+        "z": 1.21,
+        "w": 1.54,
+        "d": 2.1
+      },
+      "mechanismNominalMattress": {
+        "w": 1.4,
+        "d": 2
+      },
+      "excludedBenchId": "guest-window-bench",
+      "simultaneousDoorStorageState": "not_verified",
+      "drinksFridgeId": "guest-drinks-fridge",
+      "sleepingRole": "intentional_second_sleep_room",
+      "mattressComfortStatus": "1400mm mechanism retained; two-person comfort requires owner trial; not shrunk for layout"
+    },
+    "assumptions": [
+      {
+        "id": "concept-not-surveyed",
+        "statement": "模型坐标和开口均为概念值，未用作施工尺寸",
+        "status": "unverified"
+      },
+      {
+        "id": "bay-window-envelope",
+        "statement": "飘窗宽2.1m、外凸0.75m、 sill 0.6m 为虚拟通用值，未测量，未计入可走地面",
+        "status": "concept"
+      },
+      {
+        "id": "water-and-drain",
+        "statement": "水吧给排水仍待现场勘察和选择，保留干水吧条件",
+        "status": "unverified"
+      },
+      {
+        "id": "human-use",
+        "statement": "多人同时做饭、工作、观影和通行未验收",
+        "status": "unverified"
+      },
+      {
+        "id": "mobile-tv-support-and-power",
+        "statement": "移动架VESA、载荷、重心、锁轮和停靠插座待选型；屏幕与PS5迁移时不拖带墙侧电源线",
+        "status": "unverified"
+      },
+      {
+        "id": "entry-island-meals",
+        "statement": "入口高台与匹配高坐凳承担两人餐位；客厅折叠桌为低频备用；全部尺寸待测",
+        "status": "concept"
+      }
+    ],
+    "mobileTV": {
+      "id": "living-tv",
+      "screen": {
+        "w": 1.65,
+        "h": 0.93,
+        "bottom": 0.8
+      },
+      "stand": {
+        "w": 0.88,
+        "d": 0.66,
+        "h": 1.48,
+        "casters": 4,
+        "locking": true
+      },
+      "poses": [
+        {
+          "x": 10.15,
+          "z": 8.9,
+          "rotation": 180,
+          "label": "日常停靠"
+        },
+        {
+          "x": 10.4,
+          "z": 7.9,
+          "rotation": 270,
+          "label": "斜向共享"
+        }
+      ],
+      "ps5TravelsOnShelf": true,
+      "shelf": {
+        "w": 0.78,
+        "d": 0.44,
+        "topM": 0.527,
+        "centerZ": -0.04
+      },
+      "controllerDock": {
+        "count": 2,
+        "parent": "living-tv",
+        "support": "trolley_shelf",
+        "travelsWithTV": true
+      },
+      "cableManagement": "PS5与屏内短线随架；迁移前拔掉墙侧供电，停车后接电、锁轮；不画跨通道拖线",
+      "loading": "concept_trolley_not_selected_product; VESA/load/tip/plug compatibility pending"
+    },
+    "laundryWorkflow": {
+      "foldingSurface": "laundry-folding-shelf",
+      "fixedSortingTableRemoved": true,
+      "basketStoredIn": "r2-housekeeping",
+      "shelfDefault": "folded",
+      "shelfUse": "washer doors closed; take basket then unfold; refold before circulation",
+      "cabinetDoorAndBasketRetrieval": "model_joint_check_required"
+    },
+    "pegboards": {
+      "ids": [
+        "master-work-pegboard",
+        "entry-pegboard"
+      ],
+      "construction": "perforated_18mm_panel_25mm_standoff_removable_hooks",
+      "masterUse": "耳机、理线和文具，显示器后留空",
+      "entryUse": "钥匙、轻包及随身物件，替换原展示格和悬浮挂钩",
+      "notAdded": [
+        "灶旁油污区",
+        "水吧湿操作面",
+        "阳台柜内设备检修区"
+      ],
+      "fixing": "wall substrate, fixing capacity and door/handle clearance pending survey"
+    },
+    "modularSofa": {
+      "id": "living-sofa",
+      "moduleDimensions": {
+        "w": 1.275,
+        "d": 1.05,
+        "h": 0.76
+      },
+      "combined": [
+        {
+          "x": 8.6625,
+          "z": 6.6,
+          "rotation": 180
+        },
+        {
+          "x": 9.9375,
+          "z": 6.6,
+          "rotation": 180
+        }
+      ],
+      "separated": [
+        {
+          "x": 8.35,
+          "z": 6.55,
+          "rotation": 175
+        },
+        {
+          "x": 10.25,
+          "z": 6.55,
+          "rotation": 185
+        }
+      ],
+      "connection": "releasable lower connectors; recessed feet with furniture glides; concept not selected product",
+      "middleArmrest": false,
+      "meal": [
+        {
+          "x": 8.6625,
+          "z": 5.75,
+          "rotation": 180
+        },
+        {
+          "x": 9.9375,
+          "z": 5.75,
+          "rotation": 180
+        }
+      ],
+      "activity": [
+        {
+          "x": 8.6625,
+          "z": 5.575,
+          "rotation": 180
+        },
+        {
+          "x": 9.9375,
+          "z": 5.575,
+          "rotation": 180
+        }
+      ]
+    },
+    "accessoryReconciliation": {
+      "tv": {
+        "mobileChildren": [
+          "ps5",
+          "home:mobile-game-dock",
+          "home:mobile-power-pack"
+        ],
+        "removed": [
+          "legacy_ps5_floating_controllers",
+          "living-screen-bias"
+        ],
+        "repurposed": [
+          "r2-living-shallow",
+          "r2-living-deep"
+        ],
+        "fixedWallFrameActive": false
+      },
+      "retiredObjects": [
+        "living-rear-storage",
+        "laundry-sort-fold",
+        "hall-gate-panel",
+        "upper-entry-display",
+        "bag-hooks",
+        "salon-coffee-table"
+      ],
+      "retainedCompatibilityPlaceholders": [
+        "home:hatch-legacy-tray-empty",
+        "home:hatch-stool",
+        "home:hatch-legacy-stop-empty"
+      ],
+      "status": "concept_model_reconciled"
+    },
+    "lighting": {
+      "revision": "final-furniture-anchors-2026-10-16",
+      "scope": "concept visual lighting; no surveyed daylight or photometric acceptance",
+      "corrected": [
+        "dining-offset-1",
+        "dining-offset-2",
+        "bar-task",
+        "display-level-1",
+        "display-level-2",
+        "display-level-3",
+        "living-wall-cove",
+        "balcony-laundry",
+        "master-reading-1",
+        "master-reading-2"
+      ]
+    },
+    "livingModes": {
+      "default": "relax",
+      "modes": [
+        "relax",
+        "dining",
+        "activity"
+      ],
+      "activityClearFloor": {
+        "minX": 8,
+        "maxX": 11,
+        "minZ": 6.3,
+        "maxZ": 8.4
+      },
+      "diningSofaFrontPassageM": 0.925,
+      "parking": {
+        "table": "dining-table",
+        "chairs": [
+          "dining-chair-left",
+          "dining-chair-right"
+        ],
+        "tv": "living-tv",
+        "sofa": "living-sofa"
+      },
+      "note": "Furniture transition requires multiple actions; no one-move conversion claim; TV stays on its wheeled stand in all modes"
+    },
+    "readingNook": {
+      "chairId": "reading-chair",
+      "recordsId": "reading-records",
+      "mainDining": false,
+      "windowUncovered": true,
+      "recordsUnderWindow": true,
+      "frontAccessClearanceM": 0.7,
+      "windowHandleAndTurntableLid": "site_and_product_confirmation"
+    },
+    "collection": {
+      "bottles": 12,
+      "cupsAndGlasses": 24,
+      "displayCups": 0,
+      "hangingGlasses": 0,
+      "closedCoffeeCabinetCups": 24,
+      "cupBudgetDiameterM": 0.1,
+      "bottleBudgetDiameterM": 0.09,
+      "bottleBudgetHeightM": 0.31,
+      "status": "concept_budget_not_verified_capacity",
+      "displayUnitId": "r2-waterbar",
+      "displayUnitCount": 1
+    },
+    "bathroom": {
+      "retainedDrainObjectIds": [
+        "toilet",
+        "vanity",
+        "shower"
+      ],
+      "doorSwing": "outward_concept",
+      "shower": "bevel_corner_900x1050mm_bounding_box_not_full_clear_rectangle",
+      "status": "conditional_concept_requires_full_scale_trial_and_site_drain_check"
+    },
+    "lifeRevision": {
+      "version": 1,
+      "base": "ff3730a2",
+      "evidence": "latest_user_charter_and_annotation",
+      "dimensionStatus": "virtual_not_surveyed",
+      "kitchen": {
+        "previousGrossAreaM2": 8.82,
+        "proposedGrossAreaM2": 9.604000000000001,
+        "partitionShiftM": 0.28,
+        "externalFridge": false,
+        "areaIncreaseClaim": false,
+        "structureChange": "BLOCKED_until_partition_verified",
+        "activeRevision": "R2"
+      },
+      "entry": {
+        "benchRetained": true,
+        "wornAgainBay": true
+      },
+      "conditional": [
+        "kitchen_partitions",
+        "fridge_exact_hinge_and_ventilation",
+        "bath_clearances_and_enclosure_hardware",
+        "sofa_bed_two_person_comfort",
+        "folding_furniture_hardware",
+        "site_daylight"
+      ]
+    },
+    "entryIslandDining": {
+      "seatCount": 2,
+      "pullbackM": 0.4,
+      "pullbackDirection": "-x",
+      "seats": [
+        {
+          "id": "entry-counter-stool-0",
+          "center": [
+            4.35,
+            7.075
+          ],
+          "pulledCenter": [
+            3.95,
+            7.075
+          ],
+          "pulledWestMinX": 3.72
+        },
+        {
+          "id": "entry-counter-stool-1",
+          "center": [
+            4.35,
+            7.775
+          ],
+          "pulledCenter": [
+            3.95,
+            7.775
+          ],
+          "pulledWestMinX": 3.72
+        }
+      ],
+      "rearBarMaxX": 3.6,
+      "stoolClearOfRearBar": true,
+      "lengthCandidates": [
+        {
+          "lengthM": 1.6,
+          "islandMinZ": 6.725,
+          "corridorClearM": 0.9550000000000001,
+          "requiredClearM": 0.9,
+          "selected": true,
+          "coordinateStatus": "virtual_only"
+        },
+        {
+          "lengthM": 1.8,
+          "islandMinZ": 6.5249999999999995,
+          "corridorClearM": 0.7549999999999999,
+          "requiredClearM": 0.9,
+          "selected": false,
+          "coordinateStatus": "virtual_only"
+        },
+        {
+          "lengthM": 2,
+          "islandMinZ": 6.324999999999999,
+          "corridorClearM": 0.5549999999999997,
+          "requiredClearM": 0.9,
+          "selected": false,
+          "coordinateStatus": "virtual_only"
+        }
+      ],
+      "selectedLengthM": 1.6,
+      "coordinateStatus": "virtual_only",
+      "seatAndKneeValidation": "deferred_to_main",
+      "routeValidation": "R2 browser navigation plus joint-use pending; no inherited V11 clearance claim"
+    },
+    "spatialRevision": {
+      "version": "11.0.0",
+      "coordinateStatus": "virtual_concept_not_survey",
+      "kitchenCandidates": [
+        {
+          "x": 4.2,
+          "closedFridgePassM": 1.7350000000000003,
+          "occupiedFridgePassM": 0.7549999999999999
+        },
+        {
+          "x": 4.5,
+          "closedFridgePassM": 1.4350000000000005,
+          "occupiedFridgePassM": 0.45500000000000007
+        },
+        {
+          "x": 4.8,
+          "closedFridgePassM": 1.1350000000000007,
+          "occupiedFridgePassM": 0.15500000000000025
+        }
+      ],
+      "selectedKitchenSideX": 4.2,
+      "occupiedSidePassBudgetM": 0.7,
+      "userConfirmedRelations": [
+        "column-handdrawn -z face aligns with master-bearing top face (wall.a[1] - thickness/2)"
+      ],
+      "virtualOnly": [
+        "column center z derived as 4.56",
+        "kitchen-side selected among 4.2/4.5/4.8 using combined refrigerator use; jamb reference awaits survey",
+        "entry island length 1.6 chosen from virtual corridor clears 0.955 / 0.755 / 0.555",
+        "bay width 2.1, projection 0.75, sill 0.6",
+        "bath boundary z 2.0 is a diagram concept"
+      ],
+      "changes": [
+        "kitchen extended toward the hall only",
+        "fridge, surround, and upper cabinet translated outside the kitchen",
+        "entry return rebuilt as a counter with end supports and a knee void",
+        "bar service cabinet and hatch removed; rear bar shortened",
+        "master door shifted on its existing wall; wardrobe lengthened",
+        "bath boundary, vanity, toilet, and shower adjusted inside the same shell"
+      ],
+      "masterDoor": "restoration of the existing master-side door, not a new opening in master-bearing",
+      "noPassClaims": true,
+      "validationDeferredToMain": [
+        "entry seats and knees",
+        "bath clearances",
+        "wardrobe and vanity meshes"
+      ]
+    },
+    "suspendedBarRack": false,
+    "styleReference": {
+      "publicNote": "69671635000000000e03c4fd",
+      "visibleScope": "public text and first image only; remaining carousel blocked by login",
+      "interpretation": "restrained hard finishes, warm red-brown timber, pale woven textiles, distributed warm lamps",
+      "noFixedCoffeeTable": true
+    },
+    "r2Revision": {
+      "source": "approved R2 2D relationship; unmeasured dimensions",
+      "version": 12,
+      "alignment": {
+        "guestJambAndGlassX": 3.92,
+        "fridgeFrontAndColumnFarFaceZ": 4.31,
+        "livingCabinetAndColumnNearFaceZ": 4.81
+      },
+      "clearances": {
+        "mainKitchenM": 1.11,
+        "fridgeZoneM": 1.19,
+        "barZoneM": 1.76
+      },
+      "glazing": {
+        "sideSpanM": 1.54,
+        "targetClearOpeningM": 0.9,
+        "hardware": "three linked leaves; concept overlap, frame and seals pending"
+      },
+      "noFixedCoffeeTable": true,
+      "removedIds": [
+        "kitchen-top",
+        "kitchen-left",
+        "kitchen-prep-return",
+        "upper-kitchen-sink",
+        "fridge-surround",
+        "upper-fridge",
+        "kitchen-slider-panel",
+        "wet-bar",
+        "s02-bar-coffee",
+        "s02-bar-prep",
+        "s02-bar-beer",
+        "s02-bar-storage",
+        "upper-bar-coffee",
+        "upper-bar-display",
+        "s02-cup-0",
+        "s02-cup-1",
+        "s02-cup-2",
+        "s02-cup-3",
+        "s02-cup-4",
+        "s02-cup-5",
+        "s02-stemware-0",
+        "s02-stemware-1",
+        "s02-stemware-2",
+        "s02-stemware-3",
+        "entry-shoe",
+        "entry-bench",
+        "upper-entry",
+        "entry-worn-again",
+        "living-tv-console",
+        "upper-living-media",
+        "upper-living-side",
+        "guest-wardrobe",
+        "upper-guest-wardrobe",
+        "master-wardrobe",
+        "upper-master-wardrobe",
+        "housekeeping-cabinet",
+        "upper-housekeeping"
+      ],
+      "conditions": [
+        "structure, existing jamb and utility survey",
+        "fridge full-door/drawer/person combination",
+        "glass hardware and smoke boundary",
+        "folded furniture product and retrieval",
+        "physical phone testing"
+      ]
+    }
+  }
+}

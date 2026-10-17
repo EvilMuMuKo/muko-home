@@ -120,7 +120,12 @@ export function buildInteriorDetails(
   m: Materials,
   tag: (n: THREE.Object3D, rooms: string[], kind: string) => void,
   spatial = false,
-  model?: { version: string; objects: Record<string, any>[]; homeDesign?: any },
+  model?: {
+    version: string;
+    objects: Record<string, any>[];
+    homeDesign?: any;
+    openings?: { id: string; rotation?: number; openAngle?: number }[];
+  },
 ) {
   m.barTile = createTileMaterial();
   const groups = new Map<string, THREE.Group>();
@@ -332,11 +337,19 @@ export function buildInteriorDetails(
         addUpholsterySeam(child, m.piping);
   }
   const door = scene.getObjectByName("opening:guest-door")!;
+  const guestOpening = model?.openings?.find((opening) => opening.id === "guest-door");
+  // scene.js: closed = -deg(rotation), open = closed - deg(openAngle)
+  const doorClosed = guestOpening
+    ? -THREE.MathUtils.degToRad(guestOpening.rotation || 0)
+    : -Math.PI / 2;
+  const doorOpenYaw = guestOpening
+    ? doorClosed - THREE.MathUtils.degToRad(guestOpening.openAngle || 0)
+    : -Math.PI;
   let current = "aperitif",
     doorOpen = true;
   function setDoorOpen(open: boolean) {
     doorOpen = open;
-    door.rotation.y = open ? -Math.PI : -Math.PI / 2;
+    door.rotation.y = open ? doorOpenYaw : doorClosed;
   }
   function apply(id: string) {
     current = id;

@@ -591,14 +591,16 @@ try {
       const model = await page.evaluate(() => window.homePresentation.getModel());
       const fridge = model.objects.find((item) => item.id === "kitchen-fridge");
       if (fridge) {
-        const sign = fridge.accessFace === "+x" ? 1 : -1;
+        const normal = ({"+x":[1,0],"-x":[-1,0],"+z":[0,1],"-z":[0,-1]})[fridge.accessFace] ?? [0,1];
+        const front = [fridge.x+normal[0]*.95,fridge.z+normal[1]*.95];
+        const tangent=[-normal[1],normal[0]];
         const candidates = [
-          [fridge.x + sign*0.95, fridge.z],
-          [fridge.x + sign*0.9, fridge.z - 0.3],
-          [fridge.x + sign*0.9, fridge.z + 0.3],
+          front,
+          [front[0]+tangent[0]*.3,front[1]+tangent[1]*.3],
+          [front[0]-tangent[0]*.3,front[1]-tangent[1]*.3],
         ];
         const safeCandidates = candidates.filter((p) => planner.pointSafe(p));
-        let interactionPosition = safeCandidates.sort((a, b) => distance([roomRecord.actual[0], roomRecord.actual[2]], a) - distance([roomRecord.actual[0], roomRecord.actual[2]], b))[0] ?? planner.findNearestSafePoint([fridge.x + sign*0.95, fridge.z], 0.9);
+        let interactionPosition = safeCandidates.sort((a, b) => distance([roomRecord.actual[0], roomRecord.actual[2]], a) - distance([roomRecord.actual[0], roomRecord.actual[2]], b))[0] ?? planner.findNearestSafePoint(front, 0.9);
         if (interactionPosition && await walkTo(interactionPosition, "kitchen-fridge-interaction-approach", roomRecord)) {
           await lookAt([fridge.x, 1.15, fridge.z]);
           try {

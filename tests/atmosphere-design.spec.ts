@@ -80,7 +80,7 @@ test("cinema and guest-stay state APIs coordinate room lighting, doors and the c
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   expect(
     await page.evaluate(() => window.homePresentation.getState().version),
-  ).toBe("11.0.0");
+  ).toBe("12.0.0");
   await page.click("#panel-toggle");
   await page.evaluate(() => window.homePresentation.setStorageOpen(true));
   await page.evaluate(() => window.homePresentation.setLightingScene("cinema"));
