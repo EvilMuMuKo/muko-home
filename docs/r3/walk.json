@@ -1,0 +1,1455 @@
+{
+  "capturedAt": "2026-10-17T10:28:41.873Z",
+  "baseURL": "http://localhost:4173/",
+  "viewport": {
+    "width": 960,
+    "height": 540,
+    "deviceScaleFactor": 1
+  },
+  "status": "PASS",
+  "method": "One real Playwright Chromium first-person session. Opens modeled interior doors, plans over the live navigation snapshot, simplifies routes by line of sight, then walks each segment with real W key input and a slow joystick final approach and checks the camera position.",
+  "scope": "Browser-rendered model navigation and visible interaction only. This does not establish measured as-built clearances, physical phone performance, or full-scale ergonomics.",
+  "api": {
+    "navigationSnapshot": true,
+    "lookTarget": true,
+    "active": true,
+    "camera": [
+      5.78,
+      1.74,
+      8.17
+    ]
+  },
+  "doors": [
+    {
+      "id": "master-door",
+      "pass": true,
+      "state": {
+        "angle": 0,
+        "kitchenProgress": 1,
+        "atmosphere": {
+          "moment": "day-public",
+          "doorOpen": true,
+          "blackoutClosed": false,
+          "palette": {
+            "paper": "#eeece5",
+            "clay": "#ad7359",
+            "moss": "#6d7967",
+            "masterSage": "#74806e",
+            "masterMushroom": "#8d877b",
+            "tobacco": "#bda68f",
+            "oat": "#deddd5",
+            "media": "#aaa99f",
+            "cinema": "#485149",
+            "cinemaFront": "#303933",
+            "cinemaCeiling": "#53594f"
+          },
+          "screenInches": 83,
+          "acousticPanels": 5,
+          "compositionVersion": 10,
+          "storageGroups": 21,
+          "decorRooms": [
+            "bar",
+            "living",
+            "guest"
+          ],
+          "moments": [
+            "day-public",
+            "two-person-dining",
+            "dual-workstations",
+            "night-navigation",
+            "coffee",
+            "aperitif",
+            "game",
+            "cinema",
+            "guest-stay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "guest-door-angle",
+      "stableSamples": 4,
+      "angle": 1.5707963267948966,
+      "observable": true,
+      "pass": true
+    },
+    {
+      "id": "guest-door",
+      "pass": true,
+      "state": {
+        "angle": 1.5707963267948966,
+        "kitchenProgress": 1,
+        "atmosphere": {
+          "moment": "day-public",
+          "doorOpen": true,
+          "blackoutClosed": false,
+          "palette": {
+            "paper": "#eeece5",
+            "clay": "#ad7359",
+            "moss": "#6d7967",
+            "masterSage": "#74806e",
+            "masterMushroom": "#8d877b",
+            "tobacco": "#bda68f",
+            "oat": "#deddd5",
+            "media": "#aaa99f",
+            "cinema": "#485149",
+            "cinemaFront": "#303933",
+            "cinemaCeiling": "#53594f"
+          },
+          "screenInches": 83,
+          "acousticPanels": 5,
+          "compositionVersion": 10,
+          "storageGroups": 21,
+          "decorRooms": [
+            "bar",
+            "living",
+            "guest"
+          ],
+          "moments": [
+            "day-public",
+            "two-person-dining",
+            "dual-workstations",
+            "night-navigation",
+            "coffee",
+            "aperitif",
+            "game",
+            "cinema",
+            "guest-stay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bath-door",
+      "pass": true,
+      "state": {
+        "angle": -4.71238898038469,
+        "kitchenProgress": 1,
+        "atmosphere": {
+          "moment": "day-public",
+          "doorOpen": true,
+          "blackoutClosed": false,
+          "palette": {
+            "paper": "#eeece5",
+            "clay": "#ad7359",
+            "moss": "#6d7967",
+            "masterSage": "#74806e",
+            "masterMushroom": "#8d877b",
+            "tobacco": "#bda68f",
+            "oat": "#deddd5",
+            "media": "#aaa99f",
+            "cinema": "#485149",
+            "cinemaFront": "#303933",
+            "cinemaCeiling": "#53594f"
+          },
+          "screenInches": 83,
+          "acousticPanels": 5,
+          "compositionVersion": 10,
+          "storageGroups": 21,
+          "decorRooms": [
+            "bar",
+            "living",
+            "guest"
+          ],
+          "moments": [
+            "day-public",
+            "two-person-dining",
+            "dual-workstations",
+            "night-navigation",
+            "coffee",
+            "aperitif",
+            "game",
+            "cinema",
+            "guest-stay"
+          ]
+        }
+      }
+    },
+    {
+      "id": "kitchen-door",
+      "pass": true,
+      "state": {
+        "kitchenProgress": 1,
+        "atmosphere": {
+          "moment": "day-public",
+          "doorOpen": true,
+          "blackoutClosed": false,
+          "palette": {
+            "paper": "#eeece5",
+            "clay": "#ad7359",
+            "moss": "#6d7967",
+            "masterSage": "#74806e",
+            "masterMushroom": "#8d877b",
+            "tobacco": "#bda68f",
+            "oat": "#deddd5",
+            "media": "#aaa99f",
+            "cinema": "#485149",
+            "cinemaFront": "#303933",
+            "cinemaCeiling": "#53594f"
+          },
+          "screenInches": 83,
+          "acousticPanels": 5,
+          "compositionVersion": 10,
+          "storageGroups": 21,
+          "decorRooms": [
+            "bar",
+            "living",
+            "guest"
+          ],
+          "moments": [
+            "day-public",
+            "two-person-dining",
+            "dual-workstations",
+            "night-navigation",
+            "coffee",
+            "aperitif",
+            "game",
+            "cinema",
+            "guest-stay"
+          ]
+        }
+      }
+    }
+  ],
+  "rooms": [
+    {
+      "id": "dining",
+      "label": "阅读水吧",
+      "goal": [
+        3.2,
+        6.4
+      ],
+      "mainDirection": "north",
+      "status": "PASS",
+      "start": [
+        5.78,
+        1.74,
+        8.17
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/dining-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/dining-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/dining-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/dining-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/dining-main.png",
+        "selectedSweepIndex": 0
+      },
+      "routeIndex": 0,
+      "actual": [
+        3.521365675289721,
+        1.74,
+        6.500062748833934
+      ]
+    },
+    {
+      "id": "kitchen",
+      "label": "厨房",
+      "goal": [
+        2,
+        4.8
+      ],
+      "mainDirection": "east",
+      "status": "PASS",
+      "start": [
+        3.521365675289721,
+        1.74,
+        6.500062748833934
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/kitchen-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/kitchen-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/kitchen-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/kitchen-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/kitchen-main.png",
+        "selectedSweepIndex": 1
+      },
+      "routeIndex": 1,
+      "actual": [
+        2.312704024620476,
+        1.74,
+        4.9022487116287445
+      ]
+    },
+    {
+      "id": "hall",
+      "label": "走廊",
+      "goal": [
+        5.8,
+        3.2
+      ],
+      "mainDirection": "north",
+      "status": "PASS",
+      "start": [
+        2.735607697879562,
+        1.74,
+        4.960465473783592
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/hall-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/hall-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/hall-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/hall-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/hall-main.png",
+        "selectedSweepIndex": 0
+      },
+      "routeIndex": 3,
+      "actual": [
+        5.486659545417072,
+        1.74,
+        3.313421401281273
+      ]
+    },
+    {
+      "id": "cinema",
+      "label": "影音室",
+      "goal": [
+        2.8,
+        2.4
+      ],
+      "mainDirection": "east",
+      "status": "PASS",
+      "start": [
+        5.486659545417072,
+        1.74,
+        3.313421401281273
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/cinema-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/cinema-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/cinema-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/cinema-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/cinema-main.png",
+        "selectedSweepIndex": 1
+      },
+      "routeIndex": 4,
+      "actual": [
+        3.109275103283849,
+        1.74,
+        2.300104120201883
+      ]
+    },
+    {
+      "id": "bath",
+      "label": "卫浴",
+      "goal": [
+        5.6,
+        1.45
+      ],
+      "mainDirection": "north",
+      "status": "PASS",
+      "start": [
+        3.109275103283849,
+        1.74,
+        2.300104120201883
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/bath-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/bath-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/bath-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/bath-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/bath-main.png",
+        "selectedSweepIndex": 0
+      },
+      "routeIndex": 5,
+      "actual": [
+        5.7997858029571505,
+        1.74,
+        1.6191309769351845
+      ]
+    },
+    {
+      "id": "master",
+      "label": "主卧",
+      "goal": [
+        8,
+        2.7
+      ],
+      "mainDirection": "east",
+      "status": "PASS",
+      "start": [
+        5.7997858029571505,
+        1.74,
+        1.6191309769351845
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/master-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/master-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/master-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/master-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/master-main.png",
+        "selectedSweepIndex": 1
+      },
+      "routeIndex": 6,
+      "actual": [
+        7.788157303788067,
+        1.74,
+        2.9116525141882743
+      ]
+    },
+    {
+      "id": "living",
+      "label": "客厅",
+      "goal": [
+        9.2,
+        7.5
+      ],
+      "mainDirection": "north",
+      "status": "PASS",
+      "start": [
+        7.788157303788067,
+        1.74,
+        2.9116525141882743
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/living-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/living-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/living-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/living-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/living-main.png",
+        "selectedSweepIndex": 0
+      },
+      "routeIndex": 7,
+      "actual": [
+        9.52919130683823,
+        1.74,
+        7.399519294096711
+      ],
+      "publicLighting": {
+        "day-public": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/public-area-day.png",
+        "aperitif": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/public-area-night.png"
+      }
+    },
+    {
+      "id": "balcony",
+      "label": "阳台",
+      "goal": [
+        12.1,
+        7.5
+      ],
+      "mainDirection": "east",
+      "status": "PASS",
+      "start": [
+        9.52919130683823,
+        1.74,
+        7.399519294096711
+      ],
+      "screenshots": {
+        "sweep": [
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/balcony-north.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/balcony-east.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/balcony-south.png",
+          "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/balcony-west.png"
+        ],
+        "main": "/Users/muko/Documents/Codex/2026-10-14/work-html-work-2026-10-14/outputs/MuKo Home R3 实施与验证/全屋漫步-验收/screenshots/balcony-main.png",
+        "selectedSweepIndex": 1
+      },
+      "routeIndex": 8,
+      "actual": [
+        11.779787202356927,
+        1.74,
+        7.399995721167011
+      ]
+    }
+  ],
+  "interaction": {
+    "id": "walk-fridge",
+    "label": "使用：开合冰箱门",
+    "pass": true,
+    "interactionDistanceM": 1.1514501460387627,
+    "maximumTargetDistanceM": 1.6,
+    "before": {
+      "fridgeAngle": 0,
+      "position": [
+        2.7720165665009313,
+        1.74,
+        4.900129134397781
+      ]
+    },
+    "after": {
+      "fridgeAngle": 1.7453292519943295,
+      "position": [
+        2.735607697879562,
+        1.74,
+        4.960465473783592
+      ]
+    }
+  },
+  "pageErrors": [],
+  "resourceFailures": [],
+  "performance": {
+    "afterWalk": {
+      "renders": 1187,
+      "frameP95Ms": 33.400000000001455,
+      "pixelRatio": 1
+    },
+    "navigation": {
+      "start": [
+        5.78,
+        1.74,
+        8.17
+      ],
+      "end": [
+        11.779787202356927,
+        1.74,
+        7.399995721167011
+      ],
+      "segments": [
+        {
+          "from": [
+            5.78,
+            1.74,
+            8.17
+          ],
+          "target": [
+            5.800000000000001,
+            8.200000000000001
+          ],
+          "distanceM": 0.03605551275464109,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 95,
+          "actual": [
+            5.786739607384137,
+            1.74,
+            8.180109411076204
+          ],
+          "progressM": 0.012149999999999335
+        },
+        {
+          "from": [
+            5.786739607384137,
+            1.74,
+            8.180109411076204
+          ],
+          "target": [
+            5.4,
+            6.5
+          ],
+          "distanceM": 1.724046158635686,
+          "timeoutMs": 77583,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1485,
+          "actual": [
+            5.401549650511127,
+            1.74,
+            6.506732132830233
+          ],
+          "progressM": 1.7171379729729712
+        },
+        {
+          "from": [
+            5.401549650511127,
+            1.74,
+            6.506732132830233
+          ],
+          "target": [
+            3.5,
+            6.5
+          ],
+          "distanceM": 1.9015615674943143,
+          "timeoutMs": 85571,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 2044,
+          "actual": [
+            3.521365675289721,
+            1.74,
+            6.500062748833934
+          ],
+          "progressM": 1.8801958039954934
+        },
+        {
+          "from": [
+            3.521365675289721,
+            1.74,
+            6.500062748833934
+          ],
+          "target": [
+            3.5,
+            6.5
+          ],
+          "distanceM": 0.02136576743302121,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 18,
+          "actual": [
+            3.521365675289721,
+            1.74,
+            6.500062748833934
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            3.521365675289721,
+            1.74,
+            6.500062748833934
+          ],
+          "target": [
+            4.3,
+            6
+          ],
+          "distanceM": 0.9253832527058086,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 969,
+          "actual": [
+            4.277666819623336,
+            1.74,
+            6.014343050665682
+          ],
+          "progressM": 0.8988409459459413
+        },
+        {
+          "from": [
+            4.277666819623336,
+            1.74,
+            6.014343050665682
+          ],
+          "target": [
+            4.1000000000000005,
+            5.2
+          ],
+          "distanceM": 0.8334987120341336,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 731,
+          "actual": [
+            4.104224197813356,
+            1.74,
+            5.219361781458327
+          ],
+          "progressM": 0.8136814864864855
+        },
+        {
+          "from": [
+            4.104224197813356,
+            1.74,
+            5.219361781458327
+          ],
+          "target": [
+            2.3000000000000003,
+            4.9
+          ],
+          "distanceM": 1.8322709688884675,
+          "timeoutMs": 82453,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1584,
+          "actual": [
+            2.312704024620476,
+            1.74,
+            4.9022487116287445
+          ],
+          "progressM": 1.8193694594594547
+        },
+        {
+          "from": [
+            2.312704024620476,
+            1.74,
+            4.9022487116287445
+          ],
+          "target": [
+            2.3000000000000003,
+            4.9
+          ],
+          "distanceM": 0.012901509429012647,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 4,
+          "actual": [
+            2.312704024620476,
+            1.74,
+            4.9022487116287445
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            2.312704024620476,
+            1.74,
+            4.9022487116287445
+          ],
+          "target": [
+            2.8000000000000003,
+            4.9
+          ],
+          "distanceM": 0.4873011638864319,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 590,
+          "actual": [
+            2.7720165665009313,
+            1.74,
+            4.900129134397781
+          ],
+          "progressM": 0.4593174324324334
+        },
+        {
+          "from": [
+            2.735607697879562,
+            1.74,
+            4.960465473783592
+          ],
+          "target": [
+            2.8000000000000003,
+            5
+          ],
+          "distanceM": 0.0755602232363407,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 177,
+          "actual": [
+            2.787409845028265,
+            1.74,
+            4.992270103794896
+          ],
+          "progressM": 0.06078648648648638
+        },
+        {
+          "from": [
+            2.787409845028265,
+            1.74,
+            4.992270103794896
+          ],
+          "target": [
+            4.2,
+            5
+          ],
+          "distanceM": 1.4126113043645137,
+          "timeoutMs": 63568,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 2665,
+          "actual": [
+            4.193308693950869,
+            1.74,
+            4.999990320446379
+          ],
+          "progressM": 1.4059200457874728
+        },
+        {
+          "from": [
+            4.193308693950869,
+            1.74,
+            4.999990320446379
+          ],
+          "target": [
+            4.9,
+            3.9000000000000004
+          ],
+          "distanceM": 1.3074369228078095,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1331,
+          "actual": [
+            4.89338625189602,
+            1.74,
+            3.910294535724405
+          ],
+          "progressM": 1.2952009459459504
+        },
+        {
+          "from": [
+            4.89338625189602,
+            1.74,
+            3.910294535724405
+          ],
+          "target": [
+            5.5,
+            3.3000000000000003
+          ],
+          "distanceM": 0.8604880357819195,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 910,
+          "actual": [
+            5.486659545417072,
+            1.74,
+            3.313421401281273
+          ],
+          "progressM": 0.8415644594594553
+        },
+        {
+          "from": [
+            5.486659545417072,
+            1.74,
+            3.313421401281273
+          ],
+          "target": [
+            5.5,
+            3.3000000000000003
+          ],
+          "distanceM": 0.018923576322463942,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 2,
+          "actual": [
+            5.486659545417072,
+            1.74,
+            3.313421401281273
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            5.486659545417072,
+            1.74,
+            3.313421401281273
+          ],
+          "target": [
+            4.800000000000001,
+            3.8000000000000003
+          ],
+          "distanceM": 0.8415818819600736,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 857,
+          "actual": [
+            4.818409026037608,
+            1.74,
+            3.7869550519570585
+          ],
+          "progressM": 0.8190194594594568
+        },
+        {
+          "from": [
+            4.818409026037608,
+            1.74,
+            3.7869550519570585
+          ],
+          "target": [
+            4.2,
+            3.3000000000000003
+          ],
+          "distanceM": 0.7871181271647119,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 830,
+          "actual": [
+            4.215487137935425,
+            1.74,
+            3.313098003615595
+          ],
+          "progressM": 0.7668476415922426
+        },
+        {
+          "from": [
+            4.215487137935425,
+            1.74,
+            3.313098003615595
+          ],
+          "target": [
+            4.2,
+            2.3000000000000003
+          ],
+          "distanceM": 1.0132163719420126,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1050,
+          "actual": [
+            4.20018880051456,
+            1.74,
+            2.3123504694786225
+          ],
+          "progressM": 1.0008644594594582
+        },
+        {
+          "from": [
+            4.20018880051456,
+            1.74,
+            2.3123504694786225
+          ],
+          "target": [
+            3.1,
+            2.3000000000000003
+          ],
+          "distanceM": 1.1002581201127346,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1130,
+          "actual": [
+            3.109275103283849,
+            1.74,
+            2.300104120201883
+          ],
+          "progressM": 1.0909824324324329
+        },
+        {
+          "from": [
+            3.109275103283849,
+            1.74,
+            2.300104120201883
+          ],
+          "target": [
+            3.1,
+            2.3000000000000003
+          ],
+          "distanceM": 0.009275687680301745,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 3,
+          "actual": [
+            3.109275103283849,
+            1.74,
+            2.300104120201883
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            3.109275103283849,
+            1.74,
+            2.300104120201883
+          ],
+          "target": [
+            4.2,
+            2.3000000000000003
+          ],
+          "distanceM": 1.0907249016857894,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1014,
+          "actual": [
+            4.186144557836796,
+            1.74,
+            2.3000013226354694
+          ],
+          "progressM": 1.0768694594594561
+        },
+        {
+          "from": [
+            4.186144557836796,
+            1.74,
+            2.3000013226354694
+          ],
+          "target": [
+            4.5,
+            3.7
+          ],
+          "distanceM": 1.4347478995272638,
+          "timeoutMs": 64564,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1311,
+          "actual": [
+            4.495571686262458,
+            1.74,
+            3.680246850802446
+          ],
+          "progressM": 1.4145044594594562
+        },
+        {
+          "from": [
+            4.495571686262458,
+            1.74,
+            3.680246850802446
+          ],
+          "target": [
+            4.9,
+            3.8000000000000003
+          ],
+          "distanceM": 0.42178558260723337,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 598,
+          "actual": [
+            4.882621226176771,
+            1.74,
+            3.794854062329884
+          ],
+          "progressM": 0.4036609459459459
+        },
+        {
+          "from": [
+            4.882621226176771,
+            1.74,
+            3.794854062329884
+          ],
+          "target": [
+            5.2,
+            3.4000000000000004
+          ],
+          "distanceM": 0.5065955157834977,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 727,
+          "actual": [
+            5.18653472400147,
+            1.74,
+            3.4167522826569807
+          ],
+          "progressM": 0.4851024324324298
+        },
+        {
+          "from": [
+            5.18653472400147,
+            1.74,
+            3.4167522826569807
+          ],
+          "target": [
+            5.800000000000001,
+            2
+          ],
+          "distanceM": 1.54386744096432,
+          "timeoutMs": 69475,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1517,
+          "actual": [
+            5.795402585553013,
+            1.74,
+            2.010617385640107
+          ],
+          "progressM": 1.5322974324324254
+        },
+        {
+          "from": [
+            5.795402585553013,
+            1.74,
+            2.010617385640107
+          ],
+          "target": [
+            5.800000000000001,
+            1.6
+          ],
+          "distanceM": 0.4106431219556873,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 579,
+          "actual": [
+            5.7997858029571505,
+            1.74,
+            1.6191309769351845
+          ],
+          "progressM": 0.391510945945946
+        },
+        {
+          "from": [
+            5.7997858029571505,
+            1.74,
+            1.6191309769351845
+          ],
+          "target": [
+            5.800000000000001,
+            1.6
+          ],
+          "distanceM": 0.019132176009741365,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 7,
+          "actual": [
+            5.800541508967017,
+            1.74,
+            1.551635207375703
+          ],
+          "progressM": 0.0674999999999999
+        },
+        {
+          "from": [
+            5.800541508967017,
+            1.74,
+            1.551635207375703
+          ],
+          "target": [
+            6.7,
+            3.5
+          ],
+          "distanceM": 2.1459615425792817,
+          "timeoutMs": 96569,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1912,
+          "actual": [
+            6.691557645684815,
+            1.74,
+            3.481712568085632
+          ],
+          "progressM": 2.125819459459461
+        },
+        {
+          "from": [
+            6.691557645684815,
+            1.74,
+            3.481712568085632
+          ],
+          "target": [
+            7.300000000000001,
+            3.4000000000000004
+          ],
+          "distanceM": 0.6139047501915542,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 687,
+          "actual": [
+            7.290549552287534,
+            1.74,
+            3.4012691758663216
+          ],
+          "progressM": 0.604369459459452
+        },
+        {
+          "from": [
+            7.290549552287534,
+            1.74,
+            3.4012691758663216
+          ],
+          "target": [
+            7.800000000000001,
+            2.9000000000000004
+          ],
+          "distanceM": 0.7147101128066773,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 862,
+          "actual": [
+            7.788157303788067,
+            1.74,
+            2.9116525141882743
+          ],
+          "progressM": 0.6980959459459501
+        },
+        {
+          "from": [
+            7.788157303788067,
+            1.74,
+            2.9116525141882743
+          ],
+          "target": [
+            7.800000000000001,
+            2.9000000000000004
+          ],
+          "distanceM": 0.016614166860727083,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 3,
+          "actual": [
+            7.788157303788067,
+            1.74,
+            2.9116525141882743
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            7.788157303788067,
+            1.74,
+            2.9116525141882743
+          ],
+          "target": [
+            6.5,
+            4
+          ],
+          "distanceM": 1.6863716936592734,
+          "timeoutMs": 75887,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1467,
+          "actual": [
+            6.510810371116852,
+            1.74,
+            3.9908664569217445
+          ],
+          "progressM": 1.6722194594594582
+        },
+        {
+          "from": [
+            6.510810371116852,
+            1.74,
+            3.9908664569217445
+          ],
+          "target": [
+            6.6000000000000005,
+            4.6000000000000005
+          ],
+          "distanceM": 0.6156285107135498,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 797,
+          "actual": [
+            6.598907480791472,
+            1.74,
+            4.592538481158566
+          ],
+          "progressM": 0.6080874324324225
+        },
+        {
+          "from": [
+            6.598907480791472,
+            1.74,
+            4.592538481158566
+          ],
+          "target": [
+            7.800000000000001,
+            5.800000000000001
+          ],
+          "distanceM": 1.7031108475908299,
+          "timeoutMs": 76640,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1530,
+          "actual": [
+            7.7952563190603215,
+            1.74,
+            5.795231164876376
+          ],
+          "progressM": 1.6963844594594628
+        },
+        {
+          "from": [
+            7.7952563190603215,
+            1.74,
+            5.795231164876376
+          ],
+          "target": [
+            10.8,
+            5.800000000000001
+          ],
+          "distanceM": 3.0047474652515094,
+          "timeoutMs": 135214,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 2563,
+          "actual": [
+            10.788213495538928,
+            1.74,
+            5.799981293613556
+          ],
+          "progressM": 2.9929609459459727
+        },
+        {
+          "from": [
+            10.788213495538928,
+            1.74,
+            5.799981293613556
+          ],
+          "target": [
+            10.8,
+            7.4
+          ],
+          "distanceM": 1.6000621183172734,
+          "timeoutMs": 72003,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1979,
+          "actual": [
+            10.79991996867345,
+            1.74,
+            7.3785936543983
+          ],
+          "progressM": 1.5786557658766627
+        },
+        {
+          "from": [
+            10.79991996867345,
+            1.74,
+            7.3785936543983
+          ],
+          "target": [
+            9.5,
+            7.4
+          ],
+          "distanceM": 1.3000962105121308,
+          "timeoutMs": 60000,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1264,
+          "actual": [
+            9.52919130683823,
+            1.74,
+            7.399519294096711
+          ],
+          "progressM": 1.2709009459459522
+        },
+        {
+          "from": [
+            9.52919130683823,
+            1.74,
+            7.399519294096711
+          ],
+          "target": [
+            9.5,
+            7.4
+          ],
+          "distanceM": 0.029195264566178724,
+          "timeoutMs": 60000,
+          "pass": true,
+          "elapsedMs": 3,
+          "actual": [
+            9.52919130683823,
+            1.74,
+            7.399519294096711
+          ],
+          "progressM": 0
+        },
+        {
+          "from": [
+            9.52919130683823,
+            1.74,
+            7.399519294096711
+          ],
+          "target": [
+            11.8,
+            7.4
+          ],
+          "distanceM": 2.2708087440419176,
+          "timeoutMs": 102187,
+          "finalApproach": "real floating touch joystick at 20 percent travel",
+          "pass": true,
+          "elapsedMs": 1996,
+          "actual": [
+            11.779787202356927,
+            1.74,
+            7.399995721167011
+          ],
+          "progressM": 2.250595945945952
+        }
+      ],
+      "frameMs": {
+        "samples": 600,
+        "p50": 33.30000000000291,
+        "p95": 33.400000000001455,
+        "max": 33.5
+      },
+      "renderMs": {
+        "samples": 600,
+        "p50": 1.9000000059604645,
+        "p95": 3.2999999970197678,
+        "max": 15.600000008940697
+      },
+      "frameCount": 1227,
+      "renderCount": 1187,
+      "idleCheck": {
+        "durationMs": 1200,
+        "rendersBefore": 1187,
+        "rendersAfter": 1187,
+        "renderDelta": 0,
+        "pending": false
+      }
+    }
+  },
+  "warnings": [],
+  "initialPosition": [
+    5.78,
+    1.74,
+    8.17
+  ],
+  "lookChangesPosition": false,
+  "runtime": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "renderer": "WebGPU",
+    "rendering": {
+      "requested": "webgpu",
+      "backend": "WebGPU",
+      "deviceLossEvents": 0,
+      "fallbackReason": ""
+    },
+    "wasmBackend": "wasm",
+    "geometry": {
+      "backend": "wasm",
+      "transformedVertices": 270959,
+      "batches": 386,
+      "reason": ""
+    },
+    "qualityProfile": {
+      "mobile": true,
+      "economical": false,
+      "lightSlots": 4,
+      "shadowLights": 1,
+      "shadowSize": 512,
+      "sunShadowSize": 1024,
+      "maxDpr": 1,
+      "interactionDpr": 1,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 33.333333333333336,
+      "roomReflections": false,
+      "liveMirrors": false,
+      "reflectionStrategy": "shared-environment",
+      "physicsHz": 30,
+      "postprocessing": false
+    },
+    "softwareGpuForced": false
+  },
+  "acceptance": {
+    "allRoomsPassed": true,
+    "interactionDone": true,
+    "publicDayShot": true,
+    "pageErrorsClear": true,
+    "resourcesClear": true,
+    "webgpu": true,
+    "wasm": true
+  },
+  "screenshotCount": 42,
+  "routeCount": 9,
+  "navigation": {
+    "radiusM": 0.22,
+    "polygonCount": 677,
+    "shell": [
+      [
+        0,
+        0
+      ],
+      [
+        11.65,
+        0
+      ],
+      [
+        11.65,
+        4.4
+      ],
+      [
+        12.85,
+        4.4
+      ],
+      [
+        12.85,
+        9.35
+      ],
+      [
+        7.1,
+        9.35
+      ],
+      [
+        7.1,
+        8.45
+      ],
+      [
+        0,
+        8.45
+      ]
+    ]
+  }
+}

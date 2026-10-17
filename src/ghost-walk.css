@@ -24,6 +24,9 @@
   pointer-events: auto;
   cursor: grab;
 }
+.ghost-joystick:not(.ghost-joystick--floating) {
+  display: none;
+}
 .ghost-joystick:active {
   cursor: grabbing;
 }
@@ -90,6 +93,7 @@
   right: max(18px, env(safe-area-inset-right));
 }
 .ghost-joystick--floating {
+  pointer-events: none; /* Canvas owns captures; overlapping stick graphics must not steal another finger. */
   transform: translate(-50%, -50%);
   z-index: 1;
 }
@@ -120,7 +124,4 @@
     -webkit-backdrop-filter: none;
   }
   .ghost-joystick { background: #25332d99; }
-}
-@media (pointer: coarse) {
-  .ghost-joystick:not(.ghost-joystick--floating) { display: none; }
 }

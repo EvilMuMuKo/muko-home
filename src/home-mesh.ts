@@ -657,8 +657,9 @@ export function buildHomeArchitecture(
       "bronze",
     );
     g.add(glazing);
-    // A book and removable tray leave the real sill visible; no invented hollow structural storage.
-    box(
+    // R3 removable bay-life dressing owns the sill; older revisions retain their simple book/tray.
+    if (!bay.r3Use) {
+      box(
       g,
       m,
       0.24,
@@ -668,8 +669,8 @@ export function buildHomeArchitecture(
       sill + 0.013,
       cz + 0.22,
       "salonTimber",
-    );
-    box(
+      );
+      box(
       g,
       m,
       0.16,
@@ -679,7 +680,8 @@ export function buildHomeArchitecture(
       sill + 0.035,
       cz + 0.2,
       "clayFabric",
-    );
+      );
+    }
   }
 
   // A lightweight loop above the fixed worktop; one concentrated three-tier display remains on the wall.
