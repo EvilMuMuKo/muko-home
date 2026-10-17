@@ -1,0 +1,56 @@
+{
+  "platform": "Linux Chromium / SwiftShader, emulated touch viewport; not a physical phone benchmark",
+  "errors": [],
+  "performance": {
+    "renders": 9,
+    "pending": false,
+    "animating": false,
+    "frameMs": 33.20000000000073,
+    "quality": {
+      "mobile": true,
+      "economical": false,
+      "lightSlots": 4,
+      "shadowLights": 1,
+      "shadowSize": 512,
+      "sunShadowSize": 1024,
+      "maxDpr": 1.5,
+      "interactionDpr": 1.5,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 33.333333333333336,
+      "roomReflections": false,
+      "liveMirrors": false,
+      "reflectionStrategy": "shared-environment",
+      "physicsHz": 30,
+      "postprocessing": false
+    },
+    "geometry": {
+      "backend": "wasm",
+      "transformedVertices": 292826,
+      "batches": 351,
+      "reason": ""
+    },
+    "textures": {
+      "loaded": 12,
+      "requested": 12,
+      "failed": []
+    },
+    "batching": {
+      "sources": 553,
+      "batches": 87,
+      "reduced": 466
+    },
+    "clock": {
+      "steps": 0,
+      "collisions": 0
+    },
+    "finish": {
+      "kind": "native AA + shared PBR environment"
+    },
+    "drawCalls": 267,
+    "triangles": 153108,
+    "canvas": [
+      1266,
+      585
+    ]
+  }
+}

@@ -1,0 +1,373 @@
+:root {
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: #343a36;
+  font-synthesis: none;
+  background: #e6e2d8;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+  background: #edece5;
+  border-radius: 10px;
+  padding: 12px 15px;
+  touch-action: manipulation;
+}
+button:hover {
+  background: #fffdf5;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #8c7156;
+  outline-offset: 3px;
+}
+button.selected {
+  background: #566357;
+  color: #fff;
+}
+canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  display: block;
+}
+#topbar {
+  position: fixed;
+  top: max(18px, env(safe-area-inset-top));
+  left: max(22px, env(safe-area-inset-left));
+  right: max(22px, env(safe-area-inset-right));
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+}
+#topbar button {
+  pointer-events: auto;
+  background: #f5f3eae8;
+  box-shadow: 0 2px 16px #262c2212;
+}
+#location {
+  background: #f5f3eae8;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+#panel-toggle {
+  margin-left: auto;
+  font-size: 22px;
+  line-height: 20px;
+  width: 48px;
+  height: 44px;
+}
+#panel {
+  position: fixed;
+  right: max(22px, env(safe-area-inset-right));
+  top: 76px;
+  width: 302px;
+  max-height: calc(100dvh - 100px);
+  overflow: auto;
+  background: #f5f3ecf5;
+  border: 1px solid #ffffff80;
+  border-radius: 16px;
+  box-shadow: 0 10px 50px #20291f29;
+  padding: 19px;
+  z-index: 10;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 17px;
+}
+.panel-title button {
+  padding: 5px 10px;
+  background: none;
+  font-size: 25px;
+}
+#tabs {
+  display: flex;
+  gap: 6px;
+  margin: 15px 0 20px;
+}
+#tabs button {
+  flex: 1;
+  font-size: 13px;
+  padding: 10px;
+}
+#room-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+#room-list button {
+  text-align: left;
+  padding: 11px 9px;
+  font-size: 12px;
+  background: #e8e7df;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #899084;
+  margin: 0 0 12px;
+}
+.wide {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 12px;
+  text-align: left;
+}
+.subtle {
+  background: none;
+  border: 1px solid #d8d9ce;
+}
+#action-list button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 7px;
+  font-size: 12px;
+}
+#caption {
+  position: fixed;
+  left: max(25px, env(safe-area-inset-left));
+  bottom: max(24px, env(safe-area-inset-bottom));
+  pointer-events: none;
+  color: #fffdf2;
+  text-shadow: 0 2px 12px #17201988;
+}
+.wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.025em;
+  font-size: 36px;
+  line-height: 1.2;
+}
+.subline {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  margin-top: 6px;
+  opacity: 0.82;
+}
+.subline span {
+  margin-left: 20px;
+}
+#walk-hint {
+  position: fixed;
+  bottom: 29px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: #fffdf2;
+  text-shadow: 0 1px 5px #111;
+  pointer-events: none;
+  background: #28342b55;
+  border-radius: 20px;
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+#walk-hint span {
+  display: block;
+  text-align: center;
+  font-size: 9px;
+  opacity: 0.7;
+  margin-top: 3px;
+}
+#leave-walk {
+  position: fixed;
+  right: max(24px, env(safe-area-inset-right));
+  bottom: 24px;
+  font-size: 11px;
+  background: #f5f3eae8;
+}
+#interaction {
+  position: fixed;
+  left: 50%;
+  bottom: 94px;
+  transform: translateX(-50%);
+  background: #f5f3eaf5;
+  box-shadow: 0 3px 20px #0002;
+  font-size: 12px;
+  max-width: 280px;
+}
+.stick {
+  position: fixed;
+  width: 108px;
+  height: 108px;
+  border: 1px solid #fff8;
+  border-radius: 50%;
+  background: #f6f4ed22;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  z-index: 15;
+  box-shadow: inset 0 0 22px #fff1;
+}
+.stick.active {
+  opacity: 1;
+}
+.stick span {
+  position: absolute;
+  left: 32px;
+  top: 32px;
+  width: 42px;
+  height: 42px;
+  background: #f9f7efd9;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #25312730;
+}
+#loading,
+#fallback {
+  position: fixed;
+  inset: 0;
+  background: #e9e5db;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#loading p,
+#fallback p {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #7d847b;
+}
+.loading-line {
+  width: 140px;
+  height: 2px;
+  background: #c4c6b9;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.loading-line:after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 50%;
+  background: #75806a;
+  animation: load 1.5s ease-in-out infinite;
+}
+@keyframes load {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+#fallback[hidden],
+#loading[hidden],
+[hidden] {
+  display: none !important;
+}
+#toast {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f6f2e6;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+#toast.show {
+  opacity: 1;
+}
+@media (max-height: 500px) {
+  #topbar {
+    top: 12px;
+    left: 16px;
+    right: 16px;
+    gap: 8px;
+  }
+  #location {
+    padding: 10px 12px;
+    font-size: 11px;
+  }
+  #topbar button {
+    padding: 10px;
+  }
+  #panel {
+    top: 65px;
+    right: 15px;
+    width: 270px;
+    max-height: calc(100dvh - 78px);
+    padding: 15px;
+  }
+  #caption {
+    left: 19px;
+    bottom: 17px;
+  }
+  .wordmark {
+    font-size: 27px;
+  }
+  .subline {
+    font-size: 8px;
+  }
+  #walk-hint {
+    bottom: 18px;
+    font-size: 10px;
+  }
+  #leave-walk {
+    right: 18px;
+    bottom: 16px;
+    padding: 9px 11px;
+  }
+  #interaction {
+    bottom: 65px;
+    padding: 10px 15px;
+  }
+}
+@media (max-width: 550px) and (orientation: portrait) {
+  #location {
+    font-size: 11px;
+    padding: 12px;
+  }
+  #caption {
+    bottom: 26px;
+  }
+  #walk-hint {
+    bottom: 102px;
+    font-size: 10px;
+  }
+  #walk-hint span {
+    display: none;
+  }
+  #interaction {
+    bottom: 145px;
+  }
+  #panel {
+    width: calc(100% - 32px);
+    right: 16px;
+  }
+  #leave-walk {
+    bottom: 25px;
+  }
+  .wordmark {
+    font-size: 30px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-line:after {
+    animation: none;
+  }
+}

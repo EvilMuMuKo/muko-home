@@ -57,3 +57,7 @@ npm run benchmark
 启动兼容性：标准 `GPUAdapterInfo.isFallbackAdapter` 标记为软件适配器时直接使用 WebGL；GPU 初始化或预编译超时、设备丢失时进入一次有界恢复。普通网络/着色器验证错误仍正常报告。原生 GPU 与软件渲染分开验证，GitHub CI 使用四个分片执行完整测试范围。
 
 手机运行策略已进一步调整为稳定30Hz预算：手机默认不再暂停漫步去捕获整屋反射，使用共享环境与固定的房间平均SH探针；贴图分批上传，碰撞与互动减少重复扫描。固定手机DPR最高1.5，转向时不改变；桌面保留局部反射与实时镜面。具体取舍、复跑方法和真机边界见[手机漫步修订](docs/mobile-runtime.md)。
+
+## YAN’s Home · 独立初稿
+
+新户型源代码、设计任务书和逐房截图位于 [projects/yans-home](projects/yans-home/README.md)。其独立发布产物位于 `yans-home/`，合并并发布后可从 [YAN’s Home](https://evilmumuko.github.io/muko-home/yans-home/) 验收。原首页继续使用现有模型。
