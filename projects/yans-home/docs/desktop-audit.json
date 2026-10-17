@@ -1,36 +1,1120 @@
 {
-  "version": "1.1.0",
-  "platform": "Linux Chromium / SwiftShader, desktop 1280x800; not hardware performance evidence",
+  "platform": "Linux Chromium / SwiftShader; visual evidence, not a hardware FPS benchmark",
   "errors": [],
-  "textures": {
-    "loaded": 12,
-    "requested": 12,
-    "failed": []
+  "state": {
+    "ready": true,
+    "version": "1.2.0",
+    "name": "YAN’s Home",
+    "room": "guest",
+    "lighting": "day",
+    "walking": false,
+    "overview": true,
+    "position": [
+      15,
+      14,
+      17
+    ],
+    "renderer": "WebGL2",
+    "sticks": {
+      "move": {
+        "pointer": null,
+        "origin": [
+          0,
+          0
+        ],
+        "vector": [
+          0,
+          0
+        ],
+        "visible": false
+      },
+      "look": {
+        "pointer": null,
+        "origin": [
+          0,
+          0
+        ],
+        "vector": [
+          0,
+          0
+        ],
+        "visible": false
+      }
+    },
+    "actions": [
+      {
+        "id": "entry-door",
+        "name": "入户门",
+        "value": 1,
+        "target": 1,
+        "room": "entry"
+      },
+      {
+        "id": "guest-door",
+        "name": "南次卧新门",
+        "value": 1,
+        "target": 1,
+        "room": "guest"
+      },
+      {
+        "id": "utility-door",
+        "name": "设备平台门",
+        "value": 1,
+        "target": 1,
+        "room": "utility"
+      },
+      {
+        "id": "kitchen-door",
+        "name": "厨房玻璃门",
+        "value": 1,
+        "target": 1,
+        "room": "kitchen"
+      },
+      {
+        "id": "gaming-door",
+        "name": "游戏室门",
+        "value": 1,
+        "target": 1,
+        "room": "gaming"
+      },
+      {
+        "id": "bath-door",
+        "name": "公卫门",
+        "value": 1,
+        "target": 1,
+        "room": "bath"
+      },
+      {
+        "id": "ensuite-door",
+        "name": "主卫门",
+        "value": 1,
+        "target": 1,
+        "room": "ensuite"
+      },
+      {
+        "id": "master-door",
+        "name": "主卧套间门",
+        "value": 1,
+        "target": 1,
+        "room": "master"
+      },
+      {
+        "id": "lobby-bike-wall",
+        "name": "电梯厅收纳柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "entry-niche-shoe-0",
+        "name": "玄关鞋柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "entry-niche-shoe-1",
+        "name": "玄关鞋柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "entry-niche-upper-0",
+        "name": "玄关顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "entry-niche-upper-1",
+        "name": "玄关顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "entry"
+      },
+      {
+        "id": "lobby-low-cabinet-0",
+        "name": "电梯厅矮柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "lobby-low-cabinet-1",
+        "name": "电梯厅矮柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "coffee-upper-0",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "coffee-upper-2",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "coffee-upper-3",
+        "name": "咖啡通顶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "dining"
+      },
+      {
+        "id": "living-library-1",
+        "name": "客厅通顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-library1",
+        "name": "客厅通顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "master-wardrobe-0",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-1",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-2",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-wardrobe-3",
+        "name": "主卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-window-seat-drawer-0",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-window-seat-drawer-1",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "master-window-seat-drawer-2",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "master"
+      },
+      {
+        "id": "guest-window-seat-drawer-0",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "guest-window-seat-drawer-1",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "guest-window-seat-drawer-2",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "guest-window-seat-drawer-3",
+        "name": "窗边收纳抽屉",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "gaming-library-0",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-library-1",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-library-2",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-library-3",
+        "name": "游戏室书物柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "kitchen-upper-0",
+        "name": "厨房上柜",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "fridge-1",
+        "name": "冰箱门",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "fridge1",
+        "name": "冰箱门",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "bath-vanity-mirror--1",
+        "name": "镜柜",
+        "value": 0,
+        "target": 0,
+        "room": "bath"
+      },
+      {
+        "id": "bath-vanity-mirror-1",
+        "name": "镜柜",
+        "value": 0,
+        "target": 0,
+        "room": "bath"
+      },
+      {
+        "id": "suite-vanity-mirror--1",
+        "name": "镜柜",
+        "value": 0,
+        "target": 0,
+        "room": "ensuite"
+      },
+      {
+        "id": "suite-vanity-mirror-1",
+        "name": "镜柜",
+        "value": 0,
+        "target": 0,
+        "room": "ensuite"
+      },
+      {
+        "id": "laundry-cabinet-0",
+        "name": "洗烘顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "balcony"
+      },
+      {
+        "id": "living-back-0",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-1-lower",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-1-upper",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-2-lower",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-2-upper",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-3",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "living-back-4",
+        "name": "沙发后浅柜与展示凹位",
+        "value": 0,
+        "target": 0,
+        "room": "living"
+      },
+      {
+        "id": "guest-east-wardrobe-0",
+        "name": "南次卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "guest-east-wardrobe-1",
+        "name": "南次卧通顶衣柜",
+        "value": 0,
+        "target": 0,
+        "room": "guest"
+      },
+      {
+        "id": "lobby-upper-0",
+        "name": "电梯厅上柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "lobby-upper-1",
+        "name": "电梯厅上柜",
+        "value": 0,
+        "target": 0,
+        "room": "lift-lobby"
+      },
+      {
+        "id": "gaming-upper-0",
+        "name": "电脑桌实体墙段上柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-upper-1",
+        "name": "电脑桌实体墙段上柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "gaming-upper-2",
+        "name": "电脑桌实体墙段上柜",
+        "value": 0,
+        "target": 0,
+        "room": "gaming"
+      },
+      {
+        "id": "fridge-upper-0",
+        "name": "冰箱通风缝上方顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "kitchen-upper-south-0",
+        "name": "烟机旁上柜",
+        "value": 0,
+        "target": 0,
+        "room": "kitchen"
+      },
+      {
+        "id": "bath-wc-upper-0",
+        "name": "公卫马桶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "bath"
+      },
+      {
+        "id": "suite-wc-upper-0",
+        "name": "主卫马桶上柜",
+        "value": 0,
+        "target": 0,
+        "room": "ensuite"
+      },
+      {
+        "id": "bath-vanity-upper-0",
+        "name": "公卫镜柜顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "bath"
+      },
+      {
+        "id": "suite-vanity-upper-0",
+        "name": "主卫镜柜顶柜",
+        "value": 0,
+        "target": 0,
+        "room": "ensuite"
+      }
+    ]
   },
-  "geometry": {
-    "backend": "wasm",
-    "transformedVertices": 225051,
-    "batches": 272,
-    "reason": ""
+  "performance": {
+    "renders": 13,
+    "pending": false,
+    "animating": false,
+    "frameMs": 16.6420000000071,
+    "quality": {
+      "mobile": false,
+      "economical": false,
+      "lightSlots": 12,
+      "shadowLights": 2,
+      "shadowSize": 1024,
+      "sunShadowSize": 2048,
+      "maxDpr": 1,
+      "interactionDpr": 1,
+      "resolutionPolicy": "stable_per_profile",
+      "targetFrameMs": 16.666666666666668,
+      "roomReflections": false,
+      "liveMirrors": false,
+      "reflectionStrategy": "shared-environment",
+      "physicsHz": 60,
+      "postprocessing": true
+    },
+    "geometry": {
+      "backend": "wasm",
+      "transformedVertices": 386892,
+      "batches": 453,
+      "reason": ""
+    },
+    "textures": {
+      "loaded": 12,
+      "requested": 12,
+      "failed": []
+    },
+    "batching": {
+      "sources": 685,
+      "batches": 104,
+      "reduced": 581
+    },
+    "contact": {
+      "floors": 14,
+      "vertices": 7880,
+      "maximumDarkening": 0.24,
+      "radiusMetres": 0.3,
+      "elapsedMs": 19.09999999962747,
+      "dynamicExcluded": true
+    },
+    "lighting": {
+      "slots": 12,
+      "shadowLights": 2,
+      "localIntensity": 8
+    },
+    "clock": {
+      "steps": 0,
+      "collisions": 0
+    },
+    "finish": {
+      "kind": "4xMSAA + GTAO",
+      "rayTracing": false
+    },
+    "drawCalls": 1,
+    "triangles": 1,
+    "canvas": [
+      1280,
+      800
+    ]
   },
-  "batching": {
-    "sources": 533,
-    "batches": 85,
-    "reduced": 448
-  },
-  "screenshots": [
-    "lift-lobby",
-    "entry",
-    "dining",
-    "living",
-    "guest",
-    "master",
-    "gaming",
-    "kitchen",
-    "bath",
-    "ensuite",
-    "balcony",
-    "utility",
-    "overview"
-  ]
+  "bounds": {
+    "lobby-bike-wall": {
+      "min": [
+        3.2489999866485597,
+        4.76837147544984e-9,
+        3.6399999761581423
+      ],
+      "max": [
+        3.8500000041723252,
+        2.7599999982118604,
+        5.840000023841858
+      ]
+    },
+    "entry-niche": {
+      "min": [
+        1.4999999976158143,
+        4.76837147544984e-9,
+        7.0339999997839335
+      ],
+      "max": [
+        2.870000002384186,
+        2.7599999952316283,
+        7.692499990463257
+      ]
+    },
+    "lobby-low-cabinet": {
+      "min": [
+        1.7420000022649762,
+        -1.4305114759416426e-8,
+        4.01800000667572
+      ],
+      "max": [
+        2.088000000104308,
+        0.8025000000745057,
+        4.98199999332428
+      ]
+    },
+    "coffee-island": {
+      "min": [
+        3.9775000071525577,
+        4.76837147544984e-9,
+        4.334999942779541
+      ],
+      "max": [
+        4.773000000268222,
+        2.7599999952316283,
+        6.465000057220459
+      ]
+    },
+    "coffee-upper": {
+      "min": [
+        4.004999997615815,
+        1.6200000071525573,
+        4.360000009536743
+      ],
+      "max": [
+        4.393000000104309,
+        2.7599999928474426,
+        6.439999990463257
+      ]
+    },
+    "dining-table": {
+      "min": [
+        5.6,
+        1.0728836041806744e-8,
+        5.524999988079071
+      ],
+      "max": [
+        7.1,
+        0.9449999988079071,
+        6.375000011920929
+      ]
+    },
+    "dining-chair-1": {
+      "min": [
+        5.790000009536743,
+        0.017584113182373656,
+        4.899999999850988
+      ],
+      "max": [
+        6.309999990463257,
+        0.8100000005960465,
+        5.379999994635582
+      ]
+    },
+    "dining-chair-2": {
+      "min": [
+        6.3900000095367435,
+        0.017584113182373656,
+        6.520000005364418
+      ],
+      "max": [
+        6.909999990463257,
+        0.8100000005960465,
+        7.0000000001490115
+      ]
+    },
+    "living-library": {
+      "min": [
+        3.0000000065565104,
+        4.76837147544984e-9,
+        7.349999952316285
+      ],
+      "max": [
+        3.4725000001862645,
+        2.7599999952316283,
+        10.750000047683717
+      ]
+    },
+    "central-sofa": {
+      "min": [
+        5.429999998807907,
+        0.11499999910593034,
+        7.915000000596047
+      ],
+      "max": [
+        6.360000008344651,
+        0.843094074883187,
+        10.444999999403953
+      ]
+    },
+    "sofa-side": {
+      "min": [
+        5.480000001192093,
+        1.1920928966180355e-9,
+        7.360000001192093
+      ],
+      "max": [
+        5.919999998807907,
+        0.47750000089406963,
+        7.799999998807907
+      ]
+    },
+    "living-lamp": {
+      "min": [
+        7.1499999999999995,
+        0.005499999813735484,
+        10.15
+      ],
+      "max": [
+        7.55,
+        1.55,
+        10.549999999999999
+      ]
+    },
+    "living-plant": {
+      "min": [
+        3.1720294491976406,
+        0.005000004172325129,
+        9.963782191437737
+      ],
+      "max": [
+        4.034027087405468,
+        1.1868058466899754,
+        10.826317548137347
+      ]
+    },
+    "master-wardrobe": {
+      "min": [
+        9.150000011920929,
+        4.76837147544984e-9,
+        7.089999988079071
+      ],
+      "max": [
+        11.74999998807907,
+        2.7599999952316283,
+        7.720000000052154
+      ]
+    },
+    "master-bed": {
+      "min": [
+        8.270000001341105,
+        0.009999978542327925,
+        8.309999990463258
+      ],
+      "max": [
+        10.40999994277954,
+        1.0900000214576722,
+        10.290000009536744
+      ]
+    },
+    "master-side-1": {
+      "min": [
+        8.149999998211861,
+        6.556510945276983e-9,
+        7.865000002980231
+      ],
+      "max": [
+        8.49000000178814,
+        0.45750000089406967,
+        8.214999997019767
+      ]
+    },
+    "master-side-2": {
+      "min": [
+        8.149999998211861,
+        6.556510945276983e-9,
+        10.375000002980233
+      ],
+      "max": [
+        8.49000000178814,
+        0.45750000089406967,
+        10.724999997019768
+      ]
+    },
+    "master-window-seat": {
+      "min": [
+        9.649999976158142,
+        0.027499999813735486,
+        10.899999995827676
+      ],
+      "max": [
+        11.350000023841858,
+        0.45000000178813937,
+        11.384000000052156
+      ]
+    },
+    "guest-bed": {
+      "min": [
+        0.0800000190734863,
+        0.009999978542327925,
+        8.410000001341103
+      ],
+      "max": [
+        1.6349999996125697,
+        1.1225000001862646,
+        10.469999980926513
+      ]
+    },
+    "guest-window-seat": {
+      "min": [
+        0.19999999989569184,
+        0.027499999813735486,
+        11.079999997913838
+      ],
+      "max": [
+        2.3000000001043084,
+        0.45000000178813937,
+        11.364000000052156
+      ]
+    },
+    "gaming-desk": {
+      "min": [
+        9.045,
+        0.004499999925494193,
+        0.5200000017881393
+      ],
+      "max": [
+        9.795,
+        2.2300000190734863,
+        3.3799999982118605
+      ]
+    },
+    "gaming-chair": {
+      "min": [
+        8.135,
+        0.010000000000000002,
+        2.2225000001490116
+      ],
+      "max": [
+        8.711524758424984,
+        1.1849999976158143,
+        2.877499999850988
+      ]
+    },
+    "gaming-library": {
+      "min": [
+        6.8499999940395355,
+        4.76837147544984e-9,
+        0.6250000059604646
+      ],
+      "max": [
+        7.168000000104309,
+        2.7599999952316283,
+        3.1749999940395353
+      ]
+    },
+    "kitchen-west": {
+      "min": [
+        3.9875000095367428,
+        0.06999999403953555,
+        1.7050000023841858
+      ],
+      "max": [
+        4.66300000026822,
+        1.2706096172332764,
+        3.3349999976158142
+      ]
+    },
+    "kitchen-east": {
+      "min": [
+        6.056999999731779,
+        0.06999999403953555,
+        1.7250000429153443
+      ],
+      "max": [
+        6.732499990463257,
+        2.574999988079071,
+        3.814999957084656
+      ]
+    },
+    "kitchen-upper": {
+      "min": [
+        6.271999999895692,
+        1.7100000238418578,
+        1.7500000059604646
+      ],
+      "max": [
+        6.6900000029802325,
+        2.759999976158142,
+        2.4499999940395356
+      ]
+    },
+    "fridge": {
+      "min": [
+        4.030000005960464,
+        -2.384185793236071e-8,
+        3.460000014305115
+      ],
+      "max": [
+        4.808999999552965,
+        1.950000023841858,
+        4.239999985694886
+      ]
+    },
+    "bath-vanity": {
+      "min": [
+        8.189000000059606,
+        0.2950000047683716,
+        3.6049999997019766
+      ],
+      "max": [
+        9.110999999940395,
+        2.089999998807907,
+        3.9899999999999998
+      ]
+    },
+    "bath-wc": {
+      "min": [
+        9.415,
+        0.020000000000000018,
+        3.6499999964237215
+      ],
+      "max": [
+        9.825,
+        0.730000000052154,
+        4.319999999999999
+      ]
+    },
+    "bath-shower": {
+      "min": [
+        10.027499999813735,
+        -2.3841857821338408e-8,
+        3.712499999813736
+      ],
+      "max": [
+        11.140000011920929,
+        2.299999976158142,
+        5.087500000186265
+      ]
+    },
+    "suite-vanity": {
+      "min": [
+        9.274000000059605,
+        0.2950000047683716,
+        5.33100000038743
+      ],
+      "max": [
+        10.125999999940394,
+        2.089999998807907,
+        5.699999999999999
+      ]
+    },
+    "suite-wc": {
+      "min": [
+        9.475,
+        0.020000000000000018,
+        6.300000000000001
+      ],
+      "max": [
+        9.885,
+        0.730000000052154,
+        6.9700000035762795
+      ]
+    },
+    "suite-shower": {
+      "min": [
+        10.127499999813734,
+        -2.3841857821338408e-8,
+        5.3624999998137355
+      ],
+      "max": [
+        11.099999989271163,
+        2.299999976158142,
+        6.937500000186265
+      ]
+    },
+    "laundry": {
+      "min": [
+        3.2599999964237214,
+        -2.622604367008563e-8,
+        11.549999985694885
+      ],
+      "max": [
+        3.985000000149012,
+        1.8200000262260438,
+        12.270000014305115
+      ]
+    },
+    "laundry-cabinet": {
+      "min": [
+        3.2399999856948853,
+        2.0199999952316285,
+        11.520000004768372
+      ],
+      "max": [
+        3.9780000001043083,
+        2.7600000047683717,
+        12.279999995231629
+      ]
+    },
+    "balcony-plant": {
+      "min": [
+        7.022029449197641,
+        0.005000004172325129,
+        11.563782191437737
+      ],
+      "max": [
+        7.884027087405467,
+        1.1868058466899754,
+        12.426317548137346
+      ]
+    },
+    "living-back": {
+      "min": [
+        7.551999999895691,
+        4.76837147544984e-9,
+        7.249999998807907
+      ],
+      "max": [
+        7.870000005960464,
+        2.7599999952316283,
+        10.050000001192092
+      ]
+    },
+    "guest-east-wardrobe": {
+      "min": [
+        2.2699999999478457,
+        4.76837147544984e-9,
+        8.65000001192093
+      ],
+      "max": [
+        2.875000005960465,
+        2.7599999952316283,
+        10.449999988079071
+      ]
+    },
+    "lobby-upper": {
+      "min": [
+        1.7500000035762784,
+        2.050000010728836,
+        4.025000002980232
+      ],
+      "max": [
+        2.088000000104308,
+        2.7599999892711637,
+        4.974999997019768
+      ]
+    },
+    "gaming-upper": {
+      "min": [
+        9.52199999989569,
+        2.2999999958276747,
+        1.540000014305115
+      ],
+      "max": [
+        9.799999995231628,
+        2.760000004172325,
+        3.3199999856948854
+      ]
+    },
+    "fridge-upper": {
+      "min": [
+        4.079999988079071,
+        2.0799999964237212,
+        3.460000014305115
+      ],
+      "max": [
+        4.698000000104308,
+        2.7600000035762786,
+        4.239999985694886
+      ]
+    },
+    "kitchen-upper-south": {
+      "min": [
+        6.271999999895692,
+        1.7100000238418578,
+        3.300000009536743
+      ],
+      "max": [
+        6.6900000029802325,
+        2.759999976158142,
+        3.819999990463257
+      ]
+    },
+    "bath-wc-upper": {
+      "min": [
+        9.309999997615813,
+        1.5800000262260436,
+        3.6499999964237215
+      ],
+      "max": [
+        9.930000002384185,
+        2.7599999737739562,
+        3.848000000104308
+      ]
+    },
+    "suite-wc-upper": {
+      "min": [
+        9.369999997615814,
+        1.5800000262260436,
+        6.771999999895692
+      ],
+      "max": [
+        9.990000002384186,
+        2.7599999737739562,
+        6.970000003576279
+      ]
+    },
+    "bath-vanity-upper": {
+      "min": [
+        8.224999988079071,
+        2.1200000071525573,
+        3.6400000017881395
+      ],
+      "max": [
+        9.07500001192093,
+        2.7599999928474426,
+        3.818000000104308
+      ]
+    },
+    "suite-vanity-upper": {
+      "min": [
+        9.310000014305114,
+        2.1200000071525573,
+        5.350000001788139
+      ],
+      "max": [
+        10.089999985694885,
+        2.7599999928474426,
+        5.528000000104308
+      ]
+    },
+    "utility-ac": {
+      "min": [
+        5.972499996423721,
+        -1.1920928966180355e-8,
+        0.35
+      ],
+      "max": [
+        6.527500003576279,
+        0.850000011920929,
+        1.35
+      ]
+    }
+  }
 }

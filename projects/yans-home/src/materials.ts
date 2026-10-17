@@ -10,23 +10,25 @@ function surface(color: string, roughness = 0.85, metalness = 0) {
 }
 export function createMaterials(): Materials {
   const m: Materials = {
-    wall: surface("#e6e2d8"),
-    paint: surface("#e0dcd2", 0.72),
-    pegboard: surface("#889185", 0.8),
-    oak: surface("#cbb99b", 0.76),
-    darkwood: surface("#715c47"),
-    floor: surface("#d2c3aa", 0.78),
-    linen: surface("#d1c4ad", 0.98),
-    clay: surface("#b19c84"),
-    sage: surface("#7c8982"),
-    stone: surface("#d7d0c2", 0.66),
-    stoneFloor: surface("#c6c2b7", 0.87),
-    tileFloor: surface("#b6b8b0", 0.65),
-    tile: surface("#d7dad2", 0.5),
+    wall: surface("#d3cfc7"),
+    paint: surface("#91867c", 0.74),
+    charcoal: surface("#433e39", 0.8),
+    grout: surface("#9e9990", 0.9),
+    pegboard: surface("#82786e", 0.8),
+    oak: surface("#82705e", 0.76),
+    darkwood: surface("#51473e"),
+    floor: surface("#9c8a76", 0.78),
+    linen: surface("#ddd6cd", 0.98),
+    clay: surface("#a49b93"),
+    sage: surface("#68625c"),
+    stone: surface("#d1cbc1", 0.66),
+    stoneFloor: surface("#c6c1b8", 0.87),
+    tileFloor: surface("#afa9a0", 0.65),
+    tile: surface("#c3bdb4", 0.5),
     metal: surface("#393e3e", 0.4, 0.65),
     steel: surface("#aaaead", 0.28, 0.76),
-    bronze: surface("#a6936d", 0.4, 0.65),
-    black: surface("#252b2b", 0.5),
+    bronze: surface("#514b44", 0.4, 0.65),
+    black: surface("#292827", 0.5),
     paper: surface("#f1e9d5", 0.94),
     ceramic: surface("#e9e5d9", 0.28),
     leaf: surface("#526c52"),
@@ -78,12 +80,33 @@ export function createMaterials(): Materials {
     m[key].bumpScale = 0.0005;
   }
 
+  const washCanvas = document.createElement("canvas");
+  washCanvas.width = 8;
+  washCanvas.height = 128;
+  const washContext = washCanvas.getContext("2d")!;
+  const washGradient = washContext.createLinearGradient(0, 0, 0, 128);
+  washGradient.addColorStop(0, "rgba(255,226,185,.64)");
+  washGradient.addColorStop(0.3, "rgba(255,226,185,.21)");
+  washGradient.addColorStop(1, "rgba(255,226,185,0)");
+  washContext.fillStyle = washGradient;
+  washContext.fillRect(0, 0, 8, 128);
+  m.coveWash = surface("#fff0d8");
+  m.coveWash.map = new T.CanvasTexture(washCanvas);
+  m.coveWash.map.colorSpace = T.SRGBColorSpace;
+  m.coveWash.emissive.set("#ffe1af");
+  m.coveWash.emissiveIntensity = 0.28;
+  m.coveWash.transparent = true;
+  m.coveWash.depthWrite = false;
+  for (const name of ["floor", "stoneFloor", "tileFloor"]) {
+    m[name + "Contact"] = m[name].clone();
+    m[name + "Contact"].vertexColors = true;
+  }
   return m;
 }
 export async function hydrateMaterials(m: Materials, request: () => void) {
   const families = [
     ["oak", ["oak", "darkwood"]],
-    ["floor", ["floor"]],
+    ["floor", ["floor", "floorContact"]],
     ["linen", ["linen", "clay", "sage", "paper"]],
     ["plaster", ["wall", "paint"]],
   ] as const;

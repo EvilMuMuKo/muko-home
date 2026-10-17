@@ -1,8 +1,8 @@
 :root {
   font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif;
-  color: #343a36;
+  color: #3f3a36;
   font-synthesis: none;
-  background: #e6e2d8;
+  background: #e4dfd7;
 }
 * {
   box-sizing: border-box;
@@ -34,7 +34,7 @@ a:focus-visible {
   outline-offset: 3px;
 }
 button.selected {
-  background: #566357;
+  background: #64594f;
   color: #fff;
 }
 canvas {
@@ -123,7 +123,7 @@ canvas {
 .eyebrow {
   font-size: 10px;
   letter-spacing: 0.18em;
-  color: #899084;
+  color: #8c8075;
   margin: 0 0 12px;
 }
 .wide {
@@ -246,12 +246,12 @@ canvas {
 #fallback p {
   font-size: 12px;
   letter-spacing: 0.08em;
-  color: #7d847b;
+  color: #7e756e;
 }
 .loading-line {
   width: 140px;
   height: 2px;
-  background: #c4c6b9;
+  background: #c6bfb7;
   margin-top: 20px;
   overflow: hidden;
 }
@@ -260,7 +260,7 @@ canvas {
   display: block;
   height: 100%;
   width: 50%;
-  background: #75806a;
+  background: #7d7064;
   animation: load 1.5s ease-in-out infinite;
 }
 @keyframes load {
