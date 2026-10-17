@@ -683,6 +683,7 @@ export function buildHomeArchitecture(
   }
 
   // A lightweight loop above the fixed worktop; one concentrated three-tier display remains on the wall.
+  if (model.homeDesign?.suspendedBarRack !== false) {
   const rack = group("home:bar-suspended-loop", ["bar"]);
   const xmin = 0.58,
     xmax = 4.12,
@@ -742,6 +743,7 @@ export function buildHomeArchitecture(
   for (const z of [7.93, 7.97])
     box(rack, m, 0.7, 0.012, 0.009, 2.31, 2.422, z, "bronze", 0.002);
 
+  }
   const hatchConfig = model.homeDesign?.hatch || {};
   if (hatchConfig.enabled !== false) {
   const hx =
@@ -1046,6 +1048,12 @@ export function applyHomeMotion(
     if (config?.sequence?.tablePath?.length)
       followPath(config.sequence.tablePath, move, group.position);
     else group.position.lerpVectors(parked, target, move);
+    // R2 parks the real folded furniture above a cabinet plinth, then lowers it outside.
+    if (model?.homeDesign?.r2Revision) {
+      const cab=model.objects.find((o:any)=>o.id==='r2-living-deep');
+      const clearZ=cab.z-cab.d/2-.18;
+      group.position.y=parked.y*(1-smooth((clearZ-group.position.z)/.25));
+    }
     const useRotation = config?.usePositions?.table?.rotation ?? 0;
     group.rotation.y = THREE.MathUtils.lerp(
       -THREE.MathUtils.degToRad(object.rotation || 0),
@@ -1088,6 +1096,11 @@ export function applyHomeMotion(
         THREE.MathUtils.lerp(path[segment][1], path[segment + 1][1], t),
       );
     } else group.position.lerpVectors(parked, vector(use, parked), move);
+    if (model?.homeDesign?.r2Revision) {
+      const cab=model.objects.find((o:any)=>o.id==='r2-living-deep');
+      const clearZ=cab.z-cab.d/2-.18;
+      group.position.y=parked.y*(1-smooth((clearZ-group.position.z)/.25));
+    }
     if(path?.length) group.position.x += ((use?.x ?? path.at(-1)[0])-path.at(-1)[0])*tuck;
     const retreat =
       (state.diningRetreat || 0) *
@@ -1100,7 +1113,7 @@ export function applyHomeMotion(
     group.rotation.y = THREE.MathUtils.lerp(
       -THREE.MathUtils.degToRad(object.rotation || 0),
       -THREE.MathUtils.degToRad(rotation),
-      move,
+      model?.homeDesign?.r2Revision ? smooth((p-.89)/.045) : move,
     );
     seat.rotation.x = ((1 - unfold) * Math.PI) / 2;
     legs[0].rotation.x = (1 - unfold) * -Math.atan2(0.34,0.425);

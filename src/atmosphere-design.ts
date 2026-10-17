@@ -330,7 +330,7 @@ export function wallColour(room: string | undefined, wallId: string) {
     return wallId === "guest-west"
       ? roomPalette.cinemaFront
       : roomPalette.cinema;
-  if (room === "bar" && wallId === "north") return roomPalette.clay;
+  if (room === "bar" && wallId === "north") return "#d2c2aa";
   if (room === "bar" && wallId === "west-left") return roomPalette.moss;
   if (room === "master") return wallId === "east" ? roomPalette.masterSage : roomPalette.masterMushroom;
   if (room === "living")

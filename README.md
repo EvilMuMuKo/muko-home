@@ -16,9 +16,11 @@ npm test
 npm run benchmark
 ```
 
-`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
+当前版本为 R2 / 12.0.0，见 [R2设计与边界](docs/r2-design.md) 和 [本轮验证](docs/r2/finalr2-validation.json)。
 
-`npm run build` 生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
+`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/r2-design.ts` 在历史覆盖层上生成现行R2方案，`src/final-design.ts` 在构建时合成唯一 `src/generated-layout.json`；`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
+
+`npm run build` 先导出最终模型、生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
 
 本地 Playwright 默认使用 `/usr/bin/chromium`，可通过 `CHROMIUM_PATH` 指定；CI 使用 Playwright 安装的浏览器。
 
@@ -26,7 +28,7 @@ npm run benchmark
 
 - 横屏全画幅展示，初始位置在入户门内侧。短暂显示 welcome to MuKo’s home 与彩带，遵循减少动态效果设置；右上角打开或隐藏控制面板。
 - **空间**：选择房间、用下拉框选择镜头，支持全屋概览、俯视/透视、复位和 PNG 导出。
-- **漫游**：打开网站即从入户处进入。左侧加大摇杆或 WASD / 方向键移动，右侧摇杆或 IJKL 转头；鼠标拖动仍可辅助观察。两只摇杆可同时使用，松手、失焦或取消触控后停止。靠近并面向物件后出现一个对应交互按钮。Esc 或左上按钮退出至展示视角。墙、窗台、门扇、柱体及主要家具具有实时碰撞，门打开后按真实门洞通行；人物被限制在模型地面内。碰撞使用概念模型的圆形身体占地与可见网格包络，不替代现场通行或人体活动验收。
+- **漫游**：打开网站即从入户处进入。触屏左半屏随碰出现移动摇杆、右半屏随碰出现视角摇杆，WASD / 方向键移动、IJKL 转头；鼠标拖动仍可辅助观察。两只摇杆可同时使用，松手、失焦或取消触控后停止。靠近并面向物件后出现一个对应交互按钮。Esc 或左上按钮退出至展示视角。墙、窗台、门扇、柱体及主要家具具有实时碰撞，门打开后按真实门洞通行；人物被限制在模型地面内。碰撞使用概念模型的圆形身体占地与可见网格包络，不替代现场通行或人体活动验收。
 - **日夜**：仅保留日间、夜间、观影三档，不堆叠近似预设。日间定向阳光按窗洞与全高墙/屋顶遮光；缺少现场条件，不作为实测日照结论。
 - **动作**：按当前房间显示抽拉台面、收纳餐桌、客床、柜门、家电门或工位退椅等相关动作。动线、碰撞演示和单独收纳目录不出现在客户页面。
 - 入户岛台保留同柱宽；抽拉板采用用户接受的略窄规格，收进柜内；客厅采用锁轮移动电视与可拼合/分离的两个单人沙发模块，没有固定茶几；两间卧室有外凸飘窗。所有空间来自同一个模型。
@@ -38,7 +40,7 @@ npm run benchmark
 
 [纹理来源及许可](licenses/polyhaven-textures.md) · [V10 实施说明](docs/life-v10.md)
 
-旧版设计说明保留于 `docs/` 供追溯，不代表 V10 当前柜数、容量或布局。
+旧版设计说明保留于 `docs/` 供追溯，不代表R2当前柜数、容量或布局；以R2及有效决定索引为准。
 
 渲染主体由锁定的 Three.js 0.186.0、TypeScript 与 WASM 几何内核组成；不因本次调整升级依赖。材质为本地 PBR 贴图与独立的程序微表面，钢与墙面不共用肌理。固定画质档在转向和静止时维持相同像素尺寸；高性能桌面 WebGPU 使用 4x MSAA、空间 SMAA 及受限泛光，移动端保留原生抗锯齿，继续不加载全屏 AO/Bloom。
 

@@ -8,7 +8,7 @@ async function ready(page) {
   );
 }
 
-test("V11 household controls expose version 11 and complete reversible travel", async ({
+test("R2 household controls expose version 12 and complete reversible travel", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -24,10 +24,10 @@ test("V11 household controls expose version 11 and complete reversible travel", 
       performance: api.getPerformance(),
     };
   });
-  expect(initial.state.version).toBe("11.0.0");
+  expect(initial.state.version).toBe("12.0.0");
   expect(initial.design.version).toBe(1);
   expect(initial.design.selectedLivingLayout).toBe("mobile-tv-flexible");
-  expect(initial.model.version).toBe("11.0.0");
+  expect(initial.model.version).toBe("12.0.0");
   expect(initial.model.homeDesign.version).toBe(initial.design.version);
   expect(initial.state.renderer).toBe("WebGL2");
   expect(initial.performance.drawCalls).toBeGreaterThan(0);
@@ -53,8 +53,8 @@ test("V11 household controls expose version 11 and complete reversible travel", 
     type: "folding_table",
     room: "living",
     shape: "rectangle",
-    x: 11.0,
-    z: 9.06,
+    x: 8.64,
+    z: 8.82,
     w: 1.1,
     d: 0.7,
     h: 0.74,
@@ -73,8 +73,8 @@ test("V11 household controls expose version 11 and complete reversible travel", 
       expect.objectContaining({
         id: "dining-chair-left",
         room: "living",
-        x: 8.27,
-        z: 8.78,
+        x: 8.64,
+        z: 9.0,
         w: 0.5,
         d: 0.55,
         h: 0.88,
@@ -83,8 +83,8 @@ test("V11 household controls expose version 11 and complete reversible travel", 
       expect.objectContaining({
         id: "dining-chair-right",
         room: "living",
-        x: 8.27,
-        z: 9.03,
+        x: 8.64,
+        z: 9.16,
         w: 0.5,
         d: 0.55,
         h: 0.88,
@@ -114,25 +114,18 @@ test("V11 household controls expose version 11 and complete reversible travel", 
     recordsUnderWindow: true,
   });
   const fridge = initial.model.objects.find((object) => object.id === "kitchen-fridge");
-  const kitchen = initial.model.rooms.find((room) => room.id === "kitchen");
   expect(fridge).toMatchObject({
     room: "hall",
-    x: initial.design.spatialRevision.selectedKitchenSideX + 0.5,
-    z: 3.7,
+    x: 3.4,
+    z: 3.935,
     w: 0.91,
     d: 0.75,
-    rotation: 90,
-    accessFace: "+x",
+    rotation: 180,
+    accessFace: "+z",
   });
-  expect(initial.design.lifeRevision.kitchen.externalFridge).toBe(true);
-  const fridgeAngle = (fridge.rotation * Math.PI) / 180;
-  const fridgeHalfX =
-    (Math.abs(Math.cos(fridgeAngle)) * fridge.w +
-      Math.abs(Math.sin(fridgeAngle)) * fridge.d) /
-    2;
-  expect(fridge.x - fridgeHalfX).toBeGreaterThan(
-    Math.max(...kitchen.polygon.map((point) => point[0])),
-  );
+  expect(initial.design.lifeRevision.kitchen.externalFridge).toBe(false);
+  expect(fridge.x + fridge.w / 2).toBeLessThanOrEqual(3.855);
+  expect(fridge.z - fridge.d / 2).toBeCloseTo(3.56, 2);
   expect(initial.model.objects.find((object) => object.id === "living-tv")?.type).toBe("mobile_tv");
   expect(initial.design.mobileTV.poses).toHaveLength(2);
   const sofa = initial.model.objects.find((object) => object.id === "living-sofa");
@@ -215,7 +208,7 @@ test("V11 household controls expose version 11 and complete reversible travel", 
       );
       const closed = initial.design.motionBounds.find((item) => item.id === "kitchen-dishwasher");
       expect(open.max).not.toEqual(closed.max);
-      expect(open.max[2] - closed.max[2]).toBeGreaterThan(0.5);
+      expect(closed.min[2] - open.min[2]).toBeGreaterThan(0.5);
     }
     await page.evaluate((setter) => window.homePresentation[setter](false), transition.setter);
     await page.waitForFunction(
@@ -292,7 +285,7 @@ test("V10 operating states remain renderable and capture clean screenshots", asy
       performance: window.homePresentation.getPerformance(),
       camera: window.homePresentation.getCamera(),
     }));
-    expect(report.state.version).toBe("11.0.0");
+    expect(report.state.version).toBe("12.0.0");
     expect(report.performance.drawCalls).toBeGreaterThan(0);
     expect(report.performance.triangles).toBeGreaterThan(0);
     expect(report.camera.verticalFov).toBeGreaterThan(0);

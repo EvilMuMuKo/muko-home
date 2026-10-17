@@ -1,0 +1,21 @@
+﻿ID,测量端点或核查事项,单位或方法,对应模型参数,受影响功能
+M01,承重柱四完成面至主卧承重墙两面的相对坐标及柱宽深,mm,column-handdrawn / r2Revision.alignment,柱墙对齐、主通路、入口岛台
+M02,次卧现门框两侧至外墙/厨房端面的距离、门洞净宽,mm,openings.guest-door / kitchen-side,3.92m边界及移门、影音室出入
+M03,厨房现水槽、燃气、烟道、排水与插座中心至墙角,mm,kitchen-sink / kitchen-hob / kitchen-hood,台面、冰箱与给排水
+M04,厨房窗洞两侧、窗台标高、把手与开扇包络,mm,kitchen-window,窗下水槽、厨房半岛位置
+M05,厨房朝入户边界与水吧原隔墙性质、梁底及可改范围,mm/结构核查,kitchen-west / kitchen-side,拆墙、玻璃封闭、950mm台面
+M06,厨房外窗通风、排烟路线及燃气设备使用条件,现场专业核查,r2Revision.conditions,半开放状态、密封及燃气合规，不作当前结论
+M07,吊顶完成面、梁底、楼板结构与承重固定条件,mm/结构核查,bar-sign / r2Cabinet.h,通顶柜、招牌吊杆、滑轨安装
+M08,冰箱最终机型宽深高、转轴、满开门、抽屉与检修/散热间距,mm/官方安装图,kitchen-fridge / r2-fridge-cabinet,齐柱柜位、双人使用与操作通路
+M09,玻璃机构叠扇、轨道、密封、把手和有效开口,mm/产品安装图,kitchen-door / kitchen-pass-window,约973mm仅概念叠扇预算，不替代五金验收
+M10,入口门洞净宽、外开门扇、柜侧与墙角间距,mm,entry-door / r2-entry,100mm名义门侧余量、换鞋和次净衣
+M11,双卧飘窗宽、外凸深度、台高、窗扇和构造,mm/结构核查,homeDesign.bayWindows,不默认掏空建筑台体，不扩大可走地面
+M12,主卧门墙、窗、床架、衣柜、双桌椅最终外尺寸,mm/实物试摆,master / r2-master-wardrobe,开门、双人工作、取衣和夜行
+M13,影音沙发床型号、转换包络、床品及饮料冰箱安装图,mm/实物试用,guest-sofa-bed / r2-guest-wardrobe,两人留宿、门和床品取用
+M14,移动电视支架载重/VESA/倾覆/锁轮、沙发模块重量及连接,厂家证明/实物试用,homeDesign.mobileTV / modularSofa,移动、接电、游戏与临时就餐
+M15,备用桌椅折叠外廓、重量、手搬抓持点与实际搬运站位,mm/kg/全尺寸试摆,dining.sequence / r2-living-deep,模型路径通过不代表搬运省力或五金通过
+M16,每柜净空、分隔、铰链、收纳实物尺寸与数量,mm/清点,r2Cabinet.bays / collection,不以柜体毛容积宣称可用容量
+M17,水吧设备加水、磨豆、出杯、换桶、CO2、散热与检修,mm/官方安装图,coffee-machine / grinder / kegerator,湿水吧条件、封闭柜通风、台高舒适度
+M18,卫浴原排水与淋浴围合、马桶、台盆的真实操作包络,mm/机电核查,bathroom,沐浴/化妆/厕位联合动作
+M19,阳台洗烘、外窗、晾衣与家务柜取物/叠衣板操作,mm/机电核查,r2-housekeeping / laundryWorkflow,洗烘开门、分拣与客厅通行
+M20,所在地、朝向、外部楼体遮挡及实测照度/眩光,现场资料/照明测量,daylight / lighting,外景为概念绿景，不能作为日照/光照验收

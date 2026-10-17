@@ -1,0 +1,897 @@
+{
+  "stats": {
+    "startTime": "2026-10-17T09:15:26.371Z",
+    "duration": 110184.208,
+    "expected": 177,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "area-lighting.spec.ts",
+      "title": "area light width follows fixture axis and local -Z points at target",
+      "status": "PASS"
+    },
+    {
+      "file": "area-lighting.spec.ts",
+      "title": "area light intensity scales by scene level and preview cap",
+      "status": "PASS"
+    },
+    {
+      "file": "atmosphere-design.spec.ts",
+      "title": "room redesign preserves storage and furniture clearances while fitting the 83-inch screen",
+      "status": "PASS"
+    },
+    {
+      "file": "atmosphere-design.spec.ts",
+      "title": "wall finishes colour the two physical faces independently without recolouring neighbours",
+      "status": "PASS"
+    },
+    {
+      "file": "atmosphere-design.spec.ts",
+      "title": "cinema and guest-stay state APIs coordinate room lighting, doors and the convertible guest bed",
+      "status": "PASS"
+    },
+    {
+      "file": "atmosphere-design.spec.ts",
+      "title": "master wallcover stays on its own physical wall face",
+      "status": "PASS"
+    },
+    {
+      "file": "baked-occlusion.spec.ts",
+      "title": "bakes restrained near-contact AO under static geometry and excludes a moving TV",
+      "status": "PASS"
+    },
+    {
+      "file": "baked-occlusion.spec.ts",
+      "title": "wall segmentation leaves a door opening brighter than adjacent solid wall",
+      "status": "PASS"
+    },
+    {
+      "file": "baked-occlusion.spec.ts",
+      "title": "does not attach AO attributes to non-floor meshes",
+      "status": "PASS"
+    },
+    {
+      "file": "daylight.spec.ts",
+      "title": "daylight vector follows the declared south-east orientation and remains a concept study",
+      "status": "PASS"
+    },
+    {
+      "file": "daylight.spec.ts",
+      "title": "daylight keeps an invisible roof shadow and does not turn clear glazing into an opaque blocker",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "probe volume bounds fit inside a room and reject the overlapping hall",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "serialized atlas validation enforces finite packed SH payload and bounded grid",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "WebGPU padded RGBA16 rows are unpacked into the dense atlas slice layout",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "service is lazy and does not claim a bake from a non-renderer",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "a WebGPU half-float atlas installs in WebGL and applies the capped runtime intensity",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "WebGPU install registers Three's LightProbeGrid node without invoking a bake",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "half-float payload accepts sign-bit SH coefficients and rejects invalid bit patterns",
+      "status": "PASS"
+    },
+    {
+      "file": "diffuse-bounce.spec.ts",
+      "title": "valid negative half-float SH sign bits install as negative WebGL coefficients",
+      "status": "PASS"
+    },
+    {
+      "file": "dynamic-contact.spec.ts",
+      "title": "dynamic contact follows a movable root and stays at floor height",
+      "status": "PASS"
+    },
+    {
+      "file": "dynamic-contact.spec.ts",
+      "title": "dynamic contact is a soft render-only plane with bounded draw cost",
+      "status": "PASS"
+    },
+    {
+      "file": "exterior-world.spec.ts",
+      "title": "shared exterior is deterministic, compactly instanced, and outside the home envelope",
+      "status": "PASS"
+    },
+    {
+      "file": "exterior-world.spec.ts",
+      "title": "day and night update the same sky and landscape coherently, then restore scene background",
+      "status": "PASS"
+    },
+    {
+      "file": "exterior-world.spec.ts",
+      "title": "mobile and economical options reduce instance budgets",
+      "status": "PASS"
+    },
+    {
+      "file": "exterior-world.spec.ts",
+      "title": "leaf clusters sit in the window view and houses recede with two or three stories",
+      "status": "PASS"
+    },
+    {
+      "file": "floating-controls.spec.ts",
+      "title": "floating touch controls lock to their starting half, act independently, and clear on release",
+      "status": "PASS"
+    },
+    {
+      "file": "floating-controls.spec.ts",
+      "title": "touching controls UI does not create a floating stick; cancel and resize clear active touch state",
+      "status": "PASS"
+    },
+    {
+      "file": "floating-controls.spec.ts",
+      "title": "desktop mouse drag remains available",
+      "status": "PASS"
+    },
+    {
+      "file": "geometry.spec.ts",
+      "title": "WASM matches Three.js transforms, normals, bounds and memory growth",
+      "status": "PASS"
+    },
+    {
+      "file": "ghost-walk.spec.ts",
+      "title": "floating touch joystick and keyboard move at eye height within the ghost bounds",
+      "status": "PASS"
+    },
+    {
+      "file": "ghost-walk.spec.ts",
+      "title": "canvas drag rotates view and a nearby forward target is the only interaction",
+      "status": "PASS"
+    },
+    {
+      "file": "ghost-walk.spec.ts",
+      "title": "dual touch sticks move and turn independently, release and blur stop both",
+      "status": "PASS"
+    },
+    {
+      "file": "ghost-walk.spec.ts",
+      "title": "Escape exits, idle updates do not request renders, and dispose removes listeners and UI",
+      "status": "PASS"
+    },
+    {
+      "file": "ghost-walk.spec.ts",
+      "title": "stationary look skips collision resolution when no obstacles are moving",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "late initialization releases the abandoned GPU resource",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "successful GPU initialization retains the live resource",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "recognizes Dawn popErrorScope and explicit GPU device loss",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "ignores generic validation, network, and non-device failures",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "reads the modern info flag or the legacy flag",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "does not treat hardware or unknown metadata as software",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "resolves with the startup result",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "rejects with the underlying error",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "rejects with a timeout error when startup misses the deadline",
+      "status": "PASS"
+    },
+    {
+      "file": "gpu-recovery.spec.ts",
+      "title": "clears the timer on resolve, reject, and timeout",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "V9 keeps the V8 input intact and records concept-only bay-window and pullout geometry",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "mobile media layout keeps full seating and peripheral cabinet geometry",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "entry island keeps the column width and the two-leaf pullout fits its cabinet pocket",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "daily dining is parked by default and stores a physical envelope, while use coordinates stay explicit",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "master bedroom selects an inline full-size workstation candidate and records prior comparisons",
+      "status": "PASS"
+    },
+    {
+      "file": "home-design.spec.ts",
+      "title": "replaces selected high storage with low bedside/laundry surfaces and preserves kitchen positions",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "mobile TV carries supported console, controllers and power pack without old fixed-device props",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "entry return uses a supported two-leaf telescopic pullout within the cabinet budget",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "V9 folding table uses one complete assembly and fits its stowed budget",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "V9 outward solid bay ledges do not expand walking polygons or obstruct the clear window band",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "V9 dishwasher and stacked laundry doors have reversible real part transforms",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "two sofa modules and mobile television clear peripheral furniture in their complete sampled motions",
+      "status": "PASS"
+    },
+    {
+      "file": "home-motion.spec.ts",
+      "title": "two tabletop leaves have no volume overlap during the complete fold sequence",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "WebGL preserves views, motion, lighting, PNG and idle suspension",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "WebGPU unavailable and WASM fetch failure fall back independently",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "unsupported graphics show static preview",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "default requests WebGPU and produces a working scene or bounded compatibility recovery",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "software WebGPU adapter selects working WebGL before creating a GPU device",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "failed entrance shader preparation removes walk controls and presents the static preview",
+      "status": "PASS"
+    },
+    {
+      "file": "home.spec.ts",
+      "title": "optional physics loads on demand, conserves water and pauses cleanly",
+      "status": "PASS"
+    },
+    {
+      "file": "life-design.spec.ts",
+      "title": "V10 reclassifies the kitchen and keeps the new living/bar dependencies resolvable",
+      "status": "PASS"
+    },
+    {
+      "file": "life-design.spec.ts",
+      "title": "living dining modes keep the full table, chairs and sofa modules inside their intended poses",
+      "status": "PASS"
+    },
+    {
+      "file": "life-design.spec.ts",
+      "title": "guest drinks fridge has a clear open-door envelope and reading nook objects do not overlap",
+      "status": "PASS"
+    },
+    {
+      "file": "life-use.spec.ts",
+      "title": "French-door fridge opens toward the corridor with the real door leaves",
+      "status": "PASS"
+    },
+    {
+      "file": "life-use.spec.ts",
+      "title": "bevel shower uses the actual cut floor and inward-hinged leaf",
+      "status": "PASS"
+    },
+    {
+      "file": "life-use.spec.ts",
+      "title": "reading equipment clears the modeled sill and chair fronts the record console",
+      "status": "PASS"
+    },
+    {
+      "file": "life-use.spec.ts",
+      "title": "deployed dining chair seats meet the actual table edge and parking stays within the living envelope",
+      "status": "PASS"
+    },
+    {
+      "file": "life-use.spec.ts",
+      "title": "101 rendered dining, activity, sofa and TV transition poses have no visible-mesh AABB intersections",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-allocation.spec.ts",
+      "title": "walking light allocation reserves local task sources within the fixed mobile budget",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-allocation.spec.ts",
+      "title": "observer resolves living before overlapping hall and preserves selected room views",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-revision.spec.ts",
+      "title": "lighting anchors resolve against final objects and scene presets",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-revision.spec.ts",
+      "title": "dining and cabinet lights follow final geometry and shelf beams point down",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-revision.spec.ts",
+      "title": "master reading points avoid bed volume and bedtime keeps them off",
+      "status": "PASS"
+    },
+    {
+      "file": "lighting-revision.spec.ts",
+      "title": "daylight disables low night guides and all light vectors remain finite",
+      "status": "PASS"
+    },
+    {
+      "file": "material-calibration.spec.ts",
+      "title": "steel and bronze keep independent brushed maps and light normals",
+      "status": "PASS"
+    },
+    {
+      "file": "material-calibration.spec.ts",
+      "title": "wall and paint maps stay off the brushed metal noise",
+      "status": "PASS"
+    },
+    {
+      "file": "material-calibration.spec.ts",
+      "title": "anisotropy uses WebGL capabilities or the initialized WebGPU backend",
+      "status": "PASS"
+    },
+    {
+      "file": "mineral-surface.spec.ts",
+      "title": "authored mineral uses matched PBR data channels, physical scale and mild relief",
+      "status": "PASS"
+    },
+    {
+      "file": "mobile-diffuse.spec.ts",
+      "title": "mobile SH averages eight probes per packed coefficient and ignores padding slices",
+      "status": "PASS"
+    },
+    {
+      "file": "mobile-diffuse.spec.ts",
+      "title": "negative half SH values decode and hall remains neutral with one persistent probe",
+      "status": "PASS"
+    },
+    {
+      "file": "mobile-diffuse.spec.ts",
+      "title": "reinstalling the active room updates the same probe and intensity stays capped",
+      "status": "PASS"
+    },
+    {
+      "file": "mobile-diffuse.spec.ts",
+      "title": "validation rejects malformed data and runtime bake remains unavailable",
+      "status": "PASS"
+    },
+    {
+      "file": "mobile-runtime.spec.ts",
+      "title": "phone runtime never starts a second room capture and keeps a stable paced raster",
+      "status": "PASS"
+    },
+    {
+      "file": "pegboard.spec.ts",
+      "title": "pegboard uses actual through-holes, stand-offs and bounded removable accessories",
+      "status": "PASS"
+    },
+    {
+      "file": "planar-mirror.spec.ts",
+      "title": "planar mirror resolution stays within the mobile and desktop edge budgets",
+      "status": "PASS"
+    },
+    {
+      "file": "planar-mirror.spec.ts",
+      "title": "final bath mirror cabinet gets one bounded official reflector per moving leaf",
+      "status": "PASS"
+    },
+    {
+      "file": "plant-mesh.spec.ts",
+      "title": "plant geometry stays inside each declared object envelope and above the floor",
+      "status": "PASS"
+    },
+    {
+      "file": "plant-mesh.spec.ts",
+      "title": "foliage is a single opaque curved-ribbon mesh, with thin surfaces and no ellipsoid leaves",
+      "status": "PASS"
+    },
+    {
+      "file": "plant-mesh.spec.ts",
+      "title": "pot and soil use separate flat matte materials without room fabric or wood maps",
+      "status": "PASS"
+    },
+    {
+      "file": "progressive-materials.spec.ts",
+      "title": "home renders while material images are delayed, then hydrates all shared maps",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-accessories.spec.ts",
+      "title": "final PS5 is supported within the actual trolley shelf and follows its complete movement",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-accessories.spec.ts",
+      "title": "robot external envelope clears the deep cabinet and remains inside exterior finished wall faces",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-accessories.spec.ts",
+      "title": "living plant occupies an open bay and its actual pot rests on a real shelf",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "static same-cell meshes share a batch while source bounds and collision-layer raycasts remain available",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "same-room same-material meshes in different world cells form separate cullable batches",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "cell assignment follows transformed geometry bounds instead of shared group origins",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "animated, moving and hidden ancestors and visibility-dependent roots remain in their hierarchy",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "hidden cabinet interiors and directly animated leaves do not escape into a static batch",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "transparent surfaces and articulated furniture types retain independent objects",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-batching.spec.ts",
+      "title": "cell partition preserves room, material, layer, shadow and geometry-schema boundaries",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-design.spec.ts",
+      "title": "R2 keeps the surveyed-relational shell, opens kitchen boundaries, and preserves named furniture sizes",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-design.spec.ts",
+      "title": "R2 cabinets retain outer panels, open bays, three display shelves, and single-purpose ownership",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "kitchen-sink has an actual stone and cabinet opening through the basin rim",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "r2-bar-sink has an actual stone and cabinet opening through the basin rim",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "guest beverage refrigerator fits the real open bay and intersects no generated cabinet panel",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "every named lighting anchor resolves against the final object inventory",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "cabinet operator envelopes are outside the access face and retain their orientation",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-functional-fixes.spec.ts",
+      "title": "open kitchen glazing permits a continuous walk through its opening while closed leaves block it",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-furniture-stow.spec.ts",
+      "title": "folded furniture parked above the plinth has no actual cabinet-panel or peer intersection",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-furniture-stow.spec.ts",
+      "title": "101 extraction and return samples preserve real 2mm cabinet-door and furniture clearances",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-furniture-stow.spec.ts",
+      "title": "dining endpoint, retained furniture dimensions and task lighting share one final use position",
+      "status": "PASS"
+    },
+    {
+      "file": "r2-interactions.spec.ts",
+      "title": "R2 glass travel updates dynamic collision geometry; waterbar doors reach both endpoints",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "capture plan points stay inside ordinary and concave room polygons deterministically",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "capture quality and cache budget are bounded for mobile and desktop",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "capture point avoids solid object footprints where the room has a clear location",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "creation is lazy and does not perform GPU work before a room is selected",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "nested room membership receives a cloned local reflection material",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "overlapping hall capture remains in the actual hallway instead of the living room",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "visited room and lighting PMREMs stay alive until orderly disposal",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "rapid room changes coalesce stale uncached captures and expose whenReady",
+      "status": "PASS"
+    },
+    {
+      "file": "room-radiance.spec.ts",
+      "title": "concurrent dispose calls share cleanup and cancel an in-flight capture safely",
+      "status": "PASS"
+    },
+    {
+      "file": "salon.spec.ts",
+      "title": "salon composition preserves the storage programme and keeps the original passage width",
+      "status": "PASS"
+    },
+    {
+      "file": "salon.spec.ts",
+      "title": "new architectural frames and barrel shells clear all upper cabinet door sweeps",
+      "status": "PASS"
+    },
+    {
+      "file": "salon.spec.ts",
+      "title": "bespoke furniture stays inside its planned envelope",
+      "status": "PASS"
+    },
+    {
+      "file": "salon.spec.ts",
+      "title": "new table and seating preserve the PS5 balcony route with a 0.45 m avatar",
+      "status": "PASS"
+    },
+    {
+      "file": "simulation.spec.ts",
+      "title": "Saint-Venant still water stays still; perturbed basin conserves mass and stays positive",
+      "status": "PASS"
+    },
+    {
+      "file": "simulation.spec.ts",
+      "title": "cloth pins remain fixed and cloth avoids floor and wall over sustained wind",
+      "status": "PASS"
+    },
+    {
+      "file": "soft-bedding.spec.ts",
+      "title": "soft pillows stay inside the mattress, contact its top, and have finite metric geometry",
+      "status": "PASS"
+    },
+    {
+      "file": "soft-bedding.spec.ts",
+      "title": "runner is softly waved, metric, and drapes down at the mattress foot",
+      "status": "PASS"
+    },
+    {
+      "file": "soft-bedding.spec.ts",
+      "title": "buildSoftBedding adds two piped pillows and one light sage runner under the geometry budget",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "space revision aligns structural column and bearing-wall finished faces and preserves shell bounds",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "entry island matches the column, seats two, and keeps an open south passage",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "closed kitchen has a sink window and a usable external refrigerator envelope",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "relocated upper sink cabinet clears the kitchen window in world space",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "upper bath mirror sits against the bath side wall",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "master door moves farther from the bath and its opening fits its wall",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "master door completes its swing clear of storage and desks with a 440 mm route past the open leaf",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "simultaneous kitchen and entry-island use fits 600 mm body envelopes in the modeled clearances",
+      "status": "PASS"
+    },
+    {
+      "file": "space-revision.spec.ts",
+      "title": "exterior bays do not enlarge the indoor walking polygons",
+      "status": "PASS"
+    },
+    {
+      "file": "storage.spec.ts",
+      "title": "storage covers every room without mutating the original design",
+      "status": "PASS"
+    },
+    {
+      "file": "storage.spec.ts",
+      "title": "cabinet doors have real pivots, remain below ceiling and avoid the extractor sweep",
+      "status": "PASS"
+    },
+    {
+      "file": "storage.spec.ts",
+      "title": "new storage controls expose contents, textures load and desktop work area opens upward",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-experience.spec.ts",
+      "title": "R2 household controls expose version 12 and complete reversible travel",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-experience.spec.ts",
+      "title": "V10 operating states remain renderable and capture clean screenshots",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V10 regression: visible folding-chair meshes clear entry return and bar service throughout parking/use motion",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V9 regression: two-leaf pullout clears solid cabinet boards and column through all 101 states",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "space audit: bedroom static envelopes do not establish door, storage, bedding, or simultaneous-user clearance",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V10 dining: sample every chair-retreat step at full furniture scale",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V9 dining: the full-size vertical table park pose and 101-step move clear bar fixtures",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V9 circulation: search fixed 450 mm-radius route around the column with parked furniture",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V9 bedroom: sample both full-size 350 mm chair retreats against bed, wardrobe, and door-edge geometry",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-space.spec.ts",
+      "title": "V9 kitchen joint-use evidence: quantify existing appliance separation and dishwasher-open envelope",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-ui.spec.ts",
+      "title": "compact control panel has only space, light and action; no route or physics demo UI",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-ui.spec.ts",
+      "title": "three light presets keep the selected camera; room viewpoints use a dropdown",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-walk-integration.spec.ts",
+      "title": "real home walk has proximity interaction, fixed eye height, idle suspension and reversible exit",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-walk-integration.spec.ts",
+      "title": "whole-model geometry inventory has no missing object or nonfinite data",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-walk-integration.spec.ts",
+      "title": "visible lighting choices preserve the current hatch and dining furniture state",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-walk-integration.spec.ts",
+      "title": "arrival is directly walkable and real wall/closed door block while an opened door permits passage",
+      "status": "PASS"
+    },
+    {
+      "file": "v9-walk-integration.spec.ts",
+      "title": "portrait keeps the landscape gate and rotating restores both walk sticks",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "wall segment blocks crossing and the capsule cannot cut the inside corner",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "door opening remains a passage, while the live rotated door leaf blocks it",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "a window sill stays solid below sill height even though the wall has a window cut",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "movement slides along a wall and a long input cannot tunnel through it",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "the L-shaped floor keeps the full walker footprint out of its re-entrant notch",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "an open entry threshold stops at the floor edge instead of walking into exterior space",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "live low furniture collides and ceiling-height cabinetry is ignored",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "V9 modular and folding furniture plus low wall storage enter the walk footprint",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "final V9 model obstacle ids match scene naming and include ground-level storage",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "a moving mesh pushes a stationary walker out of its actual world pose",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "collision movement updates obstacle roots without forcing a scene-wide matrix traversal",
+      "status": "PASS"
+    },
+    {
+      "file": "walk-collision.spec.ts",
+      "title": "door depenetration stays on the floor and chooses a path clear of the adjacent wall",
+      "status": "PASS"
+    },
+    {
+      "file": "welcome.spec.ts",
+      "title": "arrival starts at entrance and reduced motion has text without ribbons",
+      "status": "PASS"
+    },
+    {
+      "file": "welcome.spec.ts",
+      "title": "normal motion welcome has finite ribbons and cleans itself up",
+      "status": "PASS"
+    }
+  ]
+}

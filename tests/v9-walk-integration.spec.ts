@@ -9,8 +9,8 @@ test("real home walk has proximity interaction, fixed eye height, idle suspensio
   await page.waitForFunction(() => window.homePresentation?.getState().ready);
   await page.evaluate(() =>
     window.homePresentation.startGhostWalk({
-      position: [5.75, 1.74, 3.7],
-      target: [4.7, 1.15, 3.7],
+      position: [3.4, 1.74, 4.95],
+      target: [3.4, 1.15, 3.935],
     }),
   );
   await expect(page.locator(".ghost-joystick:not(.ghost-look-joystick)")).toBeVisible();

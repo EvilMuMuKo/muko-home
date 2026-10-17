@@ -200,31 +200,31 @@ test("new table and seating preserve the PS5 balcony route with a 0.45 m avatar"
       report,
     };
   });
-  expect(result.version).toBe("11.0.0");
+  expect(result.version).toBe("12.0.0");
   expect(result.collisions).toEqual([]);
   expect(result.report.groups).toEqual(["bar", "living", "guest"]);
   const placed = Object.fromEntries(
     result.report.furniture.map((item: { id: string }) => [item.id, item]),
   );
   expect(placed["dining-table"]).toMatchObject({
-    x: 11.0,
-    z: 9.06,
+    x: 8.64,
+    z: 8.82,
     w: 1.1,
     d: 0.7,
     h: 0.74,
     rotation: 0,
   });
   expect(placed["dining-chair-left"]).toMatchObject({
-    x: 8.27,
-    z: 8.78,
+    x: 8.64,
+    z: 9.0,
     w: 0.5,
     d: 0.55,
     h: 0.88,
     rotation: 0,
   });
   expect(placed["dining-chair-right"]).toMatchObject({
-    x: 8.27,
-    z: 9.03,
+    x: 8.64,
+    z: 9.16,
     w: 0.5,
     d: 0.55,
     h: 0.88,

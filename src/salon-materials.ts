@@ -26,8 +26,8 @@ export function prepareSalonMaterials(m: Record<string, THREE.Material>) {
     m[name] = a;
     return a;
   };
-  clone("salonTimber", "oak", "#a88968", 0.73);
-  clone("salonDarkTimber", "oak", "#796855", 0.8);
+  clone("salonTimber", "oak", "#a78465", 0.73);
+  clone("salonDarkTimber", "oak", "#715440", 0.8);
   clone("salonFabric", "linen", "#d8d3c8", 0.88);
   clone("salonClay", "linen", "#b77d67", 0.86);
   clone("salonVault", "linen", "#b2aa9d", 0.9);
