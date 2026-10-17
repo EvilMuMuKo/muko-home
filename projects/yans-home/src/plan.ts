@@ -10,7 +10,6 @@ export type RoomId =
   | "bath"
   | "ensuite"
   | "balcony"
-  | "south-balcony"
   | "utility";
 export type Vec2 = [number, number];
 export interface Room {
@@ -21,6 +20,7 @@ export interface Room {
   camera: [number, number, number];
   target: [number, number, number];
   spawn: Vec2;
+  floorRects?: [number, number, number, number][];
 }
 export interface Opening {
   type: "door" | "window" | "passage";
@@ -31,6 +31,7 @@ export interface Opening {
   id?: string;
   name?: string;
   hinge?: number;
+  curtainSides?: number[];
   open?: boolean;
 }
 export interface Wall {
@@ -84,7 +85,7 @@ export const assumptions = [
   {
     id: "A05",
     topic: "入口改造",
-    value: "封闭旧次卧门，打开入户左侧储藏区，由其南侧新门进入次卧",
+    value: "原门区域退让成朝向玄关的收纳凹位，打开入户左侧储藏区，由其南侧新门进入次卧",
     status: "USER_CONFIRMED",
   },
 ];
@@ -121,10 +122,14 @@ export const rooms: Room[] = [
   {
     id: "entry",
     name: "入户玄关",
-    rect: [0, 5.95, 3.95, 7.05],
+    rect: [0, 5.95, 3.95, 7.77],
+    floorRects: [
+      [0, 5.95, 3.95, 7.05],
+      [1.42, 7.05, 2.95, 7.77],
+    ],
     material: "stoneFloor",
-    camera: [3.35, 1.55, 6.55],
-    target: [1.0, 1.2, 6.6],
+    camera: [3.44, 1.52, 6.35],
+    target: [2.12, 1.45, 7.4],
     spawn: [2.55, 6.28],
   },
   {
@@ -149,6 +154,10 @@ export const rooms: Room[] = [
     id: "guest",
     name: "南次卧",
     rect: [0, 7.05, 2.95, 11.45],
+    floorRects: [
+      [0, 7.05, 1.42, 7.77],
+      [0, 7.77, 2.95, 11.45],
+    ],
     material: "floor",
     camera: [2.55, 1.5, 7.95],
     target: [1.2, 1, 9.8],
@@ -159,17 +168,17 @@ export const rooms: Room[] = [
     name: "主卧",
     rect: [7.95, 7.05, 11.85, 11.45],
     material: "floor",
-    camera: [11.3, 1.5, 10.95],
-    target: [8.6, 1.1, 8.6],
+    camera: [8.55, 1.5, 7.98],
+    target: [10.8, 1.1, 10.5],
     spawn: [10.9, 9.4],
   },
   {
     id: "gaming",
     name: "电脑游戏室",
-    rect: [6.75, 1.65, 9.9, 3.55],
+    rect: [6.75, 0.45, 9.9, 3.55],
     material: "floor",
-    camera: [7.2, 1.48, 3.1],
-    target: [9.5, 1.16, 2.55],
+    camera: [7.63, 1.48, 3.13],
+    target: [9.45, 1.18, 1.75],
     spawn: [7.8, 2.85],
   },
   {
@@ -209,15 +218,6 @@ export const rooms: Room[] = [
     spawn: [6.5, 11.6],
   },
   {
-    id: "south-balcony",
-    name: "南向阳台",
-    rect: [6.75, 0.45, 9.9, 1.65],
-    material: "stoneFloor",
-    camera: [7.05, 1.5, 1.25],
-    target: [9.2, 1.1, 0.8],
-    spawn: [8, 1.33],
-  },
-  {
     id: "utility",
     name: "设备平台",
     rect: [3.95, 0.15, 6.75, 1.65],
@@ -232,8 +232,26 @@ const exteriorOpenings: Record<number, Opening[]> = {
   2: [{ type: "window", at: 1.575, width: 2.7, sill: 0.62, height: 1.9 }],
   3: [{ type: "window", at: 0.62, width: 0.8, sill: 0.8, height: 1.65 }],
   5: [{ type: "window", at: 0.8, width: 0.7, sill: 1.4, height: 1 }],
-  7: [{ type: "window", at: 2.2, width: 2.1, sill: 0.7, height: 1.75 }],
-  8: [{ type: "window", at: 1.95, width: 2.8, sill: 0.6, height: 1.85 }],
+  7: [
+    {
+      type: "window",
+      at: 2.775,
+      width: 3.25,
+      sill: 0.62,
+      height: 1.85,
+      curtainSides: [1],
+    },
+  ],
+  8: [
+    {
+      type: "window",
+      at: 1.675,
+      width: 3.35,
+      sill: 0.62,
+      height: 1.85,
+      curtainSides: [-1],
+    },
+  ],
   10: [{ type: "window", at: 2.5, width: 4.4, sill: 0.62, height: 1.9 }],
   12: [{ type: "window", at: 1.45, width: 2.1, sill: 0.6, height: 1.85 }],
 
@@ -266,7 +284,7 @@ walls.push(
   {
     id: "guest-north",
     a: [0, 7.05],
-    b: [2.95, 7.05],
+    b: [1.42, 7.05],
     openings: [
       {
         type: "door",
@@ -278,6 +296,8 @@ walls.push(
       },
     ],
   },
+  { id: "guest-niche-return", a: [1.42, 7.05], b: [1.42, 7.77] },
+  { id: "guest-niche-back", a: [1.42, 7.77], b: [2.95, 7.77] },
   { id: "guest-east", a: [2.95, 7.05], b: [2.95, 11.45] },
   {
     id: "kitchen-north",
@@ -310,21 +330,7 @@ walls.push(
       },
     ],
   },
-  {
-    id: "gaming-balcony",
-    a: [6.75, 1.65],
-    b: [9.9, 1.65],
-    openings: [
-      {
-        type: "door",
-        at: 1.25,
-        width: 1.15,
-        id: "south-balcony-door",
-        name: "南阳台玻璃门",
-        open: true,
-      },
-    ],
-  },
+  { id: "gaming-west-extension", a: [6.75, 0.45], b: [6.75, 1.65] },
   {
     id: "gaming-south",
     a: [6.75, 3.55],
@@ -424,30 +430,30 @@ export const furniture: Furnishing[] = [
     "电梯厅通顶柜与公路车展示",
   ),
   f(
-    "entry-coats",
-    "cabinet",
+    "entry-niche",
+    "entry-niche",
     "entry",
-    2.55,
-    6.83,
-    0.75,
-    0.32,
+    2.185,
+    7.37,
+    1.37,
+    0.62,
     2.76,
-    0,
+    180,
     "paint",
-    "原门位玄关通顶柜",
+    "玄关凹位顶柜 · 洞洞板 · 鞋柜",
   ),
   f(
-    "entry-shoes",
-    "cabinet",
-    "entry",
-    0.23,
-    6.43,
-    0.82,
-    0.34,
-    2.76,
+    "lobby-low-cabinet",
+    "low-cabinet",
+    "lift-lobby",
+    1.91,
+    4.5,
+    0.95,
+    0.32,
+    0.72,
     90,
-    "oak",
-    "储藏区玄关柜",
+    "paint",
+    "电梯厅矮柜",
   ),
 
   f(
@@ -513,19 +519,6 @@ export const furniture: Furnishing[] = [
   f("master-side-1", "side", "master", 8.32, 8.04, 0.3, 0.35, 0.46),
   f("master-side-2", "side", "master", 8.32, 10.55, 0.3, 0.35, 0.46),
   f("master-window-seat", "bench", "master", 10.5, 11.13, 1.7, 0.46, 0.45),
-  f(
-    "guest-wardrobe",
-    "cabinet",
-    "guest",
-    2.12,
-    7.39,
-    1.3,
-    0.6,
-    2.76,
-    0,
-    "paint",
-    "次卧通顶衣柜",
-  ),
   f("guest-bed", "bed", "guest", 1.23, 9.3, 1.5, 2.04, 1.1, 90),
   f("guest-side", "side", "guest", 0.38, 8.12, 0.42, 0.42, 0.46),
   f("guest-window-seat", "bench", "guest", 1.6, 11.12, 1.9, 0.46, 0.45),
@@ -534,8 +527,8 @@ export const furniture: Furnishing[] = [
     "desk",
     "gaming",
     9.42,
-    2.55,
-    1.72,
+    1.95,
+    2.82,
     0.75,
     0.75,
     -90,
@@ -548,8 +541,8 @@ export const furniture: Furnishing[] = [
     "cabinet",
     "gaming",
     7.0,
-    2.35,
-    1.2,
+    1.9,
+    2.55,
     0.3,
     2.76,
     90,
@@ -616,10 +609,7 @@ export const furniture: Furnishing[] = [
     "paint",
     "洗烘顶柜",
   ),
-  f("laundry-worktop", "console", "balcony", 4.65, 12.14, 1.15, 0.5, 0.91),
   f("balcony-plant", "plant", "balcony", 7.45, 12.0, 0.5, 0.5, 1.3),
-  f("south-seat", "bench", "south-balcony", 8.45, 0.77, 1.55, 0.45, 0.45),
-  f("south-plant", "plant", "south-balcony", 9.5, 1.0, 0.4, 0.4, 1.2),
   f("utility-ac", "ac", "utility", 6.25, 0.85, 0.55, 1.0, 0.85),
 ];
 export const cabinetBottom = (id: string) =>
@@ -632,7 +622,7 @@ export const cabinetBottom = (id: string) =>
         : 0;
 export const model = {
   name: "YAN’s Home",
-  version: "1.0.0",
+  version: "1.1.0",
   source: "用户户型照片与确认的改造要求",
   units: "m",
   height: HEIGHT,
@@ -644,9 +634,13 @@ export const model = {
   requirements: {
     occupants: 2,
     guestEntry: "via-opened-entry-storage",
-    oldGuestDoor: "sealed-entry-cabinet",
+    oldGuestDoor: "recessed-entry-storage",
     extensions: "incorporated",
     gamingStations: 1,
+    gamingBalcony: "fully-incorporated",
+    entryStorage: "recessed-upper-pegboard-shoe-cabinet",
+    masterWindow: "continuous-corner",
+    laundryFront: "clear",
     consoleGaming: false,
     master: "sleep",
     coffee: "coffee-only-upper-cabinets-and-island",
@@ -670,11 +664,12 @@ export function insideShell(x: number, z: number) {
 }
 export function roomAt(x: number, z: number): RoomId {
   if (x > 1.65 && x < 3.95 && z > 3.55 && z < 5.95) return "lift-lobby";
+  if (x > 1.42 && x < 2.95 && z > 7.05 && z < 7.77) return "entry";
   if (x > 7.95 && x < 9.15 && z > 5.25 && z < 7.05) return "master";
   if (x > 6.75 && x < 8.1 && z > 3.55 && z < 5.25) return "dining";
   for (const r of rooms) {
-    const [a, b, c, d] = r.rect;
-    if (x > a && x < c && z > b && z < d) return r.id;
+    for (const [a, b, c, d] of r.floorRects ?? [r.rect])
+      if (x > a && x < c && z > b && z < d) return r.id;
   }
   return "entry";
 }

@@ -1,4 +1,5 @@
 {
+  "version": "1.1.0",
   "platform": "Linux Chromium / SwiftShader, desktop 1280x800; not hardware performance evidence",
   "errors": [],
   "textures": {
@@ -8,28 +9,27 @@
   },
   "geometry": {
     "backend": "wasm",
-    "transformedVertices": 292826,
-    "batches": 351,
+    "transformedVertices": 225051,
+    "batches": 272,
     "reason": ""
   },
   "batching": {
-    "sources": 553,
-    "batches": 87,
-    "reduced": 466
+    "sources": 533,
+    "batches": 85,
+    "reduced": 448
   },
   "screenshots": [
     "lift-lobby",
     "entry",
     "dining",
     "living",
-    "gaming",
-    "master",
     "guest",
+    "master",
+    "gaming",
     "kitchen",
     "bath",
     "ensuite",
     "balcony",
-    "south-balcony",
     "utility",
     "overview"
   ]

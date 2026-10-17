@@ -11,10 +11,11 @@ function surface(color: string, roughness = 0.85, metalness = 0) {
 export function createMaterials(): Materials {
   const m: Materials = {
     wall: surface("#e6e2d8"),
-    paint: surface("#d9d5c9", 0.72),
-    oak: surface("#b39a79"),
+    paint: surface("#e0dcd2", 0.72),
+    pegboard: surface("#889185", 0.8),
+    oak: surface("#cbb99b", 0.76),
     darkwood: surface("#715c47"),
-    floor: surface("#baa98c"),
+    floor: surface("#d2c3aa", 0.78),
     linen: surface("#d1c4ad", 0.98),
     clay: surface("#b19c84"),
     sage: surface("#7c8982"),
@@ -37,8 +38,8 @@ export function createMaterials(): Materials {
   m.glass = new T.MeshPhysicalMaterial({
     color: "#c4d3ce",
     transparent: true,
-    opacity: 0.23,
-    roughness: 0.14,
+    opacity: 0.14,
+    roughness: 0.08,
     metalness: 0.08,
     depthWrite: false,
   });
@@ -69,7 +70,14 @@ export function createMaterials(): Materials {
   map.colorSpace = T.SRGBColorSpace;
   m.stone.map = map;
   m.stone.bumpMap = map;
-  m.stone.bumpScale = 0.001;
+  m.stone.bumpScale = 0.0007;
+  // A shared fine mineral surface adds detail without another image request.
+  for (const key of ["stoneFloor", "tileFloor"]) {
+    m[key].map = map;
+    m[key].bumpMap = map;
+    m[key].bumpScale = 0.0005;
+  }
+
   return m;
 }
 export async function hydrateMaterials(m: Materials, request: () => void) {
@@ -80,6 +88,12 @@ export async function hydrateMaterials(m: Materials, request: () => void) {
     ["plaster", ["wall", "paint"]],
   ] as const;
   const loader = new T.TextureLoader();
+  const tileMetres: Record<string, number> = {
+    oak: 0.5,
+    floor: 1.7,
+    linen: 0.271,
+    plaster: 1.5,
+  };
   for (const [family, keys] of families)
     for (const channel of ["color", "normal", "roughness"]) {
       try {
@@ -89,14 +103,21 @@ export async function hydrateMaterials(m: Materials, request: () => void) {
         t.wrapS = t.wrapT = T.RepeatWrapping;
         t.anisotropy = 4;
         t.colorSpace = channel === "color" ? T.SRGBColorSpace : T.NoColorSpace;
-        if (family === "floor") t.repeat.set(0.8, 0.8);
-        else if (family === "linen") t.repeat.set(2.2, 2.2);
+        t.repeat.setScalar(1 / tileMetres[family]);
         for (const key of keys) {
           const a = m[key];
           if (channel === "color") a.map = t;
           else if (channel === "normal") {
             a.normalMap = t;
-            a.normalScale.setScalar(family === "linen" ? 0.25 : 0.32);
+            a.normalScale.setScalar(
+              key === "paint"
+                ? 0.035
+                : family === "linen"
+                  ? 0.16
+                  : family === "plaster"
+                    ? 0.1
+                    : 0.18,
+            );
           } else a.roughnessMap = t;
           a.needsUpdate = true;
         }

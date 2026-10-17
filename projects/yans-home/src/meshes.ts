@@ -48,7 +48,8 @@ export function buildHome(scene: T.Scene, m: Materials) {
     y = 0,
     z = 0,
   ): T.Mesh<T.BufferGeometry, T.Material> {
-    metricUV(g);
+    // Architectural segments share one texture origin, including the overview cut.
+    metricUV(g, undefined, p === fixed ? [x, y, z] : [0, 0, 0]);
     const o = new T.Mesh(g, m[mat]);
     o.position.set(x, y, z);
     o.castShadow = true;
@@ -194,6 +195,41 @@ export function buildHome(scene: T.Scene, m: Materials) {
     o.quaternion.setFromUnitVectors(new T.Vector3(0, 1, 0), d.normalize());
     return o;
   }
+  function pegboard(
+    parent: T.Object3D,
+    left: number,
+    right: number,
+    bottom: number,
+    top: number,
+    z: number,
+  ) {
+    const shape = new T.Shape();
+    shape.moveTo(left, bottom);
+    shape.lineTo(right, bottom);
+    shape.lineTo(right, top);
+    shape.lineTo(left, top);
+    shape.closePath();
+    for (let x = left + 0.055; x < right - 0.035; x += 0.085)
+      for (let y = bottom + 0.055; y < top - 0.035; y += 0.085) {
+        const hole = new T.Path();
+        hole.absarc(x, y, 0.007, 0, Math.PI * 2, true);
+        shape.holes.push(hole);
+      }
+    const panel = mesh(
+      parent,
+      new T.ExtrudeGeometry(shape, {
+        depth: 0.018,
+        bevelEnabled: false,
+        curveSegments: 4,
+      }),
+      "pegboard",
+      0,
+      0,
+      z,
+    );
+    panel.castShadow = false;
+    return panel;
+  }
   // Wood planks and tiles use metre-scale textures; a thin seam grid gives mineral floors a real joint.
   const floorShape = new T.Shape();
   const shellPoints = awaitShell();
@@ -208,13 +244,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
   slab.rotateX(-Math.PI / 2);
   mesh(fixed, slab, "floor", 0, -0.1, 0);
   for (const room of rooms) {
-    const rectangles =
-      room.id === "entry"
-        ? [
-            [1.65, 5.95, 3.95, 7.05],
-            [0, 5.95, 1.65, 7.05],
-          ]
-        : [room.rect];
+    const rectangles = room.floorRects ?? [room.rect];
     for (const [a, b, c, d] of rectangles) {
       box(
         fixed,
@@ -269,17 +299,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
       const [x, z] = position((start + end) / 2),
         width = axisX ? end - start : 0.16,
         depth = axisX ? 0.16 : end - start;
-      const o = box(
-        fixed,
-        width,
-        y1 - y0,
-        depth,
-        x,
-        (y0 + y1) / 2,
-        z,
-        mat,
-        0.002,
-      );
+      const o = box(fixed, width, y1 - y0, depth, x, (y0 + y1) / 2, z, mat, 0);
       if (y1 > 1.05) wallTops.push(o);
       if (y0 < 1.7) colliderRect(w.id, x, z, width, depth, y1);
     }
@@ -334,7 +354,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
           curtain.position.copy(group.position);
           curtain.rotation.copy(group.rotation);
           fixed.add(curtain);
-          for (const side of [-1, 1])
+          for (const side of opening.curtainSides ?? [-1, 1])
             for (let j = 0; j < 8; j++) {
               const xx = side * (opening.width / 2 - 0.12) + j * 0.022;
               const c = box(
@@ -549,6 +569,119 @@ export function buildHome(scene: T.Scene, m: Materials) {
       box(g, w, 0.025, d + 0.015, 0, bottom + h + 0.012, 0, wood);
       if (bottom < 1.7) bodyObstacle(bottom + h);
     }
+    if (o.type === "low-cabinet") {
+      cabinet();
+      box(g, w + 0.014, 0.026, d + 0.016, 0, h + 0.018, 0, "stone", 0.006);
+      box(g, 0.23, 0.025, 0.14, 0.19, h + 0.044, 0.02, "darkwood", 0.018);
+      box(g, 0.1, 0.035, 0.07, 0.18, h + 0.065, 0.02, "ceramic", 0.02);
+    }
+    if (o.type === "entry-niche") {
+      // This unit sits inside the bedroom setback and opens toward the foyer.
+      box(g, w, h, 0.028, 0, h / 2, -d / 2 + 0.02, "paint", 0);
+      for (const x of [-w / 2 + 0.014, w / 2 - 0.014])
+        box(g, 0.028, h, d, x, h / 2, 0, "paint", 0.003);
+      const front = (name: string, bottom: number, height: number) => {
+        for (let col = 0; col < 2; col++) {
+          const cw = (w - 0.06) / 2,
+            x = -w / 2 + 0.03 + col * cw;
+          box(g, cw, 0.025, d - 0.02, x + cw / 2, bottom, 0, "oak", 0.002);
+          box(
+            g,
+            cw,
+            0.025,
+            d - 0.02,
+            x + cw / 2,
+            bottom + height,
+            0,
+            "paint",
+            0.002,
+          );
+          const pivot = new T.Group();
+          pivot.position.set(x, bottom, d / 2);
+          pivot.userData.moving = true;
+          g.add(pivot);
+          const leaf = box(
+            pivot,
+            cw - 0.012,
+            height - 0.02,
+            0.024,
+            cw / 2,
+            height / 2,
+            0,
+            "paint",
+            0.003,
+          );
+          box(
+            pivot,
+            cw - 0.07,
+            0.014,
+            0.014,
+            cw / 2,
+            height - 0.05,
+            0.019,
+            "bronze",
+            0.002,
+          );
+          g.updateWorldMatrix(true, true);
+          act(
+            o.id + "-" + name + "-" + col,
+            name === "shoe" ? "玄关鞋柜" : "玄关顶柜",
+            o.room,
+            new T.Vector3(
+              x + cw / 2,
+              bottom + height / 2,
+              d / 2 + 0.12,
+            ).applyMatrix4(g.matrixWorld),
+            (t) => (pivot.rotation.y = -t * Math.PI * 0.46),
+          );
+          if (bottom < 1.7)
+            movingCollider(o.id + "-" + name + "-leaf-" + col, leaf);
+        }
+      };
+      front("shoe", 0.12, 0.52);
+      front("upper", 2.08, 0.66);
+      box(g, w - 0.03, 0.035, d + 0.025, 0, 0.67, 0, "oak", 0.006);
+      pegboard(g, -w / 2 + 0.04, w / 2 - 0.04, 0.75, 2.02, -d / 2 + 0.045);
+      box(g, w - 0.08, 0.016, 0.025, 0, 2.045, -d / 2 + 0.065, "glow", 0.002);
+      for (const x of [-0.43, -0.13, 0.19, 0.47]) {
+        line(
+          g,
+          [x, 1.83, -d / 2 + 0.065],
+          [x, 1.83, -d / 2 + 0.14],
+          0.008,
+          "bronze",
+        );
+        line(
+          g,
+          [x, 1.83, -d / 2 + 0.14],
+          [x, 1.875, -d / 2 + 0.14],
+          0.008,
+          "bronze",
+        );
+      }
+      box(g, 0.34, 0.025, 0.14, -0.31, 1.22, -d / 2 + 0.125, "oak", 0.004);
+      box(g, 0.18, 0.1, 0.075, -0.31, 1.28, -d / 2 + 0.13, "ceramic", 0.018);
+      const pouch = box(
+        g,
+        0.22,
+        0.25,
+        0.055,
+        0.2,
+        1.58,
+        -d / 2 + 0.13,
+        "linen",
+        0.028,
+      );
+      pouch.rotation.z = -0.07;
+      line(
+        g,
+        [0.12, 1.69, -d / 2 + 0.13],
+        [0.19, 1.83, -d / 2 + 0.13],
+        0.006,
+        "darkwood",
+      );
+      bodyObstacle();
+    }
     if (o.type === "bike-wall") {
       box(g, w, h, 0.025, 0, h / 2, -d / 2 + 0.02, "paint");
       box(g, 0.43, h, d, -w / 2 + 0.22, h / 2, 0, "paint");
@@ -588,7 +721,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
           bevelEnabled: false,
           curveSegments: 5,
         }),
-        "sage",
+        "pegboard",
         0,
         0,
         -d / 2 + 0.04,
@@ -896,22 +1029,25 @@ export function buildHome(scene: T.Scene, m: Materials) {
         box(g, 0.045, 0.7, d - 0.06, x, 0.36, 0, "metal");
         box(g, 0.16, 0.035, d - 0.02, x, 0.022, 0, "metal");
       }
-      box(g, 0.9, 0.4, 0.045, -0.18, 1.12, -0.2, "black", 0.022);
+      const station = new T.Group();
+      station.position.x = 0.6;
+      g.add(station);
+      box(station, 0.9, 0.4, 0.045, -0.18, 1.12, -0.2, "black", 0.022);
       const monitor = new T.Mesh(
         new T.PlaneGeometry(0.855, 0.355),
         new T.MeshBasicMaterial({ map: displayTexture("gaming") }),
       );
       monitor.position.set(-0.18, 1.12, -0.174);
-      g.add(monitor);
-      cyl(g, 0.023, 0.023, 0.23, -0.18, 0.86, -0.2, "metal");
-      box(g, 0.26, 0.012, 0.18, -0.18, 0.76, -0.2, "metal", 0.02);
-      box(g, 0.45, 0.021, 0.17, -0.15, 0.77, 0.18, "black", 0.01);
-      box(g, 0.055, 0.027, 0.095, 0.22, 0.78, 0.18, "black", 0.02);
-      box(g, 0.24, 0.43, 0.42, 0.65, 0.975, -0.08, "black", 0.025);
-      box(g, 0.008, 0.35, 0.32, 0.525, 0.99, -0.08, "glass");
+      station.add(monitor);
+      cyl(station, 0.023, 0.023, 0.23, -0.18, 0.86, -0.2, "metal");
+      box(station, 0.26, 0.012, 0.18, -0.18, 0.76, -0.2, "metal", 0.02);
+      box(station, 0.45, 0.021, 0.17, -0.15, 0.77, 0.18, "black", 0.01);
+      box(station, 0.055, 0.027, 0.095, 0.22, 0.78, 0.18, "black", 0.02);
+      box(station, 0.24, 0.43, 0.42, 0.65, 0.975, -0.08, "black", 0.025);
+      box(station, 0.008, 0.35, 0.32, 0.525, 0.99, -0.08, "glass");
       for (const y of [0.9, 1.05]) {
         const fan = mesh(
-          g,
+          station,
           new T.TorusGeometry(0.05, 0.005, 6, 24),
           "steel",
           0.65,
@@ -921,35 +1057,33 @@ export function buildHome(scene: T.Scene, m: Materials) {
         fan.rotation.x = 0;
       }
       for (const x of [-0.69, 0.35]) {
-        box(g, 0.1, 0.19, 0.1, x, 0.86, -0.22, "black");
-        cyl(g, 0.018, 0.018, 0.12, x, 1.0, -0.22, "metal");
+        box(station, 0.1, 0.19, 0.1, x, 0.86, -0.22, "black");
+        cyl(station, 0.018, 0.018, 0.12, x, 1.0, -0.22, "metal");
       }
-      const panelShape = new T.Shape();
-      panelShape.moveTo(-w / 2, 1.46);
-      panelShape.lineTo(w / 2, 1.46);
-      panelShape.lineTo(w / 2, 2.46);
-      panelShape.lineTo(-w / 2, 2.46);
-      panelShape.closePath();
-      for (let x = -w / 2 + 0.08; x < w / 2 - 0.03; x += 0.1)
-        for (let y = 1.58; y < 2.38; y += 0.1) {
-          const hole = new T.Path();
-          hole.absarc(x, y, 0.008, 0, Math.PI * 2, true);
-          panelShape.holes.push(hole);
+      // Extend along the solid wall; preserve the existing side-window opening.
+      const sideWindow = walls.find((w) => w.id === "outer-3")!.openings![0];
+      const windowStart = 0.45 + sideWindow.at - sideWindow.width / 2 - o.z;
+      const windowEnd = 0.45 + sideWindow.at + sideWindow.width / 2 - o.z;
+      for (const [a, b] of [
+        [-w / 2, windowStart - 0.035],
+        [windowEnd + 0.035, w / 2],
+      ])
+        if (b - a > 0.18) {
+          pegboard(g, a, b, 1.46, 2.46, -d / 2 + 0.02);
+          box(
+            g,
+            b - a,
+            0.018,
+            0.028,
+            (a + b) / 2,
+            1.435,
+            -d / 2 + 0.065,
+            "glow",
+            0.003,
+          );
         }
-      const panel = mesh(
-        g,
-        new T.ExtrudeGeometry(panelShape, {
-          depth: 0.018,
-          bevelEnabled: false,
-          curveSegments: 5,
-        }),
-        "sage",
-        0,
-        0,
-        -d / 2 + 0.02,
-      );
-      panel.castShadow = false;
-      box(g, w - 0.08, 0.025, 0.035, 0, 1.45, -d / 2 + 0.07, "glow");
+      box(g, w - 0.16, 0.055, 0.11, 0, 0.64, -d / 2 + 0.08, "metal", 0.006);
+      box(g, 0.84, 0.006, 0.36, 0.44, 0.756, 0.05, "rubber", 0.018);
       bodyObstacle(0.76);
     }
     if (o.type === "office-chair") {

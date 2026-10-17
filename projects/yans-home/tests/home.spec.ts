@@ -132,7 +132,7 @@ test("old guest doorway is sealed and new guest door has stateful physical colli
     ),
   ).toBe(false);
 });
-test("all thirteen areas are connected to the entrance with a 520mm walking body", async ({
+test("all twelve areas are connected to the entrance with a 520mm walking body", async ({
   page,
 }) => {
   await ready(page);
@@ -174,18 +174,16 @@ test("all thirteen areas are connected to the entrance with a 520mm walking body
         }
       }
     }
-    return a
-      .getModel()
-      .rooms.map((r: any) => ({
-        id: r.id,
-        reachable: [...seen].some(
-          (k) =>
-            Math.hypot(
-              (k % nx) * step - r.spawn[0],
-              Math.floor(k / nx) * step - r.spawn[1],
-            ) < 0.22,
-        ),
-      }));
+    return a.getModel().rooms.map((r: any) => ({
+      id: r.id,
+      reachable: [...seen].some(
+        (k) =>
+          Math.hypot(
+            (k % nx) * step - r.spawn[0],
+            Math.floor(k / nx) * step - r.spawn[1],
+          ) < 0.22,
+      ),
+    }));
   });
   expect(result.filter((r: any) => !r.reachable)).toEqual([]);
 });
@@ -320,4 +318,48 @@ test("private elevator hall has full-height storage and a road bicycle display o
   expect(walls.find((w) => w.id === "entry-divider")!.openings![0].id).toBe(
     "entry-door",
   );
+});
+
+test("revision joins the gaming balcony, recesses entry storage and clears the laundry front", async ({
+  page,
+}) => {
+  await ready(page);
+  expect(rooms.find((r) => r.id === "gaming")!.rect[1]).toBe(0.45);
+  expect(rooms.some((r) => r.name === "南向阳台")).toBe(false);
+  expect(furniture.find((f) => f.id === "gaming-desk")!.w).toBeGreaterThan(2.7);
+  expect(
+    furniture.some((f) =>
+      [
+        "entry-coats",
+        "entry-shoes",
+        "guest-wardrobe",
+        "laundry-worktop",
+      ].includes(f.id),
+    ),
+  ).toBe(false);
+  expect(furniture.find((f) => f.id === "entry-niche")!.room).toBe("entry");
+  expect(rooms.find((r) => r.id === "guest")!.floorRects).toHaveLength(2);
+  const actual = await page.evaluate(() => {
+    const a = (window as any).homePresentation;
+    return {
+      clearAcrossFormerWall: a.clearAt(8.65, 1.65),
+      cornerPosts: a
+        .getColliders()
+        .filter(
+          (c: any) =>
+            ["outer-7", "outer-8"].includes(c.id) &&
+            c.max[1] > 1.0 &&
+            c.min[0] <= 11.85 &&
+            c.max[0] >= 11.77 &&
+            c.min[2] <= 11.45 &&
+            c.max[2] >= 11.37,
+        ),
+      staleBalconyDoor: a
+        .getState()
+        .actions.some((a: any) => a.id === "south-balcony-door"),
+    };
+  });
+  expect(actual.clearAcrossFormerWall).toBe(true);
+  expect(actual.cornerPosts).toEqual([]);
+  expect(actual.staleBalconyDoor).toBe(false);
 });
