@@ -16,9 +16,9 @@ npm test
 npm run benchmark
 ```
 
-当前版本为 R4 / 14.0.0，见 [R4设计与边界](docs/r4-design.md) 和 [本轮验证](docs/r4/validation.json)。R3空间关系继承，历史测试仅适用于对应模型。
+当前版本为 R5 / 15.0.0，见 [R5布局、插座与交互](docs/r5-design.md) 和 [本轮验证](docs/r5/validation.json)。建筑继承R3/R4，A8/A9/A10已落实到统一模型；历史测试仅适用于对应设计器。
 
-`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/r2-design.ts` 、`src/r3-design.ts` 和 `src/r4-design.ts` 在历史覆盖层上生成现行R4方案，`src/final-design.ts` 在构建时合成唯一 `src/generated-layout.json`；`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
+`src/index.html` 是入口，`src/model.js` 保留建筑基底；V6/V7/V8 覆盖层保留历史数据。`src/home-design.ts` 保留 V9 基础，`src/life-design.ts` 生成 V10 最终布局与生活状态，`src/home-mesh.ts` 生成真实活动部件，`src/daylight.ts` 定义日照概念参数。`src/r2-design.ts` 、`src/r3-design.ts` 和 `src/r4-design.ts` 在历史覆盖层上保留R4材质与风格，`src/r5-design.ts` 合并A8/A9家具与A10插座生成现行R5方案，`src/final-design.ts` 在构建时合成唯一 `src/generated-layout.json`；`src/scene.js` 负责统一渲染与交互。详见 [V10 设计与验证范围](docs/life-v10.md)。
 
 `npm run build` 先导出最终模型、生成 WASM、检查类型、构建 `dist/`，再同步根目录 `index.html`、`assets/`、预览图、`materials/` 纹理和 WASM。提交时需一起提交生成文件。这样继续兼容现有 **GitHub Pages：main 分支根目录**，无需修改线上发布设置。GitHub Actions 检查构建可复现性和测试。
 
@@ -63,3 +63,5 @@ npm run benchmark
 ## YAN’s Home · 独立初稿
 
 新户型源代码、设计任务书和逐房截图位于 [projects/yans-home](projects/yans-home/README.md)。其独立发布产物位于 `yans-home/`，合并并发布后可从 [YAN’s Home](https://evilmumuko.github.io/muko-home/yans-home/) 验收。原首页继续使用现有模型。
+
+R5两台85英寸移动电视分别读取屏幕与底座尺寸；客厅为斜向双模块布局，开放活动时电视后停。影音室保留原大床，新增并排单人沙发床与跨飘窗长直桌。小床展开、原大床展开及近位电视有组合保护，椅子先退出再展开小床。柜内插座置于内部安装面，房间切换时分区显示；湿区及空调等候选不渲染为已安装点。详情及独立图纸见R5说明。

@@ -8,7 +8,8 @@ import {createSpaceRevision} from './space-revision';
 import {createR2Design} from './r2-design';
 import {createR3Design} from './r3-design';
 import {createR4Design} from './r4-design';
+import {createR5Design} from './r5-design';
 /** Authoring composition runs at build time; the browser consumes its one final snapshot. */
-export const finalModel = createR4Design(createR3Design(createR2Design(createSpaceRevision(createLifeDesign(createHomeDesign(
+export const finalModel = createR5Design(createR4Design(createR3Design(createR2Design(createSpaceRevision(createLifeDesign(createHomeDesign(
  createSalonDesign(createAtmosphereDesign(createStorageDesign(structuredClone(baseModel) as never))),
-))))));
+)))))));

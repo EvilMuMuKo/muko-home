@@ -72,6 +72,9 @@ import {buildR2Cabinet} from "./r2-cabinet-mesh";
 import {buildBarSign} from "./bar-sign";
 import {buildBayLife} from "./bay-life";
 import {buildR2Glazing} from "./r2-glazing";
+import {applyR5Motion} from "./r5-mesh";
+import {buildElectrical} from "./electrical-mesh";
+let electricalRendering;
 const homeMotion = createHomeMotion();
 const lifeMotion = createLifeMotion();
 const currentStorage = () =>
@@ -2544,6 +2547,8 @@ var QM = {},
     miniFridge: 0,
     shower: 0,
     foldingShelf: 0,
+    smallBed: 0,
+    cinemaTV: 0,
   },
   Dn = { ...an };
 var Za = null,
@@ -3408,6 +3413,10 @@ function Xp(i) {
     Oi());
 }
 function vx(i) {
+  if(i && ut.homeDesign.r5Revision && (Dn.smallBed>0 || Dn.cinemaTV>0 || an.smallBed>.001 || an.cinemaTV>.001)) {
+    Su("请先收起小沙发床，并将影音室电视退回远位");
+    return {accepted:false,reason:"small-bed-or-near-tv"};
+  }
   Vp = i;
   let e = matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 700,
     t = performance.now(),
@@ -3433,6 +3442,8 @@ function vx(i) {
       ? "\u6536\u8D77\u5BA2\u5E8A"
       : "\u5C55\u5F00\u5BA2\u5E8A"),
     $e("#bed-state").setAttribute("aria-pressed", String(i)));
+  if(e===0){r(performance.now());xu.delete('bed');}
+  return {accepted:true};
 }
 var localStorageProgress = new Map();
 function ns(i, e = 600) {
@@ -3463,6 +3474,7 @@ function ns(i, e = 600) {
   }),
     zc(),
     Jt?.request({ shadow: !0 }));
+  if(e===0){xu.get('motion')?.(performance.now());xu.delete('motion');}
 }
 function bx() {
   for (const seat of ut.homeDesign.entryIslandDining?.seats || []) {
@@ -3497,6 +3509,7 @@ function bx() {
     activity: an.activity,
   });
   applyLifeMotion(lifeMotion, an);
+  applyR5Motion(homeMotion,Ct,an);
   for (let i of St.kitchen)
     i.group.position.set(
       i.closed[0] + i.travel[0] * an.kitchen,
@@ -3517,8 +3530,21 @@ function bx() {
   }
 }
 function setTVAlternative(alternative) {
+  if(ut.homeDesign.r5Revision){setLivingMode(alternative?"activity":"relax");return {accepted:true};}
   if (alternative && Dn.dining > 0) { Su("请先收起餐桌，再调整电视停靠位置"); return; }
   ns({tv:alternative?1:0});
+}
+function setStudyBedOpen(open) {
+  if(open && (Vp || yu.some(b=>b.progress>.001))){Su("请先收起原大沙发床，再展开工位小床");return {accepted:false,reason:"full-bed-open"};}
+  if(open && (Dn.cinemaTV>0 || an.cinemaTV>.001)){Su("请先将电视退回远位，给工位椅留出停靠空间");return {accepted:false,reason:"near-tv"};}
+  ns({smallBed:open?1:0},1500);
+  return {accepted:true};
+}
+function setCinemaTVNear(near) {
+  if(near && (Vp || yu.some(b=>b.progress>.001))){Su("大沙发床展开时，电视需要保留远位");return {accepted:false,reason:"full-bed-open"};}
+  if(near && (Dn.smallBed>0 || an.smallBed>.001)){Su("工位小床展开时，电视需要保留远位");return {accepted:false,reason:"small-bed-open"};}
+  ns({cinemaTV:near?1:0},900);
+  return {accepted:true};
 }
 function setLivingMode(mode) {
   if (!["relax","dining","activity"].includes(mode)) return;
@@ -3651,6 +3677,11 @@ function fw() {
   });
   e("sofa-toggle", "拆分 / 拼合沙发", () => ns({ sofa: Dn.sofa ? 0 : 1, dining:0, activity:0 }));
   e("tv-toggle", "电视换位", () => setTVAlternative(!Dn.tv));
+  if(ut.homeDesign.r5Revision){
+    $e('#tv-toggle').hidden=true;
+    e('study-bed-toggle','展开 / 收起工位小床',()=>setStudyBedOpen(!Dn.smallBed));
+    e('cinema-tv-toggle','影音电视 · 远近换位',()=>setCinemaTVNear(!Dn.cinemaTV));
+  }
   e("laundry-toggle", "打开洗烘舱门", () =>
     ns({ laundry: Dn.laundry ? 0 : 1 }),
   );
@@ -3697,7 +3728,9 @@ function wx() {
 function updateActionVisibility() {
   const rooms = {
     "sofa-toggle": ["living"],
-    "tv-toggle": ["living"],
+    "tv-toggle": ut.homeDesign.r5Revision ? [] : ["living"],
+    "study-bed-toggle": ["guest"],
+    "cinema-tv-toggle": ["guest"],
     "entry-toggle": ["hall"],
     "gate-toggle": ["all", "bar", "hall"],
     "kitchen-toggle": ["kitchen"],
@@ -3874,6 +3907,9 @@ function walkTargets() {
   );
   const bed = point("guest-sofa-bed", 0.65);
   if (bed) add("walk-bed", "展开 / 收起客床", bed, () => vx(!Vp));
+  const smallBed=point('study-sofa-bed',.65),cinemaTV=point('guest-tv',1.3);
+  if(smallBed)add('walk-study-bed','展开 / 收起工位小床',smallBed,()=>setStudyBedOpen(!Dn.smallBed));
+  if(cinemaTV)add('walk-cinema-tv','影音电视 · 远近换位',cinemaTV,()=>setCinemaTVNear(!Dn.cinemaTV));
   const tv = point("living-tv", 1.265);
   if (tv)
     add(
@@ -4344,6 +4380,8 @@ async function bw() {
       (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
       (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
       (spatialDesign.bayLife = buildBayLife(Ct, ut, Vn, Mu)),
+      (electricalRendering=buildElectrical(Ct,ut,Vn)),
+      Ct.getObjectByName("electrical:root")?.children.forEach(node=>Mu(node,node.userData.spaceIds||[],"electrical")),
       (staticOcclusion = bakeStaticFloorOcclusion(Ct,ut,{size:quality.mobile?256:512})),
       homeMotion.sofaModules.forEach(root => attachDynamicContact(root, {w:0.98,d:0.86,y:0.003,strength:0.16})),
       attachDynamicContact(Ct.getObjectByName("living-tv"), {w:0.7,d:0.5,y:0.003,strength:0.12}),
@@ -4609,6 +4647,13 @@ document.addEventListener("visibilitychange", () => {
   Bp() ? (atmosphere?.resetClock(), Jt?.pause()) : Jt?.resume();
 });
 window.homePresentation = {
+  getR5Revision:()=>structuredClone(ut.homeDesign.r5Revision),
+  getElectricalPlan:()=>({plan:structuredClone(ut.homeDesign.electrical),rendering:electricalRendering}),
+  getStudyState:()=>({smallBedOpen:an.smallBed>.99,cinemaNear:an.cinemaTV>.99,fullBedOpen:!!Vp,
+    chairPosition:Ct.getObjectByName('study-office-chair')?.getWorldPosition(new P()).toArray()}),
+  setStudyBedOpen,
+  setCinemaTVNear,
+  setGuestBedOpen:(open)=>vx(open),
   whenVisualReady: async () => { await visualEnhancementsReady; await Promise.all([whenMaterialTexturesReady(), roomRadiance?.whenReady(), diffuseReady]); },
   bakeDiffuseRoom: async (roomId) => {
     if (!bakeOnly) throw new Error("Offline bake requires the developer gi-bake URL flag.");
@@ -4799,7 +4844,7 @@ window.homePresentation = {
     diningRetreatProgress: an.diningRetreat,
     dishwasherProgress: an.dishwasher,
     laundryProgress: an.laundry,
-    tvProgress: an.tv,
+    tvProgress: ut.homeDesign.r5Revision ? an.activity : an.tv,
     sofaProgress: an.sofa,
     activityProgress: an.activity,
     drinksFridgeProgress: an.miniFridge,
@@ -4892,3 +4937,14 @@ window.homePresentation.getObjectBounds = () => (
       };
     })
 );
+window.homePresentation.getObjectMeshBounds = (id) => {
+  Ct.updateMatrixWorld(true);const root=Ct.getObjectByName(id),out=[];
+  root?.traverse(node=>{
+    if(!node.isMesh)return;
+    for(let p=node;p;p=p.parent)if(!p.visible)return;
+    if(!node.geometry.boundingBox)node.geometry.computeBoundingBox();
+    const b=node.geometry.boundingBox.clone().applyMatrix4(node.matrixWorld);
+    out.push({min:b.min.toArray(),max:b.max.toArray()});
+  });
+  return out;
+};

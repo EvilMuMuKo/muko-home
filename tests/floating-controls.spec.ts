@@ -138,7 +138,7 @@ test("current 4173 build creates independent touch sticks at arbitrary origins a
       ? `Current 4173 page failed before input tests: ${runtimeErrors.join("; ")}`
       : "Current 4173 page did not become ready within 30 seconds");
   }
-  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("14.0.0");
+  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("15.0.0");
   await page.evaluate(() => window.homePresentation.startGhostWalk());
   await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)")).toHaveCount(2);
   await expect(page.locator(".ghost-joystick:not(.ghost-joystick--floating)").nth(0)).toBeHidden();
