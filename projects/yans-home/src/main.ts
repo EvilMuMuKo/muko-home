@@ -33,6 +33,7 @@ let yaw = -Math.PI / 2,
   pitch = 0,
   queued = false,
   lastTime = 0,
+  lastFurnitureTime = 0,
   renders = 0,
   lastFrameMs = 0,
   dirtyShadow = true,
@@ -248,6 +249,7 @@ function toggle(a: Action) {
     }
   }
   a.target = target;
+  if (!animating) lastFurnitureTime = performance.now();
   if (a.states)
     toast(
       target === 0
@@ -382,13 +384,21 @@ function frame(now: number) {
     return;
   }
   const dt = Math.min(0.06, lastTime ? (now - lastTime) / 1000 : 1 / 30);
+  // Furniture follows elapsed time through dropped frames. Walking keeps its
+  // smaller collision-safe step; a slow renderer must not stretch a bed/door
+  // transition into many seconds of movement.
+  const furnitureDt = Math.max(
+    0,
+    Math.min(0.25, lastFurnitureTime ? (now - lastFurnitureTime) / 1000 : dt),
+  );
+  lastFurnitureTime = now;
   lastFrameMs = now - lastTime;
   lastTime = now;
   let again = false,
     changed = false;
   for (const a of home.actions)
     if (Math.abs(a.target - a.value) > 0.001) {
-      a.value = T.MathUtils.damp(a.value, a.target, 8, dt);
+      a.value = T.MathUtils.damp(a.value, a.target, 8, furnitureDt);
       if (Math.abs(a.target - a.value) < 0.003) a.value = a.target;
       a.apply(a.value);
       again = true;
