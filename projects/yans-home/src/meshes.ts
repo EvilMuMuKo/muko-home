@@ -43,6 +43,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     floors: T.Mesh[] = [],
     bounds: Record<string, { min: number[]; max: number[] }> = {};
   const all = new T.Group();
+  const displayMaps = new Map<string, T.CanvasTexture>();
   scene.add(all);
   const fixed = new T.Group();
   all.add(fixed);
@@ -1061,6 +1062,58 @@ export function buildHome(scene: T.Scene, m: Materials) {
       box(g, 0.52, 0.28, 0.07, 0, 0.67, 0.205, "oak", 0.045);
       bodyObstacle(0.85);
     }
+    if (o.type === "monitor-arm") {
+      // Clamp to the existing desk: no floor stand, glass anchor or extra PC.
+      box(g, 0.075, 0.018, 0.1, 0, 0.76, 0, "metal", 0.005);
+      cyl(g, 0.014, 0.014, 0.89, 0, 1.22, 0, "metal", 16);
+      const arm = new T.Group();
+      arm.userData.moving = true;
+      g.add(arm);
+      const links = [0, 1].map(() =>
+        box(arm, 1, 0.028, 0.026, 0, 0, 0, "metal", 0.004),
+      );
+      const joints = [0, 1].map(() =>
+        cyl(arm, 0.025, 0.025, 0.04, 0, 0, 0, "metal", 16),
+      );
+      const screen = box(arm, w, 0.43, 0.035, 0, 0, 0, "black", 0.013);
+      const picture = new T.Mesh(
+        new T.PlaneGeometry(0.698, 0.393),
+        new T.MeshBasicMaterial({ map: displayTexture("gaming") }),
+      );
+      arm.add(picture);
+      act(
+        o.id,
+        o.label!,
+        o.room,
+        new T.Vector3(9.28, 1.45, 1.255),
+        (t) => {
+          const u = T.MathUtils.lerp(0.54, -0.325, t),
+            v = T.MathUtils.lerp(0.05, 0.4, t),
+            y = T.MathUtils.lerp(1.67, 1.45, t);
+          const radius = Math.hypot(u, v),
+            angle = Math.atan2(v, u) + Math.acos(radius / 0.68);
+          const elbow = [0.34 * Math.cos(angle), 0.34 * Math.sin(angle)];
+          const points = [[0, 0], elbow, [u, v]];
+          links.forEach((link, i) => {
+            const a = points[i],
+              b = points[i + 1],
+              dx = b[0] - a[0],
+              dz = b[1] - a[1];
+            link.position.set((a[0] + b[0]) / 2, y, (a[1] + b[1]) / 2);
+            link.rotation.y = -Math.atan2(dz, dx);
+            link.scale.x = Math.hypot(dx, dz);
+          });
+          joints.forEach((joint, i) =>
+            joint.position.set(points[i + 1][0], y, points[i + 1][1]),
+          );
+          screen.position.set(u, y, v);
+          picture.position.set(u, y, v + 0.019);
+        },
+        "monitor-arm",
+        1,
+      );
+      movingCollider(o.id, screen);
+    }
     if (o.type === "display-shelves") {
       // Shallow display above seated head height; no heavy cabinet over the sofa.
       for (const y of [1.76, 2.24]) {
@@ -1710,6 +1763,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     box(p, w + 0.002, 0.006, d - 0.015, x, y + h * 0.7, z, "paper", 0);
   }
   function displayTexture(mode: string) {
+    if (displayMaps.has(mode)) return displayMaps.get(mode)!;
     const c = document.createElement("canvas");
     c.width = 1024;
     c.height = 512;
@@ -1737,6 +1791,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     ctx.fillText(mode === "gaming" ? "A QUIET WORLD" : "YAN’S HOME", 55, 458);
     const t = new T.CanvasTexture(c);
     t.colorSpace = T.SRGBColorSpace;
+    displayMaps.set(mode, t);
     return t;
   }
   // Architectural coves share one gradient and one emissive material. No extra lights per strip.

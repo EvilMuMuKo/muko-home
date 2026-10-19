@@ -34,10 +34,10 @@
         ]
       },
       "performance": {
-        "renders": 10,
+        "renders": 3,
         "pending": false,
         "animating": false,
-        "frameMs": 4299.800000000003,
+        "frameMs": 216.69999999999982,
         "quality": {
           "mobile": true,
           "economical": false,
@@ -57,8 +57,8 @@
         },
         "geometry": {
           "backend": "wasm",
-          "transformedVertices": 389117,
-          "batches": 456,
+          "transformedVertices": 390017,
+          "batches": 457,
           "reason": ""
         },
         "textures": {
@@ -67,16 +67,16 @@
           "failed": []
         },
         "batching": {
-          "sources": 735,
+          "sources": 737,
           "batches": 110,
-          "reduced": 625
+          "reduced": 627
         },
         "contact": {
           "floors": 14,
           "vertices": 7880,
           "maximumDarkening": 0.24,
           "radiusMetres": 0.3,
-          "elapsedMs": 14.099999994039536,
+          "elapsedMs": 13.5,
           "dynamicExcluded": true
         },
         "lighting": {
@@ -91,8 +91,8 @@
         "finish": {
           "kind": "native AA + shared PBR environment"
         },
-        "drawCalls": 144,
-        "triangles": 86712,
+        "drawCalls": 150,
+        "triangles": 88106,
         "canvas": [
           960,
           600
@@ -126,10 +126,10 @@
         ]
       },
       "performance": {
-        "renders": 23,
+        "renders": 4,
         "pending": false,
         "animating": false,
-        "frameMs": 2516.600000000006,
+        "frameMs": 2599.8999999999996,
         "quality": {
           "mobile": true,
           "economical": false,
@@ -149,8 +149,8 @@
         },
         "geometry": {
           "backend": "wasm",
-          "transformedVertices": 389117,
-          "batches": 456,
+          "transformedVertices": 390017,
+          "batches": 457,
           "reason": ""
         },
         "textures": {
@@ -159,16 +159,16 @@
           "failed": []
         },
         "batching": {
-          "sources": 735,
+          "sources": 737,
           "batches": 110,
-          "reduced": 625
+          "reduced": 627
         },
         "contact": {
           "floors": 14,
           "vertices": 7880,
           "maximumDarkening": 0.24,
           "radiusMetres": 0.3,
-          "elapsedMs": 14.099999994039536,
+          "elapsedMs": 13.5,
           "dynamicExcluded": true
         },
         "lighting": {
@@ -183,8 +183,8 @@
         "finish": {
           "kind": "native AA + shared PBR environment"
         },
-        "drawCalls": 156,
-        "triangles": 94784,
+        "drawCalls": 876,
+        "triangles": 549098,
         "canvas": [
           960,
           600
@@ -218,10 +218,10 @@
         ]
       },
       "performance": {
-        "renders": 36,
+        "renders": 5,
         "pending": false,
         "animating": false,
-        "frameMs": 2299.899999999994,
+        "frameMs": 1200,
         "quality": {
           "mobile": true,
           "economical": false,
@@ -241,8 +241,8 @@
         },
         "geometry": {
           "backend": "wasm",
-          "transformedVertices": 389117,
-          "batches": 456,
+          "transformedVertices": 390017,
+          "batches": 457,
           "reason": ""
         },
         "textures": {
@@ -251,16 +251,16 @@
           "failed": []
         },
         "batching": {
-          "sources": 735,
+          "sources": 737,
           "batches": 110,
-          "reduced": 625
+          "reduced": 627
         },
         "contact": {
           "floors": 14,
           "vertices": 7880,
           "maximumDarkening": 0.24,
           "radiusMetres": 0.3,
-          "elapsedMs": 14.099999994039536,
+          "elapsedMs": 13.5,
           "dynamicExcluded": true
         },
         "lighting": {
@@ -275,8 +275,8 @@
         "finish": {
           "kind": "native AA + shared PBR environment"
         },
-        "drawCalls": 155,
-        "triangles": 94484,
+        "drawCalls": 873,
+        "triangles": 548198,
         "canvas": [
           960,
           600
@@ -284,5 +284,11 @@
       }
     }
   },
-  "checks": "18-case Playwright suite and PR CI are the authoritative pass/fail record"
+  "checks": "19-case Playwright suite; PR CI is the authoritative pass/fail record. Last-frame counters may include shadow updates and are not FPS.",
+  "secondaryDisplay": {
+    "sizeClass": "32-inch",
+    "mount": "desk-clamp swivel arm",
+    "sharedPC": true,
+    "stowClearsSideWindow": true
+  }
 }

@@ -241,7 +241,18 @@ test("floating dual touch sticks spawn at each touch, move independently and res
     { x: 130, y: 210, id: 1 },
     { x: 685, y: 220, id: 2 },
   ]);
-  await page.waitForTimeout(450);
+  // Software rendering may take more than 450ms for the first moving frame.
+  // Wait for the actual touch-driven movement rather than a wall-clock guess.
+  await page.waitForFunction(
+    (before) =>
+      (window as any).homePresentation
+        .getState()
+        .position.some(
+          (v: number, i: number) => Math.abs(v - before[i]) > 0.0001,
+        ),
+    position,
+    { timeout: 25000 },
+  );
   s = await api(page);
   expect(s.sticks.move.vector[1]).toBeLessThan(-0.8);
   expect(s.sticks.look.vector[0]).toBeGreaterThan(0.4);

@@ -290,3 +290,57 @@ test("sofa extension yields to a walker and reserves its future footprint during
     ),
   ).toBe(true);
 });
+
+test("sofa-facing secondary display clamps to the desk and stows clear of the side window", async ({
+  page,
+}) => {
+  await ready(page);
+  const active = await page.evaluate(() => {
+    const a = (window as any).homePresentation,
+      cs = a.getColliders();
+    return {
+      screen: cs.find((c: any) => c.id === "gaming-lounge-monitor"),
+      sofa: cs.find((c: any) => c.id === "gaming-sofa-bed"),
+      desk: cs.find((c: any) => c.id === "gaming-desk"),
+      desks: a.getModel().furniture.filter((f: any) => f.type === "desk")
+        .length,
+    };
+  });
+  expect(active.desks).toBe(1);
+  expect((active.screen.min[2] + active.screen.max[2]) / 2).toBeCloseTo(
+    (active.sofa.min[2] + active.sofa.max[2]) / 2,
+  );
+  expect(active.screen.min[0]).toBeGreaterThan(active.desk.min[0]);
+  expect(active.screen.max[0]).toBeLessThan(active.desk.max[0]);
+  expect(active.screen.min[1]).toBeGreaterThan(1.2);
+  await page.locator("#panel-toggle").click();
+  await page.locator('[data-tab="actions"]').click();
+  const button = page.locator('[data-action="gaming-lounge-monitor"]');
+  await expect(button).toContainText("收回到桌侧");
+  await button.click();
+  await settled(page);
+  const parked = await page.evaluate(() =>
+    (window as any).homePresentation
+      .getColliders()
+      .find((c: any) => c.id === "gaming-lounge-monitor"),
+  );
+  expect(parked.min[2]).toBeGreaterThan(1.47);
+  expect(parked.min[1]).toBeGreaterThan(1.32);
+  await expect(button).toContainText("转向沙发");
+  await button.click();
+  await settled(page);
+  await cycle(page);
+  await cycle(page);
+  const foot = await page.evaluate(() => {
+    const cs = (window as any).homePresentation.getColliders(),
+      sofa = cs.find((c: any) => c.id === "gaming-sofa-bed"),
+      desk = cs.find((c: any) => c.id === "gaming-desk"),
+      screen = cs.find((c: any) => c.id === "gaming-lounge-monitor");
+    return {
+      desk: desk.min[0] - sofa.max[0],
+      screen: screen.min[0] - sofa.max[0],
+    };
+  });
+  expect(foot.desk).toBeCloseTo(0.195);
+  expect(foot.screen).toBeGreaterThan(foot.desk);
+});

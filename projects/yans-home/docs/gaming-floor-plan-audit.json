@@ -90,5 +90,23 @@
       650
     ],
     "method": "10mm four-neighbor grid; radius300 circle; occupied work reserve blocked; floor plan only. Browser tests separately use actual leaf and sofa colliders."
+  },
+  "sofaDisplay": {
+    "size_class": "32-inch",
+    "mount": "desk-clamp-articulated-arm",
+    "active_center_mm": [
+      2470,
+      725
+    ],
+    "parked_center_mm": [
+      2820,
+      1590
+    ],
+    "height_center_mm": [
+      1450,
+      1670
+    ],
+    "floor_projection_inside_existing_desk": true,
+    "shared_pc": true
   }
 }

@@ -266,6 +266,8 @@ function toggle(a: Action) {
   updateActions();
 }
 function actionLabel(a: Action) {
+  if (a.kind === "monitor-arm")
+    return `${a.target > 0.5 ? "收回到桌侧" : "转向沙发"} · ${a.name}`;
   if (a.states) {
     const next = a.target < 0.25 ? 1 : a.target < 0.75 ? 2 : 0;
     return `切换为${a.states[next]} · ${a.name}`;
