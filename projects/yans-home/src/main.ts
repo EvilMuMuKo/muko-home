@@ -575,11 +575,32 @@ async function boot() {
     if (activeAction) toggle(activeAction);
   };
   $("#export").onclick = () => {
-    renderer.render(scene, camera);
-    const a = document.createElement("a");
-    a.download = "YANs-Home.png";
-    a.href = renderer.domElement.toDataURL("image/png");
-    a.click();
+    const button = $<HTMLButtonElement>("#export");
+    button.disabled = true;
+    toast("正在保存当前画面…");
+    try {
+      renderer.render(scene, camera);
+      // Encode outside the click handler; avoid a large base64 allocation and
+      // a synchronous PNG encoder blocking input on lower-powered devices.
+      renderer.domElement.toBlob((blob) => {
+        button.disabled = false;
+        if (!blob) {
+          toast("画面保存失败，请再试一次。");
+          return;
+        }
+        const url = URL.createObjectURL(blob),
+          a = document.createElement("a");
+        a.download = "YANs-Home.png";
+        a.href = url;
+        document.body.append(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 10000);
+      }, "image/png");
+    } catch {
+      button.disabled = false;
+      toast("画面保存失败，请再试一次。");
+    }
   };
   window.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {

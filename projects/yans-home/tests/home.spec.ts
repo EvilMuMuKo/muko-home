@@ -305,6 +305,7 @@ test("floating dual touch sticks spawn at each touch, move independently and res
 test("room views, lighting and image export controls remain usable", async ({
   page,
 }) => {
+  test.setTimeout(180000);
   await ready(page);
   await page.click("#panel-toggle");
   await page.click('[data-room="gaming"]');
@@ -316,7 +317,17 @@ test("room views, lighting and image export controls remain usable", async ({
   await page.click('[data-tab="rooms"]');
   const download = page.waitForEvent("download");
   await page.click("#export");
-  expect((await download).suggestedFilename()).toBe("YANs-Home.png");
+  const saved = await download;
+  expect(saved.suggestedFilename()).toBe("YANs-Home.png");
+  expect(await saved.failure()).toBeNull();
+  const { readFile } = await import("node:fs/promises");
+  const png = await readFile((await saved.path())!);
+  expect(png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+  const canvas = await page.evaluate(
+    () => (window as any).homePresentation.getPerformance().canvas,
+  );
+  expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual(canvas);
+  expect(png.length).toBeGreaterThan(10000);
   await page.click("#panel-close");
   await page.click("#overview");
   expect((await api(page)).overview).toBe(true);

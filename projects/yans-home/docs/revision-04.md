@@ -45,10 +45,12 @@
 
 保留手机像素预算65万/100万、有限3/4个局部灯、一个局部阴影灯、共享环境与按需渲染；不新增实时反射或逐帧布料计算。条绒与软垫细节不引入新的远程图片请求。
 
-构建仅同步仓库的 `yans-home/` 子目录；muko-home原入口与原公寓源代码保持独立。验证包括生产构建、生成文件可复现、19项浏览器检查、手机触摸与三态操作，以及发布后线上烟雾检查。浏览器检查分两组并行执行，由保留原名称的verify-yans-home汇总任务要求两组均通过。执行结果见本次PR和 `docs/revision-04-audit.json`；Linux Chromium/SwiftShader及触摸模拟不等于实体手机帧率测试。
+构建仅同步仓库的 `yans-home/` 子目录；muko-home原入口与原公寓源代码保持独立。验证包括生产构建、生成文件可复现、19项浏览器检查、手机触摸与三态操作，以及发布后线上烟雾检查。浏览器检查与原项目一致，分四组并行执行，由verify-yans-home汇总任务要求全部通过。执行结果见本次PR和 `docs/revision-04-audit.json`；Linux Chromium/SwiftShader及触摸模拟不等于实体手机帧率测试。
 
 平面图见 [商品尺寸更新后的审计PDF](../public/gaming-floor-plan.pdf)；公共网页也可在电脑室的空间面板打开。现场房间净尺寸、产品完整运动扫掠、真实人体工学椅后仰与柜体施工节点仍需复尺。
 
 ## 本轮画面
 
 [坐姿](screenshots/gaming-r04-sitting.png) · [躺靠](screenshots/gaming-r04-recline.png) · [睡眠](screenshots/gaming-r04-sleeping.png)。截图为当前模型的浏览器输出，没有使用实景照片替代模型。
+
+画面导出使用异步PNG Blob，避免同步Base64编码阻塞输入；按钮在编码期间防止重复提交。浏览器验收检查实际下载文件的PNG签名、画布尺寸及非空内容。
