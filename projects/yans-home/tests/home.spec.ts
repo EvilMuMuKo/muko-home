@@ -241,7 +241,18 @@ test("floating dual touch sticks spawn at each touch, move independently and res
     { x: 130, y: 210, id: 1 },
     { x: 685, y: 220, id: 2 },
   ]);
-  await page.waitForTimeout(450);
+  // Software rendering may take more than 450ms for the first moving frame.
+  // Wait for the actual touch-driven movement rather than a wall-clock guess.
+  await page.waitForFunction(
+    (before) =>
+      (window as any).homePresentation
+        .getState()
+        .position.some(
+          (v: number, i: number) => Math.abs(v - before[i]) > 0.0001,
+        ),
+    position,
+    { timeout: 25000 },
+  );
   s = await api(page);
   expect(s.sticks.move.vector[1]).toBeLessThan(-0.8);
   expect(s.sticks.look.vector[0]).toBeGreaterThan(0.4);
@@ -294,6 +305,7 @@ test("floating dual touch sticks spawn at each touch, move independently and res
 test("room views, lighting and image export controls remain usable", async ({
   page,
 }) => {
+  test.setTimeout(180000);
   await ready(page);
   await page.click("#panel-toggle");
   await page.click('[data-room="gaming"]');
@@ -305,7 +317,17 @@ test("room views, lighting and image export controls remain usable", async ({
   await page.click('[data-tab="rooms"]');
   const download = page.waitForEvent("download");
   await page.click("#export");
-  expect((await download).suggestedFilename()).toBe("YANs-Home.png");
+  const saved = await download;
+  expect(saved.suggestedFilename()).toBe("YANs-Home.png");
+  expect(await saved.failure()).toBeNull();
+  const { readFile } = await import("node:fs/promises");
+  const png = await readFile((await saved.path())!);
+  expect(png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
+  const canvas = await page.evaluate(
+    () => (window as any).homePresentation.getPerformance().canvas,
+  );
+  expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual(canvas);
+  expect(png.length).toBeGreaterThan(10000);
   await page.click("#panel-close");
   await page.click("#overview");
   expect((await api(page)).overview).toBe(true);
@@ -398,7 +420,7 @@ test("revision 03 keeps storage useful, window clear and the new guest bedside a
       contact: a.getPerformance().contact,
     };
   });
-  expect(result.version).toBe("1.2.0");
+  expect(result.version).toBe("1.3.0");
   expect(result.livingAisle).toBeGreaterThan(1.0);
   expect(result.guestAisle).toBeGreaterThan(0.56);
   expect(result.guestFoot).toBeGreaterThan(0.6);

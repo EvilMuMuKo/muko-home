@@ -1,0 +1,112 @@
+{
+  "project": "YAN’s Home",
+  "date": "2026-10-19",
+  "source_commit_base": "016a578410ef004699d7577ec69e87939fb23f45",
+  "model_version": "1.3.0",
+  "units": "mm",
+  "field_measured": false,
+  "room_clear": [
+    2990,
+    2940
+  ],
+  "furniture": {
+    "desk": [
+      2215,
+      10,
+      750,
+      2820
+    ],
+    "tower": [
+      30,
+      1450,
+      300,
+      650
+    ],
+    "occupied_working_reserve": [
+      1215,
+      2000,
+      1000,
+      800
+    ],
+    "sofa_closed": [
+      100,
+      100,
+      800,
+      1250
+    ]
+  },
+  "product_dimensions": {
+    "source": "user-supplied-retailer-dimension-image",
+    "selected_external_width": 1250,
+    "available_widths": [
+      1050,
+      1250,
+      1450,
+      1650,
+      1850
+    ],
+    "inner_width": 1200,
+    "sleep_length": 1820,
+    "closed_depth": 800,
+    "full_depth": 1920,
+    "seat_height": 400,
+    "seat_depth": 650,
+    "closed_height": 850,
+    "headboard_height": 700,
+    "foot_height": 310,
+    "reclining_depth_provisional": 1360,
+    "rear_allowance_provisional": 100
+  },
+  "results": {
+    "foot_gap_by_state": {
+      "日常坐姿": 1315,
+      "躺靠（暂估）": 755,
+      "完全展开": 195
+    },
+    "600mm_probe_to_window_occupied": {
+      "日常坐姿": true,
+      "躺靠（暂估）": true,
+      "完全展开": false
+    },
+    "600mm_probe_to_bedside_occupied": {
+      "日常坐姿": true,
+      "躺靠（暂估）": true,
+      "完全展开": true
+    },
+    "600mm_probe_width_sweep": {
+      "1050": true,
+      "1250": true,
+      "1450": false,
+      "1650": false,
+      "1850": false
+    },
+    "door_collision_original_degrees": [
+      63.4,
+      88.2
+    ],
+    "door_collision_proposed": false,
+    "closed_storage_width_before_after": [
+      2550,
+      650
+    ],
+    "method": "10mm four-neighbor grid; radius300 circle; occupied work reserve blocked; floor plan only. Browser tests separately use actual leaf and sofa colliders."
+  },
+  "sofaDisplay": {
+    "size_class": "32-inch",
+    "mount": "desk-clamp-articulated-arm",
+    "active_center_mm": [
+      2470,
+      725
+    ],
+    "parked_center_mm": [
+      2820,
+      1590
+    ],
+    "height_center_mm": [
+      1450,
+      1670
+    ],
+    "floor_projection_inside_existing_desk": true,
+    "shared_pc": true
+  }
+}

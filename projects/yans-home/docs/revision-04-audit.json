@@ -1,0 +1,294 @@
+{
+  "date": "2026-10-19",
+  "version": "1.3.0",
+  "platform": "Linux Chromium / SwiftShader,960x600 mobile render profile; this is visual/functional evidence, not physical-phone FPS or thermal measurement",
+  "browserErrors": [],
+  "productDimensionsSource": "user-supplied-retailer-dimension-image",
+  "reclineDepthProvisional": true,
+  "roomDimensionsSiteVerified": false,
+  "states": {
+    "sitting": {
+      "sofa": {
+        "min": [
+          6.93,
+          -1.1920928966180355e-8,
+          0.6299999999999998
+        ],
+        "max": [
+          7.73,
+          0.850000011920929,
+          1.88
+        ]
+      },
+      "collider": {
+        "id": "gaming-sofa-bed",
+        "min": [
+          6.93,
+          -1.1920928966180355e-8,
+          0.6299999999999998
+        ],
+        "max": [
+          7.73,
+          0.850000011920929,
+          1.88
+        ]
+      },
+      "performance": {
+        "renders": 3,
+        "pending": false,
+        "animating": false,
+        "frameMs": 216.69999999999982,
+        "quality": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1,
+          "interactionDpr": 1,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "geometry": {
+          "backend": "wasm",
+          "transformedVertices": 390017,
+          "batches": 457,
+          "reason": ""
+        },
+        "textures": {
+          "loaded": 12,
+          "requested": 12,
+          "failed": []
+        },
+        "batching": {
+          "sources": 737,
+          "batches": 110,
+          "reduced": 627
+        },
+        "contact": {
+          "floors": 14,
+          "vertices": 7880,
+          "maximumDarkening": 0.24,
+          "radiusMetres": 0.3,
+          "elapsedMs": 13.5,
+          "dynamicExcluded": true
+        },
+        "lighting": {
+          "slots": 4,
+          "shadowLights": 1,
+          "localIntensity": 8
+        },
+        "clock": {
+          "steps": 0,
+          "collisions": 0
+        },
+        "finish": {
+          "kind": "native AA + shared PBR environment"
+        },
+        "drawCalls": 150,
+        "triangles": 88106,
+        "canvas": [
+          960,
+          600
+        ]
+      }
+    },
+    "recline": {
+      "sofa": {
+        "min": [
+          6.93,
+          0,
+          0.6299999999999999
+        ],
+        "max": [
+          8.29,
+          0.85,
+          1.88
+        ]
+      },
+      "collider": {
+        "id": "gaming-sofa-bed",
+        "min": [
+          6.93,
+          -1.1920928966180355e-8,
+          0.6299999999999998
+        ],
+        "max": [
+          8.290000000000001,
+          0.850000011920929,
+          1.88
+        ]
+      },
+      "performance": {
+        "renders": 4,
+        "pending": false,
+        "animating": false,
+        "frameMs": 2599.8999999999996,
+        "quality": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1,
+          "interactionDpr": 1,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "geometry": {
+          "backend": "wasm",
+          "transformedVertices": 390017,
+          "batches": 457,
+          "reason": ""
+        },
+        "textures": {
+          "loaded": 12,
+          "requested": 12,
+          "failed": []
+        },
+        "batching": {
+          "sources": 737,
+          "batches": 110,
+          "reduced": 627
+        },
+        "contact": {
+          "floors": 14,
+          "vertices": 7880,
+          "maximumDarkening": 0.24,
+          "radiusMetres": 0.3,
+          "elapsedMs": 13.5,
+          "dynamicExcluded": true
+        },
+        "lighting": {
+          "slots": 4,
+          "shadowLights": 1,
+          "localIntensity": 8
+        },
+        "clock": {
+          "steps": 0,
+          "collisions": 0
+        },
+        "finish": {
+          "kind": "native AA + shared PBR environment"
+        },
+        "drawCalls": 876,
+        "triangles": 549098,
+        "canvas": [
+          960,
+          600
+        ]
+      }
+    },
+    "sleeping": {
+      "sofa": {
+        "min": [
+          6.93,
+          0,
+          0.6299999999999999
+        ],
+        "max": [
+          8.85,
+          0.85,
+          1.88
+        ]
+      },
+      "collider": {
+        "id": "gaming-sofa-bed",
+        "min": [
+          6.93,
+          -1.1920928966180355e-8,
+          0.6299999999999999
+        ],
+        "max": [
+          8.85,
+          0.850000011920929,
+          1.8800000000000003
+        ]
+      },
+      "performance": {
+        "renders": 5,
+        "pending": false,
+        "animating": false,
+        "frameMs": 1200,
+        "quality": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "maxDpr": 1,
+          "interactionDpr": 1,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "geometry": {
+          "backend": "wasm",
+          "transformedVertices": 390017,
+          "batches": 457,
+          "reason": ""
+        },
+        "textures": {
+          "loaded": 12,
+          "requested": 12,
+          "failed": []
+        },
+        "batching": {
+          "sources": 737,
+          "batches": 110,
+          "reduced": 627
+        },
+        "contact": {
+          "floors": 14,
+          "vertices": 7880,
+          "maximumDarkening": 0.24,
+          "radiusMetres": 0.3,
+          "elapsedMs": 13.5,
+          "dynamicExcluded": true
+        },
+        "lighting": {
+          "slots": 4,
+          "shadowLights": 1,
+          "localIntensity": 8
+        },
+        "clock": {
+          "steps": 0,
+          "collisions": 0
+        },
+        "finish": {
+          "kind": "native AA + shared PBR environment"
+        },
+        "drawCalls": 873,
+        "triangles": 548198,
+        "canvas": [
+          960,
+          600
+        ]
+      }
+    }
+  },
+  "checks": "19-case Playwright suite; PR CI is the authoritative pass/fail record. Last-frame counters may include shadow updates and are not FPS.",
+  "secondaryDisplay": {
+    "sizeClass": "32-inch",
+    "mount": "desk-clamp swivel arm",
+    "sharedPC": true,
+    "stowClearsSideWindow": true
+  }
+}

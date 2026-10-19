@@ -163,6 +163,16 @@ canvas {
   margin-top: 6px;
   opacity: 0.82;
 }
+#gaming-plan {
+  display: block;
+  padding: 11px 14px;
+  border: 1px solid #b7b7a5;
+  border-radius: 9px;
+  color: inherit;
+  text-decoration: none;
+  text-align: center;
+  font-size: 12px;
+}
 .subline span {
   margin-left: 20px;
 }
@@ -370,4 +380,8 @@ canvas {
   .loading-line:after {
     animation: none;
   }
+}
+
+#gaming-plan[hidden] {
+  display: none;
 }

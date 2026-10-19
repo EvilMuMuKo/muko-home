@@ -10,6 +10,7 @@ import {
   walls,
   furniture,
   cabinetBottom,
+  gamingSofa,
   type Furnishing,
   type RoomId,
   type Wall,
@@ -30,6 +31,8 @@ export interface Action {
   target: number;
   apply: (t: number) => void;
   kind: string;
+  states?: readonly string[];
+  envelope?: (t: number) => { min: T.Vector3; max: T.Vector3 };
 }
 export function buildHome(scene: T.Scene, m: Materials) {
   const colliders: Collider[] = [],
@@ -40,6 +43,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     floors: T.Mesh[] = [],
     bounds: Record<string, { min: number[]; max: number[] }> = {};
   const all = new T.Group();
+  const displayMaps = new Map<string, T.CanvasTexture>();
   scene.add(all);
   const fixed = new T.Group();
   all.add(fixed);
@@ -158,7 +162,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     kind = "cabinet",
     initial = 0,
   ) {
-    const a = {
+    const a: Action = {
       id,
       name,
       room,
@@ -528,10 +532,9 @@ export function buildHome(scene: T.Scene, m: Materials) {
       );
     }
     function cabinet(bottom = 0) {
-      const cols =
-          o.id === "guest-east-wardrobe"
-            ? 2
-            : Math.max(1, Math.round(w / 0.58)),
+      const cols = ["guest-east-wardrobe", "gaming-library"].includes(o.id)
+          ? 2
+          : Math.max(1, Math.round(w / 0.58)),
         cw = w / cols;
       box(g, w, 0.08, d, 0, bottom + 0.06, 0, "charcoal");
       box(g, w, 0.035, d, 0, bottom + h - 0.02, 0, wood);
@@ -540,7 +543,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
       box(g, w, h, 0.018, 0, bottom + h / 2, -d / 2 + 0.055, "charcoal");
       const front = (j: number, low: number, high: number, suffix = "") => {
         const x = -w / 2 + cw * (j + 0.5),
-          sliding = o.id === "guest-east-wardrobe";
+          sliding = ["guest-east-wardrobe", "gaming-library"].includes(o.id);
         const pivot = new T.Group();
         pivot.position.set(
           x - cw / 2 + 0.012,
@@ -1059,6 +1062,275 @@ export function buildHome(scene: T.Scene, m: Materials) {
       box(g, 0.52, 0.28, 0.07, 0, 0.67, 0.205, "oak", 0.045);
       bodyObstacle(0.85);
     }
+    if (o.type === "monitor-arm") {
+      // Clamp to the existing desk: no floor stand, glass anchor or extra PC.
+      box(g, 0.075, 0.018, 0.1, 0, 0.76, 0, "metal", 0.005);
+      cyl(g, 0.014, 0.014, 0.89, 0, 1.22, 0, "metal", 16);
+      const arm = new T.Group();
+      arm.userData.moving = true;
+      g.add(arm);
+      const links = [0, 1].map(() =>
+        box(arm, 1, 0.028, 0.026, 0, 0, 0, "metal", 0.004),
+      );
+      const joints = [0, 1].map(() =>
+        cyl(arm, 0.025, 0.025, 0.04, 0, 0, 0, "metal", 16),
+      );
+      const screen = box(arm, w, 0.43, 0.035, 0, 0, 0, "black", 0.013);
+      const picture = new T.Mesh(
+        new T.PlaneGeometry(0.698, 0.393),
+        new T.MeshBasicMaterial({ map: displayTexture("gaming") }),
+      );
+      arm.add(picture);
+      act(
+        o.id,
+        o.label!,
+        o.room,
+        new T.Vector3(9.28, 1.45, 1.255),
+        (t) => {
+          const u = T.MathUtils.lerp(0.54, -0.325, t),
+            v = T.MathUtils.lerp(0.05, 0.4, t),
+            y = T.MathUtils.lerp(1.67, 1.45, t);
+          const radius = Math.hypot(u, v),
+            angle = Math.atan2(v, u) + Math.acos(radius / 0.68);
+          const elbow = [0.34 * Math.cos(angle), 0.34 * Math.sin(angle)];
+          const points = [[0, 0], elbow, [u, v]];
+          links.forEach((link, i) => {
+            const a = points[i],
+              b = points[i + 1],
+              dx = b[0] - a[0],
+              dz = b[1] - a[1];
+            link.position.set((a[0] + b[0]) / 2, y, (a[1] + b[1]) / 2);
+            link.rotation.y = -Math.atan2(dz, dx);
+            link.scale.x = Math.hypot(dx, dz);
+          });
+          joints.forEach((joint, i) =>
+            joint.position.set(points[i + 1][0], y, points[i + 1][1]),
+          );
+          screen.position.set(u, y, v);
+          picture.position.set(u, y, v + 0.019);
+        },
+        "monitor-arm",
+        1,
+      );
+      movingCollider(o.id, screen);
+    }
+    if (o.type === "display-shelves") {
+      // Shallow display above seated head height; no heavy cabinet over the sofa.
+      for (const y of [1.76, 2.24]) {
+        box(g, w, 0.028, d, 0, y, 0, wood, 0.005);
+        for (const x of [-w * 0.34, w * 0.34])
+          box(g, 0.018, 0.12, 0.16, x, y - 0.065, -0.015, "metal", 0.003);
+      }
+      for (let j = 0; j < 4; j++)
+        book(
+          g,
+          -0.34 + j * 0.065,
+          1.775,
+          0,
+          0.045,
+          0.19 + (j % 2) * 0.035,
+          0.13,
+        );
+      const frame = box(
+        g,
+        0.28,
+        0.25,
+        0.025,
+        0.19,
+        2.38,
+        -0.055,
+        "walnut",
+        0.006,
+      );
+      box(
+        g,
+        0.24,
+        0.21,
+        0.006,
+        frame.position.x,
+        frame.position.y,
+        -0.038,
+        "paper",
+        0.002,
+      );
+      box(g, 0.09, 0.14, 0.008, 0.2, 2.37, -0.032, "olive", 0.003);
+      cyl(g, 0.045, 0.035, 0.15, 0.34, 1.855, 0.015, "ceramic", 20);
+      // Visible reading sconce, sharing the existing bounded room-light pool.
+      line(g, [0.37, 1.5, -0.075], [0.37, 1.5, 0.16], 0.009, "bronze");
+      sphere(g, 0.37, 1.49, 0.17, 0.07, 0.055, 0.07, "paper");
+    }
+    if (o.type === "sofa-bed") {
+      function cushion(
+        parent: T.Object3D,
+        width: number,
+        height: number,
+        depth: number,
+        x: number,
+        y: number,
+        z: number,
+        face: "y" | "z" = "y",
+      ) {
+        const geometry = new RoundedBoxGeometry(width, height, depth, 5, 0.03);
+        const positions = geometry.getAttribute("position"),
+          normals = geometry.getAttribute("normal");
+        for (let i = 0; i < positions.count; i++) {
+          const weight = face === "y" ? normals.getY(i) : normals.getZ(i);
+          if (weight < 0.65) continue;
+          const u = positions.getX(i) / width,
+            v =
+              face === "y"
+                ? positions.getZ(i) / depth
+                : positions.getY(i) / height;
+          let depression = 0;
+          for (const a of [-0.25, 0.25])
+            for (const b of [-0.25, 0.25])
+              depression +=
+                0.012 * Math.exp(-((u - a) ** 2 + (v - b) ** 2) / 0.013);
+          if (face === "y")
+            positions.setY(i, positions.getY(i) - depression * weight);
+          else positions.setZ(i, positions.getZ(i) - depression * weight);
+        }
+        positions.needsUpdate = true;
+        geometry.computeVertexNormals();
+        return mesh(parent, geometry, "olive", x, y, z);
+      }
+      const back = -d / 2;
+      box(g, w - 0.05, 0.075, d - 0.04, 0, 0.15, 0, "walnut", 0.012);
+      box(g, w - 0.03, 0.39, 0.035, 0, 0.505, back + 0.02, "walnut", 0.008);
+      for (const x of [-w / 2 + 0.015, w / 2 - 0.015]) {
+        box(g, 0.03, 0.14, d - 0.06, x, 0.24, 0, "walnut", 0.008);
+        line(
+          g,
+          [x, 0.55, back + 0.06],
+          [x, 0.55, d / 2 - 0.06],
+          0.015,
+          "walnut",
+        );
+        for (const z of [back + 0.06, d / 2 - 0.06])
+          cyl(g, 0.015, 0.015, 0.53, x, 0.285, z, "walnut", 16);
+      }
+      // Cane insert uses actual open weave silhouettes, shared and batched, not a new texture.
+      for (let x = -w / 2 + 0.06; x < w / 2 - 0.04; x += 0.035)
+        box(g, 0.008, 0.32, 0.006, x, 0.51, back + 0.042, "oak", 0);
+      const moving = new T.Group();
+      moving.userData.moving = true;
+      g.add(moving);
+      const seatPads = [-0.3, 0.3].map((x) =>
+        cushion(moving, 0.592, 0.12, 0.65, x, 0.34, 0.045),
+      );
+      const rest = new T.Group();
+      moving.add(rest);
+      for (const x of [-0.3, 0.3])
+        cushion(rest, 0.592, 0.45, 0.12, x, 0.225, 0, "z");
+      const pillow = box(
+        rest,
+        0.3,
+        0.27,
+        0.12,
+        0.22,
+        0.22,
+        0.11,
+        "linen",
+        0.055,
+      );
+      pillow.rotation.z = -0.1;
+      const extension = new T.Group();
+      moving.add(extension);
+      const tray = box(
+        extension,
+        w - 0.05,
+        0.06,
+        1,
+        0,
+        0.15,
+        0,
+        "walnut",
+        0.008,
+      );
+      const pads = [-0.3, 0.3].flatMap((x) =>
+        [0, 1].map((row) => ({
+          row,
+          mesh: cushion(extension, 0.592, 0.12, 1, x, 0.25, 0),
+        })),
+      );
+      const end = new T.Group();
+      moving.add(end);
+      box(end, w - 0.03, 0.1, 0.035, 0, 0.21, 0, "walnut", 0.008);
+      for (const x of [-w / 2 + 0.015, w / 2 - 0.015]) {
+        cyl(end, 0.015, 0.015, 0.27, x, 0.175, 0, "walnut", 16);
+        sphere(end, x, 0.295, 0, 0.015, 0.015, 0.015, "walnut");
+      }
+      for (const x of [-0.46, 0.46])
+        cyl(end, 0.03, 0.03, 0.035, x, 0.025, -0.04, "rubber", 12);
+      const collision = new T.Mesh(
+        new T.BoxGeometry(w, 0.85, 1),
+        new T.MeshBasicMaterial(),
+      );
+      collision.visible = false;
+      moving.add(collision);
+      const depthAt = (t: number) =>
+        t <= 0.5
+          ? T.MathUtils.lerp(gamingSofa.depths[0], gamingSofa.depths[1], t * 2)
+          : T.MathUtils.lerp(
+              gamingSofa.depths[1],
+              gamingSofa.depths[2],
+              (t - 0.5) * 2,
+            );
+      const envelope = (t: number) => ({
+        min: new T.Vector3(o.x - d / 2, 0, o.z - w / 2),
+        max: new T.Vector3(o.x - d / 2 + depthAt(t), 0.85, o.z + w / 2),
+      });
+      const action = act(
+        o.id,
+        o.label!,
+        o.room,
+        new T.Vector3(o.x + d / 2 + 0.15, 0.7, o.z + w / 2),
+        (t) => {
+          const depth = depthAt(t),
+            out = depth - d;
+          const tilt = t <= 0.5 ? t * 1.1 : 0.55 + (t - 0.5) * 0.9;
+          rest.position.set(0, 0.4 - 0.09 * t, back + 0.08 + 0.395 * tilt);
+          rest.rotation.x = (-tilt * Math.PI) / 2;
+          pillow.visible = t < 0.85;
+          const seatDepth = T.MathUtils.lerp(
+            0.65,
+            gamingSofa.sleepLength / 3,
+            t,
+          );
+          const seatCenter = T.MathUtils.lerp(
+            0.045,
+            back + 0.05 + seatDepth / 2,
+            t,
+          );
+          for (const pad of seatPads) {
+            pad.position.set(pad.position.x, 0.34 - 0.09 * t, seatCenter);
+            pad.scale.z = seatDepth / 0.65;
+          }
+          extension.visible = end.visible = out > 0.003;
+          const start = seatCenter + seatDepth / 2,
+            padLength = Math.max(0.001, back + depth - 0.05 - start);
+          tray.scale.z = Math.max(0.001, out);
+          tray.position.z = d / 2 + out / 2 - 0.01;
+          for (const pad of pads) {
+            pad.mesh.scale.z = padLength / 2;
+            pad.mesh.position.set(
+              pad.mesh.position.x,
+              0.34 - 0.09 * t,
+              start + (padLength * (pad.row + 0.5)) / 2,
+            );
+          }
+          end.position.z = back + depth - 0.025;
+          collision.position.set(0, 0.425, back + depth / 2);
+          collision.scale.z = depth;
+          const b = envelope(t);
+          bounds[o.id] = { min: b.min.toArray(), max: b.max.toArray() };
+        },
+        "sofa-bed",
+      );
+      action.states = gamingSofa.states;
+      action.envelope = envelope;
+      movingCollider(o.id, collision);
+    }
     if (o.type === "sofa") {
       box(g, w - 0.14, 0.17, d - 0.08, 0, 0.2, 0, "clay", 0.09);
       for (const x of [-0.62, 0.62])
@@ -1172,42 +1444,52 @@ export function buildHome(scene: T.Scene, m: Materials) {
       bodyObstacle(0.5);
     }
     if (o.type === "desk") {
-      box(g, w, 0.045, d, 0, 0.73, 0, "oak", 0.012);
+      box(g, w, 0.045, d, 0, 0.73, 0, wood, 0.012);
       for (const x of [-w / 2 + 0.06, w / 2 - 0.06]) {
-        box(g, 0.045, 0.7, d - 0.06, x, 0.36, 0, "metal");
-        box(g, 0.16, 0.035, d - 0.02, x, 0.022, 0, "metal");
+        for (const sign of [-1, 1])
+          line(
+            g,
+            [x, 0.035, sign * (d / 2 - 0.045)],
+            [x, 0.705, sign * (d / 2 - 0.12)],
+            0.022,
+            "metal",
+          );
+        box(g, 0.055, 0.035, d - 0.02, x, 0.022, 0, "metal");
       }
       const station = new T.Group();
-      station.position.x = 0.6;
+      // PC and chair are offset towards the entrance, clear of the sofa width.
+      station.position.x = 0.85;
       g.add(station);
-      box(station, 0.9, 0.4, 0.045, -0.18, 1.12, -0.2, "black", 0.022);
+      box(station, 0.9, 0.4, 0.045, 0, 1.12, 0.06, "black", 0.022);
       const monitor = new T.Mesh(
         new T.PlaneGeometry(0.855, 0.355),
         new T.MeshBasicMaterial({ map: displayTexture("gaming") }),
       );
-      monitor.position.set(-0.18, 1.12, -0.174);
+      monitor.position.set(0, 1.12, 0.086);
       station.add(monitor);
-      cyl(station, 0.023, 0.023, 0.23, -0.18, 0.86, -0.2, "metal");
-      box(station, 0.26, 0.012, 0.18, -0.18, 0.76, -0.2, "metal", 0.02);
-      box(station, 0.45, 0.021, 0.17, -0.15, 0.77, 0.18, "black", 0.01);
-      box(station, 0.055, 0.027, 0.095, 0.22, 0.78, 0.18, "black", 0.02);
-      box(station, 0.24, 0.43, 0.42, 0.65, 0.975, -0.08, "black", 0.025);
-      box(station, 0.008, 0.35, 0.32, 0.525, 0.99, -0.08, "glass");
-      for (const y of [0.9, 1.05]) {
-        const fan = mesh(
-          station,
-          new T.TorusGeometry(0.05, 0.005, 6, 24),
-          "steel",
-          0.65,
-          y,
-          0.135,
-        );
-        fan.rotation.x = 0;
-      }
-      for (const x of [-0.69, 0.35]) {
+      cyl(station, 0.023, 0.023, 0.23, 0, 0.86, 0.06, "metal");
+      box(station, 0.26, 0.012, 0.18, 0, 0.76, 0.06, "metal", 0.02);
+      box(station, 0.45, 0.021, 0.17, 0.05, 0.77, 0.25, "black", 0.01);
+      box(station, 0.055, 0.027, 0.095, 0.34, 0.78, 0.25, "black", 0.02);
+      for (const x of [-0.5, 0.5]) {
         box(station, 0.1, 0.19, 0.1, x, 0.86, -0.22, "black");
         cyl(station, 0.018, 0.018, 0.12, x, 1.0, -0.22, "metal");
       }
+      // Tower sits on the solid-wall middle section, not in the side-window opening.
+      const tower = new T.Group();
+      tower.position.x = -0.16;
+      g.add(tower);
+      box(tower, 0.24, 0.43, 0.42, 0, 0.975, -0.08, "black", 0.025);
+      box(tower, 0.008, 0.35, 0.32, -0.125, 0.99, -0.08, "glass");
+      for (const y of [0.9, 1.05])
+        mesh(
+          tower,
+          new T.TorusGeometry(0.05, 0.005, 6, 24),
+          "steel",
+          0,
+          y,
+          0.135,
+        );
       // Extend along the solid wall; preserve the existing side-window opening.
       const sideWindow = walls.find((w) => w.id === "outer-3")!.openings![0];
       const windowStart = 0.45 + sideWindow.at - sideWindow.width / 2 - o.z;
@@ -1231,7 +1513,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
           );
         }
       box(g, w - 0.16, 0.055, 0.11, 0, 0.64, -d / 2 + 0.08, "metal", 0.006);
-      box(g, 0.84, 0.006, 0.36, 0.44, 0.756, 0.05, "rubber", 0.018);
+      box(g, 0.9, 0.006, 0.4, 0.85, 0.756, 0.13, "rubber", 0.018);
       bodyObstacle(0.76);
     }
     if (o.type === "office-chair") {
@@ -1481,6 +1763,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     box(p, w + 0.002, 0.006, d - 0.015, x, y + h * 0.7, z, "paper", 0);
   }
   function displayTexture(mode: string) {
+    if (displayMaps.has(mode)) return displayMaps.get(mode)!;
     const c = document.createElement("canvas");
     c.width = 1024;
     c.height = 512;
@@ -1508,6 +1791,7 @@ export function buildHome(scene: T.Scene, m: Materials) {
     ctx.fillText(mode === "gaming" ? "A QUIET WORLD" : "YAN’S HOME", 55, 458);
     const t = new T.CanvasTexture(c);
     t.colorSpace = T.SRGBColorSpace;
+    displayMaps.set(mode, t);
     return t;
   }
   // Architectural coves share one gradient and one emissive material. No extra lights per strip.

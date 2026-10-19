@@ -17,6 +17,8 @@ export function createMaterials(): Materials {
     pegboard: surface("#82786e", 0.8),
     oak: surface("#82705e", 0.76),
     darkwood: surface("#51473e"),
+    walnut: surface("#795841", 0.52),
+    olive: surface("#596947", 0.96),
     floor: surface("#9c8a76", 0.78),
     linen: surface("#ddd6cd", 0.98),
     clay: surface("#a49b93"),
@@ -53,6 +55,32 @@ export function createMaterials(): Materials {
   m.paper.emissiveIntensity = 0.12;
   m.screen.emissive.set("#6e9bab");
   m.screen.emissiveIntensity = 0.34;
+  // Shared, mipmapped corduroy normals add ribbed textile detail without
+  // downloading another image or adding geometry/per-frame simulation.
+  const ribCanvas = document.createElement("canvas");
+  ribCanvas.width = ribCanvas.height = 256;
+  const ribContext = ribCanvas.getContext("2d")!;
+  const ribs = ribContext.createImageData(256, 256);
+  for (let y = 0; y < 256; y++)
+    for (let x = 0; x < 256; x++) {
+      const i = (y * 256 + x) * 4;
+      const nx = Math.sin((x / 256) * Math.PI * 16) * 0.3;
+      const ny = Math.sin(x * 17 + y * 31) * 0.018;
+      ribs.data[i] = Math.round(127.5 + nx * 127.5);
+      ribs.data[i + 1] = Math.round(127.5 + ny * 127.5);
+      ribs.data[i + 2] = Math.round(
+        127.5 + Math.sqrt(1 - nx * nx - ny * ny) * 127.5,
+      );
+      ribs.data[i + 3] = 255;
+    }
+  ribContext.putImageData(ribs, 0, 0);
+  const ribMap = new T.CanvasTexture(ribCanvas);
+  ribMap.wrapS = ribMap.wrapT = T.RepeatWrapping;
+  ribMap.repeat.setScalar(12.5);
+  ribMap.anisotropy = 4;
+  ribMap.colorSpace = T.NoColorSpace;
+  m.olive.normalMap = ribMap;
+  m.olive.normalScale.setScalar(0.55);
   const c = document.createElement("canvas");
   c.width = 1024;
   c.height = 512;
@@ -105,7 +133,7 @@ export function createMaterials(): Materials {
 }
 export async function hydrateMaterials(m: Materials, request: () => void) {
   const families = [
-    ["oak", ["oak", "darkwood"]],
+    ["oak", ["oak", "darkwood", "walnut"]],
     ["floor", ["floor", "floorContact"]],
     ["linen", ["linen", "clay", "sage", "paper"]],
     ["plaster", ["wall", "paint"]],
