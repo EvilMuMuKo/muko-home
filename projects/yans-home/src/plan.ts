@@ -55,6 +55,24 @@ export interface Furnishing {
   label?: string;
 }
 export const HEIGHT = 2.8;
+// Supplied retailer dimension image; reclining projection and site fit remain provisional.
+export const gamingSofa = {
+  width: 1.25,
+  availableWidths: [1.05, 1.25, 1.45, 1.65, 1.85],
+  innerWidth: 1.2,
+  sleepLength: 1.82,
+  depths: [0.8, 1.36, 1.92],
+  seatHeight: 0.4,
+  seatDepth: 0.65,
+  closedHeight: 0.85,
+  headboardHeight: 0.7,
+  footHeight: 0.31,
+  rearAllowance: 0.1,
+  states: ["坐姿", "躺靠", "睡眠"],
+  source: "user-supplied-retailer-dimension-image-2026-10-19",
+  recliningDepthVerified: false,
+  supplierVerified: false,
+} as const;
 // Photograph dimensions take precedence over pixels. The 600mm discrepancy is explicit, not silently averaged.
 export const assumptions = [
   {
@@ -178,8 +196,8 @@ export const rooms: Room[] = [
     name: "电脑游戏室",
     rect: [6.75, 0.45, 9.9, 3.55],
     material: "floor",
-    camera: [7.63, 1.48, 3.13],
-    target: [9.45, 1.18, 1.75],
+    camera: [8.02, 1.62, 3.36],
+    target: [8.25, 1.0, 1.4],
     spawn: [7.8, 2.85],
   },
   {
@@ -532,22 +550,48 @@ export const furniture: Furnishing[] = [
     0.75,
     0.75,
     -90,
-    undefined,
+    "walnut",
     "单机位电脑桌",
   ),
-  f("gaming-chair", "office-chair", "gaming", 8.45, 2.55, 0.67, 0.68, 1.2, -90),
+  f("gaming-chair", "office-chair", "gaming", 8.45, 2.93, 0.67, 0.68, 1.2, -90),
   f(
     "gaming-library",
     "cabinet",
     "gaming",
-    7.0,
-    1.9,
-    2.55,
+    7.01,
+    2.305,
+    0.65,
     0.3,
     2.76,
     90,
     "paint",
-    "游戏室书物柜",
+    "游戏室移门窄柜",
+  ),
+  f(
+    "gaming-sofa-bed",
+    "sofa-bed",
+    "gaming",
+    7.33,
+    1.255,
+    gamingSofa.width,
+    gamingSofa.depths[0],
+    gamingSofa.closedHeight,
+    90,
+    "olive",
+    "三态沙发床",
+  ),
+  f(
+    "gaming-display",
+    "display-shelves",
+    "gaming",
+    6.99,
+    1.255,
+    1.0,
+    0.2,
+    0.6,
+    90,
+    "walnut",
+    "浅木展示层板",
   ),
   f(
     "kitchen-west",
@@ -758,7 +802,7 @@ export const cabinetBases: Record<string, number> = {
 export const cabinetBottom = (id: string) => cabinetBases[id] ?? 0;
 export const model = {
   name: "YAN’s Home",
-  version: "1.2.0",
+  version: "1.3.0",
   source: "用户户型照片与确认的改造要求",
   units: "m",
   height: HEIGHT,
@@ -767,6 +811,7 @@ export const model = {
   walls,
   furniture,
   cabinetBases,
+  gamingSofa,
   assumptions,
   requirements: {
     occupants: 2,
@@ -778,6 +823,7 @@ export const model = {
     extensions: "incorporated",
     gamingStations: 1,
     gamingBalcony: "fully-incorporated",
+    gamingLounge: "compact-three-state-sofa-bed-with-staggered-station",
     entryStorage: "recessed-upper-pegboard-shoe-cabinet",
     masterWindow: "continuous-corner",
     laundryFront: "clear",

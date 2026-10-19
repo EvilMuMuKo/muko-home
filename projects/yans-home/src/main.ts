@@ -225,13 +225,56 @@ function closePanel() {
   $("#panel-toggle").setAttribute("aria-expanded", "false");
 }
 function toggle(a: Action) {
-  a.target = a.target > 0.5 ? 0 : 1;
-  animating = true;
+  const target = a.states
+    ? a.target < 0.25
+      ? 0.5
+      : a.target < 0.75
+        ? 1
+        : 0
+    : a.target > 0.5
+      ? 0
+      : 1;
+  if (walking && a.envelope) {
+    const b = a.envelope(Math.max(a.value, target));
+    if (
+      Math.hypot(
+        Math.max(b.min.x - eye.x, 0, eye.x - b.max.x),
+        Math.max(b.min.z - eye.z, 0, eye.z - b.max.z),
+      ) <
+      playerRadius + 0.02
+    ) {
+      toast("请先走到沙发侧面，再切换形态。");
+      return;
+    }
+  }
+  a.target = target;
+  if (a.states)
+    toast(
+      target === 0
+        ? "沙发已收起，恢复窗边通道。"
+        : "请从沙发靠门的一侧出入，收起后再到窗边。",
+    );
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    a.value = target;
+    a.apply(target);
+    refreshDynamic();
+  }
+  animating = home.actions.some(
+    (action) => Math.abs(action.target - action.value) > 0.001,
+  );
   schedule(true);
   updateActions();
 }
+function actionLabel(a: Action) {
+  if (a.states) {
+    const next = a.target < 0.25 ? 1 : a.target < 0.75 ? 2 : 0;
+    return `切换为${a.states[next]} · ${a.name}`;
+  }
+  return `${a.target > 0.5 ? "收起 / 关闭" : "展开 / 打开"} · ${a.name}`;
+}
 function updateActions() {
   if (!home) return;
+  $("#gaming-plan").hidden = currentRoom !== "gaming";
   const container = $("#action-list");
   container.replaceChildren();
   const list = home.actions.filter(
@@ -241,7 +284,8 @@ function updateActions() {
   );
   for (const a of list) {
     const b = document.createElement("button");
-    b.textContent = `${a.target > 0.5 ? "收起 / 关闭" : "展开 / 打开"} · ${a.name}`;
+    b.textContent = actionLabel(a);
+    b.dataset.action = a.id;
     b.onclick = () => toggle(a);
     container.append(b);
   }
@@ -265,6 +309,20 @@ function clearAt(x: number, z: number) {
     !insideShell(x, z + playerRadius)
   )
     return false;
+  // Reserve the entire sofa movement envelope so a walker cannot step into
+  // an extending mechanism between animation frames.
+  for (const a of home.actions) {
+    if (!a.envelope || Math.abs(a.target - a.value) <= 0.001) continue;
+    const b = a.envelope(Math.max(a.target, a.value));
+    if (
+      Math.hypot(
+        Math.max(b.min.x - x, 0, x - b.max.x),
+        Math.max(b.min.z - z, 0, z - b.max.z),
+      ) <
+      playerRadius - 0.002
+    )
+      return false;
+  }
   for (const c of home.colliders) {
     if (c.max.y < 0.24 || c.min.y > 1.75) continue;
     const dx = Math.max(c.min.x - x, 0, x - c.max.x),
@@ -312,9 +370,7 @@ function nearby(now: number) {
     }
   }
   $("#interaction").hidden = !activeAction;
-  if (activeAction)
-    $("#interaction").textContent =
-      `${activeAction.target > 0.5 ? "关闭" : "打开"} · ${activeAction.name}`;
+  if (activeAction) $("#interaction").textContent = actionLabel(activeAction);
 }
 function frame(now: number) {
   queued = false;
@@ -581,6 +637,8 @@ async function boot() {
         value: a.value,
         target: a.target,
         room: a.room,
+        kind: a.kind,
+        state: a.states?.[Math.round(a.value * 2)],
       })),
     }),
     getModel: () => structuredClone(model),

@@ -398,7 +398,7 @@ test("revision 03 keeps storage useful, window clear and the new guest bedside a
       contact: a.getPerformance().contact,
     };
   });
-  expect(result.version).toBe("1.2.0");
+  expect(result.version).toBe("1.3.0");
   expect(result.livingAisle).toBeGreaterThan(1.0);
   expect(result.guestAisle).toBeGreaterThan(0.56);
   expect(result.guestFoot).toBeGreaterThan(0.6);
