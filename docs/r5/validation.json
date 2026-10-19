@@ -80,12 +80,55 @@
       "reason": "Virtual geometry only"
     },
     "releaseCI": {
-      "status": "NOT RUN",
-      "note": "See pull request checks for final full201 case status"
+      "status": "PASS",
+      "passed": 201,
+      "shards": [
+        51,
+        50,
+        50,
+        50
+      ],
+      "run": "https://github.com/EvilMuMuKo/muko-home/actions/runs/39242186306",
+      "testedSourceCommit": "44b287b",
+      "mergeCommit": "e8fabe1364f0744a9be1650400a1741ad756dd54"
     },
     "publication": {
-      "status": "NOT RUN",
-      "note": "Release build prepared; final Pages status recorded in PR and delivery message"
+      "status": "PASS",
+      "url": "https://evilmumuko.github.io/muko-home/",
+      "version": "15.0.0",
+      "pagesCommit": "e8fabe1364f0744a9be1650400a1741ad756dd54",
+      "runtimeErrors": [],
+      "failedResources": [],
+      "electrical": {
+        "points": 48,
+        "groups": 34,
+        "conditionalOmitted": 14,
+        "drawCalls": 24
+      },
+      "studyInteraction": {
+        "open": {
+          "accepted": true
+        },
+        "blocked": {
+          "accepted": false,
+          "reason": "small-bed-open"
+        },
+        "opened": {
+          "smallBedOpen": true,
+          "cinemaNear": false,
+          "fullBedOpen": false,
+          "chairPosition": [
+            2.9,
+            0,
+            1.8
+          ]
+        },
+        "near": {
+          "accepted": true
+        }
+      },
+      "verifiedAt": "2026-10-19T11:19:18.495Z",
+      "note": "Post-publication evidence update changes documentation only; source and generated application bytes unchanged."
     },
     "grokFinalAudit": {
       "status": "PASS",
