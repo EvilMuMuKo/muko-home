@@ -1,0 +1,1505 @@
+{
+  "version": "A10",
+  "scope": "local_2d_electrical_concept_only",
+  "sourceVersion": "14.0.0",
+  "coordinates": "metres, same virtual x/z as source; heights are outlet center above finished floor, not regulatory defaults",
+  "roomNames": {
+    "living": "客厅",
+    "master": "主卧",
+    "guest": "影音室／书房",
+    "kitchen": "厨房",
+    "bar": "水吧／阅读角",
+    "hall": "玄关／走廊",
+    "bath": "卫生间",
+    "balcony": "阳台"
+  },
+  "points": [
+    {
+      "id": "L01",
+      "room": "living",
+      "x": 10.3,
+      "z": 9.26,
+      "heightM": 0.35,
+      "acModules": 2,
+      "rj45": 2,
+      "use": "85英寸电视／随车PS5／充电",
+      "mount": "下侧实墙",
+      "note": "客厅斜放与后停共用；电源尾线从墙侧进入支架后部，电视、PS5使用随架固定排插。移动前断电收线；不得带电拖线穿越通路。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        10.3,
+        9.26
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        10.3,
+        9.26
+      ]
+    },
+    {
+      "id": "L02",
+      "room": "living",
+      "x": 7.19,
+      "z": 8.85,
+      "heightM": 0.35,
+      "acModules": 2,
+      "rj45": 1,
+      "use": "入口侧备用／临时设备",
+      "mount": "错台右侧实墙",
+      "note": "侧向电视仅预留供电；当前边几、沙发与入口组合尚未重排，不代表此处已有可用电视位。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        7.19,
+        8.85
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        7.19,
+        8.85
+      ]
+    },
+    {
+      "id": "L03",
+      "room": "living",
+      "x": 11.15,
+      "z": 4.49,
+      "heightM": 0.35,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "柜端落地灯／清洁备用",
+      "mount": "上侧实墙",
+      "note": "位于通顶柜右端之外；反向电视方案会改变主通路，未作为通过方案。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        11.15,
+        4.49
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        11.15,
+        4.49
+      ]
+    },
+    {
+      "id": "L04",
+      "room": "living",
+      "x": 8.5,
+      "z": 4.49,
+      "heightM": 1.1,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "浅柜音响／小设备",
+      "mount": "通顶浅柜开放格背板",
+      "note": "预留独立开放服务格及检修口；强弱电分隔；不得封在满高柜背后。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        8.5,
+        4.81
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        8.5,
+        4.53
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "L05",
+      "room": "living",
+      "x": 11.0,
+      "z": 9.26,
+      "heightM": 0.35,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "扫地机充电",
+      "mount": "下侧实墙",
+      "note": "插座位于机器左侧；留出插拔与弯线空间，不藏在机器背后。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        11.0,
+        9.26
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        11.0,
+        9.26
+      ]
+    },
+    {
+      "id": "F01",
+      "room": "living",
+      "x": 10.2,
+      "z": 8.6,
+      "heightM": 0,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "电视停靠带可选地面电源",
+      "mount": "可选地插",
+      "note": "不列入基础安装数量。需核楼板、清洁防水、盖板与底座脚轮；不设置于中央活动区。优先采用L01。",
+      "status": "CONDITIONAL",
+      "kind": "optional_floor",
+      "accessXZ": [
+        10.2,
+        8.6
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        10.2,
+        8.6
+      ]
+    },
+    {
+      "id": "M01",
+      "room": "master",
+      "x": 8.15,
+      "z": 0.09,
+      "heightM": 0.65,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "左床边充电／阅读",
+      "mount": "床头实墙",
+      "note": "在完整床架左侧；插座中心高于概念床边台。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        8.15,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        8.15,
+        0.09
+      ]
+    },
+    {
+      "id": "M02",
+      "room": "master",
+      "x": 10.9,
+      "z": 0.09,
+      "heightM": 0.65,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "右床边充电／阅读",
+      "mount": "床头实墙",
+      "note": "避开床头板与床边柜背板；开关和充电分开表达。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        10.9,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        10.9,
+        0.09
+      ]
+    },
+    {
+      "id": "M03",
+      "room": "master",
+      "x": 8.25,
+      "z": 4.31,
+      "heightM": 0.55,
+      "acModules": 4,
+      "rj45": 2,
+      "use": "Windows主机／显示器／音箱等",
+      "mount": "一字桌后实墙",
+      "note": "位于理线槽下方，避开主机占位；插拔从桌下前侧到达。4个模块需预留成组面板长度。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        8.25,
+        4.31
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        8.25,
+        4.31
+      ]
+    },
+    {
+      "id": "M04",
+      "room": "master",
+      "x": 9.75,
+      "z": 4.31,
+      "heightM": 0.55,
+      "acModules": 3,
+      "rj45": 1,
+      "use": "MacBook／扩展坞／备用",
+      "mount": "一字桌后实墙",
+      "note": "与M03分组理线；固定理线槽，不让适配器落地。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        9.75,
+        4.31
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        9.75,
+        4.31
+      ]
+    },
+    {
+      "id": "M05",
+      "room": "master",
+      "x": 9.25,
+      "z": 4.31,
+      "heightM": 0.9,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "桌面常插充电",
+      "mount": "桌后实墙",
+      "note": "位于两个屏幕之间、洞洞板下方；86面板顶约943mm，洞洞板底970mm，施工仍需校核边距。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        9.25,
+        4.31
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        9.25,
+        4.31
+      ]
+    },
+    {
+      "id": "M06",
+      "room": "master",
+      "x": 11.56,
+      "z": 3.45,
+      "heightM": 0.35,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "窗边阅读／清洁",
+      "mount": "飘窗下端实墙",
+      "note": "避开窗洞与窗帘停靠，不在玻璃或飘窗台体开孔。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        11.56,
+        3.45
+      ],
+      "normalXZ": [
+        -1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        11.56,
+        3.45
+      ]
+    },
+    {
+      "id": "M07",
+      "room": "master",
+      "x": 6.99,
+      "z": 1.2,
+      "heightM": 2.3,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "衣柜照明驱动／维护",
+      "mount": "衣柜独立服务格",
+      "note": "可开启检修格，电源不被衣物覆盖；驱动散热与板材隔离待厂家深化。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        7.6,
+        1.2
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        7.03,
+        1.2
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "C01",
+      "room": "guest",
+      "x": 2.95,
+      "z": 3.31,
+      "heightM": 0.35,
+      "acModules": 2,
+      "rj45": 2,
+      "use": "影音室85英寸电视／游戏",
+      "mount": "下侧实墙",
+      "note": "设在底座右边；不放进电视后仅约46mm的窄缝。远近两个停靠位共用，连接尾线沿底座右后侧固定。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        2.95,
+        3.31
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.95,
+        3.31
+      ]
+    },
+    {
+      "id": "C02",
+      "room": "guest",
+      "x": 4.71,
+      "z": 2.15,
+      "heightM": 0.35,
+      "acModules": 2,
+      "rj45": 1,
+      "use": "右侧备用／清洁",
+      "mount": "右侧实墙",
+      "note": "避开柜体末端与房门开合区域；不等于右墙电视摆位已通过。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        4.71,
+        2.15
+      ],
+      "normalXZ": [
+        -1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        4.71,
+        2.15
+      ]
+    },
+    {
+      "id": "C03",
+      "room": "guest",
+      "x": 0.09,
+      "z": 2.85,
+      "heightM": 0.55,
+      "acModules": 2,
+      "rj45": 2,
+      "use": "单人工位墙上电源",
+      "mount": "窗洞下端实墙",
+      "note": "从左侧实墙沿可拆线槽到桌左后角；不横跨桌后625mm取物间隙，不切割飘窗建筑台体。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        0.09,
+        2.85
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        0.09,
+        2.85
+      ]
+    },
+    {
+      "id": "C04",
+      "room": "guest",
+      "x": -0.35,
+      "z": 2.2,
+      "heightM": 0.78,
+      "acModules": 6,
+      "rj45": 0,
+      "use": "工位桌面固定排插",
+      "mount": "家具附件",
+      "note": "由C03供电，6个插孔不计为6个墙插。放桌面后左侧，不塞进仅110mm高的飘窗夹层；单排插不串接。",
+      "status": "PROPOSED",
+      "kind": "furniture_pdu",
+      "accessXZ": [
+        -0.35,
+        2.2
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        -0.35,
+        2.2
+      ]
+    },
+    {
+      "id": "C05",
+      "room": "guest",
+      "x": 0.55,
+      "z": 0.09,
+      "heightM": 1.05,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "小沙发床头充电",
+      "mount": "床后实墙",
+      "note": "高于850mm沙发靠背，避免被靠背完全挡住；USB模块可选。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        0.55,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        0.55,
+        0.09
+      ]
+    },
+    {
+      "id": "C06",
+      "room": "guest",
+      "x": 3.25,
+      "z": 0.09,
+      "heightM": 0.65,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "原大沙发床旁充电／阅读",
+      "mount": "上侧实墙",
+      "note": "在大床右侧，不将插座布在床头正中或上方柜体内。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        3.25,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        3.25,
+        0.09
+      ]
+    },
+    {
+      "id": "C07",
+      "room": "guest",
+      "x": 4.71,
+      "z": 1.15,
+      "heightM": 0.35,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "饮料小冰箱",
+      "mount": "相邻柜内服务格",
+      "note": "插座不在冰箱背后；柜体右侧独立开口，插拔、散热与开门同时深化。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        4.0,
+        1.15
+      ],
+      "normalXZ": [
+        -1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        4.565,
+        1.15
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "K01",
+      "room": "kitchen",
+      "x": 3.4,
+      "z": 3.49,
+      "heightM": 2.1,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "大冰箱专用",
+      "mount": "冰箱上方服务格",
+      "note": "高于概念冰箱1850mm；从上柜开门检修，不藏在冰箱背后。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        3.4,
+        4.31
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        3.4,
+        3.53
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "K02",
+      "room": "kitchen",
+      "x": 1.9,
+      "z": 3.49,
+      "heightM": 2.1,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "烟机专用",
+      "mount": "相邻吊柜服务格",
+      "note": "离开烟管中心；保留开门检修与散热，接口规格按所选设备。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        1.9,
+        3.825
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        1.9,
+        3.53
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "K03",
+      "room": "kitchen",
+      "x": 1.72,
+      "z": 3.49,
+      "heightM": 0.55,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "灶具点火预留",
+      "mount": "灶旁独立干燥格",
+      "note": "是否需要市电由灶具型号确认；不放在灶体正下方或燃气接口旁。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        1.72,
+        4.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        1.72,
+        4.09
+      ]
+    },
+    {
+      "id": "K04",
+      "room": "kitchen",
+      "x": 2.55,
+      "z": 5.6,
+      "heightM": 0.55,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "烤箱专用接口",
+      "mount": "出品岛台邻格",
+      "note": "在烤箱右侧服务格；插座额定电流或固定接线按铭牌确定，不画成已选普通10A。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        2.55,
+        5.2
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.55,
+        5.815
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "K05",
+      "room": "kitchen",
+      "x": 0.6,
+      "z": 5.6,
+      "heightM": 0.55,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "洗碗机专用",
+      "mount": "出品岛台邻格",
+      "note": "洗碗机左侧干燥服务格；避免压在设备背部，不能与管路占同一狭窄空间。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        0.6,
+        5.2
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        0.6,
+        5.815
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "K06",
+      "room": "kitchen",
+      "x": 2.55,
+      "z": 5.2,
+      "heightM": 0.82,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "空气炸锅／出品小家电",
+      "mount": "岛台朝厨房竖向立面",
+      "note": "低于950mm台面；不嵌玻璃、不向上开口，避开水槽和热源，实际面板与门扇待柜体深化。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        2.55,
+        5.2
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.55,
+        5.2
+      ]
+    },
+    {
+      "id": "K07",
+      "room": "kitchen",
+      "x": 0.32,
+      "z": 5.1,
+      "heightM": 0.55,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "净水设备预留",
+      "mount": "水槽柜分隔干燥服务格",
+      "note": "湿管、检修和防滴分隔待核；无法形成干燥隔格时改到邻柜。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        0.74,
+        5.1
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        0.74,
+        5.1
+      ]
+    },
+    {
+      "id": "K08",
+      "room": "kitchen",
+      "x": 2.25,
+      "z": 3.49,
+      "heightM": 1.15,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "后排备餐小家电",
+      "mount": "后墙台面上",
+      "note": "在烟机与冰箱之间，台面上200mm；不得被小家电本体完全遮挡。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        2.25,
+        3.49
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.25,
+        3.49
+      ]
+    },
+    {
+      "id": "B01",
+      "room": "bar",
+      "x": 1.15,
+      "z": 8.36,
+      "heightM": 1.45,
+      "acModules": 3,
+      "rj45": 0,
+      "use": "咖啡机／磨豆机／备用",
+      "mount": "水吧开放操作龛后板",
+      "note": "高于现机身但要避开蒸汽出口；实际龛上沿、插头弯线与设备维护共同深化。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        1.15,
+        7.61
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        1.15,
+        8.32
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "B02",
+      "room": "bar",
+      "x": 2.1,
+      "z": 8.36,
+      "heightM": 1.2,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "调酒／电水壶",
+      "mount": "水吧操作龛后板",
+      "note": "避开精酿塔、杯架与常用落杯面；高负载小家电不得串接排插。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        2.1,
+        7.61
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.1,
+        8.32
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "B03",
+      "room": "bar",
+      "x": 3.15,
+      "z": 8.36,
+      "heightM": 0.5,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "精酿机专用",
+      "mount": "精酿机右侧检修格",
+      "note": "不被机器压住，保留通风与排水检修；断电可在邻格操作。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        3.15,
+        7.61
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        3.15,
+        8.32
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "B04",
+      "room": "bar",
+      "x": 0.09,
+      "z": 7.45,
+      "heightM": 0.85,
+      "acModules": 3,
+      "rj45": 0,
+      "use": "唱片机／有源音箱／阅读灯",
+      "mount": "窗下柜旁实墙",
+      "note": "位于窗洞下端实墙；沿墙收线到唱片柜，不在窗玻璃和可开启窗扇上装插座。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        0.09,
+        7.45
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        0.09,
+        7.45
+      ]
+    },
+    {
+      "id": "B05",
+      "room": "bar",
+      "x": 5.1,
+      "z": 6.725,
+      "heightM": 0.8,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "两人岛台充电",
+      "mount": "封闭岛台端立面",
+      "note": "封闭储物保留；线缆不穿过坐席腿部或开合门，安装面板避柜门铰链。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        5.1,
+        6.725
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        5.1,
+        6.725
+      ]
+    },
+    {
+      "id": "B06",
+      "room": "bar",
+      "x": 2.4,
+      "z": 6.6,
+      "heightM": 2.55,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "MuKo’s Bar招牌／灯驱动",
+      "mount": "顶部可检修接线",
+      "note": "固定接线点，不计普通插座；招牌驱动独立可维护，局部照明可控。",
+      "status": "PROPOSED",
+      "kind": "fixed_connection",
+      "accessXZ": [
+        2.4,
+        6.6
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.4,
+        6.6
+      ]
+    },
+    {
+      "id": "H01",
+      "room": "hall",
+      "x": 6.73,
+      "z": 8.36,
+      "heightM": 0.85,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "玄关随身设备充电",
+      "mount": "玄关柜开放服务格",
+      "note": "低于洞洞板底950mm；先确认入户门全开与插拔动作，不把插座封进满柜背板。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        6.73,
+        7.81
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.73,
+        8.32
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "H02",
+      "room": "hall",
+      "x": 6.81,
+      "z": 2.65,
+      "heightM": 1.4,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "光猫／交换机／路由设备",
+      "mount": "弱电箱候选位置",
+      "note": "现有入户光纤与弱电箱未实测；此处仅候选，强弱电分隔、散热、配线与维护待核。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        6.81,
+        2.65
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        6.81,
+        2.65
+      ]
+    },
+    {
+      "id": "H03",
+      "room": "hall",
+      "x": 5.8,
+      "z": 4.8,
+      "heightM": 2.6,
+      "acModules": 0,
+      "rj45": 1,
+      "use": "PoE无线AP",
+      "mount": "顶部弱电端口",
+      "note": "由交换机PoE供电，不另计市电插座；位置、漫游与信号覆盖待核。",
+      "status": "PROPOSED",
+      "kind": "data",
+      "accessXZ": [
+        5.8,
+        4.8
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        5.8,
+        4.8
+      ]
+    },
+    {
+      "id": "W01",
+      "room": "bath",
+      "x": 4.89,
+      "z": 1.68,
+      "heightM": 0.45,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "智能马桶",
+      "mount": "卫生间左侧实墙候选",
+      "note": "暂缓定位：与淋浴围合、门、水管共同核定电气分区及防溅措施；不能仅加防水盖就认定可装。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        4.89,
+        1.68
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        4.89,
+        1.68
+      ]
+    },
+    {
+      "id": "W02",
+      "room": "bath",
+      "x": 6.81,
+      "z": 1.55,
+      "heightM": 1.35,
+      "acModules": 2,
+      "rj45": 0,
+      "use": "剃须／牙刷／吹风机",
+      "mount": "镜柜干燥隔格候选",
+      "note": "镜柜取物、洗脸与电气分区需实测；吹风机接口与负载另核，不以封进镜柜代替防护。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        6.37,
+        1.55
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        6.37,
+        1.55
+      ]
+    },
+    {
+      "id": "W03",
+      "room": "bath",
+      "x": 5.8,
+      "z": 0.75,
+      "heightM": 2.62,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "浴霸／排风固定接口",
+      "mount": "吊顶可检修接线",
+      "note": "按设备铭牌、回路及控制方式设计，等电位与剩余电流保护由电气设计核定。",
+      "status": "CONDITIONAL",
+      "kind": "fixed_connection",
+      "accessXZ": [
+        5.8,
+        0.75
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        5.8,
+        0.75
+      ]
+    },
+    {
+      "id": "Y01",
+      "room": "balcony",
+      "x": 12.76,
+      "z": 4.65,
+      "heightM": 1.15,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "洗衣机专用",
+      "mount": "阳台右上短实墙",
+      "note": "位于玻璃起点前；在机身侧面而非背面，侧隙插拔、供排水、防溅与设备实际尺寸待核。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        12.76,
+        4.65
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        12.76,
+        4.65
+      ]
+    },
+    {
+      "id": "Y02",
+      "room": "balcony",
+      "x": 12.76,
+      "z": 4.65,
+      "heightM": 1.45,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "烘干机专用",
+      "mount": "阳台右上短实墙",
+      "note": "与Y01竖向分组；独立插座，回路容量按烘干机类型与铭牌，先核侧隙可达。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        12.76,
+        4.65
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        12.76,
+        4.65
+      ]
+    },
+    {
+      "id": "Y03",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 9.26,
+      "heightM": 1.2,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "吸尘器充电",
+      "mount": "家政柜干燥服务格",
+      "note": "开门可拔插，独立通风隔格，不与湿拖把或清洁剂混放。",
+      "status": "PROPOSED",
+      "kind": "socket",
+      "accessXZ": [
+        12.25,
+        8.605
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        12.25,
+        9.22
+      ],
+      "modelMountNote": "示意安装于柜体内侧背板；accessXZ仅表示柜前可达面，柜内检修格待现场及柜体深化。"
+    },
+    {
+      "id": "Y04",
+      "room": "balcony",
+      "x": 11.9,
+      "z": 9.26,
+      "heightM": 1.1,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "熨烫／叠衣临时用电",
+      "mount": "阳台下侧短实墙",
+      "note": "在家政柜左侧，不装玻璃；留出电线从立面到工作面的固定路线，潮湿条件待核。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        11.9,
+        9.26
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        11.9,
+        9.26
+      ]
+    },
+    {
+      "id": "Y05",
+      "room": "balcony",
+      "x": 12.25,
+      "z": 7.0,
+      "heightM": 2.55,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "电动晾衣架预留",
+      "mount": "顶部固定接线",
+      "note": "只有采用电动型号时启用，按产品控制与检修要求预留。",
+      "status": "CONDITIONAL",
+      "kind": "fixed_connection",
+      "accessXZ": [
+        12.25,
+        7.0
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        12.25,
+        7.0
+      ]
+    },
+    {
+      "id": "A01",
+      "room": "living",
+      "x": 10.9,
+      "z": 9.26,
+      "heightM": 2.3,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "空调专用候选",
+      "mount": "机位未选的墙面候选",
+      "note": "先确定空调形式、内机边界、冷凝水与检修再定点；落在柜体范围时须改机位，不能直接施工。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        10.9,
+        9.26
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        10.9,
+        9.26
+      ]
+    },
+    {
+      "id": "A02",
+      "room": "master",
+      "x": 11.05,
+      "z": 0.09,
+      "heightM": 2.3,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "空调专用候选",
+      "mount": "机位未选的墙面候选",
+      "note": "先确定空调形式、内机边界、冷凝水与检修再定点；落在柜体范围时须改机位，不能直接施工。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        11.05,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        11.05,
+        0.09
+      ]
+    },
+    {
+      "id": "A03",
+      "room": "guest",
+      "x": 3.65,
+      "z": 0.09,
+      "heightM": 2.3,
+      "acModules": 1,
+      "rj45": 0,
+      "use": "空调专用候选",
+      "mount": "机位未选的墙面候选",
+      "note": "先确定空调形式、内机边界、冷凝水与检修再定点；落在柜体范围时须改机位，不能直接施工。",
+      "status": "CONDITIONAL",
+      "kind": "socket",
+      "accessXZ": [
+        3.65,
+        0.09
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": false,
+      "modelMountXZ": [
+        3.65,
+        0.09
+      ]
+    }
+  ],
+  "tvPositions": [
+    {
+      "id": "living_diagonal",
+      "room": "living",
+      "center": [
+        10.2,
+        8.6
+      ],
+      "yaw": 205,
+      "body": [
+        1.895,
+        0.06
+      ],
+      "base": [
+        1.1,
+        0.66
+      ],
+      "supply": "L01",
+      "tail": [
+        10.4,
+        8.72
+      ],
+      "cablePath": [
+        [
+          10.3,
+          9.26
+        ],
+        [
+          10.75,
+          9.26
+        ],
+        [
+          10.75,
+          8.8
+        ],
+        [
+          10.4,
+          8.72
+        ]
+      ],
+      "label": "客厅斜向观影"
+    },
+    {
+      "id": "living_park",
+      "room": "living",
+      "center": [
+        10.2,
+        8.83
+      ],
+      "yaw": 180,
+      "body": [
+        1.895,
+        0.06
+      ],
+      "base": [
+        1.1,
+        0.66
+      ],
+      "supply": "L01",
+      "tail": [
+        10.6,
+        9.0
+      ],
+      "cablePath": [
+        [
+          10.3,
+          9.26
+        ],
+        [
+          10.75,
+          9.26
+        ],
+        [
+          10.75,
+          9.05
+        ],
+        [
+          10.6,
+          9.0
+        ]
+      ],
+      "label": "客厅活动后停"
+    },
+    {
+      "id": "cinema_far",
+      "room": "guest",
+      "center": [
+        2.05,
+        2.84
+      ],
+      "yaw": 0,
+      "body": [
+        1.895,
+        0.06
+      ],
+      "base": [
+        1.086,
+        0.849
+      ],
+      "supply": "C01",
+      "tail": [
+        2.55,
+        2.97
+      ],
+      "cablePath": [
+        [
+          2.95,
+          3.31
+        ],
+        [
+          2.7,
+          3.31
+        ],
+        [
+          2.7,
+          3.15
+        ],
+        [
+          2.55,
+          2.97
+        ]
+      ],
+      "label": "影音室远位"
+    },
+    {
+      "id": "cinema_near",
+      "room": "guest",
+      "center": [
+        2.05,
+        2.44
+      ],
+      "yaw": 0,
+      "body": [
+        1.895,
+        0.06
+      ],
+      "base": [
+        1.086,
+        0.849
+      ],
+      "supply": "C01",
+      "tail": [
+        2.55,
+        2.7
+      ],
+      "cablePath": [
+        [
+          2.95,
+          3.31
+        ],
+        [
+          2.7,
+          3.31
+        ],
+        [
+          2.7,
+          2.9
+        ],
+        [
+          2.55,
+          2.7
+        ]
+      ],
+      "label": "影音室近位·大床收起"
+    }
+  ],
+  "sourceOfficial": "https://www.mohurd.gov.cn/gongkai/zc/wjk/art/2025/art_66adac27fa2144bb86f98fe4c297efd6.html",
+  "pending": [
+    "全屋墙面与插座定位实测，既有强弱电入户位置",
+    "空调形式、机位、冷凝水、机身与柜体冲突",
+    "全部设备铭牌、专用接口、同时负载与回路设计",
+    "卫生间电气分区、防溅、等电位及剩余电流保护",
+    "移动电视电源尾线、插头方向、线夹、底座脚轮和抗倾覆",
+    "厨房玻璃轨道与柜体面板、蒸汽热源及水管分隔",
+    "网络线缆暗管与电源分隔；现有光纤/同轴来源",
+    "新孔槽避承重构件，电线不得靠照片推断可开槽"
+  ],
+  "sourceBaseSHA256": "1a77ecbd9c7495f1d9bd64783b045f0ac27fb866da59fef52a18e69eeeb104f4",
+  "revision": "A10"
+}

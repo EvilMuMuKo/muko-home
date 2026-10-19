@@ -200,7 +200,7 @@ test("new table and seating preserve the PS5 balcony route with a 0.45 m avatar"
       report,
     };
   });
-  expect(result.version).toBe("14.0.0");
+  expect(result.version).toBe("15.0.0");
   expect(result.collisions).toEqual([]);
   expect(result.report.groups).toEqual(["bar", "living", "guest"]);
   const placed = Object.fromEntries(

@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1164" height="705" viewBox="808 46 776 470">
+<rect width="1600" height="1280" fill="#f4f0e6" />
+<text x="800" y="28" text-anchor="middle" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="20" font-weight="700">影音室移动电视 · 85英寸优先 · 原大床与长桌保留</text>
+<defs>
+<pattern id="hatch" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#8a6a32" stroke-width="1.2" /></pattern>
+<pattern id="mattress" patternUnits="userSpaceOnUse" width="10" height="10"><path d="M0 10 L10 0" stroke="#c5b59a" stroke-width="0.6" /></pattern>
+<pattern id="lap" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f0c36a" fill-opacity="0.55" /><line x1="0" y1="0" x2="0" y2="8" stroke="#8a5a12" stroke-width="1.3" /></pattern>
+</defs>
+<rect x="16" y="46" width="776" height="470" fill="#fffefb" stroke="#d9d2c4" stroke-width="1" />
+<text x="30" y="64" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="15" font-weight="700">00  固定电视对照</text>
+<rect x="174.10" y="114.70" width="508.20" height="354.20" fill="#f7f4ee" stroke="none" />
+<rect x="81.70" y="154.30" width="82.50" height="231.00" fill="#efe2c4" stroke="none" />
+<rect x="81.70" y="154.30" width="82.50" height="231.00" fill="url(#hatch)" stroke="none" opacity="0.55" />
+<rect x="154.30" y="94.90" width="547.80" height="19.80" fill="#3a3834" />
+<rect x="682.30" y="94.90" width="19.80" height="393.80" fill="#3a3834" />
+<rect x="154.30" y="468.90" width="441.10" height="19.80" fill="#3a3834" />
+<rect x="690.00" y="468.90" width="12.10" height="19.80" fill="#3a3834" />
+<rect x="154.30" y="94.90" width="19.80" height="59.40" fill="#3a3834" />
+<rect x="154.30" y="385.30" width="19.80" height="103.40" fill="#3a3834" />
+<rect x="61.90" y="134.50" width="19.80" height="270.60" fill="#3a3834" />
+<rect x="61.90" y="134.50" width="112.20" height="19.80" fill="#3a3834" />
+<rect x="61.90" y="385.30" width="112.20" height="19.80" fill="#3a3834" />
+<line x1="71.80" y1="181.80" x2="71.80" y2="357.80" stroke="#d7ecf5" stroke-width="4" stroke-linecap="round" />
+<line x1="71.80" y1="181.80" x2="71.80" y2="357.80" stroke="#2c6f86" stroke-width="1.2" />
+<line x1="81.70" y1="181.80" x2="81.70" y2="357.80" stroke="#2c6f86" stroke-width="1" />
+<line x1="595.40" y1="478.80" x2="690.00" y2="478.80" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3" />
+<line x1="595.40" y1="478.80" x2="595.40" y2="384.20" stroke="#1c1915" stroke-width="2.4" stroke-linecap="butt" />
+<path d="M 690.00 478.80 A 94.60 94.60 0 0 0 595.40 384.20" fill="none" stroke="#5c6570" stroke-width="1" stroke-dasharray="4 3" />
+<circle cx="595.40" cy="478.80" r="2.2" fill="#1c1915" />
+<text x="103.70" y="236.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text><text x="103.70" y="236.80" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text>
+<text x="103.70" y="256.60" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text><text x="103.70" y="256.60" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text>
+<rect x="604.20" y="132.30" width="66.00" height="181.50" fill="#c8bfb0" stroke="#5c5348" stroke-width="1.3" />
+<line x1="637.20" y1="132.30" x2="637.20" y2="313.80" stroke="#5c5348" stroke-width="0.8" />
+<text x="637.20" y="217.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text><text x="637.20" y="217.00" fill="#3f382f" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text>
+<text x="637.20" y="239.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text><text x="637.20" y="239.00" fill="#5c5348" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text>
+<rect x="197.20" y="434.80" width="308.00" height="33.00" fill="#d9d3c8" stroke="#6e675d" stroke-width="1" />
+<rect x="288.50" y="450.20" width="202.40" height="13.20" fill="#1b1b1b" />
+<text x="389.70" y="412.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">上一版固定电视</text><text x="389.70" y="412.80" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">上一版固定电视</text>
+<rect x="305.00" y="121.85" width="169.40" height="113.30" fill="#c9d4cf" stroke="#3e5c54" stroke-width="1.4" />
+<rect x="309.40" y="125.70" width="160.60" height="28.60" fill="#a9bbb4" stroke="#3e5c54" stroke-width="0.8" />
+<rect x="313.80" y="159.80" width="151.80" height="63.80" fill="#d5e0db" stroke="#3e5c54" stroke-width="0.6" />
+<text x="389.70" y="184.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text><text x="389.70" y="184.00" fill="#3e5c54" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text>
+<text x="389.70" y="206.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text><text x="389.70" y="206.00" fill="#3d4a46" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text>
+<text x="240.10" y="181.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">左侧尚无追加</text><text x="240.10" y="181.80" fill="#5c6570" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">左侧尚无追加</text>
+<rect x="808" y="46" width="776" height="470" fill="#fffefb" stroke="#d9d2c4" stroke-width="1" />
+<text x="822" y="64" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="15" font-weight="700">01  日常观影 · 可前移游戏</text>
+<rect x="966.10" y="114.70" width="508.20" height="354.20" fill="#f7f4ee" stroke="none" />
+<rect x="873.70" y="154.30" width="82.50" height="231.00" fill="#efe2c4" stroke="none" />
+<rect x="873.70" y="154.30" width="82.50" height="231.00" fill="url(#hatch)" stroke="none" opacity="0.55" />
+<rect x="946.30" y="94.90" width="547.80" height="19.80" fill="#3a3834" />
+<rect x="1474.30" y="94.90" width="19.80" height="393.80" fill="#3a3834" />
+<rect x="946.30" y="468.90" width="441.10" height="19.80" fill="#3a3834" />
+<rect x="1482.00" y="468.90" width="12.10" height="19.80" fill="#3a3834" />
+<rect x="946.30" y="94.90" width="19.80" height="59.40" fill="#3a3834" />
+<rect x="946.30" y="385.30" width="19.80" height="103.40" fill="#3a3834" />
+<rect x="853.90" y="134.50" width="19.80" height="270.60" fill="#3a3834" />
+<rect x="853.90" y="134.50" width="112.20" height="19.80" fill="#3a3834" />
+<rect x="853.90" y="385.30" width="112.20" height="19.80" fill="#3a3834" />
+<line x1="863.80" y1="181.80" x2="863.80" y2="357.80" stroke="#d7ecf5" stroke-width="4" stroke-linecap="round" />
+<line x1="863.80" y1="181.80" x2="863.80" y2="357.80" stroke="#2c6f86" stroke-width="1.2" />
+<line x1="873.70" y1="181.80" x2="873.70" y2="357.80" stroke="#2c6f86" stroke-width="1" />
+<line x1="1387.40" y1="478.80" x2="1482.00" y2="478.80" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3" />
+<line x1="1387.40" y1="478.80" x2="1387.40" y2="384.20" stroke="#1c1915" stroke-width="2.4" stroke-linecap="butt" />
+<path d="M 1482.00 478.80 A 94.60 94.60 0 0 0 1387.40 384.20" fill="none" stroke="#5c6570" stroke-width="1" stroke-dasharray="4 3" />
+<circle cx="1387.40" cy="478.80" r="2.2" fill="#1c1915" />
+<text x="895.70" y="236.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text><text x="895.70" y="236.80" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text>
+<text x="895.70" y="256.60" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text><text x="895.70" y="256.60" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text>
+<rect x="1396.20" y="132.30" width="66.00" height="181.50" fill="#c8bfb0" stroke="#5c5348" stroke-width="1.3" />
+<line x1="1429.20" y1="132.30" x2="1429.20" y2="313.80" stroke="#5c5348" stroke-width="0.8" />
+<text x="1429.20" y="217.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text><text x="1429.20" y="217.00" fill="#3f382f" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text>
+<text x="1429.20" y="239.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text><text x="1429.20" y="239.00" fill="#5c5348" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text>
+<rect x="967.20" y="423.80" width="129.80" height="44.00" fill="#bc9c77" stroke="#6e675d" stroke-width="1" />
+<text x="1032.10" y="445.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text><text x="1032.10" y="445.80" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text>
+<rect x="1121.97" y="370.50" width="119.46" height="93.39" fill="#dce4df" stroke="#557266" stroke-width="1.2" />
+<rect x="1126.70" y="375.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="1126.70" y="456.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="1233.40" y="375.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="1233.40" y="456.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="1060.76" y="415.82" width="241.89" height="9.35" fill="none" stroke="#aa8661" stroke-dasharray="4 3" stroke-width="1.2" />
+<rect x="1077.47" y="417.20" width="208.45" height="6.60" fill="#283932" stroke="#10251c" stroke-width="1" />
+<text x="1181.70" y="452.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text><text x="1181.70" y="452.40" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text>
+<rect x="1097.00" y="121.85" width="169.40" height="113.30" fill="#c9d4cf" stroke="#3e5c54" stroke-width="1.4" />
+<rect x="1101.40" y="125.70" width="160.60" height="28.60" fill="#a9bbb4" stroke="#3e5c54" stroke-width="0.8" />
+<rect x="1105.80" y="159.80" width="151.80" height="63.80" fill="#d5e0db" stroke="#3e5c54" stroke-width="0.6" />
+<text x="1181.70" y="184.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text><text x="1181.70" y="184.00" fill="#3e5c54" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text>
+<text x="1181.70" y="206.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text><text x="1181.70" y="206.00" fill="#3d4a46" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text>
+<rect x="974.35" y="121.85" width="115.50" height="88.00" fill="#e4d0b0" stroke="#6d5330" stroke-width="1.4" />
+<rect x="978.75" y="126.25" width="106.70" height="24.20" fill="#c2a888" stroke="#6d5330" stroke-width="0.7" />
+<rect x="983.15" y="157.05" width="97.90" height="44.00" fill="#f3e6d4" stroke="#6d5330" stroke-width="0.6" />
+<text x="1032.10" y="173.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床闭合</text><text x="1032.10" y="173.00" fill="#6d5330" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床闭合</text>
+<text x="1032.10" y="192.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">靠背 z 0.155</text><text x="1032.10" y="192.80" fill="#5c4a32" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">靠背 z 0.155</text>
+<rect x="881.40" y="289.05" width="215.60" height="66.00" fill="#f3e6c8" stroke="#7a6240" stroke-width="1.5" fill-opacity=".92" />
+<line x1="976.00" y1="300.60" x2="1088.20" y2="300.60" stroke="#7a6240" stroke-width="1" />
+<rect x="968.30" y="291.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="968.30" y="350.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="1092.60" y="291.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="1092.60" y="350.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<text x="1032.10" y="342.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text><text x="1032.10" y="342.40" fill="#7a6240" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text>
+<circle cx="1032.10" cy="258.80" r="41.25" fill="#e7efe9" stroke="#2f4a44" stroke-width="1.6" />
+<line x1="1032.10" y1="269.80" x2="1032.10" y2="291.80" stroke="#2f4a44" stroke-width="1.4" stroke-linecap="round" />
+<text x="1192.70" y="275.30" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">座椅常位</text><text x="1192.70" y="275.30" fill="#2f4a44" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">座椅常位</text>
+<text x="1192.70" y="295.10" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">(0.69, 1.40) 朝 +z</text><text x="1192.70" y="295.10" fill="#2f4a44" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">(0.69, 1.40) 朝 +z</text>
+<line x1="1077.20" y1="267.60" x2="1143.20" y2="278.60" stroke="#2f4a44" stroke-width="0.8" />
+<line x1="974.35" y1="121.85" x2="1266.40" y2="121.85" stroke="#2c6f86" stroke-width="1.1" stroke-dasharray="4 2" />
+<text x="1332.40" y="165.30" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">靠背齐</text><text x="1332.40" y="165.30" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">靠背齐</text>
+<rect x="1121.97" y="326.50" width="119.46" height="93.39" fill="none" stroke="#557266" stroke-width="1" stroke-dasharray="3 3" />
+<line x1="1077.47" y1="376.50" x2="1285.92" y2="376.50" stroke="#557266" stroke-width="2" stroke-dasharray="4 3" />
+<text x="1313.70" y="357.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">前移400</text><text x="1313.70" y="357.80" fill="#557266" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">前移400</text>
+<text x="822" y="506" fill="#6b3a00" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="700">床收起时可前移游戏；投影虚线是另一位置，不是第二台电视。</text>
+<rect x="16" y="546" width="776" height="470" fill="#fffefb" stroke="#d9d2c4" stroke-width="1" />
+<text x="30" y="564" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="15" font-weight="700">02  小床展开 · 电视后停</text>
+<rect x="174.10" y="614.70" width="508.20" height="354.20" fill="#f7f4ee" stroke="none" />
+<rect x="81.70" y="654.30" width="82.50" height="231.00" fill="#efe2c4" stroke="none" />
+<rect x="81.70" y="654.30" width="82.50" height="231.00" fill="url(#hatch)" stroke="none" opacity="0.55" />
+<rect x="154.30" y="594.90" width="547.80" height="19.80" fill="#3a3834" />
+<rect x="682.30" y="594.90" width="19.80" height="393.80" fill="#3a3834" />
+<rect x="154.30" y="968.90" width="441.10" height="19.80" fill="#3a3834" />
+<rect x="690.00" y="968.90" width="12.10" height="19.80" fill="#3a3834" />
+<rect x="154.30" y="594.90" width="19.80" height="59.40" fill="#3a3834" />
+<rect x="154.30" y="885.30" width="19.80" height="103.40" fill="#3a3834" />
+<rect x="61.90" y="634.50" width="19.80" height="270.60" fill="#3a3834" />
+<rect x="61.90" y="634.50" width="112.20" height="19.80" fill="#3a3834" />
+<rect x="61.90" y="885.30" width="112.20" height="19.80" fill="#3a3834" />
+<line x1="71.80" y1="681.80" x2="71.80" y2="857.80" stroke="#d7ecf5" stroke-width="4" stroke-linecap="round" />
+<line x1="71.80" y1="681.80" x2="71.80" y2="857.80" stroke="#2c6f86" stroke-width="1.2" />
+<line x1="81.70" y1="681.80" x2="81.70" y2="857.80" stroke="#2c6f86" stroke-width="1" />
+<line x1="595.40" y1="978.80" x2="690.00" y2="978.80" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3" />
+<line x1="595.40" y1="978.80" x2="595.40" y2="884.20" stroke="#1c1915" stroke-width="2.4" stroke-linecap="butt" />
+<path d="M 690.00 978.80 A 94.60 94.60 0 0 0 595.40 884.20" fill="none" stroke="#5c6570" stroke-width="1" stroke-dasharray="4 3" />
+<circle cx="595.40" cy="978.80" r="2.2" fill="#1c1915" />
+<text x="103.70" y="736.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text><text x="103.70" y="736.80" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text>
+<text x="103.70" y="756.60" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text><text x="103.70" y="756.60" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text>
+<rect x="604.20" y="632.30" width="66.00" height="181.50" fill="#c8bfb0" stroke="#5c5348" stroke-width="1.3" />
+<line x1="637.20" y1="632.30" x2="637.20" y2="813.80" stroke="#5c5348" stroke-width="0.8" />
+<text x="637.20" y="717.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text><text x="637.20" y="717.00" fill="#3f382f" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text>
+<text x="637.20" y="739.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text><text x="637.20" y="739.00" fill="#5c5348" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text>
+<rect x="175.20" y="923.80" width="129.80" height="44.00" fill="#bc9c77" stroke="#6e675d" stroke-width="1" />
+<text x="240.10" y="945.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text><text x="240.10" y="945.80" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text>
+<rect x="329.97" y="870.50" width="119.46" height="93.39" fill="#dce4df" stroke="#557266" stroke-width="1.2" />
+<rect x="334.70" y="875.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="334.70" y="956.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="441.40" y="875.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="441.40" y="956.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="268.75" y="915.83" width="241.89" height="9.35" fill="none" stroke="#aa8661" stroke-dasharray="4 3" stroke-width="1.2" />
+<rect x="285.47" y="917.20" width="208.45" height="6.60" fill="#283932" stroke="#10251c" stroke-width="1" />
+<text x="389.70" y="952.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text><text x="389.70" y="952.40" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text>
+<rect x="305.00" y="621.85" width="169.40" height="113.30" fill="#c9d4cf" stroke="#3e5c54" stroke-width="1.4" />
+<rect x="309.40" y="625.70" width="160.60" height="28.60" fill="#a9bbb4" stroke="#3e5c54" stroke-width="0.8" />
+<rect x="313.80" y="659.80" width="151.80" height="63.80" fill="#d5e0db" stroke="#3e5c54" stroke-width="0.6" />
+<text x="389.70" y="684.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text><text x="389.70" y="684.00" fill="#3e5c54" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 闭合</text>
+<text x="389.70" y="706.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text><text x="389.70" y="706.00" fill="#3d4a46" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原位不动</text>
+<rect x="182.35" y="621.85" width="115.50" height="211.20" fill="#e4d0b0" stroke="#6d5330" stroke-width="1.4" />
+<rect x="182.35" y="621.85" width="115.50" height="211.20" fill="url(#mattress)" stroke="none" opacity="0.55" />
+<rect x="185.10" y="632.85" width="110.00" height="200.20" fill="none" stroke="#6d5330" stroke-width="0.7" stroke-dasharray="4 2" />
+<rect x="186.75" y="626.25" width="106.70" height="24.20" fill="#c2a888" stroke="#6d5330" stroke-width="0.7" />
+<text x="240.10" y="684.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床展开</text><text x="240.10" y="684.00" fill="#6d5330" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床展开</text>
+<text x="240.10" y="703.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">向 +z</text><text x="240.10" y="703.80" fill="#5c4a32" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">向 +z</text>
+<rect x="89.40" y="789.05" width="215.60" height="66.00" fill="#f3e6c8" stroke="#7a6240" stroke-width="1.5" fill-opacity=".92" />
+<line x1="184.00" y1="800.60" x2="296.20" y2="800.60" stroke="#7a6240" stroke-width="1" />
+<rect x="176.30" y="791.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="176.30" y="850.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="300.60" y="791.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="300.60" y="850.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="182.35" y="789.05" width="115.50" height="44.00" fill="url(#lap)" stroke="#8a5a12" stroke-width="1.2" />
+<line x1="182.35" y1="833.05" x2="297.85" y2="833.05" stroke="#6b3a00" stroke-width="1.4" stroke-dasharray="3 2" />
+<text x="240.10" y="807.20" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">套入 400</text><text x="240.10" y="807.20" fill="#6b3a00" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">套入 400</text>
+<text x="240.10" y="842.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text><text x="240.10" y="842.40" fill="#7a6240" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text>
+<circle cx="240.10" cy="758.80" r="41.25" fill="none" stroke="#8a5a12" stroke-width="1.2" stroke-dasharray="5 3" />
+<line x1="215.90" y1="734.60" x2="264.30" y2="783.00" stroke="#8a5a12" stroke-width="1.3" />
+<line x1="215.90" y1="783.00" x2="264.30" y2="734.60" stroke="#8a5a12" stroke-width="1.3" />
+<circle cx="483.20" cy="802.80" r="41.25" fill="#e7efe9" stroke="#2f4a44" stroke-width="1.6" />
+<line x1="483.20" y1="813.80" x2="483.20" y2="835.80" stroke="#2f4a44" stroke-width="1.4" stroke-linecap="round" />
+<text x="483.20" y="860.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">椅子改停此处</text><text x="483.20" y="860.00" fill="#2f4a44" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">椅子改停此处</text>
+<text x="483.20" y="877.60" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">(2.90, 1.80)</text><text x="483.20" y="877.60" fill="#2f4a44" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">(2.90, 1.80)</text>
+<text x="30" y="1006" fill="#6b3a00" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="700">琥珀色为床尾套进桌下的 400 mm。大床保持闭合，椅子先改停。</text>
+<rect x="808" y="546" width="776" height="470" fill="#fffefb" stroke="#d9d2c4" stroke-width="1" />
+<text x="822" y="564" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="15" font-weight="700">03  大床展开 · 电视后停</text>
+<rect x="966.10" y="614.70" width="508.20" height="354.20" fill="#f7f4ee" stroke="none" />
+<rect x="873.70" y="654.30" width="82.50" height="231.00" fill="#efe2c4" stroke="none" />
+<rect x="873.70" y="654.30" width="82.50" height="231.00" fill="url(#hatch)" stroke="none" opacity="0.55" />
+<rect x="946.30" y="594.90" width="547.80" height="19.80" fill="#3a3834" />
+<rect x="1474.30" y="594.90" width="19.80" height="393.80" fill="#3a3834" />
+<rect x="946.30" y="968.90" width="441.10" height="19.80" fill="#3a3834" />
+<rect x="1482.00" y="968.90" width="12.10" height="19.80" fill="#3a3834" />
+<rect x="946.30" y="594.90" width="19.80" height="59.40" fill="#3a3834" />
+<rect x="946.30" y="885.30" width="19.80" height="103.40" fill="#3a3834" />
+<rect x="853.90" y="634.50" width="19.80" height="270.60" fill="#3a3834" />
+<rect x="853.90" y="634.50" width="112.20" height="19.80" fill="#3a3834" />
+<rect x="853.90" y="885.30" width="112.20" height="19.80" fill="#3a3834" />
+<line x1="863.80" y1="681.80" x2="863.80" y2="857.80" stroke="#d7ecf5" stroke-width="4" stroke-linecap="round" />
+<line x1="863.80" y1="681.80" x2="863.80" y2="857.80" stroke="#2c6f86" stroke-width="1.2" />
+<line x1="873.70" y1="681.80" x2="873.70" y2="857.80" stroke="#2c6f86" stroke-width="1" />
+<line x1="1387.40" y1="978.80" x2="1482.00" y2="978.80" stroke="#9aa0a6" stroke-width="1" stroke-dasharray="3 3" />
+<line x1="1387.40" y1="978.80" x2="1387.40" y2="884.20" stroke="#1c1915" stroke-width="2.4" stroke-linecap="butt" />
+<path d="M 1482.00 978.80 A 94.60 94.60 0 0 0 1387.40 884.20" fill="none" stroke="#5c6570" stroke-width="1" stroke-dasharray="4 3" />
+<circle cx="1387.40" cy="978.80" r="2.2" fill="#1c1915" />
+<text x="895.70" y="736.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text><text x="895.70" y="736.80" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">窗</text>
+<text x="895.70" y="756.60" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text><text x="895.70" y="756.60" fill="#2c6f86" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">台高 0.60</text>
+<rect x="1396.20" y="632.30" width="66.00" height="181.50" fill="#c8bfb0" stroke="#5c5348" stroke-width="1.3" />
+<line x1="1429.20" y1="632.30" x2="1429.20" y2="813.80" stroke="#5c5348" stroke-width="0.8" />
+<text x="1429.20" y="717.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text><text x="1429.20" y="717.00" fill="#3f382f" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">衣柜</text>
+<text x="1429.20" y="739.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text><text x="1429.20" y="739.00" fill="#5c5348" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">原宽保留</text>
+<rect x="967.20" y="923.80" width="129.80" height="44.00" fill="#bc9c77" stroke="#6e675d" stroke-width="1" />
+<text x="1032.10" y="945.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text><text x="1032.10" y="945.80" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="10" font-weight="600" text-anchor="middle">后柜保留</text>
+<rect x="1121.97" y="870.50" width="119.46" height="93.39" fill="#dce4df" stroke="#557266" stroke-width="1.2" />
+<rect x="1126.70" y="875.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="1126.70" y="956.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="1233.40" y="875.40" width="3.85" height="6.60" fill="#354139" />
+<rect x="1233.40" y="956.80" width="3.85" height="6.60" fill="#354139" />
+<rect x="1060.76" y="915.83" width="241.89" height="9.35" fill="none" stroke="#aa8661" stroke-dasharray="4 3" stroke-width="1.2" />
+<rect x="1077.47" y="917.20" width="208.45" height="6.60" fill="#283932" stroke="#10251c" stroke-width="1" />
+<text x="1181.70" y="952.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text><text x="1181.70" y="952.40" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">移动85 / 停靠</text>
+<rect x="974.35" y="621.85" width="115.50" height="88.00" fill="#e4d0b0" stroke="#6d5330" stroke-width="1.4" />
+<rect x="978.75" y="626.25" width="106.70" height="24.20" fill="#c2a888" stroke="#6d5330" stroke-width="0.7" />
+<rect x="983.15" y="657.05" width="97.90" height="44.00" fill="#f3e6d4" stroke="#6d5330" stroke-width="0.6" />
+<text x="1032.10" y="673.00" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床闭合</text><text x="1032.10" y="673.00" fill="#6d5330" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="600" text-anchor="middle">小床闭合</text>
+<text x="1032.10" y="692.80" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">靠背 z 0.155</text><text x="1032.10" y="692.80" fill="#5c4a32" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="500" text-anchor="middle">靠背 z 0.155</text>
+<rect x="1097.00" y="622.40" width="169.40" height="231.00" fill="#c9d4cf" stroke="#3e5c54" stroke-width="1.4" />
+<rect x="1097.00" y="622.40" width="169.40" height="231.00" fill="url(#mattress)" stroke="none" opacity="0.85" />
+<rect x="1101.40" y="626.80" width="160.60" height="30.80" fill="#a9bbb4" stroke="#3e5c54" stroke-width="0.8" />
+<text x="1181.70" y="720.30" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 展开</text><text x="1181.70" y="720.30" fill="#3e5c54" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="13" font-weight="600" text-anchor="middle">大沙发床 展开</text>
+<text x="1181.70" y="743.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">x 1.28–2.82</text><text x="1181.70" y="743.40" fill="#3d4a46" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">x 1.28–2.82</text>
+<text x="1181.70" y="763.20" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">z 0.16–2.26</text><text x="1181.70" y="763.20" fill="#3d4a46" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="400" text-anchor="middle">z 0.16–2.26</text>
+<rect x="881.40" y="789.05" width="215.60" height="66.00" fill="#f3e6c8" stroke="#7a6240" stroke-width="1.5" fill-opacity=".92" />
+<line x1="976.00" y1="800.60" x2="1088.20" y2="800.60" stroke="#7a6240" stroke-width="1" />
+<rect x="968.30" y="791.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="968.30" y="850.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="1092.60" y="791.80" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<rect x="1092.60" y="850.10" width="3.30" height="3.30" fill="#4e5560" stroke="#2c3138" stroke-width="0.6" />
+<text x="1032.10" y="842.40" fill="#fffef8" stroke="#fffef8" stroke-width="3.5" stroke-linejoin="round" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text><text x="1032.10" y="842.40" fill="#7a6240" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="11" font-weight="600" text-anchor="middle">长桌 1.96×0.60</text>
+<circle cx="1032.10" cy="758.80" r="41.25" fill="#e7efe9" stroke="#2f4a44" stroke-width="1.6" />
+<line x1="1032.10" y1="769.80" x2="1032.10" y2="791.80" stroke="#2f4a44" stroke-width="1.4" stroke-linecap="round" />
+<text x="822" y="1006" fill="#6b3a00" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12" font-weight="700">人先离开工位。中间被大床挡住。不能两床同时打开还各自进出。</text>
+<rect x="40" y="1028" width="110" height="6" fill="#1c1915" />
+<rect x="150" y="1028" width="110" height="6" fill="#fffefb" stroke="#1c1915" stroke-width="1" />
+<text x="40" y="1048" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">0</text>
+<text x="145" y="1048" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">1 m</text>
+<text x="255" y="1048" fill="#1c1915" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">2 m · 比例 110 px/m</text>
+<rect x="620" y="1024" width="16" height="12" fill="url(#lap)" stroke="#8a5a12" stroke-width="0.6" />
+<text x="642" y="1035" fill="#6b3a00" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">床尾套入书桌 400 mm（仅 02）</text>
+<text x="40" y="1066" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">A8｜电视改为移动式。原固定电视柜中段腾空供底座停靠；桌后1180×400低柜保留，长桌1960×600与原大床不动。</text>
+<text x="40" y="1082" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">85优先；75为较轻松选项；98为条件方案。实线85机身宽1895，琥珀虚线98机身宽2199，均为官方产品外尺寸参考。</text>
+<text x="40" y="1098" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">参考底座1086×849：后停中心(2.05,2.84)，前移中心(2.05,2.44)。屏幕面目标z2.87/2.47，相对底座位置待整架深化。</text>
+<text x="40" y="1114" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">大沙发概念眼位z0.40–0.65，后停屏幕到眼睛的垂直距离2.22–2.47m；躺卧以头部为准，不从距离里扣除整张床长。</text>
+<text x="40" y="1130" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">后停底座前沿z2.4155，大床展开前沿z2.26，名义间隔155.5mm；这是设备间隙，不是脚端通道。</text>
+<text x="40" y="1146" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">85右边至内开门叶x3.92约922.5mm；98同中心约770.5mm。仅为未转向时的局部预算，非完整人体通行验收。</text>
+<text x="40" y="1162" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">床展开时电视后停。大角度换向要先收床，不能在贴墙停靠位原地任意旋转。小床斜看、桌面遮挡与视线需另核。</text>
+<text x="40" y="1178" fill="#2a2722" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="12">参考底座不是完整支架选型；承载、VESA、安装高度、重心、线缆、锁轮及实际全行程待核。仅2D图审，未改模型或发布。</text>
+</svg>

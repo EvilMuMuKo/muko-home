@@ -4,7 +4,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'
 const page=await browser.newPage({viewport:{width:900,height:560}}),errors=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
 const views={guest:'guest-main',bath:'bath-main',master:'master-main',kitchen:'kitchen-main',bar:'salon-bar-seat',living:'living-main',balcony:'balcony-main'};
-const data={version:1,source:'Unified R4 V14 warm material and lighting revision; offline static architecture only',variants:{}};
+const data={version:1,source:'Unified R5 V15 approved layouts and electrical placement; offline static architecture only',variants:{}};
 try {
  await page.goto((process.argv[2]||'http://localhost:4173/')+'?gi-bake');
  await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});

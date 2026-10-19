@@ -2,11 +2,13 @@ import * as THREE from "three";
 import { buildPegboard } from "./pegboard-mesh";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { metricUV } from "./texture-mapping";
+import { buildR5Furniture, type R5Motion } from "./r5-mesh";
 
 type Materials = Record<string, THREE.Material>;
 type Tag = (node: THREE.Object3D, rooms: string[], kind: string) => void;
 type Model = Record<string, any>;
 export type HomeMotion = {
+  r5?: R5Motion;
   model?: Model;
   table?: {
     group: THREE.Group;
@@ -152,6 +154,7 @@ export function buildHomeFurniture(
   m: Materials,
   motion: HomeMotion,
 ) {
+  if (buildR5Furniture(group, o, m, motion)) return true;
   if (o.type === "counter_stool") {
     group.userData.animated = true;
     const seat = o.seatHeight ?? 0.65;
@@ -249,7 +252,7 @@ export function buildHomeFurniture(
       module.name = `sofa-module-${index + 1}`;
       const w = 1.275,
         d = 1.05,
-        outer = index === 0 ? 1 : -1;
+        outer = o.moduleOuterSigns?.[index] ?? (index === 0 ? 1 : -1);
       box(module, m, w, 0.22, d, 0, 0.245, 0, "salonFabric", 0.065);
       box(
         module,
@@ -279,7 +282,7 @@ export function buildHomeFurniture(
       for (const x of [-0.5, 0.5])
         for (const z of [-0.36, 0.36])
           box(module, m, 0.045, 0.14, 0.045, x, 0.07, z, "salonTimber");
-      box(module, m, 0.04, 0.025, 0.09, (-outer * w) / 2, 0.17, -0.25, "steel");
+      box(module, m, 0.04, 0.025, 0.09, o.moduleOuterSigns ? -outer*(w/2-.025) : (-outer*w)/2, 0.17, -0.25, "steel");
       const cushion = box(
         module,
         m,
@@ -524,7 +527,10 @@ export function buildHomeArchitecture(
 ) {
   motion.model = model;
   const device = scene.getObjectByName("ps5");
-  if (device && motion.mobileTV) motion.mobileTV.group.attach(device);
+  if (device && motion.mobileTV) {
+    motion.mobileTV.group.attach(device);
+    if(model.homeDesign?.r5Revision){device.position.set(0,.530,-.04);device.rotation.set(0,0,0);}
+  }
   const solids: { room: string; name: string; min: number[]; max: number[] }[] =
     [];
   function group(id: string, rooms: string[], kind = "detail") {
@@ -926,6 +932,7 @@ export function buildHomeArchitecture(
     3.075,
     "salonTimber",
   );
+  if(!model.homeDesign?.r5Revision){
   for (const x of [0.6, 3.5])
     solid(
       cinema,
@@ -951,6 +958,7 @@ export function buildHomeArchitecture(
     3.255,
     "salonTimber",
   );
+  }
   // Books are useful objects at reachable low level, not high cabinetry on every empty wall.
   const living = group("home:living-ritual", ["living"]);
   const media = model.objects.find((o: any) => o.id === "living-tv-console");
@@ -1015,6 +1023,12 @@ export function applyHomeMotion(
           ),
         ),
       );
+      if(model.homeDesign?.r5Revision){
+        // Give the two full-size modules room to turn, rather than swapping or clipping their corners.
+        const turn=Math.max(meal,activity),world=parent.localToWorld(module.position.clone());
+        world.x+=(index===0?1:-1)*.05*Math.sin(Math.PI*turn);
+        module.position.copy(parent.worldToLocal(world));
+      }
       const parentAngle = -THREE.MathUtils.degToRad(
         model.objects.find((o: any) => o.id === "living-sofa").rotation || 0,
       );
@@ -1030,13 +1044,14 @@ export function applyHomeMotion(
       const t = smooth(state.tv || 0) * (1-smooth(Math.max(state.dining||0,state.activity||0)/.15)),
         a = poses[0],
         b = poses[1];
+      const activity=smooth(state.activity||0),park=model?.homeDesign?.mobileTV?.activityPose;
       motion.mobileTV.group.position.set(
-        THREE.MathUtils.lerp(a.x, b.x, t),
+        THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.x, b.x, t),park?.x??a.x,activity),
         0,
-        THREE.MathUtils.lerp(a.z, b.z, t),
+        THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.z, b.z, t),park?.z??a.z,activity),
       );
       motion.mobileTV.group.rotation.y = -THREE.MathUtils.degToRad(
-        THREE.MathUtils.lerp(a.rotation, b.rotation, t),
+        THREE.MathUtils.lerp(THREE.MathUtils.lerp(a.rotation, b.rotation, t),park?.rotation??a.rotation,activity),
       );
     }
   }

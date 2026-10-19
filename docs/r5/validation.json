@@ -1,0 +1,463 @@
+{
+  "release": "R5",
+  "version": "15.0.0",
+  "date": "2026-10-19",
+  "scope": "A8 cinema study, A9 diagonal living, A10 electrical unified model",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "command": "npm run build"
+    },
+    "architecture": {
+      "status": "PASS",
+      "unchanged": [
+        "shell",
+        "walls",
+        "openings",
+        "rooms",
+        "guest-sofa-bed"
+      ],
+      "comparedTo": "55f37e3"
+    },
+    "localFullInitial": {
+      "status": "FAIL",
+      "passed": 192,
+      "failed": 8,
+      "note": "Failures diagnosed; geometry fixes, current version expectations and mobile-TV narrowphase applied. Superseded by targeted reruns and release CI."
+    },
+    "targetedFinal": {
+      "status": "PASS",
+      "passed": 16,
+      "includes": "5 actual-mesh cases and 7 R5 browser cases, salon regressions"
+    },
+    "affectedBrowser": {
+      "status": "PASS",
+      "note": "Original affected run passed23/25; route/lamp failure fixed and salon rerun passed; isolated floating-controls suite5/5 and first case10 repeats passed without source changes."
+    },
+    "geometryAccessoriesStow": {
+      "status": "PASS",
+      "passed": 11
+    },
+    "diffuseBake": {
+      "status": "PASS",
+      "variants": [
+        "day",
+        "night"
+      ],
+      "rooms": 7,
+      "runtimeErrors": 0
+    },
+    "desktopNativeGPU": {
+      "status": "FAIL",
+      "targetFps": 60,
+      "measuredFps": 47.97121726959059,
+      "note": "Target60fps not reached in this concurrent same-Mac run; no claim of AAA visual or performance acceptance."
+    },
+    "mobileViewportSimulation": {
+      "status": "PASS",
+      "targetFps": 30,
+      "measuredFps": 30.144058622639793,
+      "note": "Same Mac GPU with mobile viewport/touch emulation. Not phone hardware."
+    },
+    "stableResolution": {
+      "status": "PASS",
+      "cyclesPerProfile": 20,
+      "note": "No turn/stop DPR or drawing-buffer changes in either profile"
+    },
+    "visualInspection": {
+      "status": "PASS",
+      "scope": "Local native browser guest closed/open, desk and living screenshot inspection; concept representation."
+    },
+    "phoneHardware": {
+      "status": "NOT RUN"
+    },
+    "onsiteElectrical": {
+      "status": "BLOCKED",
+      "reason": "Needs site dimensions, load/circuit and qualified electrical coordination"
+    },
+    "bedHardwareLoad": {
+      "status": "NOT RUN",
+      "reason": "Virtual geometry only"
+    },
+    "releaseCI": {
+      "status": "NOT RUN",
+      "note": "See pull request checks for final full201 case status"
+    },
+    "publication": {
+      "status": "NOT RUN",
+      "note": "Release build prepared; final Pages status recorded in PR and delivery message"
+    },
+    "grokFinalAudit": {
+      "status": "PASS",
+      "scope": "Read-only audit of R5 model, mesh, electrical data and docs; confirmed per-room instancing, cabinet mount separation and mobile accessory hierarchy"
+    }
+  },
+  "performance": {
+    "scope": "Same macOS browser/GPU; mobile is viewport/touch emulation, not phone hardware; HTTP cache cleared, shader cache not cleared",
+    "runs": [
+      {
+        "mobile": false,
+        "interactiveMs": 4408,
+        "visualMs": 6738,
+        "backend": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "version": "15.0.0",
+        "quality": {
+          "mobile": false,
+          "economical": false,
+          "lightSlots": 12,
+          "shadowLights": 2,
+          "shadowSize": 1024,
+          "sunShadowSize": 2048,
+          "sunShadowRadius": 2,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 16.666666666666668,
+          "roomReflections": true,
+          "liveMirrors": true,
+          "reflectionStrategy": "room-capture",
+          "physicsHz": 60,
+          "postprocessing": true
+        },
+        "p95Raf": 33.399999999999636,
+        "renderedFps": 47.97121726959059,
+        "beforeCalls": 1178,
+        "afterCalls": 116,
+        "triangles": 172836,
+        "dprs": [
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              2160,
+              1350
+            ]
+          }
+        ],
+        "errors": [],
+        "warnings": []
+      },
+      {
+        "mobile": true,
+        "interactiveMs": 1532,
+        "visualMs": 2029,
+        "backend": {
+          "requested": "webgpu",
+          "backend": "WebGPU",
+          "deviceLossEvents": 0,
+          "fallbackReason": ""
+        },
+        "version": "15.0.0",
+        "quality": {
+          "mobile": true,
+          "economical": false,
+          "lightSlots": 4,
+          "shadowLights": 1,
+          "shadowSize": 512,
+          "sunShadowSize": 1024,
+          "sunShadowRadius": 1.25,
+          "maxDpr": 1.5,
+          "interactionDpr": 1.5,
+          "resolutionPolicy": "stable_per_profile",
+          "targetFrameMs": 33.333333333333336,
+          "roomReflections": false,
+          "liveMirrors": false,
+          "reflectionStrategy": "shared-environment",
+          "physicsHz": 30,
+          "postprocessing": false
+        },
+        "p95Raf": 16.799999999999272,
+        "renderedFps": 30.144058622639793,
+        "beforeCalls": 174,
+        "afterCalls": 131,
+        "triangles": 80929,
+        "dprs": [
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          },
+          {
+            "dpr": 1.5,
+            "buffer": [
+              1266,
+              585
+            ]
+          }
+        ],
+        "errors": [],
+        "warnings": []
+      }
+    ]
+  },
+  "collaboration": {
+    "grokBuild": "Authored electrical instancing module and applied room/mount corrections; primary agent verified geometry and tests. Final read-only audit retained separately.",
+    "luna": "Independent R5 model/tests and floating-control replication"
+  },
+  "privacy": "Original private photos and annotations excluded; public files contain approved diagrams and requirements."
+}

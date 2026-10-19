@@ -7,7 +7,7 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.waitForFunction(() => window.homePresentation?.getState().ready, undefined, { timeout: 90_000 });
   // Verify motion after startup/reflection preparation, not while the software renderer is paused for captures.
   await page.evaluate(() => window.homePresentation.whenVisualReady());
-  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("14.0.0");
+  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("15.0.0");
   expect(await page.evaluate(() => window.homePresentation.getR2Revision().version)).toBe(12);
   await page.evaluate(() => window.homePresentation.startGhostWalk());
 

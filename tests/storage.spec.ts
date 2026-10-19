@@ -115,8 +115,14 @@ test("new storage controls expose contents, textures load and desktop work area 
                 Math.max(upper.min[i], other.min[i]) >
               0.003,
           )
-        )
-          conflicts.push([upper.id, other.id]);
+        ) {
+          // A trolley's floor base and high screen leave empty space between them.
+          // Broad whole-object AABBs must not treat that empty volume as solid cabinet collision.
+          const pieces=["guest-tv","living-tv"].includes(other.id)
+            ? window.homePresentation.getObjectMeshBounds(other.id) : [other];
+          if(pieces.some(piece=>[0,1,2].every(i=>Math.min(upper.max[i],piece.max[i])-Math.max(upper.min[i],piece.min[i])>.003)))
+            conflicts.push([upper.id, other.id]);
+        }
       }
     return conflicts;
   });

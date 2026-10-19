@@ -259,12 +259,16 @@ export function buildInteriorDetails(
     for (const x of [1.05, 2.05, 3.05])
       box(guest, 0.78, 0.74, 0.038, x, 1.29, 0.112, "cinemaAcoustic", 0.012);
   for (const x of [0.65, 3.35]) {
-    box(guest, 0.2, 0.39, 0.16, x, 1.05, 3.17, "cinemaWood", 0.012);
-    box(guest, 0.176, 0.365, 0.009, x, 1.05, 3.084, "cinemaAcoustic", 0.004);
+    const speakerY=model?.homeDesign?.r5Revision?1.4:1.05;
+    box(guest, 0.2, 0.39, 0.16, x, speakerY, 3.17, "cinemaWood", 0.012);
+    box(guest, 0.176, 0.365, 0.009, x, speakerY, 3.084, "cinemaAcoustic", 0.004);
+    if(model?.homeDesign?.r5Revision)box(guest,.04,.08,.07,x,speakerY,3.275,'steel',.003);
   }
+  if(!model?.homeDesign?.r5Revision){
   box(guest, 0.85, 0.06, 0.13, 2.05, 0.49, 3.0, "cinemaAcoustic", 0.012);
   box(guest, 0.31, 0.35, 0.32, 0.6, 0.18, 0.45, "cinemaWood", 0.02);
   box(guest, 0.28, 0.31, 0.006, 0.6, 0.18, 0.286, "cinemaAcoustic", 0.01);
+  }
   box(guest, 2.5, 0.008, 2.48, 2.05, 0.009, 1.71, "cinemaAcoustic", 0.002);
   // Merge decorative meshes by room/material. Dynamic shutters, curtains and screens stay separate.
   for (const [id, group] of groups) {
@@ -324,7 +328,7 @@ export function buildInteriorDetails(
   treatment.add(blackout);
   const poster = artwork(true),
     screens: { material: THREE.MeshStandardMaterial; room: string }[] = [];
-  for (const id of ["guest-tv", "living-tv", "pc-monitor", "macbook"]) {
+  for (const id of ["guest-tv", "living-tv", "pc-monitor", "macbook", ...(model?.homeDesign?.r5Revision ? ["study-monitor"] : [])]) {
     const g = scene.getObjectByName(id)!;
     g.traverse((n) => {
       if (n instanceof THREE.Mesh && n.material === m.screen) {
@@ -333,7 +337,7 @@ export function buildInteriorDetails(
         const size = geometry.boundingBox!.getSize(new THREE.Vector3());
         const positions = geometry.getAttribute("position"),
           uv = geometry.getAttribute("uv");
-        const facing = id === "living-tv" ? 1 : -1;
+        const facing = id === "living-tv" || (id==='guest-tv' && model?.homeDesign?.r5Revision) ? 1 : -1;
         for (let i = 0; i < positions.count; i++)
           uv.setXY(
             i,
@@ -350,7 +354,7 @@ export function buildInteriorDetails(
         n.material = material;
         screens.push({
           material,
-          room: id.startsWith("guest") ? "guest" : ["pc-monitor", "macbook"].includes(id) ? "master" : "living",
+          room: id.startsWith("guest") || id==='study-monitor' ? "guest" : ["pc-monitor", "macbook"].includes(id) ? "master" : "living",
         });
       }
     });
