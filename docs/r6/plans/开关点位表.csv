@@ -1,0 +1,17 @@
+﻿编号,区域,用途,高度毫米,键数,面板,控制灯具,双控配对,安装面,状态,源X米,源Z米,说明
+SW01,hall,入户/走廊主灯 + 鞋柜低位灯,1200,2,2-gang,entry-wash;corridor-wash;entry-shoe-low,SW02,入户门内侧实墙,PROPOSED,6.15,8.3,与 SW02 双控走廊；门口主开关高度 1.20m（通用做法，概念位置未实测）
+SW02,hall,走廊双控（主卧端）,1200,2,2-gang,entry-wash;corridor-wash;corridor-guide,SW01,走廊近主卧端实墙,PROPOSED,6.75,4.3,与 SW01 组成双控；夜间走 corridor-guide 低照度灯带
+SW03,living,客厅基础 + 电视墙洗墙 + 岛台餐位重点光,1200,2,2-gang,living-wall-cove;living-wall-accent;dining-offset-1;dining-offset-2,,客厅入户侧实墙,PROPOSED,7.2,8.0,一组灯一个开关；洗墙与基础分键，便于只开氛围
+SW04,living,沙发旁阅读灯/柜底灯,700,2,2-gang,living-reading-lamp;storage-living-task,,沙发模块旁低位,PROPOSED,10.6,6.2,沙发侧开关 0.70m，坐姿可及；模块移动时按插拔式连接处理
+SW05,living,电视墙重点光单独控制,1200,1,1-gang,living-wall-accent,,电视墙侧实墙,PROPOSED,11.9,8.8,观影场景只留 cove，洗墙灯可单独关闭
+SW06,bar,水吧操作光 / 洗墙 / 酒具展示三层,1200,3,3-gang,bar-task;bar-wall-wash;display-level-1;display-level-2;display-level-3,,水吧操作龛入口,PROPOSED,2.4,6.95,对应基础+重点+氛围三层法；展示层可独立开关
+SW07,bar,阅读角重点光,700,1,1-gang,reading-local-task,,阅读椅侧低位,PROPOSED,4.6,6.9,0.70m 低位，坐姿可及
+SW08,kitchen,厨房基础 + 备餐条灯 + 水槽任务光,1200,2,2-gang,kitchen-base-1;kitchen-base-2;kitchen-prep-profile;kitchen-sink-task,,厨房门内侧实墙,PROPOSED,2.95,5.85,烹饪区与备餐区分键；燃气/排烟专业条件仍待核
+SW09,kitchen,水槽任务光就地控制,1200,1,1-gang,kitchen-sink-task,,操作台端实墙,PROPOSED,3.9,5.4,湿手操作采用大面板按键
+SW10,master,主卧主灯/洗墙/衣柜面光,1200,2,2-gang,master-headboard;master-wall-wash;master-wardrobe-face,SW11,主卧门内侧实墙,PROPOSED,6.7,3.85,与 SW11 双控；独立控制工作/睡眠光（对应 R02）
+SW11,master,床头双控 + 床下夜灯 + 双阅读灯,700,2,2-gang,master-headboard;master-underbed;master-reading-1;master-reading-2,SW10,床头左侧,PROPOSED,5.0,3.6,0.70m 与床头柜齐；起夜走 master-underbed 低照度
+SW12,guest,影音室基础 + 屏幕偏置光,1200,2,2-gang,guest-wall-cove;guest-screen-bias,SW13,影音室门内侧实墙,PROPOSED,4.6,2.2,与 SW13 双控；观影场景关 cove、留 screen-bias
+SW13,guest,客住夜灯 + 阅读灯,700,2,2-gang,guest-night-guide;guest-reader,SW12,小床侧低位,PROPOSED,3.2,1.6,沙发床展开时仍可触及；起夜路径独立于主灯
+SW14,bath,卫生间主灯 + 镜前灯 + 淋浴区,1200,2,2-gang,bath-mirror-side-1;bath-mirror-side-2;bath-shower,,卫生间门外侧实墙,PROPOSED,6.3,2.05,门外开关便于先亮后进；湿区防溅与等电位待专业确认
+SW15,bath,镜前灯独立控制,1200,1,1-gang,bath-mirror-side-1;bath-mirror-side-2,,镜柜侧干燥面,PROPOSED,6.81,1.85,化妆/剃须只开镜前灯，减少夜间全亮
+SW16,balcony,家政区任务光 + 收纳光 + 低位夜灯,1200,2,2-gang,balcony-laundry;balcony-storage;balcony-low,,阳台门内侧实墙,PROPOSED,11.9,9.0,洗→晾→收动线起点；洗烘设备本身用插座而非开关控制
