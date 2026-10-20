@@ -205,7 +205,8 @@ test("R5 electrical renderer batches proposed outlets per room, omits conditiona
 
   const root = scene.getObjectByName("electrical:root")!;
   const expectedRooms = [...new Set(proposed
-    .filter((p: any) => p.kind !== "fixed_connection" && p.kind !== "data" && p.id !== "C04" && (p.acModules || 0) + (p.rj45 || 0) > 0)
+    .filter((p: any) => p.kind !== "fixed_connection" && p.kind !== "data" && p.id !== "C04" &&
+      (p.kind === "switch" || (p.acModules || 0) + (p.rj45 || 0) > 0))
     .map((p: any) => p.room))].sort();
   const roomGroups = root.children.filter((n) => n.name.startsWith("electrical-") && !n.name.startsWith("electrical-pdu-"));
   expect(roomGroups.map((n) => n.name).sort()).toEqual(expectedRooms.map((room) => `electrical-${room}`));
