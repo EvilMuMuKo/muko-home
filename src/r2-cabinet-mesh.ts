@@ -21,6 +21,8 @@ export type R2CabinetMeta = {
   backMaterial?: string;
   frame?: boolean;
   cutouts?: Array<{x:number;z:number;w:number;d:number;y0:number;y1:number}>;
+  r7PullPolicy?: string;
+  r7BallPulls?: Array<{bay:number;segment:number;leaf:number;color:string}>;
 };
 
 export type R2Panel = {
@@ -278,7 +280,7 @@ function addPanel(group: THREE.Object3D, p: R2Panel, materials: Record<string, T
   metricUV(geo, /oak|wood/i.test(p.material) && p.w > p.h ? "horizontal" : undefined);
   const mesh = new THREE.Mesh(geo, materials[p.material] ?? materials.oak);
   mesh.position.set(p.x, p.y, p.z);
-  mesh.castShadow = true;
+  mesh.castShadow = !/glass/i.test(p.material);
   mesh.receiveShadow = true;
   group.add(mesh);
 }
@@ -409,7 +411,20 @@ export function buildR2Cabinet(
         pivot.position.set(hingeX, y0, -D / 2 - 0.001);
         group.add(pivot);
         const center = (-side * leafW) / 2;
-        addPanel(
+        if (bay.material === "r7BlackGlass") {
+          const ft = 0.016;
+          const rail = (x: number, y: number, w: number, h: number, name: string) => {
+            addPanel(pivot, { x, y, z: -DOOR_T / 2, w, h, d: DOOR_T, material: "r7Ink" }, materials);
+            pivot.children[pivot.children.length - 1].name = name;
+          };
+          rail(center - leafW / 2 + ft / 2, segH / 2, ft, segH, "r7-glass-stile");
+          rail(center + leafW / 2 - ft / 2, segH / 2, ft, segH, "r7-glass-stile");
+          rail(center, ft / 2, leafW, ft, "r7-glass-rail");
+          rail(center, segH - ft / 2, leafW, ft, "r7-glass-rail");
+          addPanel(pivot, {
+            x: center, y: segH / 2, z: -DOOR_T / 2, w: leafW - ft * 2, h: segH - ft * 2, d: 0.006, material: "r7BlackGlass",
+          }, materials);
+        } else addPanel(
           pivot,
           {
             x: center,
@@ -422,7 +437,19 @@ export function buildR2Cabinet(
           },
           materials,
         );
-        addPanel(
+        const pull = meta.r7BallPulls?.find((p: any) => p.bay === i && p.segment === s && p.leaf === leaf);
+        if (pull) {
+          const key = `r7Ball:${pull.color}`;
+          if (!materials[key]) {
+            materials[key] = new THREE.MeshStandardMaterial({ color: pull.color, roughness: 0.35, metalness: 0.05 });
+            materials[key].userData.r7Role = true;
+          }
+          const knob = new THREE.Mesh(new THREE.SphereGeometry(0.012, 12, 10), materials[key]);
+          knob.position.set(center - side * (leafW / 2 - 0.06), Math.min(segH - 0.1, segH * 0.48), -DOOR_T - 0.012);
+          knob.castShadow = true;
+          knob.userData.animated = true;
+          pivot.add(knob);
+        } else if (meta.r7PullPolicy !== "two-balls") addPanel(
           pivot,
           {
             x: center - side * (leafW / 2 - 0.07),

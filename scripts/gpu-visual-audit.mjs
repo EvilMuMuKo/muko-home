@@ -34,9 +34,15 @@ try {
  assert.equal(report.initial.state.lighting.areaSlotCount,2);
  assert.equal(report.initial.state.lighting.slotCount,12);
  const shot=async(name,view,light)=>{
-  await page.evaluate(({view,light})=>{window.homePresentation.setInteriorView(view);window.homePresentation.setLightingScene(light);},{view,light});
-  await page.waitForFunction(()=>!window.homePresentation.getPerformance().pending,null,{timeout:60000});
-  const path=resolve(out,name+'.png');await page.screenshot({path});report.shots.push({name,path,view,light});
+  const before=await page.evaluate(()=>window.homePresentation.getPerformance().renders);
+  await page.evaluate(({view,light})=>{window.homePresentation.setLightingScene(light);window.homePresentation.setInteriorView(view);},{view,light});
+  await page.evaluate(()=>window.homePresentation.whenVisualReady());
+  await page.waitForFunction(({before,view,light})=>{
+   const h=window.homePresentation,p=h.getPerformance(),s=h.getState();
+   return p.renders>before && !p.pending && s.activePoint===view && s.lightScene===light;
+  },{before,view,light},{timeout:60000});
+  const state=await page.evaluate(()=>{const s=window.homePresentation.getState();return {activePoint:s.activePoint,lightScene:s.lightScene,night:s.night,renders:window.homePresentation.getPerformance().renders};});
+  const path=resolve(out,name+'.png');await page.screenshot({path});report.shots.push({name,path,view,light,state});
  };
  await shot('bar-day','salon-bar-seat','day-public');await shot('bar-night','salon-bar-seat','aperitif');await shot('living-night','living-media','game');await shot('master-day','master-main','day-public');await shot('master-night','master-main','aperitif');await shot('master-work','master-work','work');
  report.final=await page.evaluate(()=>window.homePresentation.getPerformance());

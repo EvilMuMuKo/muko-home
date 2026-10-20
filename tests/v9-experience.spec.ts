@@ -24,10 +24,10 @@ test("R3 household controls expose version 13 and complete reversible travel", a
       performance: api.getPerformance(),
     };
   });
-  expect(initial.state.version).toBe("16.0.0");
+  expect(initial.state.version).toBe("17.0.0");
   expect(initial.design.version).toBe(1);
   expect(initial.design.selectedLivingLayout).toBe("mobile-tv-flexible");
-  expect(initial.model.version).toBe("16.0.0");
+  expect(initial.model.version).toBe("17.0.0");
   expect(initial.model.shell).toContainEqual([7.1, 9.35]);
   const dailyIsland = initial.model.objects.find((object) => object.id === "s02-entry-return");
   expect(dailyIsland).toMatchObject({ x: 4.95, z: 7.525, w: 0.5, d: 1.6 });
@@ -293,7 +293,7 @@ test("V10 operating states remain renderable and capture clean screenshots", asy
       performance: window.homePresentation.getPerformance(),
       camera: window.homePresentation.getCamera(),
     }));
-    expect(report.state.version).toBe("16.0.0");
+    expect(report.state.version).toBe("17.0.0");
     expect(report.performance.drawCalls).toBeGreaterThan(0);
     expect(report.performance.triangles).toBeGreaterThan(0);
     expect(report.camera.verticalFov).toBeGreaterThan(0);

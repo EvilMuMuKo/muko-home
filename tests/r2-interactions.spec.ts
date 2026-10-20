@@ -7,7 +7,7 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.waitForFunction(() => window.homePresentation?.getState().ready, undefined, { timeout: 90_000 });
   // Verify motion after startup/reflection preparation, not while the software renderer is paused for captures.
   await page.evaluate(() => window.homePresentation.whenVisualReady());
-  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("16.0.0");
+  expect(await page.evaluate(() => window.homePresentation.getState().version)).toBe("17.0.0");
   expect(await page.evaluate(() => window.homePresentation.getR2Revision().version)).toBe(12);
   await page.evaluate(() => window.homePresentation.startGhostWalk());
 
@@ -28,18 +28,21 @@ test("R2 glass travel updates dynamic collision geometry; waterbar doors reach b
   await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress > 0.99, undefined, { timeout: 30_000 });
   const opened = await snapshotKitchen(page);
 
-  expect(closed.leaves).toHaveLength(7);
+  expect(closed.leaves).toHaveLength(3);
+  const fold = await page.evaluate(() => window.homePresentation.getR7PassPose());
+  expect(fold.pairs).toHaveLength(2);
   expect(opened.progress).toBeGreaterThan(0.99);
-  expect(opened.leaves.slice(0, 3)).not.toEqual(closed.leaves.slice(0, 3));
-  expect(opened.leaves.slice(3)).not.toEqual(closed.leaves.slice(3));
+  expect(opened.leaves).not.toEqual(closed.leaves);
   expect(opened.polygons).not.toEqual(closed.polygons);
   if (intermediate) {
     expect(intermediate.progress).toBeGreaterThan(0.05);
     expect(intermediate.progress).toBeLessThan(0.95);
-    expect(intermediate.leaves.slice(0, 3)).not.toEqual(closed.leaves.slice(0, 3));
-    expect(intermediate.leaves.slice(0, 3)).not.toEqual(opened.leaves.slice(0, 3));
-    expect(intermediate.leaves.slice(3)).not.toEqual(closed.leaves.slice(3));
-    expect(intermediate.leaves.slice(3)).not.toEqual(opened.leaves.slice(3));
+    expect(intermediate.leaves).not.toEqual(closed.leaves);
+    expect(intermediate.leaves).not.toEqual(opened.leaves);
+    const theta = intermediate.progress * Math.PI / 2;
+    const bz = 5.85 + 0.7 * Math.sin(theta);
+    expect(intermediate.fold.pairs[0].B[2]).toBeCloseTo(bz, 2);
+    expect(intermediate.fold.pairs[1].C[1]).toBeCloseTo(2.35 - 1.4 * Math.cos(theta), 2);
     expect(intermediate.polygons).not.toEqual(closed.polygons);
     expect(intermediate.polygons).not.toEqual(opened.polygons);
   }
@@ -85,6 +88,7 @@ async function sampleIntermediateKitchen(page: import("@playwright/test").Page) 
     progress: number;
     leaves: number[][];
     polygons: number[][][];
+    fold: { pairs: Array<{ A: number[]; B: number[]; C: number[] }> };
   } | null>((resolve) => {
     const deadline = performance.now() + 4_000;
     const sample = () => {
@@ -94,6 +98,7 @@ async function sampleIntermediateKitchen(page: import("@playwright/test").Page) 
           progress,
           leaves: window.homePresentation.getMovingPartTransforms().kitchen,
           polygons: window.homePresentation.getWalkNavigationSnapshot().polygons,
+          fold: window.homePresentation.getR7PassPose(),
         });
       } else if (performance.now() >= deadline) {
         resolve(null);
@@ -110,6 +115,7 @@ declare global {
     homePresentation: {
       getState(): { ready: boolean; version: string; kitchenProgress: number };
       getR2Revision(): { version: number };
+      getR7PassPose(): { pairs: Array<{ A: number[]; B: number[]; C: number[] }> };
       startGhostWalk(): void;
       getWalkCollisionAudit(): { movingOpenings: string[] } | null;
       setWalkDoorOpen(id: string, open: boolean): void;

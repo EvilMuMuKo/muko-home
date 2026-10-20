@@ -33,7 +33,7 @@ const fixtures = () => model.lighting.fixtures as any[];
 const switches = () => points().filter((p) => p.kind === "switch");
 
 test("R6 adds one wall-switch point per controlled zone with concept-only status", () => {
-  expect(model.version).toBe("16.0.0");
+  expect(model.version).toBe("17.0.0");
   expect(switches()).toHaveLength(16);
   for (const s of switches()) {
     expect(s.status).toBe("PROPOSED");

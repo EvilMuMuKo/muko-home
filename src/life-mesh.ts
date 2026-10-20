@@ -63,10 +63,11 @@ export function buildLifeFurniture(g:THREE.Group,o:any,m:M,motion:LifeMotion):bo
   if(o.type==="lounge_chair") {
     for(const x of [-.31,.31])for(const z of [-.29,.29])bar(g,m,[x,.03,z],[x,.36,z],.022,"salonDarkTimber");
     box(g,m,.76,.12,.78,0,.36,0,"salonDarkTimber",.045);
-    box(g,m,.71,.17,.66,0,.47,-.02,"salonClay",.07);
-    const back=box(g,m,.76,.46,.16,0,.65,.30,"salonClay",.065);back.rotation.x=-.13;
+    const seat = o.material === "r7Mustard" ? "r7Mustard" : "salonClay";
+    box(g,m,.71,.17,.66,0,.47,-.02,seat,.07);
+    const back=box(g,m,.76,.46,.16,0,.65,.30,seat,.065);back.rotation.x=-.13;
     for(const x of [-.38,.38])box(g,m,.1,.20,.69,x,.56,-.015,"salonTimber",.04);
-    const pillow=box(g,m,.33,.31,.1,.12,.65,.17,"linen",.05);pillow.rotation.z=-.09;
+    const pillow=box(g,m,.33,.31,.1,.12,.65,.17,seat,.05);pillow.rotation.z=-.09;
     return true;
   }
   if(o.type==="record_console") {
