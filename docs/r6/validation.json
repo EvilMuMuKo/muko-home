@@ -1,0 +1,83 @@
+{
+  "release": "R6",
+  "version": "16.0.0",
+  "date": "2026-10-20",
+  "scope": "R6 wall switches (SW01-SW16), lighting-quality criteria on all fixtures, weak-current topology",
+  "checks": {
+    "build": {
+      "status": "PASS",
+      "command": "npm run build",
+      "node": "24.19.0",
+      "note": "tsc --noEmit, vite build and static sync all passed; generated Pages files committed"
+    },
+    "architecture": {
+      "status": "PASS",
+      "unchanged": [
+        "shell",
+        "walls",
+        "openings",
+        "rooms",
+        "furniture-poses",
+        "storage-24-cabinets",
+        "material-budget",
+        "render-budget"
+      ],
+      "comparedTo": "R5 / 15.0.0"
+    },
+    "electrical": {
+      "status": "PASS",
+      "points": 64,
+      "sockets": 42,
+      "switches": 16,
+      "dualControlPairs": [
+        ["SW01", "SW02"],
+        ["SW10", "SW11"],
+        ["SW12", "SW13"]
+      ],
+      "drawCalls": "<=30",
+      "wallPowerGroups": "sockets only",
+      "note": "switch keys batch into the existing per-room instanced meshes; conditional points unchanged"
+    },
+    "lightingQuality": {
+      "status": "PASS",
+      "fixtures": 43,
+      "criMin": 90,
+      "targetLux": "group default with desk/kitchen/reading overrides",
+      "qualityStatus": "concept_target_not_photometric_acceptance",
+      "note": "targets are design intent, not DIAlux/Relux calculation; no maintained illuminance or reflection factors"
+    },
+    "weakCurrent": {
+      "status": "PASS",
+      "scope": "concept_only_not_surveyed",
+      "nodes": 6,
+      "rules": 5,
+      "note": "fiber entry and existing weak-current box remain un-surveyed; no conduit or tray geometry claimed"
+    },
+    "localFullSuite": {
+      "status": "PASS",
+      "passed": 207,
+      "failed": 0,
+      "durationMinutes": 12.9,
+      "note": "local run used CHROMIUM_PATH to the installed Chrome; two specs hardcode localhost:4173 and must run against the suite's own server"
+    },
+    "targetedRerun": {
+      "status": "PASS",
+      "passed": 27,
+      "failed": 2,
+      "note": "the two failures connect to a hardcoded localhost:4173 left running from another project; they pass under CI where 4173 is the suite's own preview server"
+    },
+    "releaseCI": {
+      "status": "PENDING",
+      "workflow": ".github/workflows/verify.yml",
+      "shards": 4,
+      "note": "filled by the PR verification run"
+    }
+  },
+  "boundaries": [
+    "switch positions, heights and dual-control grouping are concept layouts pending wall finish, framing and door-casing survey",
+    "targetLux is design intent; no photometric measurement or calculation",
+    "criMin is a selection threshold, not a specific product",
+    "weak-current topology has no conduit sizing, tray routing or entry survey",
+    "construction, hardware load, real use and real-device performance remain NOT RUN"
+  ]
+}
