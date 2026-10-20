@@ -110,13 +110,15 @@ test("R5 study state parks the chair when the small bed opens and prevents incom
   expect(nearDenied.reason).toBeTruthy();
 });
 
-test("R5 A10 keeps 48 electrical points, separates the furniture power strip and excludes conditional points from rendering", async ({ page }) => {
+test("R6 keeps 64 electrical points (48 A10 + 16 switches), separates the furniture power strip and excludes conditional points from rendering", async ({ page }) => {
   const result = await page.evaluate(() => {
     const plan = window.homePresentation.getElectricalPlan();
     const conditionalIds = plan.plan.points.filter((p: any) => p.status === "CONDITIONAL").map((p: any) => p.id);
     return { plan: plan.plan, rendering: plan.rendering, conditionalIds };
   });
-  expect(result.plan.points).toHaveLength(48);
+  expect(result.plan.points).toHaveLength(64);
+  expect(result.plan.points.filter((p: any) => p.kind === "switch")).toHaveLength(16);
+  expect(result.plan.points.filter((p: any) => p.kind === "socket")).toHaveLength(42);
   const strip = result.plan.points.find((p: any) => p.kind === "furniture_pdu");
   expect(strip).toBeTruthy();
   expect(strip.kind).not.toBe("socket");
