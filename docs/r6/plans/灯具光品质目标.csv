@@ -1,0 +1,44 @@
+﻿id,room,group,type,kelvin,lumens,beamAngle,targetLux,criMin,glare
+entry-shoe-low,hall,night,line,2700,110,110,20,90,low-level guide light; keep the source below eye height and out of the walking sightline
+entry-wash,hall,accent,spot,3000,550,48,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+corridor-wash,hall,ambient,spot,3000,300,80,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+corridor-guide,hall,night,line,2700,80,100,10,90,low-level guide light; keep the source below eye height and out of the walking sightline
+dining-offset-1,living,accent,spot,3000,200,58,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+dining-offset-2,living,accent,spot,3000,200,58,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+bar-task,bar,task,line,3500,520,100,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+display-level-1,bar,decor,line,2700,55,95,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+display-level-2,bar,decor,line,2700,55,95,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+display-level-3,bar,decor,line,2700,55,95,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+bar-wall-wash,bar,ambient,spot,3000,300,80,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+kitchen-base-1,kitchen,basic,spot,3000,700,65,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+kitchen-base-2,kitchen,basic,spot,3000,700,65,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+kitchen-prep-profile,kitchen,task,line,3500,650,100,500,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+kitchen-sink-task,kitchen,task,spot,3500,350,95,500,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+living-wall-cove,living,ambient,line,2700,600,115,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+living-wall-accent,living,accent,spot,3000,480,45,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+living-reading-lamp,living,reading,spot,2700,500,90,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+master-headboard,master,ambient,line,2700,460,115,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+master-underbed,master,night,line,2700,100,110,10,90,low-level guide light; keep the source below eye height and out of the walking sightline
+master-reading-1,master,reading,spot,2700,130,45,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+master-reading-2,master,reading,spot,2700,130,45,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+master-wardrobe-face,master,basic,spot,3000,480,48,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+pc-desk-task,master,work,line,3500,500,90,500,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+mac-desk-task,master,work,line,3500,500,90,500,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+master-wall-wash,master,ambient,spot,3000,300,80,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+guest-screen-bias,guest,screen,line,2700,120,100,30,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+guest-wall-cove,guest,ambient,line,2700,720,115,80,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+guest-reader,guest,reading,spot,2700,220,55,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+guest-night-guide,guest,night,line,2700,65,95,10,90,low-level guide light; keep the source below eye height and out of the walking sightline
+bath-mirror-side-1,bath,task,line,3000,250,105,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+bath-mirror-side-2,bath,task,line,3000,250,105,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+bath-shower,bath,basic,spot,3000,650,60,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+bath-night,bath,night,line,2700,60,95,10,90,low-level guide light; keep the source below eye height and out of the walking sightline
+balcony-laundry,balcony,task,spot,3500,750,50,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+balcony-storage,balcony,basic,spot,3500,450,50,150,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+balcony-low,balcony,night,line,2700,70,100,10,90,low-level guide light; keep the source below eye height and out of the walking sightline
+storage-living-task,living,decor,line,3000,320,100,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+storage-guest-task,guest,task,line,3000,240,100,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+storage-entry-task,hall,decor,line,3000,150,100,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+reading-local-task,bar,task,spot,3000,230,65,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+entry-island-dining-task,bar,task,line,3000,330,85,300,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
+r2-bar-sign-light,bar,decor,spot,3000,170,70,100,90,avoid direct view of the source; wash surfaces instead of aiming at eye height
