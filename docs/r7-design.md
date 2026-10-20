@@ -5,7 +5,7 @@ R7 包在 R6 16.0.0 外面。R6 的 16 组墙开关、43 个灯具光品质指�
 ## 行为
 
 - 水吧仍是 3510×750×2700，五列分工不变。精酿 800 模块底格改为 y=0..0.915、门洞敞开，落地设备高 850；其余格保留 90 踢脚。台面支承还在。台底到设备顶约 65mm 只是几何预算，不声明散热通过。
-- 550 上部展示改为可开的细黑玻璃门，仍走原来的收纳门交互，关门时层板收在门后。水吧只保留两颗红 / 蓝球拉手，装在对应门页上。
+- 550 上部展示改为可开的细黑玻璃门，仍走原来的收纳门交互，透明门关上时三层层板与陈列物仍持续可见；普通不透明门保持关门隐藏内部的优化。水吧只保留两颗红 / 蓝球拉手，装在对应门页上。
 - 出品窗不再使用四扇横移玻璃。侧门 `kitchen-door` 仍是原来的三扇滑门。新品窗是两组双折，每片长 700，铰链在 y=2.35，关闭时下沿 0.95。运动跟现有 `an.kitchen`，没有新按钮。全开时上下片在厚度上错开。右侧 1220 为固定玻璃，上方 2.35..2.70 是固定眉梁。
 - 人物正在漫步且站在 x0.09..2.70、z5.85..6.55 的动作区内时，开合会被拒绝，原因 `walker-in-pass-sweep`。按钮、漫步目标、`setKitchenOpen` 及诊断用的中态保持接口走同一人物范围判断。
 - MuKo’s Bar 牌改到眉梁厨房侧，x=1.395，z=5.83，y=2.40，高 200。朝 +z，不再用吊杆。仍用 `r2-bar-sign-light`。镜头 id `r4-bar-from-living` 仍有效，目标改到新牌。
@@ -32,11 +32,13 @@ R7 包在 R6 16.0.0 外面。R6 的 16 组墙开关、43 个灯具光品质指�
 
 ## 这轮实测
 
-`npm run build` 通过，最终模型 17.0.0，预览包 `dist/assets/index-CxH7cDsA.js`。Playwright 针对 R2 几何、R2 交互、R3、R4、R5、R6 开关、R7 几何共 29 项通过（1.6 分钟，日志 `outputs/r7-implementation/playwright.txt`）。几何与交互回归仍在测试目录，重截图不进 CI。
+`npm run build` 通过，最终模型 17.0.0，源码、统一模型快照与静态产物一同提交。Playwright 针对 R2 几何、R2 交互、R3、R4、R5、R6 开关、R7 几何共 29 项通过（1.6 分钟，日志 `outputs/r7-implementation/playwright.txt`）。几何与交互回归仍在测试目录，重截图不进 CI。
 
 `scripts/r7-visual-audit.mjs` 对 `http://localhost:4173/?renderer=webgl` 通过，16 张，页面错误为空。夜间先设灯光再设机位：`sign-night` 为 `r4-bar-from-living` / `aperitif`。折窗中态在 `no-preference` 下取到 `kitchenProgress` 0.210 并保持，闭合为 0，全开为 1。记录在 `outputs/r7-implementation/screenshots/r7-visual-audit.json`。
 
 `scripts/gpu-visual-audit.mjs` 另补了实际渲染帧、目标视角和灯光场景的等待条件，防止截到切换前的旧画面。用最终构建重跑到 `outputs/r7-implementation/native-reviewed`：状态 PASS，版本 17.0.0，渲染器 WebGPU，adapter vendor apple、architecture metal-3、非 fallback，碰撞后端 wasm，控制台错误为空，6 张。这是桌面 Chrome 的原生画面，不是施工验收。真机 NOT RUN。
+
+透明展示格已补关→开→关的运行时可见性断言，以及普通实门柜的对照；受影响的 R7 与 R2 交互共 8 项通过，另保存 18 张原生地址截图（含新增展示柜正面开闭近景）。
 
 ## 运行复核
 

@@ -254,7 +254,7 @@ export function r2CabinetPanels(o: any): R2Panel[] {
         w,
         h: T,
         d: shelfD * 0.96,
-        material: mat,
+        material: bay.material === "r7BlackGlass" ? frameMat : mat,
         hide: bay.door === "solid",
         owner: index,
       });
@@ -313,9 +313,12 @@ export function buildR2Cabinet(
     if (bay.door !== "solid") return;
     const inside = new THREE.Group();
     inside.name = `${o.id || "r2"}:inside:${i}`;
-    inside.visible = false;
-    inside.userData.animated = true;
-    inside.userData.visibilityDependent = true;
+    const showThrough = bay.material === "r7BlackGlass";
+    inside.visible = showThrough;
+    if (!showThrough) {
+      inside.userData.animated = true;
+      inside.userData.visibilityDependent = true;
+    } else inside.userData.r7AlwaysVisible = true;
     group.add(inside);
     hidden.set(i, inside);
   });
@@ -464,7 +467,7 @@ export function buildR2Cabinet(
         );
         markAnimated(pivot);
         const record: R2Door = { pivot, sign: side, unitId: String(o.id ?? "") };
-        if (inside) record.insideGroup = inside;
+        if (inside && !inside.userData.r7AlwaysVisible) record.insideGroup = inside;
         doors.push(record);
       }
     }

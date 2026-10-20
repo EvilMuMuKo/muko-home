@@ -51,6 +51,10 @@ try {
   await page.evaluate(() => window.homePresentation.setStorageOpen(true));
   await shot("bar-glass-open", need("salon-bar-seat"), "day-public");
   await page.evaluate(() => window.homePresentation.setStorageOpen(false));
+  await shot("display-closed", need("r7-display-front"), "day-public");
+  await page.evaluate(() => window.homePresentation.setStorageOpen(true));
+  await shot("display-open", need("r7-display-front"), "day-public");
+  await page.evaluate(() => window.homePresentation.setStorageOpen(false));
   await shot("sign-day", need("r4-bar-from-living"), "day-public");
   await shot("sign-night", need("r4-bar-from-living"), "aperitif");
   await page.evaluate(() => window.homePresentation.releaseKitchenHold());

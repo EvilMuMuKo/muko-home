@@ -4885,6 +4885,7 @@ window.homePresentation = {
         unitId: d.unitId,
         name: d.pivot.name,
         angle: d.pivot.rotation[d.axis || "y"],
+        insideVisible: (d.insideGroup ?? Ct.getObjectByName(String(d.pivot.name).replace(/:door:(\d+):.*$/, ":inside:$1")))?.visible ?? false,
       })),
   getState: () => ({
     version: ut.version,

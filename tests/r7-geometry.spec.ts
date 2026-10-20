@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import * as THREE from "three";
 import { createServer } from "vite";
-import { r2CabinetPanels } from "../src/r2-cabinet-mesh";
+import { buildR2Cabinet, r2CabinetPanels } from "../src/r2-cabinet-mesh";
 import { buildR7PassWindow, poseR7Pass, r7FoldPoints, r7WalkerInSweep } from "../src/r7-mesh";
 import { ensureR7Materials } from "../src/r7-finish";
 
@@ -179,6 +179,30 @@ test("room visibility filters the tagged pass, and the kitchen button refuses th
   expect(after).toBeCloseTo(before, 2);
 });
 
+test("glass display shelves stay visible with the door shut; opaque interiors still hide", () => {
+  const water = model.objects.find((o: any) => o.id === "r2-waterbar");
+  const group = new THREE.Group();
+  const materials: Record<string, THREE.Material> = {};
+  for (const name of ["r7Pale", "r7NicheWood", "r7BlackGlass", "r7Ink", "oak", "bronze"]) {
+    materials[name] = new THREE.MeshStandardMaterial({ name });
+  }
+  const doors: Array<{ pivot: THREE.Object3D; insideGroup?: THREE.Group }> = [];
+  expect(buildR2Cabinet(group, water, materials, doors as any)).toBe(true);
+  const glassInside = group.getObjectByName("r2-waterbar:inside:8") as THREE.Group;
+  expect(glassInside.visible).toBe(true);
+  expect(glassInside.userData.r7AlwaysVisible).toBe(true);
+  expect(glassInside.userData.visibilityDependent).toBeUndefined();
+  const shelves = glassInside.children.filter((child) => (child as THREE.Mesh).isMesh);
+  expect(shelves.length).toBeGreaterThanOrEqual(3);
+  expect(shelves.every((shelf) => (shelf as THREE.Mesh).material && ((shelf as THREE.Mesh).material as THREE.Material).name !== "r7BlackGlass")).toBe(true);
+  expect(doors.filter((door) => door.pivot.name.includes(":door:8:")).every((door) => !door.insideGroup)).toBe(true);
+  const opaque = doors.find((door) => door.pivot.name.includes(":door:0:"));
+  expect(opaque?.insideGroup?.visible).toBe(false);
+  expect(opaque?.insideGroup?.userData.visibilityDependent).toBe(true);
+  opaque!.insideGroup!.visible = true;
+  expect(glassInside.visible).toBe(true);
+});
+
 test("closed fold leaves stop a walking person and the display door opens", async ({ page }) => {
   test.setTimeout(120000);
   await page.goto("/?renderer=webgl");
@@ -194,8 +218,27 @@ test("closed fold leaves stop a walking person and the display door opens", asyn
   const z = await page.evaluate(() => (window as any).homePresentation.getGhostWalkState().position[2]);
   expect(z).toBeGreaterThan(6.0);
   await page.evaluate(() => (window as any).homePresentation.stopGhostWalk());
+  const readInsides = () => page.evaluate(() => (window as any).homePresentation.getStorageDoors()
+    .filter((d: any) => d.unitId === "r2-waterbar")
+    .map((d: any) => ({ name: d.name, insideVisible: d.insideVisible })));
+  await page.evaluate(() => (window as any).homePresentation.setStorageOpen(false));
+  const shut = await readInsides();
+  expect(shut.filter((d) => String(d.name).includes(":door:8:")).every((d) => d.insideVisible === true)).toBe(true);
+  expect(shut.find((d) => String(d.name).includes(":door:0:"))?.insideVisible).toBe(false);
   await page.evaluate(() => (window as any).homePresentation.setStorageOpen(true));
-  const door = await page.evaluate(() => (window as any).homePresentation.getStorageDoors().find((d: any) => d.unitId === "r2-waterbar" && String(d.name).includes(":door:8:")));
+  const opened = await readInsides();
+  expect(opened.filter((d) => String(d.name).includes(":door:8:")).every((d) => d.insideVisible === true)).toBe(true);
+  expect(opened.find((d) => String(d.name).includes(":door:0:"))?.insideVisible).toBe(true);
+  await page.evaluate(() => (window as any).homePresentation.setStorageOpen(false));
+  const shutAgain = await readInsides();
+  expect(shutAgain.filter((d) => String(d.name).includes(":door:8:")).every((d) => d.insideVisible === true)).toBe(true);
+  expect(shutAgain.find((d) => String(d.name).includes(":door:0:"))?.insideVisible).toBe(false);
+  const door = shutAgain.find((d) => String(d.name).includes(":door:8:"))
+    ? await page.evaluate(() => {
+      (window as any).homePresentation.setStorageOpen(true);
+      return (window as any).homePresentation.getStorageDoors().find((d: any) => d.unitId === "r2-waterbar" && String(d.name).includes(":door:8:"));
+    })
+    : null;
   expect(Math.abs(door.angle)).toBeGreaterThan(1.4);
   const pulls = await page.evaluate(() => {
     const root = document;

@@ -101,6 +101,14 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
       target: [1.395, 2.5, 5.85],
     });
   }
+  m.presentation.interiorViews.push({
+    id: "r7-display-front",
+    roomId: "bar",
+    label: "550玻璃展示正面",
+    position: [2.015, 1.72, 6.2],
+    target: [2.015, 2.15, 7.61],
+    horizontalFov: 42,
+  });
 
   const shallow = obj("r2-living-shallow");
   shallow.r2Cabinet.frameMaterial = "r7Pale";
