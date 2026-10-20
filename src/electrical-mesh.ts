@@ -21,6 +21,13 @@ type ElectricalPoint = {
   heightM: number;
   acModules?: number;
   rj45?: number;
+  switch?: {
+    keys?: number;
+    controls?: string[];
+    dualControlOf?: string | null;
+    plate?: string;
+    conceptOnly?: boolean;
+  };
 };
 
 export type ElectricalGroup = {
@@ -30,6 +37,7 @@ export type ElectricalGroup = {
   heightM: number;
   acModules: number;
   rj45: number;
+  kind?: string;
 };
 
 function pointsOf(model: any): ElectricalPoint[] {
@@ -55,6 +63,16 @@ function isDataPoint(p: ElectricalPoint): boolean {
 
 function isC04Pdu(p: ElectricalPoint): boolean {
   return p.id === 'C04';
+}
+
+function isSwitch(p: ElectricalPoint): boolean {
+  return p.kind === 'switch';
+}
+
+/** R6: wall switch keys are concept panels (no socket holes); they never count as wall power groups. */
+function switchKeyCount(p: ElectricalPoint): number {
+  const keys = p.switch?.keys;
+  return Number.isFinite(keys) ? Math.min(4, Math.max(1, Number(keys))) : 1;
 }
 
 function pickMaterial(
@@ -131,6 +149,7 @@ export function buildElectrical(
   groups: ElectricalGroup[];
   conditionalOmitted: string[];
   wallPowerGroups: number;
+  switches: number;
   drawCalls: number;
   conceptOnly: true;
 } {
@@ -138,6 +157,7 @@ export function buildElectrical(
   const conditionalOmitted = points.filter(isConditional).map((p) => p.id);
   const shown = points.filter(showsProposed);
   const wallPowerGroups = points.filter((p) => p.status === 'PROPOSED' && p.kind === 'socket').length;
+  const switchPoints = shown.filter(isSwitch);
 
   const groups: ElectricalGroup[] = [];
   const byRoom = new Map<string, ElectricalPoint[]>();
@@ -153,12 +173,13 @@ export function buildElectrical(
       heightM: p.heightM,
       acModules,
       rj45,
+      kind: p.kind,
     });
     if (isFixedConnection(p) || isDataPoint(p) || isC04Pdu(p)) {
       if (isC04Pdu(p)) pdus.push(p);
       continue;
     }
-    if (acModules + rj45 === 0) continue;
+    if (!isSwitch(p) && acModules + rj45 === 0) continue;
     const list = byRoom.get(p.room);
     if (list) list.push(p);
     else byRoom.set(p.room, [p]);
@@ -175,6 +196,7 @@ export function buildElectrical(
 
   const scratch = new THREE.Object3D();
   const plateScale = new THREE.Vector3(MODULE_M - 0.004, MODULE_M - 0.004, PLATE_D);
+  const keyScale = new THREE.Vector3(0.024, 0.026, 0.004);
   const seamScale = new THREE.Vector3(MODULE_M + SEAM, MODULE_M + SEAM, 0.004);
   const pinScale = new THREE.Vector3(0.01, 0.014, 0.004);
   const portScale = new THREE.Vector3(0.016, 0.014, 0.004);
@@ -184,6 +206,11 @@ export function buildElectrical(
     let roomPlates = 0;
     let roomHoles = 0;
     for (const p of list) {
+      if (isSwitch(p)) {
+        roomPlates += 1;
+        roomHoles += switchKeyCount(p);
+        continue;
+      }
       const ac = p.acModules ?? 0;
       const rj = p.rj45 ?? 0;
       roomPlates += ac + rj;
@@ -203,6 +230,29 @@ export function buildElectrical(
     let holeIndex = 0;
 
     for (const p of list) {
+      if (isSwitch(p)) {
+        // R6 switch: one 86mm plate, keys rendered into the same depth instance as socket ports.
+        const rotation = facing(p.normalXZ);
+        const normal = new THREE.Vector3(0, 0, 1).applyQuaternion(rotation);
+        const origin = new THREE.Vector3((p.modelMountXZ??p.accessXZ)[0], p.heightM, (p.modelMountXZ??p.accessXZ)[1]);
+        const center = origin.clone().addScaledVector(normal, PLATE_D / 2);
+        place(scratch, center.clone().addScaledVector(normal, -0.001), rotation, seamScale);
+        seams.setMatrixAt(plateIndex, scratch.matrix);
+        place(scratch, center, rotation, plateScale);
+        plates.setMatrixAt(plateIndex, scratch.matrix);
+        plateIndex++;
+        const n = switchKeyCount(p);
+        const span = 0.030;
+        const start = -((n - 1) * span) / 2;
+        for (let k = 0; k < n; k++) {
+          const face = center.clone()
+            .add(new THREE.Vector3(0, start + k * span, 0))
+            .addScaledVector(normal, PLATE_D / 2 + 0.001);
+          place(scratch, face, rotation, keyScale);
+          holes.setMatrixAt(holeIndex++, scratch.matrix);
+        }
+        continue;
+      }
       const ac = p.acModules ?? 0;
       const rj = p.rj45 ?? 0;
       const mods = ac + rj;
@@ -290,6 +340,7 @@ export function buildElectrical(
     groups,
     conditionalOmitted,
     wallPowerGroups,
+    switches: switchPoints.length,
     drawCalls,
     conceptOnly: true,
   };

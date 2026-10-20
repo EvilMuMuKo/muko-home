@@ -1,7 +1,7 @@
 {
-  "version": "A10",
+  "version": "A11",
   "scope": "local_2d_electrical_concept_only",
-  "sourceVersion": "14.0.0",
+  "sourceVersion": "15.0.0",
   "coordinates": "metres, same virtual x/z as source; heights are outlet center above finished floor, not regulatory defaults",
   "roomNames": {
     "living": "客厅",
@@ -1321,6 +1321,609 @@
         3.65,
         0.09
       ]
+    },
+    {
+      "id": "SW01",
+      "room": "hall",
+      "x": 6.15,
+      "z": 8.3,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "入户/走廊主灯 + 鞋柜低位灯",
+      "mount": "入户门内侧实墙",
+      "note": "与 SW02 双控走廊；门口主开关高度 1.20m（通用做法，概念位置未实测）",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "entry-wash",
+          "corridor-wash",
+          "entry-shoe-low"
+        ],
+        "dualControlOf": "SW02",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        6.15,
+        8.3
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.15,
+        8.3
+      ]
+    },
+    {
+      "id": "SW02",
+      "room": "hall",
+      "x": 6.75,
+      "z": 4.3,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "走廊双控（主卧端）",
+      "mount": "走廊近主卧端实墙",
+      "note": "与 SW01 组成双控；夜间走 corridor-guide 低照度灯带",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "entry-wash",
+          "corridor-wash",
+          "corridor-guide"
+        ],
+        "dualControlOf": "SW01",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        6.75,
+        4.3
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.75,
+        4.3
+      ]
+    },
+    {
+      "id": "SW03",
+      "room": "living",
+      "x": 7.2,
+      "z": 8.0,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "客厅基础 + 电视墙洗墙 + 岛台餐位重点光",
+      "mount": "客厅入户侧实墙",
+      "note": "一组灯一个开关；洗墙与基础分键，便于只开氛围",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "living-wall-cove",
+          "living-wall-accent",
+          "dining-offset-1",
+          "dining-offset-2"
+        ],
+        "dualControlOf": null,
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        7.2,
+        8.0
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        7.2,
+        8.0
+      ]
+    },
+    {
+      "id": "SW04",
+      "room": "living",
+      "x": 10.6,
+      "z": 6.2,
+      "heightM": 0.7,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "沙发旁阅读灯/柜底灯",
+      "mount": "沙发模块旁低位",
+      "note": "沙发侧开关 0.70m，坐姿可及；模块移动时按插拔式连接处理",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "living-reading-lamp",
+          "storage-living-task"
+        ],
+        "dualControlOf": null,
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        10.6,
+        6.2
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        10.6,
+        6.2
+      ]
+    },
+    {
+      "id": "SW05",
+      "room": "living",
+      "x": 11.9,
+      "z": 8.8,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "电视墙重点光单独控制",
+      "mount": "电视墙侧实墙",
+      "note": "观影场景只留 cove，洗墙灯可单独关闭",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 1,
+        "controls": [
+          "living-wall-accent"
+        ],
+        "dualControlOf": null,
+        "plate": "1-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        11.9,
+        8.8
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        11.9,
+        8.8
+      ]
+    },
+    {
+      "id": "SW06",
+      "room": "bar",
+      "x": 2.4,
+      "z": 6.95,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "水吧操作光 / 洗墙 / 酒具展示三层",
+      "mount": "水吧操作龛入口",
+      "note": "对应基础+重点+氛围三层法；展示层可独立开关",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 3,
+        "controls": [
+          "bar-task",
+          "bar-wall-wash",
+          "display-level-1",
+          "display-level-2",
+          "display-level-3"
+        ],
+        "dualControlOf": null,
+        "plate": "3-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        2.4,
+        6.95
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.4,
+        6.95
+      ]
+    },
+    {
+      "id": "SW07",
+      "room": "bar",
+      "x": 4.6,
+      "z": 6.9,
+      "heightM": 0.7,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "阅读角重点光",
+      "mount": "阅读椅侧低位",
+      "note": "0.70m 低位，坐姿可及",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 1,
+        "controls": [
+          "reading-local-task"
+        ],
+        "dualControlOf": null,
+        "plate": "1-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        4.6,
+        6.9
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        4.6,
+        6.9
+      ]
+    },
+    {
+      "id": "SW08",
+      "room": "kitchen",
+      "x": 2.95,
+      "z": 5.85,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "厨房基础 + 备餐条灯 + 水槽任务光",
+      "mount": "厨房门内侧实墙",
+      "note": "烹饪区与备餐区分键；燃气/排烟专业条件仍待核",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "kitchen-base-1",
+          "kitchen-base-2",
+          "kitchen-prep-profile",
+          "kitchen-sink-task"
+        ],
+        "dualControlOf": null,
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        2.95,
+        5.85
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        2.95,
+        5.85
+      ]
+    },
+    {
+      "id": "SW09",
+      "room": "kitchen",
+      "x": 3.9,
+      "z": 5.4,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "水槽任务光就地控制",
+      "mount": "操作台端实墙",
+      "note": "湿手操作采用大面板按键",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 1,
+        "controls": [
+          "kitchen-sink-task"
+        ],
+        "dualControlOf": null,
+        "plate": "1-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        3.9,
+        5.4
+      ],
+      "normalXZ": [
+        1,
+        0
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        3.9,
+        5.4
+      ]
+    },
+    {
+      "id": "SW10",
+      "room": "master",
+      "x": 6.7,
+      "z": 3.85,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "主卧主灯/洗墙/衣柜面光",
+      "mount": "主卧门内侧实墙",
+      "note": "与 SW11 双控；独立控制工作/睡眠光（对应 R02）",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "master-headboard",
+          "master-wall-wash",
+          "master-wardrobe-face"
+        ],
+        "dualControlOf": "SW11",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        6.7,
+        3.85
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.7,
+        3.85
+      ]
+    },
+    {
+      "id": "SW11",
+      "room": "master",
+      "x": 5.0,
+      "z": 3.6,
+      "heightM": 0.7,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "床头双控 + 床下夜灯 + 双阅读灯",
+      "mount": "床头左侧",
+      "note": "0.70m 与床头柜齐；起夜走 master-underbed 低照度",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "master-headboard",
+          "master-underbed",
+          "master-reading-1",
+          "master-reading-2"
+        ],
+        "dualControlOf": "SW10",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        5.0,
+        3.6
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        5.0,
+        3.6
+      ]
+    },
+    {
+      "id": "SW12",
+      "room": "guest",
+      "x": 4.6,
+      "z": 2.2,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "影音室基础 + 屏幕偏置光",
+      "mount": "影音室门内侧实墙",
+      "note": "与 SW13 双控；观影场景关 cove、留 screen-bias",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "guest-wall-cove",
+          "guest-screen-bias"
+        ],
+        "dualControlOf": "SW13",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        4.6,
+        2.2
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        4.6,
+        2.2
+      ]
+    },
+    {
+      "id": "SW13",
+      "room": "guest",
+      "x": 3.2,
+      "z": 1.6,
+      "heightM": 0.7,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "客住夜灯 + 阅读灯",
+      "mount": "小床侧低位",
+      "note": "沙发床展开时仍可触及；起夜路径独立于主灯",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "guest-night-guide",
+          "guest-reader"
+        ],
+        "dualControlOf": "SW12",
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        3.2,
+        1.6
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        3.2,
+        1.6
+      ]
+    },
+    {
+      "id": "SW14",
+      "room": "bath",
+      "x": 6.3,
+      "z": 2.05,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "卫生间主灯 + 镜前灯 + 淋浴区",
+      "mount": "卫生间门外侧实墙",
+      "note": "门外开关便于先亮后进；湿区防溅与等电位待专业确认",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "bath-mirror-side-1",
+          "bath-mirror-side-2",
+          "bath-shower"
+        ],
+        "dualControlOf": null,
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        6.3,
+        2.05
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.3,
+        2.05
+      ]
+    },
+    {
+      "id": "SW15",
+      "room": "bath",
+      "x": 6.81,
+      "z": 1.85,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "镜前灯独立控制",
+      "mount": "镜柜侧干燥面",
+      "note": "化妆/剃须只开镜前灯，减少夜间全亮",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 1,
+        "controls": [
+          "bath-mirror-side-1",
+          "bath-mirror-side-2"
+        ],
+        "dualControlOf": null,
+        "plate": "1-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        6.81,
+        1.85
+      ],
+      "normalXZ": [
+        0,
+        1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        6.81,
+        1.85
+      ]
+    },
+    {
+      "id": "SW16",
+      "room": "balcony",
+      "x": 11.9,
+      "z": 9.0,
+      "heightM": 1.2,
+      "acModules": 0,
+      "rj45": 0,
+      "use": "家政区任务光 + 收纳光 + 低位夜灯",
+      "mount": "阳台门内侧实墙",
+      "note": "洗→晾→收动线起点；洗烘设备本身用插座而非开关控制",
+      "status": "PROPOSED",
+      "kind": "switch",
+      "switch": {
+        "keys": 2,
+        "controls": [
+          "balcony-laundry",
+          "balcony-storage",
+          "balcony-low"
+        ],
+        "dualControlOf": null,
+        "plate": "2-gang",
+        "conceptOnly": true
+      },
+      "accessXZ": [
+        11.9,
+        9.0
+      ],
+      "normalXZ": [
+        0,
+        -1
+      ],
+      "modelDisplay": true,
+      "modelMountXZ": [
+        11.9,
+        9.0
+      ]
     }
   ],
   "tvPositions": [
@@ -1501,5 +2104,93 @@
     "新孔槽避承重构件，电线不得靠照片推断可开槽"
   ],
   "sourceBaseSHA256": "1a77ecbd9c7495f1d9bd64783b045f0ac27fb866da59fef52a18e69eeeb104f4",
-  "revision": "A10"
+  "revision": "A11",
+  "weakCurrentTopology": {
+    "version": "R6",
+    "scope": "concept_only_not_surveyed",
+    "note": "拓扑只表达汇聚关系与规则，不代表已实测入户光纤、桥架或管径；H02/H03 状态仍为候选。",
+    "nodes": [
+      {
+        "id": "WAN-IN",
+        "type": "fiber_entry",
+        "label": "入户光纤",
+        "location": "H02 候选（未实测）"
+      },
+      {
+        "id": "ONT",
+        "type": "ont",
+        "label": "光猫",
+        "location": "H02"
+      },
+      {
+        "id": "SW-CORE",
+        "type": "switch",
+        "label": "主交换机（千兆 5–8 口）",
+        "location": "H02",
+        "note": "接 NAS 或 3 个以上 AP 时选 8 口并留 2 口余量"
+      },
+      {
+        "id": "AP-LIVING",
+        "type": "ap",
+        "label": "客厅 PoE AP",
+        "location": "客厅吊顶或中央空调检修口",
+        "coverageRule": "只穿一堵墙"
+      },
+      {
+        "id": "AP-MASTER",
+        "type": "ap",
+        "label": "主卧 PoE AP",
+        "location": "主卧吊顶开放处",
+        "coverageRule": "只穿一堵墙"
+      },
+      {
+        "id": "AP-GUEST",
+        "type": "ap",
+        "label": "影音室/书房 AP（可选）",
+        "location": "H03 顶部端口",
+        "note": "影音室若做有线回传，可省掉此 AP"
+      }
+    ],
+    "links": [
+      {
+        "from": "WAN-IN",
+        "to": "ONT",
+        "medium": "fiber"
+      },
+      {
+        "from": "ONT",
+        "to": "SW-CORE",
+        "medium": "CAT6"
+      },
+      {
+        "from": "SW-CORE",
+        "to": "AP-LIVING",
+        "medium": "CAT6 + PoE"
+      },
+      {
+        "from": "SW-CORE",
+        "to": "AP-MASTER",
+        "medium": "CAT6 + PoE"
+      },
+      {
+        "from": "SW-CORE",
+        "to": "AP-GUEST",
+        "medium": "CAT6 + PoE（可选）"
+      }
+    ],
+    "rj45Convergence": {
+      "L01_living_tv": 2,
+      "master_dual_workstation": 2,
+      "guest_cinema": 2,
+      "bar_optional": 1,
+      "balcony_service": 1
+    },
+    "rules": [
+      "星型不串接：每个网口单独回一根到汇聚点",
+      "AP 优先吊顶开放面或中央空调检修口，避免金属柜内",
+      "网线超五类满足千兆；六类带骨架更好；七类对家用以无必要",
+      "强弱电分管分盒，间距与开槽以现场结构确认为准",
+      "摄像头/门铃等室外线路不在本轮范围"
+    ]
+  }
 }
