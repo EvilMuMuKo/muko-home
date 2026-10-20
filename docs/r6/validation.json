@@ -30,9 +30,18 @@
       "sockets": 42,
       "switches": 16,
       "dualControlPairs": [
-        ["SW01", "SW02"],
-        ["SW10", "SW11"],
-        ["SW12", "SW13"]
+        [
+          "SW01",
+          "SW02"
+        ],
+        [
+          "SW10",
+          "SW11"
+        ],
+        [
+          "SW12",
+          "SW13"
+        ]
       ],
       "drawCalls": "<=30",
       "wallPowerGroups": "sockets only",
@@ -67,10 +76,28 @@
       "note": "the two failures connect to a hardcoded localhost:4173 left running from another project; they pass under CI where 4173 is the suite's own preview server"
     },
     "releaseCI": {
-      "status": "PENDING",
+      "status": "PASS",
       "workflow": ".github/workflows/verify.yml",
       "shards": 4,
-      "note": "filled by the PR verification run"
+      "runs": [
+        "39356095834 (head 9d5f935)",
+        "39356164769 (head e4cb891)"
+      ],
+      "note": "all four shards passed before merge"
+    },
+    "livePages": {
+      "status": "PASS",
+      "url": "https://evilmumuko.github.io/muko-home/",
+      "verifiedVia": "headless Chrome (webgl) reading window.homePresentation",
+      "observed": {
+        "version": "16.0.0",
+        "points": 64,
+        "switches": 16,
+        "sockets": 42,
+        "switchRenderedGroups": 16,
+        "drawCalls": 27,
+        "pageErrors": 0
+      }
     }
   },
   "boundaries": [
