@@ -60,3 +60,15 @@ test('second edition exposes eleven new concepts and the updated reading corner'
   await expect(page.locator('#viewer-description')).toContainText('布局构思');
   await expect(page.locator('#download')).toHaveAttribute('href', /originals\/V19.png$/);
 });
+
+test('an early filter selection survives a slow image catalog', async ({ page }) => {
+  await page.route('**/gallery/images.json', async route => {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    await route.continue();
+  });
+  await page.goto('/gallery/');
+  await page.getByRole('button', { name: '第二辑 · 新构思', exact: true }).click();
+  await expect(page.locator('.card')).toHaveCount(20);
+  await expect(page.locator('.card:visible')).toHaveCount(11);
+  await expect(page.getByRole('button', { name: '第二辑 · 新构思', exact: true })).toHaveAttribute('aria-pressed', 'true');
+});

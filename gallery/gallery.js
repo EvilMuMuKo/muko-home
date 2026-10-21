@@ -3,7 +3,7 @@ const viewer = document.querySelector('#viewer');
 const stage = document.querySelector('#image-stage');
 const viewerImage = document.querySelector('#viewer-image');
 const filters = [...document.querySelectorAll('[data-filter]')];
-let images = [], visible = [], current = 0, returnFocus = null, startTouch = null;
+let images = [], visible = [], current = 0, returnFocus = null, startTouch = null, activeFilter = '全部';
 
 function imageUrl(path) { return new URL(path, document.baseURI).href; }
 function resetZoom() {
@@ -37,6 +37,7 @@ function openImage(id, trigger) {
 }
 function closeImage() { viewer.close(); }
 function applyFilter(value, announce = true) {
+  activeFilter = value;
   visible = images.filter(item => value === '全部' || (value === '第二辑' ? item.edition === '第二辑' : item.category === value));
   for (const button of filters) button.setAttribute('aria-pressed', String(button.dataset.filter === value));
   for (const card of gallery.children) card.hidden = !visible.some(item => item.id === card.dataset.id);
@@ -105,7 +106,7 @@ fetch('images.json').then(response => {
   document.querySelector('#total-count').textContent = String(images.length).padStart(2, '0');
   document.querySelector('#filter-count').textContent = String(images.length).padStart(2, '0');
   gallery.append(...images.map(createCard));
-  applyFilter('全部', false);
+  applyFilter(activeFilter, false);
   const requested = location.hash.slice(1);
   if (images.some(item => item.id === requested)) openImage(requested, gallery.querySelector('[data-id="' + requested + '"] button'));
 }).catch(() => { document.querySelector('#load-error').hidden = false; });
