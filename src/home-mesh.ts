@@ -1209,29 +1209,46 @@ export function homeMotionBounds(motion: HomeMotion) {
   return objects.map((group) => {
     group.updateWorldMatrix(true, true);
     const b = homeVisibleBounds(group);
+    const dress = homeDecorativeBounds(group);
     return {
       id: group.name,
       min: b.min.toArray(),
       max: b.max.toArray(),
       visible: group.visible,
+      // Rigid moving solid. Cloth and other dress stay on decorativeEnvelope.
+      ...(dress.isEmpty()
+        ? {}
+        : { decorativeEnvelope: { min: dress.min.toArray(), max: dress.max.toArray() } }),
     };
   });
 }
-/** Hidden props are cleared before motion and do not belong to its swept solid. */
+/** Rigid visible solid. Decorative overlays (userData.decorativeEnvelope) are omitted. */
 export function homeVisibleBounds(root: THREE.Object3D) {
+  return collectBounds(root, false);
+}
+/** World box of decorative overlays only. Empty when the assembly has none. */
+export function homeDecorativeBounds(root: THREE.Object3D) {
+  return collectBounds(root, true);
+}
+function collectBounds(root: THREE.Object3D, decorative: boolean) {
   root.updateWorldMatrix(true, true);
   const bounds = new THREE.Box3();
-  function visit(node: THREE.Object3D) {
+  function visit(node: THREE.Object3D, inDress: boolean) {
     if (node !== root && !node.visible) return;
+    const dress = inDress || node.userData?.decorativeEnvelope === true;
+    if (dress !== decorative) {
+      for (const child of node.children) visit(child, dress);
+      return;
+    }
     if (node instanceof THREE.Mesh && node.geometry) {
       if (!node.geometry.boundingBox) node.geometry.computeBoundingBox();
       bounds.union(
         node.geometry.boundingBox!.clone().applyMatrix4(node.matrixWorld),
       );
     }
-    for (const child of node.children) visit(child);
+    for (const child of node.children) visit(child, dress);
   }
-  visit(root);
+  visit(root, false);
   return bounds;
 }
 export function updateHomeLighting(motion: HomeMotion, daylight: boolean) {

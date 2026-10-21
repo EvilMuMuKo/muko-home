@@ -365,8 +365,13 @@ export function buildR7Dressing(
     cloth.position.y = 0.014;
     cloth.castShadow = false;
     cloth.visible = false;
+    // Overhang is dress, not the 1.10 x 0.70 table solid or the walk hull.
+    cloth.userData.decorativeEnvelope = true;
+    cloth.userData.physicsBody = false;
     const fold = new THREE.Mesh(uvBox(0.22, 0.004, 0.16), new THREE.MeshStandardMaterial({ color: "#c6a23a", roughness: 0.9 }));
     fold.name = "r7-cloth-fold";
+    fold.userData.decorativeEnvelope = true;
+    fold.userData.physicsBody = false;
     fold.position.set(0.18, 0.016, 0.1);
     cloth.add(fold);
     top.add(cloth);

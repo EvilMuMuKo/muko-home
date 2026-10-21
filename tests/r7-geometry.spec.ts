@@ -4,7 +4,7 @@ import { createServer } from "vite";
 import { buildR2Cabinet, r2CabinetPanels } from "../src/r2-cabinet-mesh";
 import { buildR7PassWindow, poseR7Pass, r7FoldPoints, r7WalkerInSweep } from "../src/r7-mesh";
 import { buildR7Dressing, poseR7Lamp } from "../src/r7-dress";
-import { applyHomeMotion, buildHomeFurniture, createHomeMotion } from "../src/home-mesh";
+import { applyHomeMotion, buildHomeFurniture, createHomeMotion, homeDecorativeBounds, homeVisibleBounds } from "../src/home-mesh";
 import { ensureR7Materials } from "../src/r7-finish";
 
 let server: Awaited<ReturnType<typeof createServer>>;
@@ -273,6 +273,17 @@ test("R7 dressing mounts on the waterbar end, not the opened kitchen wall", () =
   const cloth = scene.getObjectByName("r7-cloth")!;
   expect(cloth.visible).toBe(true);
   expect(cloth.parent).toBe(tableTop);
+  expect(cloth.userData.physicsBody).toBe(false);
+  expect(cloth.userData.decorativeEnvelope).toBe(true);
+  tableGroup.updateWorldMatrix(true, true);
+  const body = homeVisibleBounds(tableGroup);
+  const clothBox = homeDecorativeBounds(tableGroup);
+  expect(body.max.x - body.min.x).toBeCloseTo(tableObj.w, 3);
+  expect(body.max.z - body.min.z).toBeCloseTo(tableObj.d, 3);
+  expect(clothBox.max.x - clothBox.min.x).toBeCloseTo(tableObj.w + 0.06, 3);
+  expect(clothBox.max.z - clothBox.min.z).toBeCloseTo(tableObj.d + 0.06, 3);
+  expect(clothBox.min.x).toBeLessThan(body.min.x);
+  expect(clothBox.max.x).toBeGreaterThan(body.max.x);
   const sample = new THREE.Vector3(0.12, 0, -0.08);
   const worldAt = (dining: number) => {
     applyHomeMotion(motion as any, { dining } as any);
