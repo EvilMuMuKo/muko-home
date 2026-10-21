@@ -28,11 +28,17 @@ R7 包在 R6 16.0.0 外面。R6 的 16 组墙开关、43 个灯具光品质指�
 - 釉砖贴图一张代表 100mm，重复 10 次/米。粗糙度贴图按绝对值使用，材质粗糙度为 1。法线由砖面和砖缝的高度差算出。拉丝钢只用在折页铰销。
 - 折页世界坐标 A/B/C 在 0、0.25、0.5、0.75、1 与公式对照。侧滑门仍是 3 扇线性叶片。
 
-招牌字是透明暖白纹理，不再用浅色底盖住木板。550 展示门有窄黑框，玻璃内缩并跟门页转动。折窗、眉梁、釉砖和木台边尺寸读最终模型。截图改由 `scripts/r7-visual-audit.mjs` 负责，不进 CI 分片。
+招牌字是透明暖白纹理，不再用浅色底盖住木板。550 展示门有窄黑框，玻璃内缩并跟门页转动。玻璃展示格的层板在门关着时也留在场景里，普通实心门内胆仍随开门才显示。折窗、眉梁、釉砖和木台边尺寸读最终模型。截图改由 `scripts/r7-visual-audit.mjs` 负责，不进 CI 分片。
+
+厨房外立面釉砖是 100mm 冷灰，带轻微起伏和细白缝。客厅展开餐桌的正上方，关节灯从 2.68m 天花接出三段相接的银杆和奶油罩，不另加光源。餐桌收起时灯罩底高于 2.0m。红色圆角三角钟、浅架和圆拱菜单装在水吧通顶柜东侧端板上，朝公共区约 120mm。厨房西墙被整高开口切空，不能当安装面。桌布挂在 `buildHomeFurniture` 造出的 `motion.table.top` 上，只在餐桌展开时显示，并随桌面倾倒和平移。客厅地毯是橙色织物纹理。客厅地面只使用 `materials.floor`，颜色、法线和粗糙度都是 `scripts/r7-herringbone.py` 用仓库橡木三张贴图离线生成的同一人字拼：`r7-herringbone-color.webp`、`r7-herringbone-normal.webp`、`r7-herringbone-roughness.webp`，均为 1024×1024，铺贴尺度 1.7 m。手机和桌面请求同一张，不再请求 `floor-*-desktop` 或旧的直铺 `floor-roughness`。十二张纹理请求数不变。颜色仍是 sRGB，法线和粗糙度仍是无色彩空间。失败记录仍用 `floor-color` 这类键，并另有 `failedSources` 写出真实 URL。厨房、卫浴和阳台继续用石材，这张人字拼不赋给家具。水吧座前有一小块旋转过的黄白棋盘，不抬高地面。客厅浅柜是银色模块柜，中间开敞格外沿有一圈细铬管和角上的球，另有一块黄托盘。灯罩宽端朝下，只有餐桌完全展开后才下降，下降后的罩影落在桌面内。这些是可浏览的概念模型，不是 3A 成片，也不是真机或现场验收。
 
 ## 这轮实测
 
-`npm run build` 通过，最终模型 17.0.0，源码、统一模型快照与静态产物一同提交。Playwright 针对 R2 几何、R2 交互、R3、R4、R5、R6 开关、R7 几何共 29 项通过（1.6 分钟，日志 `outputs/r7-implementation/playwright.txt`）。几何与交互回归仍在测试目录，重截图不进 CI。
+2026-10-21：`npm run build` 通过，模型 17.0.0。入口脚本是 `assets/index-D_j1Oevz.js`，样式仍是 `assets/index-Cq-AD4mh.css`。人字拼三张 WebP 在 `public/materials/` 与 `dist/materials/`。
+
+Playwright 复用 `http://localhost:4173`，原生 Chrome。`tests/r7-geometry.spec.ts` 与 `tests/progressive-materials.spec.ts` 共 9 项通过（1.4 分钟）。十二个纹理请求里地板三通道是 `r7-herringbone-{color,normal,roughness}.webp`，没有 `floor-*`。桌布父级是真实折叠桌面，收起时隐藏，展开时世界位置跟着桌面转。灯链几何断言没有改。真机 NOT RUN。
+
+`scripts/gpu-visual-audit.mjs` 写到 `outputs/r7-implementation/final-style-native/webgpu-visual-audit.json`。地板断言对齐 `src/material-detail.ts`：三通道宽高都是 1024，`family` 为 `floor`，铺贴 `[1.7, 1.7]`，并且各有一条状态 200 的 `r7-herringbone-{color,normal,roughness}.webp`，没有 `floor-*`。WebGPU、WASM、4xMSAA 和页面 / 控制台 / 失败资源检查仍在。2026-10-21 对 `http://localhost:4173/` 重跑：状态 PASS，版本 17.0.0，渲染器 WebGPU，adapter vendor apple、architecture metal-3、非 fallback，碰撞后端 wasm，页面错误、控制台错误、失败资源都是 0，6 张有效帧是 `bar-day.png`、`bar-night.png`、`living-night.png`、`master-day.png`、`master-night.png`、`master-work.png`（各 1440×900）。同目录早先的 `floor-herringbone.png` 与 `bar-end.png` 不计入这 6 张。先前那次 2048 断言的 FAIL 不是这次结果。这不是 3A，也不是真机或现场验收。真机 NOT RUN。
 
 `scripts/r7-visual-audit.mjs` 对 `http://localhost:4173/?renderer=webgl` 通过，16 张，页面错误为空。夜间先设灯光再设机位：`sign-night` 为 `r4-bar-from-living` / `aperitif`。折窗中态在 `no-preference` 下取到 `kitchenProgress` 0.210 并保持，闭合为 0，全开为 1。记录在 `outputs/r7-implementation/screenshots/r7-visual-audit.json`。
 
@@ -41,6 +47,8 @@ R7 包在 R6 16.0.0 外面。R6 的 16 组墙开关、43 个灯具光品质指�
 透明展示格已补关→开→关的运行时可见性断言，以及普通实门柜的对照；受影响的 R7 与 R2 交互共 8 项通过，另保存 18 张原生地址截图（含新增展示柜正面开闭近景）。
 
 ## 运行复核
+
+下面是更早一轮的命令备忘。2026-10-21 的结果以上一节为准。
 
 ```sh
 npm run build

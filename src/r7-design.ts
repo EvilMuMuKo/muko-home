@@ -17,6 +17,7 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
     { bay: 0, segment: 0, leaf: 0, color: "#b23a3a" },
     { bay: 12, segment: 0, leaf: 0, color: "#2f4f86" },
   ];
+  water.r2Cabinet.r7BarPulls = [{ bay: 14, segment: 0, leaf: 0, color: "#3d6fbf" }];
   for (const bay of water.r2Cabinet.bays) {
     if (bay.purpose === "beer" && bay.y <= 0.09) {
       bay.y = 0;
@@ -102,6 +103,49 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
     });
   }
   m.presentation.interiorViews.push({
+    id: "r7-bar-end",
+    roomId: "bar",
+    label: "水吧东端收藏",
+    position: [5.35, 1.9, 7.98],
+    target: [3.55, 1.9, 7.98],
+    horizontalFov: 48,
+  }, {
+    id: "r7-lamp-stowed",
+    roomId: "living",
+    label: "收起关节灯",
+    position: [10.55, 2.2, 6.7],
+    target: [8.85, 2.4, 7.55],
+    horizontalFov: 40,
+  }, {
+    id: "r7-lamp-table",
+    roomId: "living",
+    label: "展开餐桌关节灯",
+    position: [11.05, 1.58, 7.1],
+    target: [9.3, 1.32, 7.55],
+    horizontalFov: 42,
+  }, {
+    id: "r7-floor-herringbone",
+    roomId: "living",
+    label: "人字拼地面",
+    position: [11.2, 2.15, 4.95],
+    target: [11.05, 0.0, 5.35],
+    horizontalFov: 55,
+  }, {
+    id: "r7-chrome-cabinet",
+    roomId: "living",
+    label: "客厅吊柜铬框",
+    position: [7.55, 1.42, 5.9],
+    target: [9.05, 1.33, 4.82],
+    horizontalFov: 48,
+  }, {
+    id: "r7-entry-checker",
+    roomId: "hall",
+    label: "入口菱形地坪",
+    position: [4.95, 1.2, 6.15],
+    target: [4.45, 0.0, 6.91],
+    horizontalFov: 42,
+  });
+  m.presentation.interiorViews.push({
     id: "r7-display-front",
     roomId: "bar",
     label: "550玻璃展示正面",
@@ -127,6 +171,23 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
   chair.material = "r7Mustard";
   const peninsula = obj("r2-kitchen-peninsula");
   const tileH = peninsula.h - 0.09;
+  const table = obj("dining-table");
+  const use = m.homeDesign.dining.sequence.tablePath.at(-1);
+  const rug = obj("living-rug");
+  rug.material = "r7Rug";
+  const bar = obj("r2-waterbar");
+  const openCut = m.openings.find((o: any) => o.id === "kitchen-counter-boundary");
+  m.homeDesign.r7Dressing = {
+    lamp: { x: use[0], ceilingY: 2.68, z: use[1], fixtureIds: ["dining-offset-1", "dining-offset-2"] },
+    ownerId: bar.id,
+    face: "+x",
+    end: { x: bar.w / 2, y: 1.55, z: 0, yaw: Math.PI / 2, w: 0.52, d: 0.12, menuX: 0, rooms: ["bar", "hall"] },
+    clockY: 2.15,
+    cloth: { w: table.w + 0.06, d: table.d + 0.06 },
+    chrome: { ownerId: "r2-living-shallow", x: 0, y: 0.85 + 0.95 / 2, z: -0.172, w: 1.9, h: 0.95 },
+    checker: { x: bar.x + bar.w / 2 + 0.85, z: bar.z - bar.d / 2 - 0.72, w: 0.48, d: 0.48 },
+    rejectedMount: { wallId: "kitchen-west", reason: "kitchen-counter-boundary opens the full wall height", cutHeight: openCut?.height },
+  };
   m.homeDesign.r7Tiles = {
     parentId: peninsula.id,
     w: 2.61,

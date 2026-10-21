@@ -39,7 +39,12 @@ try {
     const state = await page.evaluate((id) => {
       const s = window.homePresentation.getState();
       const camera = window.homePresentation.getInteriorViews().find((v) => v.id === id);
-      return { activePoint: s.activePoint, lightScene: s.lightScene, night: s.night, kitchenProgress: s.kitchenProgress, renders: window.homePresentation.getPerformance().renders, camera };
+      const perf = window.homePresentation.getPerformance();
+      return {
+        activePoint: s.activePoint, lightScene: s.lightScene, night: s.night, kitchenProgress: s.kitchenProgress,
+        renders: perf.renders, frameP95Ms: perf.frameP95Ms, drawingBuffer: perf.drawingBuffer, pixelRatio: perf.pixelRatio,
+        drawCalls: perf.drawCalls, triangles: perf.triangles, camera,
+      };
     }, view);
     const path = resolve(out, name + ".png");
     await page.screenshot({ path });
@@ -73,6 +78,15 @@ try {
   await page.evaluate(() => window.homePresentation.setKitchenOpen(true));
   await page.waitForFunction(() => window.homePresentation.getState().kitchenProgress > 0.98);
   await shot("kitchen-open", need("kitchen-main"), "day-public");
+  await shot("lamp-stowed", need("r7-lamp-stowed"), "day-public");
+  await shot("bar-end", need("r7-bar-end"), "day-public");
+  await shot("entry-checker", need("r7-entry-checker"), "day-public");
+  await shot("floor-herringbone", need("r7-floor-herringbone"), "day-public");
+  await shot("chrome-cabinet", need("r7-chrome-cabinet"), "day-public");
+  await page.evaluate(() => window.homePresentation.setDiningOpen(true));
+  await page.waitForFunction(() => window.homePresentation.getState().diningProgress > 0.98);
+  await shot("lamp-day", need("r7-lamp-table"), "day-public");
+  await shot("lamp-night", need("r7-lamp-table"), "aperitif");
   await shot("living-day", need("living-main"), "day-public");
   await shot("living-night", need("living-main"), "aperitif");
   await shot("master-day", need("master-main"), "day-public");

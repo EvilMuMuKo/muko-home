@@ -73,6 +73,7 @@ import {buildBarSign} from "./bar-sign";
 import {buildBayLife} from "./bay-life";
 import {buildR2Glazing} from "./r2-glazing";
 import {buildR7PassWindow, poseR7Pass, buildR7PassTiles, r7WalkerInSweep} from "./r7-mesh";
+import {buildR7Dressing, poseR7Lamp} from "./r7-dress";
 import {ensureR7Materials} from "./r7-finish";
 import {applyR5Motion} from "./r5-mesh";
 import {buildElectrical} from "./electrical-mesh";
@@ -3239,7 +3240,7 @@ function lw() {
           aw(e, i);
           break;
         case "rug":
-          re(e, i.w, 0.012, i.d, 0, 0.012, 0, "linen", 0.035);
+          re(e, i.w, 0.012, i.d, 0, 0.012, 0, i.material || "linen", 0.035);
           break;
         case "side_table":
           (at(e, 0.19, 0.035, 0, i.h, 0, "oak"),
@@ -3547,6 +3548,8 @@ function bx() {
   applyR5Motion(homeMotion,Ct,an);
   const r7Pass = Ct.getObjectByName("opening:kitchen-pass-window");
   if (r7Pass?.userData.r7Fold) poseR7Pass(r7Pass, an.kitchen);
+  const r7Dress = Ct.getObjectByName("r7-dressing");
+  if (r7Dress) poseR7Lamp(r7Dress, an.dining);
   for (let i of St.kitchen)
     i.group.position.set(
       i.closed[0] + i.travel[0] * an.kitchen,
@@ -4422,6 +4425,7 @@ async function bw() {
       finishFurniture(Ct, ut.objects, Vn),
       (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
       (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
+      (ut.homeDesign.r7Dressing && buildR7Dressing(Ct, Vn, ut.homeDesign.r7Dressing, Mu)),
       (spatialDesign.bayLife = buildBayLife(Ct, ut, Vn, Mu)),
       (electricalRendering=buildElectrical(Ct,ut,Vn)),
       Ct.getObjectByName("electrical:root")?.children.forEach(node=>Mu(node,node.userData.spaceIds||[],"electrical")),

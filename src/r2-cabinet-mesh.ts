@@ -23,6 +23,7 @@ export type R2CabinetMeta = {
   cutouts?: Array<{x:number;z:number;w:number;d:number;y0:number;y1:number}>;
   r7PullPolicy?: string;
   r7BallPulls?: Array<{bay:number;segment:number;leaf:number;color:string}>;
+  r7BarPulls?: Array<{bay:number;segment:number;leaf:number;color:string}>;
 };
 
 export type R2Panel = {
@@ -452,6 +453,20 @@ export function buildR2Cabinet(
           knob.castShadow = true;
           knob.userData.animated = true;
           pivot.add(knob);
+        } else if (meta.r7BarPulls?.some((p: any) => p.bay === i && p.segment === s && p.leaf === leaf)) {
+          const bar = meta.r7BarPulls.find((p: any) => p.bay === i && p.segment === s && p.leaf === leaf);
+          addPanel(pivot, {
+            x: center - side * (leafW / 2 - 0.08),
+            y: Math.min(segH - 0.08, segH * 0.45),
+            z: -DOOR_T - 0.006,
+            w: 0.09,
+            h: 0.008,
+            d: 0.008,
+            material: "r7Brushed",
+          }, materials);
+          const handle = new THREE.MeshStandardMaterial({ color: bar!.color, roughness: 0.35, metalness: 0.2 });
+          handle.userData.r7Role = true;
+          (pivot.children[pivot.children.length - 1] as THREE.Mesh).material = handle;
         } else if (meta.r7PullPolicy !== "two-balls") addPanel(
           pivot,
           {

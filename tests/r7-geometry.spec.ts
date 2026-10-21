@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { createServer } from "vite";
 import { buildR2Cabinet, r2CabinetPanels } from "../src/r2-cabinet-mesh";
 import { buildR7PassWindow, poseR7Pass, r7FoldPoints, r7WalkerInSweep } from "../src/r7-mesh";
+import { buildR7Dressing, poseR7Lamp } from "../src/r7-dress";
+import { applyHomeMotion, buildHomeFurniture, createHomeMotion } from "../src/home-mesh";
 import { ensureR7Materials } from "../src/r7-finish";
 
 let server: Awaited<ReturnType<typeof createServer>>;
@@ -177,6 +179,118 @@ test("room visibility filters the tagged pass, and the kitchen button refuses th
   await page.evaluate(() => document.querySelector<HTMLButtonElement>("#kitchen-toggle")?.click());
   const after = await page.evaluate(() => (window as any).homePresentation.getState().kitchenProgress);
   expect(after).toBeCloseTo(before, 2);
+});
+
+test("R7 dressing mounts on the waterbar end, not the opened kitchen wall", () => {
+  const dress = model.homeDesign.r7Dressing;
+  const bar = model.objects.find((o: any) => o.id === "r2-waterbar");
+  const cut = model.openings.find((o: any) => o.id === "kitchen-counter-boundary");
+  expect(cut.height).toBeGreaterThan(2.6);
+  expect(dress.ownerId).toBe("r2-waterbar");
+  expect(dress.face).toBe("+x");
+  expect(dress.end.d).toBeLessThanOrEqual(0.12);
+  expect(dress.lamp.ceilingY).toBeCloseTo(2.68, 2);
+  expect(bar.x + bar.w / 2).toBeGreaterThan(3.4);
+  const scene = new THREE.Scene();
+  const tableObj = model.objects.find((o: any) => o.id === "dining-table");
+  const motion = createHomeMotion();
+  motion.model = model;
+  const tableGroup = new THREE.Group();
+  tableGroup.name = "dining-table";
+  const materials: Record<string, THREE.Material> = {};
+  for (const name of ["r7Pale", "r7NicheWood", "r7Ink", "r7Brushed", "r7ClothStripe", "oak", "salonTimber", "bronze"]) materials[name] = new THREE.MeshStandardMaterial();
+  expect(buildHomeFurniture(tableGroup, tableObj, materials, motion)).toBe(true);
+  expect(motion.table?.top).toBeTruthy();
+  scene.add(tableGroup);
+  const barGroup = new THREE.Group();
+  barGroup.name = "r2-waterbar";
+  barGroup.position.set(bar.x, 0, bar.z);
+  scene.add(barGroup);
+  const shallow = new THREE.Group();
+  shallow.name = "r2-living-shallow";
+  scene.add(shallow);
+  buildR7Dressing(scene, materials, dress, (node, rooms) => { node.userData.spaceIds = rooms; });
+  const end = scene.getObjectByName("r7-bar-end")!;
+  expect(end.parent).toBe(barGroup);
+  expect(end.position.x).toBeCloseTo(bar.w / 2, 2);
+  end.updateWorldMatrix(true, true);
+  const probe = end.localToWorld(new THREE.Vector3(0, 0, dress.end.d));
+  expect(probe.x).toBeGreaterThan(bar.x + bar.w / 2);
+  expect(probe.x).toBeLessThanOrEqual(bar.x + bar.w / 2 + dress.end.d + 0.02);
+  expect(probe.z).toBeGreaterThan(bar.z - bar.d / 2);
+  expect(probe.z).toBeLessThan(bar.z + bar.d / 2);
+  expect(scene.getObjectByName("r7-cloth")?.visible).toBe(false);
+  const tableTop = motion.table!.top;
+  const shadeOf = () => {
+    const shade = scene.getObjectByName("r7-lamp-shade")!;
+    shade.updateWorldMatrix(true, true);
+    return new THREE.Box3().setFromObject(shade);
+  };
+  const insideTop = (box: THREE.Box3, topBox: THREE.Box3) => {
+    expect(box.min.x).toBeGreaterThanOrEqual(topBox.min.x - 0.002);
+    expect(box.max.x).toBeLessThanOrEqual(topBox.max.x + 0.002);
+    expect(box.min.z).toBeGreaterThanOrEqual(topBox.min.z - 0.002);
+    expect(box.max.z).toBeLessThanOrEqual(topBox.max.z + 0.002);
+  };
+  let sawLow = false;
+  for (let i = 0; i <= 1000; i++) {
+    const t = i / 1000;
+    applyHomeMotion(motion as any, { dining: t });
+    const posed = poseR7Lamp(scene, t)!;
+    const box = shadeOf();
+    expect(posed.bottom).toBeCloseTo(box.min.y, 3);
+    const topUp = new THREE.Vector3(0, 1, 0).applyQuaternion(tableTop.getWorldQuaternion(new THREE.Quaternion()));
+    if (t <= 0.94) expect(box.min.y).toBeGreaterThanOrEqual(2);
+    if (box.min.y < 2) {
+      sawLow = true;
+      expect(topUp.y).toBeGreaterThan(0.99);
+      expect(Math.abs(tableTop.rotation.x)).toBeLessThan(0.01);
+      insideTop(box, new THREE.Box3().setFromObject(tableTop));
+    }
+  }
+  expect(sawLow).toBe(true);
+  const open = poseR7Lamp(scene, 1)!;
+  const openBox = shadeOf();
+  expect(openBox.min.y).toBeLessThan(2);
+  expect(open.bottom).toBeCloseTo(openBox.min.y, 3);
+  const shell = scene.getObjectByName("r7-shade-shell") as THREE.Mesh;
+  const shellUp = new THREE.Vector3(0, 1, 0).applyQuaternion(shell.getWorldQuaternion(new THREE.Quaternion()));
+  expect(shellUp.y).toBeGreaterThan(0.95);
+  expect((shell.geometry as THREE.CylinderGeometry).parameters.radiusBottom).toBeGreaterThan((shell.geometry as THREE.CylinderGeometry).parameters.radiusTop);
+  const joints = (scene.getObjectByName("r7-arm-lamp") as THREE.Object3D).userData.jointsWorld as number[][];
+  for (let i = 0; i < 3; i++) {
+    const gap = Math.hypot(joints[i + 1][0] - joints[i][0], joints[i + 1][1] - joints[i][1], joints[i + 1][2] - joints[i][2]);
+    expect(gap).toBeGreaterThan(0.3);
+    expect(gap).toBeLessThan(0.5);
+  }
+  expect(open.bottom).toBeLessThan(2);
+  expect(Math.abs(joints[3][1] - openBox.max.y)).toBeLessThan(0.03);
+  expect(scene.getObjectByName("r7-collect-shelves")?.userData.spaceIds).toEqual(["bar", "hall"]);
+  expect(scene.getObjectByName("r7-cloth")?.visible).toBe(true);
+  poseR7Lamp(scene, 0);
+  expect(scene.getObjectByName("r7-cloth")?.visible).toBe(false);
+  poseR7Lamp(scene, 1);
+  const cloth = scene.getObjectByName("r7-cloth")!;
+  expect(cloth.visible).toBe(true);
+  expect(cloth.parent).toBe(tableTop);
+  const sample = new THREE.Vector3(0.12, 0, -0.08);
+  const worldAt = (dining: number) => {
+    applyHomeMotion(motion as any, { dining } as any);
+    poseR7Lamp(scene, dining);
+    cloth.updateWorldMatrix(true, true);
+    const viaCloth = cloth.localToWorld(sample.clone());
+    const viaTop = sample.clone().applyMatrix4(cloth.matrix).applyMatrix4(tableTop.matrixWorld);
+    expect(viaCloth.distanceTo(viaTop)).toBeLessThan(1e-4);
+    expect(cloth.visible).toBe(dining >= 0.94);
+    return viaCloth;
+  };
+  const stowed = worldAt(0);
+  const unfolded = worldAt(1);
+  expect(stowed.distanceTo(unfolded)).toBeGreaterThan(0.2);
+  expect(cloth.visible).toBe(true);
+  expect(cloth.parent).toBe(motion.table!.top);
+  const shelf = scene.getObjectByName("r7-shelf") as THREE.Mesh;
+  expect(shelf.geometry.getAttribute("uv").count).toBeGreaterThan(0);
 });
 
 test("glass display shelves stay visible with the door shut; opaque interiors still hide", () => {

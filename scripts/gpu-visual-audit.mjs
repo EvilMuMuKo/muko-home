@@ -5,11 +5,11 @@ import assert from 'node:assert/strict';
 const url=process.argv[2]||'http://localhost:4173/';
 const out=resolve(process.argv[3]||'../../outputs/MuKo Home 游戏化材质升级/WebGPU桌面');
 await mkdir(out,{recursive:true});
-const report={url,time:new Date().toISOString(),status:'FAIL',pageErrors:[],consoleErrors:[],missing:[],shots:[],scope:'Native macOS Chromium WebGPU. Desktop GPU evidence, not physical-phone measurement.'};
+const report={url,time:new Date().toISOString(),status:'FAIL',pageErrors:[],consoleErrors:[],missing:[],materialResponses:[],shots:[],scope:'Native macOS Chromium WebGPU. Desktop GPU evidence, not physical-phone measurement.'};
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--enable-unsafe-webgpu','--ignore-gpu-blocklist']});
 try {
  const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1,reducedMotion:'reduce'});
- page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});page.on('response',r=>{if(r.status()>=400)report.missing.push([r.status(),r.url()]);});
+ page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});page.on('response',r=>{const target=r.url();if(r.status()>=400)report.missing.push([r.status(),target]);if(target.includes('/materials/'))report.materialResponses.push({status:r.status(),url:target});});
  await page.goto(url);await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});
  await page.waitForFunction(()=>window.homePresentation.getPerformance().renders>0);
  await page.locator(".home-welcome").waitFor({state:"detached",timeout:10000});
@@ -30,7 +30,20 @@ try {
    if(!channel.missing) assert.equal(channel.colorSpace,channel.channel==='map'?'srgb':'',`${id} ${channel.channel} colourspace`);
   }
  }
- assert.equal(material('floor').channels[0].width,2048);
+ const floorChannels=material('floor').channels;
+ assert.deepEqual(floorChannels.map(channel=>[
+  channel.channel,channel.width,channel.height,channel.provenance?.family,channel.provenance?.channel,channel.provenance?.tileMeters,
+ ]),[
+  ['map',1024,1024,'floor','color',[1.7,1.7]],
+  ['normalMap',1024,1024,'floor','normal',[1.7,1.7]],
+  ['roughnessMap',1024,1024,'floor','roughness',[1.7,1.7]],
+ ]);
+ for (const channel of ['color','normal','roughness']) {
+  const hits=report.materialResponses.filter(entry=>entry.url.endsWith(`/materials/r7-herringbone-${channel}.webp`));
+  assert.equal(hits.length,1,`floor ${channel} resource`);
+  assert.equal(hits[0].status,200,`floor ${channel} status`);
+ }
+ assert.deepEqual(report.materialResponses.filter(entry=>/\/materials\/floor-/.test(entry.url)),[]);
  assert.equal(report.initial.state.lighting.areaSlotCount,2);
  assert.equal(report.initial.state.lighting.slotCount,12);
  const shot=async(name,view,light)=>{

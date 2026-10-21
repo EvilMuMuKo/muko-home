@@ -21,13 +21,16 @@ function tileTextures() {
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     const grout = x < groutPx || y < groutPx;
     const o = (y * size + x) * 4;
-    height[y * size + x] = grout ? 0 : 0.012;
+    const wave = Math.sin(x * 0.62) * Math.sin(y * 0.47);
+    height[y * size + x] = grout ? 0 : 0.007 + wave * 0.005;
     if (grout) {
-      img[o] = 168; img[o + 1] = 170; img[o + 2] = 172;
-      rv[o] = rv[o + 1] = rv[o + 2] = 220;
+      img[o] = 214; img[o + 1] = 214; img[o + 2] = 210;
+      rv[o] = rv[o + 1] = rv[o + 2] = 210;
     } else {
-      img[o] = 198; img[o + 1] = 202; img[o + 2] = 204;
-      rv[o] = rv[o + 1] = rv[o + 2] = 55;
+      const shade = Math.round(168 + wave * 16);
+      img[o] = shade + 6; img[o + 1] = shade + 8; img[o + 2] = shade + 10;
+      const gloss = Math.round(42 + (wave + 1) * 18);
+      rv[o] = rv[o + 1] = rv[o + 2] = gloss;
     }
   }
   const h = (x: number, y: number) => height[((y + size) % size) * size + ((x + size) % size)];
@@ -137,6 +140,42 @@ export function ensureR7Materials(m: Record<string, THREE.Material>) {
   tile.name = "r7Tile";
   tile.userData.r7Role = true;
   m.r7Tile = tile;
+  const stripe = new Uint8Array(64 * 64 * 4);
+  for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) {
+    const bar = x % 18 < 1;
+    const o = (y * 64 + x) * 4;
+    stripe[o] = bar ? 122 : 132;
+    stripe[o + 1] = bar ? 58 : 150;
+    stripe[o + 2] = bar ? 64 : 162;
+    stripe[o + 3] = 255;
+  }
+  const stripeMap = new THREE.DataTexture(stripe, 64, 64);
+  stripeMap.wrapS = stripeMap.wrapT = THREE.RepeatWrapping;
+  stripeMap.colorSpace = THREE.SRGBColorSpace;
+  stripeMap.needsUpdate = true;
+  const cloth = new THREE.MeshStandardMaterial({ color: "#ffffff", map: stripeMap, roughness: 0.9 });
+  cloth.name = "r7ClothStripe";
+  cloth.userData.r7Role = true;
+  m.r7ClothStripe = cloth;
+  const weave = new Uint8Array(32 * 32 * 4);
+  for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) {
+    const n = ((x + y) % 5 === 0 ? 18 : 0) + ((x * 3 + y) % 7);
+    const o = (y * 32 + x) * 4;
+    weave[o] = 196 + n; weave[o + 1] = 98 + n / 2; weave[o + 2] = 32; weave[o + 3] = 255;
+  }
+  const weaveMap = new THREE.DataTexture(weave, 32, 32);
+  weaveMap.wrapS = weaveMap.wrapT = THREE.RepeatWrapping;
+  weaveMap.colorSpace = THREE.SRGBColorSpace;
+  weaveMap.repeat.set(8, 6);
+  weaveMap.needsUpdate = true;
+  const rugMat = new THREE.MeshStandardMaterial({ color: "#ffffff", map: weaveMap, roughness: 0.94 });
+  rugMat.name = "r7Rug";
+  rugMat.userData.r7Role = true;
+  m.r7Rug = rugMat;
+  const menuMat = new THREE.MeshStandardMaterial({ color: "#1b1c1a", roughness: 0.7 });
+  menuMat.name = "r7Menu";
+  menuMat.userData.r7Role = true;
+  m.r7Menu = menuMat;
 }
 
 /** Room remaps must not replace a material this layer already assigned. */
