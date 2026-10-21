@@ -19,7 +19,7 @@ function showImage(index, updateHash = true) {
   viewerImage.src = imageUrl(item.image);
   viewerImage.alt = item.title + '，装修风格效果图';
   document.querySelector('#viewer-title').textContent = item.title;
-  document.querySelector('#viewer-description').textContent = item.description;
+  document.querySelector('#viewer-description').textContent = (item.edition ? item.edition + (item.concept ? ' · 布局构思：' : ' · ') : '') + item.description;
   document.querySelector('#viewer-count').textContent = String(current + 1).padStart(2, '0') + ' / ' + String(visible.length).padStart(2, '0');
   const download = document.querySelector('#download');
   download.href = imageUrl(item.original);
@@ -37,7 +37,7 @@ function openImage(id, trigger) {
 }
 function closeImage() { viewer.close(); }
 function applyFilter(value, announce = true) {
-  visible = images.filter(item => value === '全部' || item.category === value);
+  visible = images.filter(item => value === '全部' || (value === '第二辑' ? item.edition === '第二辑' : item.category === value));
   for (const button of filters) button.setAttribute('aria-pressed', String(button.dataset.filter === value));
   for (const card of gallery.children) card.hidden = !visible.some(item => item.id === card.dataset.id);
   if (announce) document.querySelector('#status').textContent = value + '，共 ' + visible.length + ' 张图片';
@@ -60,7 +60,13 @@ function createCard(item, index) {
   const copy = document.createElement('div'); const title = document.createElement('h2');
   title.className = 'card-title'; title.textContent = item.title;
   const description = document.createElement('p'); description.className = 'card-description'; description.textContent = item.description;
-  copy.append(title, description); const number = document.createElement('span'); number.className = 'card-index'; number.textContent = String(index + 1).padStart(2, '0');
+  copy.append(title);
+  if (item.edition) {
+    const badge = document.createElement('span'); badge.className = 'edition-badge';
+    badge.textContent = item.edition + (item.concept ? ' / 布局构思' : ' / 新视角');
+    copy.append(badge);
+  }
+  copy.append(description); const number = document.createElement('span'); number.className = 'card-index'; number.textContent = item.id.slice(1);
   caption.append(copy, number); card.append(button, caption); return card;
 }
 filters.forEach(button => button.addEventListener('click', () => applyFilter(button.dataset.filter)));
@@ -96,6 +102,8 @@ fetch('images.json').then(response => {
   return response.json();
 }).then(catalog => {
   images = catalog.images; visible = images;
+  document.querySelector('#total-count').textContent = String(images.length).padStart(2, '0');
+  document.querySelector('#filter-count').textContent = String(images.length).padStart(2, '0');
   gallery.append(...images.map(createCard));
   applyFilter('全部', false);
   const requested = location.hash.slice(1);
