@@ -5,11 +5,11 @@ import assert from 'node:assert/strict';
 const url=process.argv[2]||'http://localhost:4173/';
 const out=resolve(process.argv[3]||'../../outputs/MuKo Home 游戏化材质升级/WebGPU桌面');
 await mkdir(out,{recursive:true});
-const report={url,time:new Date().toISOString(),status:'FAIL',pageErrors:[],consoleErrors:[],missing:[],shots:[],scope:'Native macOS Chromium WebGPU. Desktop GPU evidence, not physical-phone measurement.'};
+const report={url,time:new Date().toISOString(),status:'FAIL',pageErrors:[],consoleErrors:[],missing:[],materialResponses:[],shots:[],scope:'Native macOS Chromium WebGPU. Desktop GPU evidence, not physical-phone measurement.'};
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',args:['--enable-unsafe-webgpu','--ignore-gpu-blocklist']});
 try {
  const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1,reducedMotion:'reduce'});
- page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});page.on('response',r=>{if(r.status()>=400)report.missing.push([r.status(),r.url()]);});
+ page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text());});page.on('response',r=>{const target=r.url();if(r.status()>=400)report.missing.push([r.status(),target]);if(target.includes('/materials/'))report.materialResponses.push({status:r.status(),url:target});});
  await page.goto(url);await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});
  await page.waitForFunction(()=>window.homePresentation.getPerformance().renders>0);
  await page.locator(".home-welcome").waitFor({state:"detached",timeout:10000});
@@ -30,13 +30,32 @@ try {
    if(!channel.missing) assert.equal(channel.colorSpace,channel.channel==='map'?'srgb':'',`${id} ${channel.channel} colourspace`);
   }
  }
- assert.equal(material('floor').channels[0].width,2048);
+ const floorChannels=material('floor').channels;
+ assert.deepEqual(floorChannels.map(channel=>[
+  channel.channel,channel.width,channel.height,channel.provenance?.family,channel.provenance?.channel,channel.provenance?.tileMeters,
+ ]),[
+  ['map',1024,1024,'floor','color',[1.7,1.7]],
+  ['normalMap',1024,1024,'floor','normal',[1.7,1.7]],
+  ['roughnessMap',1024,1024,'floor','roughness',[1.7,1.7]],
+ ]);
+ for (const channel of ['color','normal','roughness']) {
+  const hits=report.materialResponses.filter(entry=>entry.url.endsWith(`/materials/r7-herringbone-${channel}.webp`));
+  assert.equal(hits.length,1,`floor ${channel} resource`);
+  assert.equal(hits[0].status,200,`floor ${channel} status`);
+ }
+ assert.deepEqual(report.materialResponses.filter(entry=>/\/materials\/floor-/.test(entry.url)),[]);
  assert.equal(report.initial.state.lighting.areaSlotCount,2);
  assert.equal(report.initial.state.lighting.slotCount,12);
  const shot=async(name,view,light)=>{
-  await page.evaluate(({view,light})=>{window.homePresentation.setInteriorView(view);window.homePresentation.setLightingScene(light);},{view,light});
-  await page.waitForFunction(()=>!window.homePresentation.getPerformance().pending,null,{timeout:60000});
-  const path=resolve(out,name+'.png');await page.screenshot({path});report.shots.push({name,path,view,light});
+  const before=await page.evaluate(()=>window.homePresentation.getPerformance().renders);
+  await page.evaluate(({view,light})=>{window.homePresentation.setLightingScene(light);window.homePresentation.setInteriorView(view);},{view,light});
+  await page.evaluate(()=>window.homePresentation.whenVisualReady());
+  await page.waitForFunction(({before,view,light})=>{
+   const h=window.homePresentation,p=h.getPerformance(),s=h.getState();
+   return p.renders>before && !p.pending && s.activePoint===view && s.lightScene===light;
+  },{before,view,light},{timeout:60000});
+  const state=await page.evaluate(()=>{const s=window.homePresentation.getState();return {activePoint:s.activePoint,lightScene:s.lightScene,night:s.night,renders:window.homePresentation.getPerformance().renders};});
+  const path=resolve(out,name+'.png');await page.screenshot({path});report.shots.push({name,path,view,light,state});
  };
  await shot('bar-day','salon-bar-seat','day-public');await shot('bar-night','salon-bar-seat','aperitif');await shot('living-night','living-media','game');await shot('master-day','master-main','day-public');await shot('master-night','master-main','aperitif');await shot('master-work','master-work','work');
  report.final=await page.evaluate(()=>window.homePresentation.getPerformance());

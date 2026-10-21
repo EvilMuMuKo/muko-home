@@ -477,6 +477,9 @@ export function createWalkCollision(
       continue;
     addGroup(object.id, "object");
   }
+  for (const id of ["r7-collect-shelves", "r7-tri-clock", "r7-arm-lamp"]) {
+    if (scene.getObjectByName(id)) addGroup(id, "object");
+  }
   for (const opening of model.openings)
     if (DYNAMIC_OPENING_TYPES.has(opening.type))
       addGroup(`opening:${opening.id}`, "opening");

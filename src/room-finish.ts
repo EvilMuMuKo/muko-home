@@ -196,6 +196,7 @@ export function finishFurniture(
       ];
     group.traverse((node) => {
       if (!(node instanceof THREE.Mesh)) return;
+      if ((node.material as THREE.Material)?.userData?.r7Role) return;
       if (node.material === m.oak || node.material === m.darkoak)
         node.material = wood;
       else if (node.material === m.cabinetPaint) node.material = paint;

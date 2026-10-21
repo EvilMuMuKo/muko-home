@@ -6,6 +6,8 @@ const textureState = {
   loaded: 0,
   hydrated: 0,
   failed: [] as string[],
+  /** Real request URL for each failed family-channel key. Empty when nothing failed. */
+  failedSources: [] as { key: string; url: string }[],
   metricMapping: true,
 };
 let materialTexturesReady: Promise<void> = Promise.resolve();
@@ -124,6 +126,7 @@ export function auditSceneSurfaces(scene: THREE.Object3D) {
 export const materialDetailState = () => ({
   ...textureState,
   failed: [...textureState.failed],
+  failedSources: textureState.failedSources.map((entry) => ({ ...entry })),
 });
 
 type AnisotropySource = {
@@ -265,6 +268,7 @@ export async function refineMaterials(
   textureState.loaded = 0;
   textureState.hydrated = 0;
   textureState.failed = [];
+  textureState.failedSources = [];
   textureState.requested = 12;
   const mobile = matchMedia("(max-width:1000px), (pointer:coarse)").matches;
   const loader = new THREE.TextureLoader();
@@ -328,17 +332,23 @@ export async function refineMaterials(
     texture.userData.materialAudit.source = "progressive-placeholder";
     return texture;
   };
+  const mapFile = (name: string, channel: string) =>
+    name === "floor"
+      ? `r7-herringbone-${channel}.webp`
+      : `${name}-${channel}.webp`;
   const load = async (name: string, channel: string) => {
     let texture: THREE.Texture | null = null;
+    const url = `${import.meta.env.BASE_URL}materials/${mapFile(name, channel)}`;
     try {
-      texture = await loader.loadAsync(
-        `${import.meta.env.BASE_URL}materials/${name}-${channel}${name === "floor" && !mobile ? "-desktop" : ""}.webp`,
-      );
+      texture = await loader.loadAsync(url);
     } catch {
       texture = null;
     }
     if (texture) configure(texture, name, channel);
-    else textureState.failed.push(`${name}-${channel}`);
+    else {
+      textureState.failed.push(`${name}-${channel}`);
+      textureState.failedSources.push({ key: `${name}-${channel}`, url });
+    }
     if (texture) textureState.loaded++;
     if (!progressive) options.onTextureReady?.({
       family: name,

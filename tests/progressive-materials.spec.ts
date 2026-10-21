@@ -81,6 +81,13 @@ test("home renders while material images are delayed, then hydrates all shared m
         ],
       };
     });
+    const requestedNames = [...materialRequests].map((url) => decodeURIComponent(url).split("/").pop());
+    expect(requestedNames.filter((name) => name?.startsWith("r7-herringbone-")).sort()).toEqual([
+      "r7-herringbone-color.webp",
+      "r7-herringbone-normal.webp",
+      "r7-herringbone-roughness.webp",
+    ]);
+    expect(requestedNames.some((name) => name?.startsWith("floor-"))).toBe(false);
     expect(before.loaded).toBe(0);
     expect(before.backend).toBe(testInfo.config.metadata.hardwareGPU ? "WebGPU" : "WebGL2");
     expect(before.failed).toEqual([]);

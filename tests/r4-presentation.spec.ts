@@ -10,19 +10,15 @@ test('R4 sign faces living seats and clears the full kitchen glass travel region
  try{
   const {finalModel:m}=await server.ssrLoadModule('/src/final-design.ts');
   const s=m.objects.find((o:any)=>o.id==='r2-bar-sign');
-  const angle=-THREE.MathUtils.degToRad(s.rotation);
-  const normal=new THREE.Vector3(Math.sin(angle),0,Math.cos(angle));
-  const halfZ=Math.abs(Math.sin(angle))*s.w/2+Math.abs(Math.cos(angle))*s.d/2;
-  // All side leaves, tracks and the counter glass remain north of this terminal plane.
-  expect(s.z-halfZ).toBeGreaterThan(5.85+.10);
-  expect(s.y).toBeGreaterThanOrEqual(2.10);
-  expect(s.y+s.h).toBeLessThan(2.7);
-  for(const v of m.homeDesign.r4Revision.signViews){
-   const line=new THREE.Vector3(v.position[0]-s.x,0,v.position[2]-s.z).normalize();
-   expect(normal.dot(line),v.id).toBeGreaterThan(.75);
-   const distance=Math.hypot(v.position[0]-s.x,v.position[2]-s.z);
-   expect(2*Math.atan(s.w*normal.dot(line)/(2*distance))*180/Math.PI,v.id).toBeGreaterThan(8);
-  }
+  // Header recess on the kitchen side of the fold plane. The old diagonal-sign facing test does not apply.
+  expect(s.z+s.d/2).toBeLessThanOrEqual(5.85);
+  expect(s.z-s.d/2).toBeGreaterThan(5.7);
+  expect(s.y).toBeGreaterThanOrEqual(2.4);
+  expect(s.y+s.h).toBeLessThanOrEqual(2.6);
+  expect(s.x).toBeCloseTo(1.395, 3);
+  const living=m.presentation.interiorViews.find((v:any)=>v.id==='r4-bar-from-living');
+  expect(living.target[0]).toBeCloseTo(1.395, 3);
+  expect(living.target[1]).toBeGreaterThan(2);
   const dusk=m.lighting.scenes.find((x:any)=>x.id==='aperitif');
   expect(dusk.roomLevels.bar.task).toBe(.55);
   expect(dusk.fixtureKelvin['bar-task']).toBe(3000);

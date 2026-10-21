@@ -317,7 +317,7 @@ test("R3 sliding leaves, posts and extended tracks clear actual kitchen cabinetr
     moving: any[] = [];
   const { buildR2Glazing } = await server.ssrLoadModule("/src/r2-glazing.ts");
   const roots = [];
-  for (const id of ["kitchen-door", "kitchen-pass-window"])
+  for (const id of ["kitchen-door"])
     roots.push(
       buildR2Glazing(
         f.scene,

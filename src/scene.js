@@ -72,6 +72,9 @@ import {buildR2Cabinet} from "./r2-cabinet-mesh";
 import {buildBarSign} from "./bar-sign";
 import {buildBayLife} from "./bay-life";
 import {buildR2Glazing} from "./r2-glazing";
+import {buildR7PassWindow, poseR7Pass, buildR7PassTiles, r7WalkerInSweep} from "./r7-mesh";
+import {buildR7Dressing, poseR7Lamp} from "./r7-dress";
+import {ensureR7Materials} from "./r7-finish";
 import {applyR5Motion} from "./r5-mesh";
 import {buildElectrical} from "./electrical-mesh";
 let electricalRendering;
@@ -606,6 +609,10 @@ function Kg({
         e.add(R),
         r(R, _.id === "entry-door" ? ["hall"] : L, "opening"),
         _.id === "entry-door" && a.entry.push({ group: R, base: O, angle: U }));
+    }
+    if (_.type === "sliding_door" && _.r7Fold) {
+      buildR7PassWindow(e, _, n, r);
+      continue;
     }
     if (_.type === "sliding_door" && _.r2Glazing) {
       buildR2Glazing(e, _, n, r, a.kitchen);
@@ -2583,6 +2590,7 @@ async function ew() {
   await refineMaterials(Vn, Ht, { progressive: true, onTextureReady: () => Jt?.request() });
   enhanceSurfaces(Vn, Ct, ut.objects, Mu);
   configureRoomMaterials(Vn);
+  ensureR7Materials(Vn);
   prepareSalonMaterials(Vn);
   Ct.userData.materials = Vn;
 }
@@ -3232,7 +3240,7 @@ function lw() {
           aw(e, i);
           break;
         case "rug":
-          re(e, i.w, 0.012, i.d, 0, 0.012, 0, "linen", 0.035);
+          re(e, i.w, 0.012, i.d, 0, 0.012, 0, i.material || "linen", 0.035);
           break;
         case "side_table":
           (at(e, 0.19, 0.035, 0, i.h, 0, "oak"),
@@ -3446,7 +3454,33 @@ function vx(i) {
   return {accepted:true};
 }
 var localStorageProgress = new Map();
+function kitchenSweepBlock() {
+  if (!ut.homeDesign?.r7Revision || yr !== "walk") return null;
+  const sweep = ut.homeDesign.r7Revision.pass;
+  if (r7WalkerInSweep(ct.position.x, ct.position.z, sweep)) return "walker-in-pass-sweep";
+  return null;
+}
+function requestKitchen(open) {
+  const reason = kitchenSweepBlock();
+  if (reason) {
+    Su("请先离开出品窗折页范围，再开合餐厨玻璃");
+    return { accepted: false, reason };
+  }
+  ns({ kitchen: open ? 1 : 0 });
+  return { accepted: true };
+}
 function ns(i, e = 600) {
+  if (Object.hasOwn(i, "kitchen") && ut.homeDesign?.r7Revision) {
+    const reason = kitchenSweepBlock();
+    const next = i.kitchen ? 1 : 0;
+    if (reason && Math.abs(next - (Dn.kitchen ? 1 : 0)) > 0.001) {
+      Su("请先离开出品窗折页范围，再开合餐厨玻璃");
+      const rest = { ...i };
+      delete rest.kitchen;
+      if (!Object.keys(rest).length) return { accepted: false, reason };
+      i = rest;
+    }
+  }
   if (Object.hasOwn(i, "storage")) localStorageProgress.clear();
   let t = { ...an },
     n = { ...Dn, ...i };
@@ -3476,7 +3510,9 @@ function ns(i, e = 600) {
     Jt?.request({ shadow: !0 }));
   if(e===0){xu.get('motion')?.(performance.now());xu.delete('motion');}
 }
+let kitchenHold = null;
 function bx() {
+  if (kitchenHold != null) an.kitchen = kitchenHold;
   for (const seat of ut.homeDesign.entryIslandDining?.seats || []) {
     const root = Ct.getObjectByName(seat.id);
     if (root) { root.position.x = seat.center[0] - (ut.homeDesign.entryIslandDining.pullbackM ?? 0.4) * an.counterSeats; root.userData.animated = true; }
@@ -3510,6 +3546,10 @@ function bx() {
   });
   applyLifeMotion(lifeMotion, an);
   applyR5Motion(homeMotion,Ct,an);
+  const r7Pass = Ct.getObjectByName("opening:kitchen-pass-window");
+  if (r7Pass?.userData.r7Fold) poseR7Pass(r7Pass, an.kitchen);
+  const r7Dress = Ct.getObjectByName("r7-dressing");
+  if (r7Dress) poseR7Lamp(r7Dress, an.dining);
   for (let i of St.kitchen)
     i.group.position.set(
       i.closed[0] + i.travel[0] * an.kitchen,
@@ -3609,7 +3649,8 @@ function fw() {
   (St.kitchen.length &&
     e("kitchen-toggle", "餐厨玻璃\uFF08\u5DF2\u5173\uFF09", () => {
       let s = Dn.kitchen ? 0 : 1;
-      (ns({ kitchen: s }),
+      if (requestKitchen(!Dn.kitchen).accepted === false) return;
+      (s = Dn.kitchen ? 1 : 0,
         ($e("#kitchen-toggle").textContent = s
           ? "餐厨玻璃\uFF08\u5DF2\u5F00\uFF09"
           : "餐厨玻璃\uFF08\u5DF2\u5173\uFF09"),
@@ -3827,8 +3868,12 @@ function setWalkDoorOpen(id, open) {
     Jt?.request({ shadow: true });
     return;
   }
-  if (id === "entry-door" || id === "kitchen-door") {
-    ns({ [id === "entry-door" ? "entry" : "kitchen"]: open ? 1 : 0 });
+  if (id === "kitchen-door") {
+    requestKitchen(open);
+    return;
+  }
+  if (id === "entry-door") {
+    ns({ entry: open ? 1 : 0 });
     return;
   }
   const opening = ut.openings.find((o) => o.id === id && o.type === "door");
@@ -3925,7 +3970,7 @@ function walkTargets() {
       "walk-kitchen-door",
       "开合餐厨玻璃",
       [kitchen.center[0], 1.15, kitchen.center[1]],
-      () => ns({ kitchen: Dn.kitchen ? 0 : 1 }),
+      () => requestKitchen(!Dn.kitchen),
     );
   const door = ut.openings.find((o) => o.id === "guest-door");
   if (door)
@@ -3972,7 +4017,7 @@ function walkTargets() {
       normal,
     );
   }
-  if (ut.homeDesign.r2Revision) add('walk-kitchen-pass-window','开合餐厨玻璃',[1.96,1.5,5.85],()=>setWalkDoorOpen('kitchen-door',!Dn.kitchen));
+  if (ut.homeDesign.r2Revision) add('walk-kitchen-pass-window','开合餐厨玻璃',[1.96,1.5,5.85],()=>requestKitchen(!Dn.kitchen));
   const walls = Gp.filter((node) => node.userData.kind === "wall");
   const ray = new yi.Raycaster();
   return targets.filter((target) => {
@@ -4376,9 +4421,11 @@ async function bw() {
         tag: Mu,
         materials: Vn,
       }),
+      (ut.homeDesign.r7Tiles && buildR7PassTiles(Ct.getObjectByName(ut.homeDesign.r7Tiles.parentId), Vn, ut.homeDesign.r7Tiles)),
       finishFurniture(Ct, ut.objects, Vn),
       (roomAtmosphere = buildInteriorDetails(Ct, Vn, Mu, true, ut)),
       (spatialDesign = buildHomeArchitecture(Ct, ut, Vn, Mu, homeMotion)),
+      (ut.homeDesign.r7Dressing && buildR7Dressing(Ct, Vn, ut.homeDesign.r7Dressing, Mu)),
       (spatialDesign.bayLife = buildBayLife(Ct, ut, Vn, Mu)),
       (electricalRendering=buildElectrical(Ct,ut,Vn)),
       Ct.getObjectByName("electrical:root")?.children.forEach(node=>Mu(node,node.userData.spaceIds||[],"electrical")),
@@ -4648,6 +4695,28 @@ document.addEventListener("visibilitychange", () => {
 });
 window.homePresentation = {
   getR5Revision:()=>structuredClone(ut.homeDesign.r5Revision),
+  getR7Revision:()=>structuredClone(ut.homeDesign.r7Revision),
+  setKitchenOpen: requestKitchen,
+  holdKitchenProgress: (value) => {
+    if (!Number.isFinite(value) || value < 0 || value > 1) throw new RangeError("Kitchen progress must be between 0 and 1");
+    if (kitchenSweepBlock()) return an.kitchen;
+    kitchenHold = value;
+    an.kitchen = value;
+    bx();
+    Jt?.request({ shadow: true });
+    return an.kitchen;
+  },
+  releaseKitchenHold: () => { kitchenHold = null; },
+  getInteriorViews: () => ut.presentation.interiorViews.map((v) => ({ id: v.id, roomId: v.roomId, label: v.label, position: v.position, target: v.target })),
+  getR7PassPose: () => {
+    Ct.updateMatrixWorld(true);
+    const at = (name) => Ct.getObjectByName(name)?.getWorldPosition(new P()).toArray() || null;
+    return {
+      progress: an.kitchen,
+      pairs: [0, 1].map((g) => ({ A: at(`r7-fold-upper-${g}`), B: at(`r7-fold-lower-${g}`), C: at(`r7-fold-tip-${g}`) })),
+      visible: Ct.getObjectByName("opening:kitchen-pass-window")?.visible ?? false,
+    };
+  },
   getElectricalPlan:()=>({plan:structuredClone(ut.homeDesign.electrical),rendering:electricalRendering}),
   getStudyState:()=>({smallBedOpen:an.smallBed>.99,cinemaNear:an.cinemaTV>.99,fullBedOpen:!!Vp,
     chairPosition:Ct.getObjectByName('study-office-chair')?.getWorldPosition(new P()).toArray()}),
@@ -4818,7 +4887,9 @@ window.homePresentation = {
       .filter((d) => d.unitId)
       .map((d) => ({
         unitId: d.unitId,
+        name: d.pivot.name,
         angle: d.pivot.rotation[d.axis || "y"],
+        insideVisible: (d.insideGroup ?? Ct.getObjectByName(String(d.pivot.name).replace(/:door:(\d+):.*$/, ":inside:$1")))?.visible ?? false,
       })),
   getState: () => ({
     version: ut.version,

@@ -10,6 +10,7 @@ import {createR3Design} from './r3-design';
 import {createR4Design} from './r4-design';
 import {createR5Design} from './r5-design';
 import {createR6Design} from './r6-design';
+import {createR7Design} from './r7-design';
 
 /** Authoring composition runs at build time; the browser consumes its one final snapshot. */
 const storageBase = createStorageDesign(structuredClone(baseModel) as never);
@@ -23,4 +24,4 @@ const r3 = createR3Design(r2);
 const r4 = createR4Design(r3);
 const r5 = createR5Design(r4);
 
-export const finalModel = createR6Design(r5);
+export const finalModel = createR7Design(createR6Design(r5));
