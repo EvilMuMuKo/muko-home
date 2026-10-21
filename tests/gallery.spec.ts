@@ -37,6 +37,7 @@ test('mobile gallery defers original PNGs and fits a narrow viewport', async ({ 
   await page.getByRole('button', { name: '放大细看', exact: true }).click();
   await expect(page.locator('#viewer-image')).toHaveAttribute('src', /originals\/V01.png$/);
   await expect(page.getByRole('button', { name: '适应屏幕', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.locator('#viewer-image').evaluate((img: HTMLImageElement) => img.decode());
   await page.screenshot({ path: 'test-results/gallery-mobile-viewer.png' });
 });
 

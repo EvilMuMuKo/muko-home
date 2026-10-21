@@ -15,7 +15,7 @@
       "thumbnail": "images/V19-480.webp",
       "srcset": "images/V19-480.webp 480w, images/V19-960.webp 960w, images/V19-1600.webp 1586w",
       "original": "originals/V19.png",
-      "sha256": "aec6b6da2fa74ce7718ca1f0cc294792d72ea3522db698927b896d9f531d2f9b"
+      "sha256": "3cd7b1251e5aa31bc962fea51e894b8128851df21e5a959735365d50662d5034"
     },
     {
       "id": "V20",
@@ -30,7 +30,7 @@
       "thumbnail": "images/V20-480.webp",
       "srcset": "images/V20-480.webp 480w, images/V20-960.webp 960w, images/V20-1600.webp 1586w",
       "original": "originals/V20.png",
-      "sha256": "b980134af1f54ccf43dd73cdca391bc36788ca0014158a79bf6762546a7c5eb9"
+      "sha256": "29fdeeef6d5a0f94f5a60f09eb44b984c5b90539479dbe0e79922094db799931"
     },
     {
       "id": "V10",
@@ -81,7 +81,7 @@
       "id": "V17",
       "title": "影音室 · 双床客住构思",
       "category": "卧室与影音",
-      "description": "两床同时展开，移动电视保持远位。床间与桌侧非常紧凑，构造及转换余量仍待校核。",
+      "description": "双床同时展开的静态概念，移动电视保持远位。床间与桌侧余量紧凑，不代表转换、通行尺寸或施工验证通过。",
       "edition": "第二辑",
       "concept": true,
       "width": 1586,
