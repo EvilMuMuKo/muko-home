@@ -1,6 +1,7 @@
 // Keep GitHub Pages' existing main:/ publishing configuration working after merge.
 import { cp, rm } from "node:fs/promises";
 await rm("assets", { recursive: true, force: true });
+await rm("gallery", { recursive: true, force: true });
 for (const name of [
   "index.html",
   "assets",
@@ -13,6 +14,7 @@ for (const name of [
   "icon-192.png",
   "icon-512.png",
   "site.webmanifest",
+  "gallery",
 ]) {
   await cp(`dist/${name}`, name, { recursive: true });
 }

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="MuKo Home 装修风格效果图展册。中古包豪斯与日本现代的日常生活，九个空间视角。">
+  <meta property="og:title" content="MuKo Home · 空间影集">
+  <meta property="og:description" content="九个空间视角，关于两个人的日常。">
+  <meta property="og:image" content="https://evilmumuko.github.io/muko-home/gallery/images/V01-1600.webp">
+  <title>MuKo Home · 空间影集</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="gallery.css">
+  <script src="gallery.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="./" aria-label="MuKo Home 空间影集首页">MuKo <span>HOME</span><i aria-hidden="true"></i></a>
+    <a class="model-link" href="../">探索 3D 空间 <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <div class="intro-title"><p class="eyebrow">A HOME, IN THE MAKING</p><h1 id="page-title">有温度的材料，<br>有自己的日常。</h1></div>
+      <div class="intro-copy"><p>深木、釉面、织物与一点明亮的颜色。<br>把中古包豪斯与日本现代的气息，<br>带进 MuKo 的家。</p><span class="edition">空间影集 / 09 个视角 / 2026.10</span></div>
+    </section>
+    <div class="gallery-toolbar"><div class="filters" role="group" aria-label="筛选空间">
+      <button type="button" data-filter="全部" aria-pressed="true">全部 <span>09</span></button>
+      <button type="button" data-filter="公共空间" aria-pressed="false">公共空间</button>
+      <button type="button" data-filter="卧室与影音" aria-pressed="false">卧室与影音</button>
+      <button type="button" data-filter="家政空间" aria-pressed="false">家政空间</button>
+    </div><p class="view-hint">点击图片，放大慢慢看</p></div>
+    <p id="status" class="sr-only" role="status" aria-live="polite"></p>
+    <div id="gallery" class="gallery" aria-label="效果图列表"></div>
+    <p id="load-error" hidden>图片目录暂时未能加载，请刷新页面重试。</p>
+    <noscript><p>请启用 JavaScript 以浏览影集，也可直接查看 <a href="originals/V01.png">入户原图</a>。</p></noscript>
+    <footer><p class="footer-brand">MuKo Home</p><p>基于当前空间模型生成的风格效果图，包含本轮局部设计修订。<br>用于感受材料、色彩与氛围；尺寸和构造仍需进一步确认。</p><a href="../">进入 3D 空间 ↗</a></footer>
+  </main>
+  <dialog id="viewer" aria-labelledby="viewer-title" aria-describedby="viewer-description">
+    <div class="viewer-top"><span id="viewer-count"></span><div class="viewer-tools"><button id="zoom" type="button" aria-pressed="false">放大细看</button><a id="download" download>下载原图</a><button id="close" type="button" aria-label="关闭大图">关闭 <span aria-hidden="true">×</span></button></div></div>
+    <div id="image-stage" class="image-stage"><img id="viewer-image" alt="" draggable="false"></div>
+    <div class="viewer-bottom"><div><h2 id="viewer-title"></h2><p id="viewer-description"></p></div><div class="viewer-navigation"><button id="previous" type="button" aria-label="上一张">←</button><button id="next" type="button" aria-label="下一张">→</button></div></div>
+  </dialog>
+</body>
+</html>
