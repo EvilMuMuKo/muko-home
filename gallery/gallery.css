@@ -2,3 +2,5 @@
 
 /* Respect notches and landscape cutouts in the full-screen viewer. */
 .viewer-top{padding-top:max(16px,env(safe-area-inset-top));padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}.viewer-bottom{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}.site-header{padding-top:max(22px,env(safe-area-inset-top))}
+
+.edition-badge{display:inline-block;margin-top:8px;font-size:10px;letter-spacing:.5px;color:#84402e;background:#eaded0;padding:3px 8px;border-radius:3px}
