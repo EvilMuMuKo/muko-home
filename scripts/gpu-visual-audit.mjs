@@ -13,6 +13,11 @@ try {
  await page.goto(url);await page.waitForFunction(()=>window.homePresentation?.getState().ready,null,{timeout:120000});
  await page.waitForFunction(()=>window.homePresentation.getPerformance().renders>0);
  await page.locator(".home-welcome").waitFor({state:"detached",timeout:10000});
+ await page.evaluate(()=>window.homePresentation.whenVisualReady());
+ await page.waitForFunction(()=>{
+  const detail=window.homePresentation.getPerformance().materialDetail;
+  return detail.loaded===detail.requested && detail.hydrated===detail.requested;
+ },null,{timeout:120000,polling:100});
  report.adapter=await page.evaluate(async()=>{
   const adapter=await navigator.gpu?.requestAdapter();const info=adapter?.info;
   return info?{vendor:info.vendor,architecture:info.architecture,description:info.description,isFallbackAdapter:info.isFallbackAdapter??adapter.isFallbackAdapter??null}:null;
