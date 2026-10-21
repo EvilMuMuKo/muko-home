@@ -1,0 +1,123 @@
+{
+  "edition": "2026-10-21",
+  "model": "R7",
+  "images": [
+    {
+      "id": "V01",
+      "title": "入户 · MuKo’s Bar",
+      "category": "公共空间",
+      "description": "连续出品台、灰蓝釉砖与深木收口，让进门的第一眼有自己的性格。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V01-1600.webp",
+      "thumbnail": "images/V01-480.webp",
+      "srcset": "images/V01-480.webp 480w, images/V01-960.webp 960w, images/V01-1600.webp 1586w",
+      "original": "originals/V01.png",
+      "sha256": "d31327efc7b8292b0967ecdd787c9b2b1f17371376f2b99c4485775e559c753c"
+    },
+    {
+      "id": "V02",
+      "title": "水吧 · 咖啡与收藏",
+      "category": "公共空间",
+      "description": "奶油柜面与暖木展示格，容纳咖啡、杯具和日常收藏。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V02-1600.webp",
+      "thumbnail": "images/V02-480.webp",
+      "srcset": "images/V02-480.webp 480w, images/V02-960.webp 960w, images/V02-1600.webp 1586w",
+      "original": "originals/V02.png",
+      "sha256": "06a18aa8820785ec0aadc86bbd315d6f94a0be489532b07d6388c86f5b407315"
+    },
+    {
+      "id": "V03",
+      "title": "厨房 · 日常出品",
+      "category": "公共空间",
+      "description": "灰蓝釉砖、黄白棋盘与奶油柜面，保留清晰的操作台。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V03-1600.webp",
+      "thumbnail": "images/V03-480.webp",
+      "srcset": "images/V03-480.webp 480w, images/V03-960.webp 960w, images/V03-1600.webp 1586w",
+      "original": "originals/V03.png",
+      "sha256": "50ebd7ce5194215e89ea405288c6344cdaaa48b6397c8c7507dfb5faeb7189f7"
+    },
+    {
+      "id": "V04",
+      "title": "岛台 · 两人时光",
+      "category": "公共空间",
+      "description": "两人餐位、短桌旗与局部灯光；从水吧望向客厅。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V04-1600.webp",
+      "thumbnail": "images/V04-480.webp",
+      "srcset": "images/V04-480.webp 480w, images/V04-960.webp 960w, images/V04-1600.webp 1586w",
+      "original": "originals/V04.png",
+      "sha256": "f7b5a2d310fb6981d3f73f7ec00927ed0a066a38883dec850deccf3c4b64be06"
+    },
+    {
+      "id": "V05",
+      "title": "客厅 · 自由组合",
+      "category": "公共空间",
+      "description": "可合并的双模块沙发与移动大屏，中央留给生活。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V05-1600.webp",
+      "thumbnail": "images/V05-480.webp",
+      "srcset": "images/V05-480.webp 480w, images/V05-960.webp 960w, images/V05-1600.webp 1586w",
+      "original": "originals/V05.png",
+      "sha256": "dc2ab5d62624386a8607f85aa249ab527925ed359765975a82bcb4e40e48231d"
+    },
+    {
+      "id": "V06",
+      "title": "主卧 · 温暖的暗调",
+      "category": "卧室与影音",
+      "description": "暖暗墙面、格纹床品与柔和日光，保留高飘窗的层次。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V06-1600.webp",
+      "thumbnail": "images/V06-480.webp",
+      "srcset": "images/V06-480.webp 480w, images/V06-960.webp 960w, images/V06-1600.webp 1586w",
+      "original": "originals/V06.png",
+      "sha256": "32a3b7407c3a3ed6504f5f3ec1608c26cfee23c43149e408bb527b7b69370542"
+    },
+    {
+      "id": "V07",
+      "title": "主卧 · 一字工位",
+      "category": "卧室与影音",
+      "description": "木桌、洞洞板与独立任务灯，把两人的工作区安顿好。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V07-1600.webp",
+      "thumbnail": "images/V07-480.webp",
+      "srcset": "images/V07-480.webp 480w, images/V07-960.webp 960w, images/V07-1600.webp 1586w",
+      "original": "originals/V07.png",
+      "sha256": "757451fa928fafdf06e3ce15d151784cdba760ab995c7a4f1ec97e8d432273b5"
+    },
+    {
+      "id": "V08",
+      "title": "影音室 · 窗边停留",
+      "category": "卧室与影音",
+      "description": "大小沙发床并排，窗边单工位不再另放办公转椅。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V08-1600.webp",
+      "thumbnail": "images/V08-480.webp",
+      "srcset": "images/V08-480.webp 480w, images/V08-960.webp 960w, images/V08-1600.webp 1586w",
+      "original": "originals/V08.png",
+      "sha256": "651aaeed9f7625087e484fd224ba94062224496043b37742391d29e89012218b"
+    },
+    {
+      "id": "V09",
+      "title": "阳台 · 家政日常",
+      "category": "家政空间",
+      "description": "统一柜面与窗边收口，延续全屋的材料语言。",
+      "width": 1586,
+      "height": 992,
+      "image": "images/V09-1600.webp",
+      "thumbnail": "images/V09-480.webp",
+      "srcset": "images/V09-480.webp 480w, images/V09-960.webp 960w, images/V09-1600.webp 1586w",
+      "original": "originals/V09.png",
+      "sha256": "86ad385169c8370fd385244afc274d4b27fdfe40afbc2ea21802a2b0d25d0d0c"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # MuKo Home
 
-[打开空间设计方案](https://evilmumuko.github.io/muko-home/)
+[打开空间设计方案](https://evilmumuko.github.io/muko-home/) · [打开效果图展册](https://evilmumuko.github.io/muko-home/gallery/)
 
 自然、温暖、适度复古的双人住宅空间概念设计。支持空间切换、日夜照明、家具动作和第一人称自由漫游。空间与设备仍需现场复测，当前展示不作为施工图。
 
@@ -65,3 +65,7 @@ npm run benchmark
 新户型源代码、设计任务书和逐房截图位于 [projects/yans-home](projects/yans-home/README.md)。其独立发布产物位于 `yans-home/`，合并并发布后可从 [YAN’s Home](https://evilmumuko.github.io/muko-home/yans-home/) 验收。原首页继续使用现有模型。
 
 R5两台85英寸移动电视分别读取屏幕与底座尺寸；客厅为斜向双模块布局，开放活动时电视后停。影音室保留原大床，新增并排单人沙发床与跨飘窗长直桌。小床展开、原大床展开及近位电视有组合保护，椅子先退出再展开小床。柜内插座置于内部安装面，房间切换时分区显示；湿区及空调等候选不渲染为已安装点。详情及独立图纸见R5说明。
+
+## 效果图展册
+
+独立入口为 `/gallery/`。源文件与图片在 `public/gallery/`，构建后同步到根目录 `gallery/`，沿用现有 Pages 托管。九张生成图提供 480/960/1600px WebP 预览，原始 PNG 仅在放大细看或下载时请求。支持空间筛选、键盘与触屏切换，以及 `#V08` 等单图分享链接。原始参考图库及内部提示词不包含在公开展册中。图像中的连续出品台、影音室去除办公椅等是本轮效果图修订，尚未写回3D模型。
