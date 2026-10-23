@@ -2783,6 +2783,7 @@ function nw(i, e) {
     }));
 }
 function iw(i, e) {
+  if (e.r7OmitMesh) return;
   at(i, 0.08, 0.43, 0, 0.215, 0, "steel");
   for (let t = 0; t < 5; t++) {
     let n = new mn();
@@ -2807,11 +2808,14 @@ function sw(i, e) {
     re(i, 0.46, 0.34, 0.075, 0, 0.69, 0.2, e.material, 0.045));
 }
 function mx(i, e, t = !1) {
-  let n = t ? 0.24 : 0.23;
-  re(i, e.w - 0.05, n, e.d - 0.08, 0, 0.17, 0, "darkoak");
+  let n = t ? 0.24 : 0.23,
+    woodMat = e.material === "r7ForestGreen" && Vn.r7NicheWood ? "r7NicheWood" : "darkoak",
+    upholsteryMat = e.material === "r7ForestGreen" && Vn.r7ForestGreen ? "r7ForestGreen" : "linen",
+    accentMat = e.material === "r7ForestGreen" && Vn.r7RustPillow ? "r7RustPillow" : "sage";
+  re(i, e.w - 0.05, n, e.d - 0.08, 0, 0.17, 0, woodMat);
   for (let l of [-e.w / 2 + 0.1, e.w / 2 - 0.1])
     for (let c of [-e.d / 2 + 0.12, e.d / 2 - 0.12])
-      at(i, 0.028, 0.1, l, 0.05, c, "darkoak");
+      at(i, 0.028, 0.1, l, 0.05, c, woodMat);
   let s = re(
       i,
       e.w - 0.16,
@@ -2820,7 +2824,7 @@ function mx(i, e, t = !1) {
       0,
       t ? 0.355 : 0.38,
       -0.06,
-      "linen",
+      upholsteryMat,
       0.075,
     ),
     r = re(
@@ -2831,12 +2835,12 @@ function mx(i, e, t = !1) {
       0,
       t ? 0.585 : 0.62,
       e.d / 2 - 0.14,
-      "linen",
+      upholsteryMat,
       0.07,
     ),
     a = [];
   for (let l of [-e.w / 2 + 0.09, e.w / 2 - 0.09])
-    re(i, 0.17, 0.43, e.d - 0.05, l, 0.42, 0, "linen", 0.065);
+    re(i, 0.17, 0.43, e.d - 0.05, l, 0.42, 0, upholsteryMat, 0.065);
   let o = t ? 2 : 3;
   for (let l = 0; l < o; l++) {
     let c = -e.w / 2 + 0.17 + ((l + 0.5) * (e.w - 0.34)) / o;
@@ -2849,7 +2853,7 @@ function mx(i, e, t = !1) {
         c,
         t ? 0.4375 : 0.51,
         -0.06,
-        "linen",
+        upholsteryMat,
         0.04,
       ),
     ),
@@ -2862,7 +2866,7 @@ function mx(i, e, t = !1) {
           c,
           t ? 0.625 : 0.7,
           e.d / 2 - 0.27,
-          l === 0 ? "sage" : "linen",
+          l === 0 ? accentMat : upholsteryMat,
           0.045,
         ),
       ));
@@ -2872,8 +2876,8 @@ function mx(i, e, t = !1) {
     let l = new mn();
     ((l.visible = !1),
       i.add(l),
-      re(l, 1.4, 0.12, 0.8, 0, 0.3, -0.79, "linen", 0.035),
-      re(l, 1.4, 0.12, 0.41, 0, 0.3, -1.385, "linen", 0.025));
+      re(l, 1.4, 0.12, 0.8, 0, 0.3, -0.79, upholsteryMat, 0.035),
+      re(l, 1.4, 0.12, 0.41, 0, 0.3, -1.385, upholsteryMat, 0.025));
     for (let c of [-0.63, 0.63]) re(l, 0.03, 0.3, 0.03, c, 0.15, -1.4, "steel");
     yu.push({ g: i, ext: l, o: e, seat: s, back: r, tops: a });
   }

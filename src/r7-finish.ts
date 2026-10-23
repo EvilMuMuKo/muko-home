@@ -24,12 +24,12 @@ function tileTextures() {
     const wave = Math.sin(x * 0.62) * Math.sin(y * 0.47);
     height[y * size + x] = grout ? 0 : 0.007 + wave * 0.005;
     if (grout) {
-      img[o] = 214; img[o + 1] = 214; img[o + 2] = 210;
+      img[o] = 224; img[o + 1] = 222; img[o + 2] = 216;
       rv[o] = rv[o + 1] = rv[o + 2] = 210;
     } else {
-      const shade = Math.round(168 + wave * 16);
-      img[o] = shade + 6; img[o + 1] = shade + 8; img[o + 2] = shade + 10;
-      const gloss = Math.round(42 + (wave + 1) * 18);
+      const shade = Math.round(142 + wave * 15);
+      img[o] = shade - 14; img[o + 1] = shade; img[o + 2] = shade + 18;
+      const gloss = Math.round(38 + (wave + 1) * 16);
       rv[o] = rv[o + 1] = rv[o + 2] = gloss;
     }
   }
@@ -41,6 +41,7 @@ function tileTextures() {
     nv[o + 1] = Math.round((direction.y * 0.5 + 0.5) * 255);
     nv[o + 2] = Math.round((direction.z * 0.5 + 0.5) * 255);
   }
+  color.colorSpace = THREE.SRGBColorSpace;
   for (const tex of [color, rough, normal]) {
     tex.needsUpdate = true;
     tex.repeat.set(10, 10);
@@ -85,6 +86,150 @@ function brushTextures() {
   return brushMaps;
 }
 
+function kitchenCheckerTexture() {
+  const size = 128;
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const u = x / size;
+      const v = y / size;
+      const du = (u + v) * 2;
+      const dv = (u - v + 2) * 2;
+      const fu = Math.abs(du - Math.round(du));
+      const fv = Math.abs(dv - Math.round(dv));
+      const grout = fu < 0.028 || fv < 0.028;
+      const warm = (Math.floor(du) + Math.floor(dv)) % 2 === 0;
+      const grain = Math.round(Math.sin(x * 0.37) * Math.cos(y * 0.41) * 4);
+      const o = (y * size + x) * 4;
+      if (grout) {
+        data[o] = 214;
+        data[o + 1] = 208;
+        data[o + 2] = 196;
+      } else if (warm) {
+        data[o] = Math.min(255, 218 + grain);
+        data[o + 1] = Math.min(255, 146 + grain);
+        data[o + 2] = Math.max(0, 66 + grain);
+      } else {
+        data[o] = Math.min(255, 242 + grain);
+        data[o + 1] = Math.min(255, 236 + grain);
+        data[o + 2] = Math.min(255, 224 + grain);
+      }
+      data[o + 3] = 255;
+    }
+  }
+  const tex = new THREE.DataTexture(data, size, size);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(1.6, 1.6);
+  tex.generateMipmaps = true;
+  tex.minFilter = THREE.LinearMipmapLinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function plaidBeddingTexture(scale = 7) {
+  const size = 128;
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const gx = Math.floor((x / 16)) % 2 === 0;
+      const gy = Math.floor((y / 16)) % 2 === 0;
+      const fine = ((x + y) % 3 === 0 ? 4 : 0) - ((x * 3 + y) % 4 === 0 ? 3 : 0);
+      const o = (y * size + x) * 4;
+      if (gx && gy) {
+        data[o] = 240 + fine;
+        data[o + 1] = 233 + fine;
+        data[o + 2] = 221 + fine;
+      } else if (gx !== gy) {
+        data[o] = 186 + fine;
+        data[o + 1] = 158 + fine;
+        data[o + 2] = 132 + fine;
+      } else {
+        data[o] = 138 + fine;
+        data[o + 1] = 104 + fine;
+        data[o + 2] = 77 + fine;
+      }
+      data[o + 3] = 255;
+    }
+  }
+  const tex = new THREE.DataTexture(data, size, size);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(scale, scale);
+  tex.generateMipmaps = true;
+  tex.minFilter = THREE.LinearMipmapLinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.anisotropy = 8;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function cinemaRugTexture() {
+  const size = 128;
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const cx = ((x % 32) - 16) / 16;
+      const cy = ((y % 32) - 16) / 16;
+      const dist = Math.hypot(cx, cy);
+      const diamond = Math.abs(cx) + Math.abs(cy);
+      const weave = ((x + y) % 2 === 0 ? 5 : -4);
+      const o = (y * size + x) * 4;
+      if (dist < 0.56 || diamond < 0.65) {
+        data[o] = 86 + weave;
+        data[o + 1] = 102 + weave;
+        data[o + 2] = 114 + weave;
+      } else if (diamond < 0.92) {
+        data[o] = 156 + weave;
+        data[o + 1] = 56 + weave;
+        data[o + 2] = 44 + weave;
+      } else {
+        data[o] = 64 + weave;
+        data[o + 1] = 54 + weave;
+        data[o + 2] = 50 + weave;
+      }
+      data[o + 3] = 255;
+    }
+  }
+  const tex = new THREE.DataTexture(data, size, size);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(4, 4);
+  tex.generateMipmaps = true;
+  tex.minFilter = THREE.LinearMipmapLinearFilter;
+  tex.magFilter = THREE.LinearFilter;
+  tex.needsUpdate = true;
+  return tex;
+}
+
+function stripeThrowTexture() {
+  const size = 64;
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) {
+    const band = y % 32;
+    for (let x = 0; x < size; x++) {
+      const o = (y * size + x) * 4;
+      const knit = (x % 4 === 0 ? 6 : 0);
+      if (band < 12) {
+        data[o] = 228 + knit; data[o + 1] = 216 + knit; data[o + 2] = 194 + knit;
+      } else if (band < 22) {
+        data[o] = 142 + knit; data[o + 1] = 48 + knit; data[o + 2] = 38 + knit;
+      } else {
+        data[o] = 34 + knit; data[o + 1] = 42 + knit; data[o + 2] = 52 + knit;
+      }
+      data[o + 3] = 255;
+    }
+  }
+  const tex = new THREE.DataTexture(data, size, size);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(3, 3);
+  tex.needsUpdate = true;
+  return tex;
+}
+
 function cloneStd(source: THREE.Material, color: string, roughness: number, metalness: number) {
   const material = (source as THREE.MeshStandardMaterial).clone();
   material.color.set(color);
@@ -98,10 +243,25 @@ function cloneStd(source: THREE.Material, color: string, roughness: number, meta
 /** Shared R7 finishes. Call once before meshes are built. */
 export function ensureR7Materials(m: Record<string, THREE.Material>) {
   if (m.r7Pale) return;
-  m.r7Pale = cloneStd(m.cabinetPaint || m.upperPaint, "#e4dfd6", 0.78, 0.02);
-  m.r7NicheWood = cloneStd(m.oak, "#9a704c", 0.62, 0.02);
-  m.r7LipWood = cloneStd(m.oak, "#8d6848", 0.58, 0.02);
-  m.r7Mustard = cloneStd(m.linen || m.sage, "#c6a23a", 0.86, 0);
+  m.r7Pale = cloneStd(m.cabinetPaint || m.upperPaint, "#e4dfd6", 0.76, 0.02);
+  m.r7Pale.name = "r7Pale";
+  m.r7NicheWood = cloneStd(m.oak, "#936744", 0.62, 0.02);
+  m.r7NicheWood.name = "r7NicheWood";
+  m.r7LipWood = cloneStd(m.oak, "#825b3b", 0.56, 0.02);
+  m.r7LipWood.name = "r7LipWood";
+  m.r7Mustard = cloneStd(m.linen || m.sage, "#c89f36", 0.86, 0);
+  m.r7Mustard.name = "r7Mustard";
+  const leather = cloneStd(m.linen || m.oak, "#202225", 0.44, 0.05);
+  leather.roughness = 0.44;
+  leather.roughnessMap = null;
+  leather.name = "r7BlackLeather";
+  m.r7BlackLeather = leather;
+  const forest = cloneStd(m.linen || m.sage, "#3f5340", 0.88, 0);
+  forest.name = "r7ForestGreen";
+  m.r7ForestGreen = forest;
+  const rust = cloneStd(m.linen || m.sage, "#943e2f", 0.86, 0);
+  rust.name = "r7RustPillow";
+  m.r7RustPillow = rust;
   const glass = new THREE.MeshStandardMaterial({
     color: "#1c1e22",
     roughness: 0.08,
@@ -130,7 +290,7 @@ export function ensureR7Materials(m: Record<string, THREE.Material>) {
   m.r7Brushed = steel;
   const maps = tileTextures();
   const tile = new THREE.MeshStandardMaterial({
-    color: "#d5d8da",
+    color: "#b8c7d4",
     map: maps.color,
     roughnessMap: maps.rough,
     normalMap: maps.normal,
@@ -140,13 +300,58 @@ export function ensureR7Materials(m: Record<string, THREE.Material>) {
   tile.name = "r7Tile";
   tile.userData.r7Role = true;
   m.r7Tile = tile;
+  const kitchenChecker = new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: kitchenCheckerTexture(),
+    roughness: 0.72,
+    metalness: 0.02,
+  });
+  kitchenChecker.name = "r7KitchenChecker";
+  kitchenChecker.userData.r7Role = true;
+  m.r7KitchenChecker = kitchenChecker;
+  const plaid = new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: plaidBeddingTexture(7),
+    roughness: 0.9,
+    metalness: 0,
+  });
+  plaid.name = "r7PlaidBedding";
+  plaid.userData.r7Role = true;
+  m.r7PlaidBedding = plaid;
+  const plaidPillow = new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: plaidBeddingTexture(5),
+    roughness: 0.88,
+    metalness: 0,
+  });
+  plaidPillow.name = "r7PlaidPillow";
+  plaidPillow.userData.r7Role = true;
+  m.r7PlaidPillow = plaidPillow;
+  const cinemaRug = new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: cinemaRugTexture(),
+    roughness: 0.92,
+    metalness: 0,
+  });
+  cinemaRug.name = "r7CinemaRug";
+  cinemaRug.userData.r7Role = true;
+  m.r7CinemaRug = cinemaRug;
+  const stripeThrow = new THREE.MeshStandardMaterial({
+    color: "#ffffff",
+    map: stripeThrowTexture(),
+    roughness: 0.9,
+    metalness: 0,
+  });
+  stripeThrow.name = "r7StripeThrow";
+  stripeThrow.userData.r7Role = true;
+  m.r7StripeThrow = stripeThrow;
   const stripe = new Uint8Array(64 * 64 * 4);
   for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) {
-    const bar = x % 18 < 1;
+    const bar = x % 18 < 2;
     const o = (y * 64 + x) * 4;
-    stripe[o] = bar ? 122 : 132;
-    stripe[o + 1] = bar ? 58 : 150;
-    stripe[o + 2] = bar ? 64 : 162;
+    stripe[o] = bar ? 132 : 118;
+    stripe[o + 1] = bar ? 54 : 134;
+    stripe[o + 2] = bar ? 58 : 148;
     stripe[o + 3] = 255;
   }
   const stripeMap = new THREE.DataTexture(stripe, 64, 64);

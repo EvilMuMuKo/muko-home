@@ -73,31 +73,35 @@ export function buildR5Furniture(g:THREE.Group,o:any,m:Mats,motion:Motion){
   g.userData.animated=true;return true;
  }
  if(o.type==='study_desk'){
-  box(g,m,o.w,.03,o.d,0,.725,0,'oak',.008).name='study:desktop';
+  const topMat=m.r7NicheWood?'r7NicheWood':'oak';
+  const legMat=m.r7Ink?'r7Ink':'bronze';
+  box(g,m,o.w,.03,o.d,0,.725,0,topMat,.008).name='study:desktop';
   for(const x of [.125,1.255])for(const z of [1.715,2.245])
-   box(g,m,.03,.71,.03,x-o.x,.355,z-o.z,'bronze',.003).name='study:outside-leg';
+   box(g,m,.03,.71,.03,x-o.x,.355,z-o.z,legMat,.003).name='study:outside-leg';
   // The slim edge frame remains entirely above the required 680mm clearance.
-  for(const z of [-.28,.28])box(g,m,o.w-.05,.025,.018,0,.6975,z,'bronze',.003);
+  for(const z of [-.28,.28])box(g,m,o.w-.05,.025,.018,0,.6975,z,legMat,.003);
   return true;
  }
  if(o.type==='study_sofa_bed'){
   const state=motion.r5||=( {} );g.userData.animated=true;
-  box(g,m,1.05,.18,.8,0,.22,0,'salonTimber',.012);
-  for(const x of [-.495,.495])for(const z of [-.37,.37])box(g,m,.05,.15,.05,x,.075,z,'salonTimber');
+  const woodMat=o.material==='r7ForestGreen'&&m.r7NicheWood?'r7NicheWood':'salonTimber';
+  const fabricMat=o.material==='r7ForestGreen'&&m.r7ForestGreen?'r7ForestGreen':'oliveFabric';
+  box(g,m,1.05,.18,.8,0,.22,0,woodMat,.012);
+  for(const x of [-.495,.495])for(const z of [-.37,.37])box(g,m,.05,.15,.05,x,.075,z,woodMat);
   // Timber rear rail, softly padded, follows the product's 850mm closed height.
-  box(g,m,1.05,.48,.045,0,.61,-.3775,'salonTimber');
-  const pillow=box(g,m,.97,.41,.14,0,.62,-.30,'oliveFabric',.045);
-  box(g,m,.99,.15,1.82/3,0,.325,-.35+1.82/6,'oliveFabric',.035).name='study:seat-cushion';
+  box(g,m,1.05,.48,.045,0,.61,-.3775,woodMat);
+  const pillow=box(g,m,.97,.41,.14,0,.62,-.30,fabricMat,.045);
+  box(g,m,.99,.15,1.82/3,0,.325,-.35+1.82/6,fabricMat,.035).name='study:seat-cushion';
   const leaves:THREE.Group[]=[],cushions:THREE.Mesh[]=[];
   for(let i=0;i<2;i++){
    const leaf=new THREE.Group();leaf.name=`study:pullout-${i+1}`;g.add(leaf);leaves.push(leaf);
-   box(leaf,m,1.03,.055,.56,0,.20,0,'salonTimber');
-   for(const x of [-.47,.47]){box(leaf,m,.035,.16,.035,x,.105,.24,'salonTimber');wheel(leaf,m,x,.24);}
-   const foam=box(leaf,m,.99,.15,1.82/3,0,.325,0,'oliveFabric',.035);cushions.push(foam);
-   if(i===1)box(leaf,m,1.05,.31,.05,0,.155,.3283333333,'salonTimber');
+   box(leaf,m,1.03,.055,.56,0,.20,0,woodMat);
+   for(const x of [-.47,.47]){box(leaf,m,.035,.16,.035,x,.105,.24,woodMat);wheel(leaf,m,x,.24);}
+   const foam=box(leaf,m,.99,.15,1.82/3,0,.325,0,fabricMat,.035);cushions.push(foam);
+   if(i===1)box(leaf,m,1.05,.31,.05,0,.155,.3283333333,woodMat);
   }
   // Fine channel seams replace a featureless inflated cushion; never add below-desk braces.
-  for(const x of [-.24,.24])box(g,m,.004,.002,.53,x,.401,-.04,'salonFabric',.001);
+  for(const x of [-.24,.24])box(g,m,.004,.002,.53,x,.401,-.04,fabricMat,.001);
   state.bed={root:g,leaves,cushions,pillow};return true;
  }
  return false;

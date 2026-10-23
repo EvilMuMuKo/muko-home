@@ -370,6 +370,21 @@ export function buildR2Cabinet(
       }
     }
 
+    if (bay.door === "open" && bay.material === "r7NicheWood" && purpose !== "beer") {
+      const linerT = 0.006;
+      const yBot = bay.y + (bay.y < 0.02 ? KICK + T : T / 2);
+      const yTop = bay.y + bay.h - (bay.y + bay.h >= H - EPS ? T : T / 2);
+      const innerH = Math.max(T, yTop - yBot);
+      const innerCy = (yBot + yTop) / 2;
+      const linerD = Math.max(T, D - T - 0.024);
+      const linerZ = -D / 2 + 0.016 + linerD / 2;
+      addPanel(group, { x: innerX, y: innerCy, z: D / 2 - T - linerT / 2, w: innerW, h: innerH, d: linerT, material: "r7NicheWood" }, materials);
+      addPanel(group, { x: innerX, y: yBot + linerT / 2, z: linerZ, w: innerW, h: linerT, d: linerD, material: "r7NicheWood" }, materials);
+      addPanel(group, { x: innerX, y: yTop - linerT / 2, z: linerZ, w: innerW, h: linerT, d: linerD, material: "r7NicheWood" }, materials);
+      addPanel(group, { x: innerX - innerW / 2 + linerT / 2, y: innerCy, z: linerZ, w: linerT, h: innerH, d: linerD, material: "r7NicheWood" }, materials);
+      addPanel(group, { x: innerX + innerW / 2 - linerT / 2, y: innerCy, z: linerZ, w: linerT, h: innerH, d: linerD, material: "r7NicheWood" }, materials);
+    }
+
     if (bay.door === "open" && purpose !== "display" && purpose !== "appliance" && purpose !== "beer" && purpose !== "bench" && purpose !== "pegboard") {
       const floorY = bay.y + (bay.y < 0.02 ? KICK + T : T);
       const span = (bay.shelves ?? []).find((s) => s > 0.12) ?? Math.min(bay.h - 0.04, 0.36);
