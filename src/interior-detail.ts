@@ -367,11 +367,14 @@ export function buildInteriorDetails(
     for (const child of upholstery)
       if (
         child instanceof THREE.Mesh &&
-        [m.linen, m.livingFabric, m.cinemaFabric, m.salonFabric].includes(
+        [m.linen, m.livingFabric, m.cinemaFabric, m.salonFabric, m.r7BlackLeather, m.r7ForestGreen].includes(
           child.material as THREE.Material,
         )
       )
-        addUpholsterySeam(child, m.piping);
+        addUpholsterySeam(
+          child,
+          child.material === m.r7BlackLeather ? (m.r7Ink || m.piping) : m.piping,
+        );
   }
   const door = scene.getObjectByName("opening:guest-door")!;
   const guestOpening = model?.openings?.find((opening) => opening.id === "guest-door");

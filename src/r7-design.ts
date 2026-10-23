@@ -1,4 +1,4 @@
-/** R7 applies the confirmed A12 Bauhaus × Japanese-modern finish on the R6 model. */
+/** R7 applies the confirmed A12 Bauhaus × Japanese-modern finish and render-gallery alignments on the R6 model. */
 export function createR7Design<T extends Record<string, any>>(base: T): T {
   const m: any = structuredClone(base);
   m.version = "17.0.0";
@@ -65,17 +65,17 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
     id: "r7-pass-lip",
     type: "cabinet_frame",
     room: "kitchen",
-    x: 1.395,
+    x: 2.005,
     z: 5.925,
     y: 0.92,
-    w: 2.61,
+    w: 3.83,
     d: 0.15,
     h: 0.03,
     rotation: 0,
     material: "r7LipWood",
     r7Role: "outer-counter-edge",
-    note: "30mm timber edge, 150mm overhang on the bar face only; not an equipment back panel",
-    collisionParts: [{ x: 1.395, z: 5.925, y: 0.92, w: 2.61, d: 0.15, h: 0.03, material: "r7LipWood" }],
+    note: "30mm continuous timber edge (x=0.09..3.92), 150mm overhang across the full pass-through bar face",
+    collisionParts: [{ x: 2.005, z: 5.925, y: 0.92, w: 3.83, d: 0.15, h: 0.03, material: "r7LipWood" }],
   });
 
   const sign = obj("r2-bar-sign");
@@ -157,18 +157,61 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
   const shallow = obj("r2-living-shallow");
   shallow.r2Cabinet.frameMaterial = "r7Pale";
   shallow.r2Cabinet.frontMaterial = "r7Pale";
+  shallow.r2Cabinet.backMaterial = "r7NicheWood";
   for (const bay of shallow.r2Cabinet.bays) {
     if (bay.door === "open") bay.material = "r7NicheWood";
   }
   const entry = obj("r2-entry");
   entry.r2Cabinet.frameMaterial = "r7Pale";
   entry.r2Cabinet.frontMaterial = "r7Pale";
+  entry.r2Cabinet.backMaterial = "r7NicheWood";
   for (const bay of entry.r2Cabinet.bays) {
     if (bay.door === "open" && bay.purpose !== "bench") bay.material = "r7NicheWood";
   }
 
+  // Align kitchen, island, living suspended, master wardrobe and balcony cabinets with V01-V20 cream doors & walnut frames.
+  for (const id of [
+    "r2-kitchen-back",
+    "r2-kitchen-sink-base",
+    "r2-kitchen-peninsula",
+    "r2-shallow-peninsula",
+    "r2-fridge-cabinet",
+    "r3-entry-island-base",
+    "r2-living-deep",
+    "r2-master-wardrobe",
+    "r2-housekeeping",
+  ]) {
+    const cab = obj(id);
+    if (cab.r2Cabinet) {
+      cab.r2Cabinet.frameMaterial = "r7NicheWood";
+      cab.r2Cabinet.frontMaterial = "r7Pale";
+      cab.r2Cabinet.backMaterial = "r7NicheWood";
+      for (const bay of cab.r2Cabinet.bays) {
+        if (bay.door === "open") bay.material = "r7NicheWood";
+      }
+    }
+  }
+  for (const id of ["upper-kitchen-left", "upper-kitchen-prep", "upper-master-work"]) {
+    const upper = m.objects.find((o: any) => o.id === id);
+    if (upper) {
+      upper.material = "r7Pale";
+      upper.caseMaterial = "r7NicheWood";
+      upper.insideMaterial = "r7NicheWood";
+    }
+  }
+
   const chair = obj("reading-chair");
   chair.material = "r7Mustard";
+  const livingSofa = obj("living-sofa");
+  livingSofa.material = "r7BlackLeather";
+  const studySofa = obj("study-sofa-bed");
+  studySofa.material = "r7ForestGreen";
+  const guestSofa = obj("guest-sofa-bed");
+  guestSofa.material = "r7ForestGreen";
+  const studyChair = obj("study-office-chair");
+  studyChair.r7OmitMesh = true;
+  studyChair.note = "V08/V10/V11: office swivel chair mesh omitted; small sofa-bed serves as desk seating";
+
   const peninsula = obj("r2-kitchen-peninsula");
   const tileH = peninsula.h - 0.09;
   const table = obj("dining-table");
@@ -190,24 +233,44 @@ export function createR7Design<T extends Record<string, any>>(base: T): T {
   };
   m.homeDesign.r7Tiles = {
     parentId: peninsula.id,
-    w: 2.61,
+    w: 3.83,
     h: tileH,
     t: 0.008,
-    x: 0,
+    x: 0.61,
     y: 0.09 + tileH / 2,
     z: peninsula.d / 2 + 0.004,
+    fullSpan: true,
   };
 
   m.homeDesign.r7Revision = {
-    sources: ["A12 Bauhaus × Japanese modern, applied on the unchanged R6 plan"],
+    sources: ["A12 Bauhaus × Japanese modern + V01–V20 render gallery alignments, applied on the unchanged R6 plan"],
     structureChanged: false,
     keepsR6: { switchPoints: m.homeDesign.r6Revision?.switchPoints, lightingCriteria: m.homeDesign.r6Revision?.lightingCriteria },
     pass: pass.sweep,
     passId: "kitchen-pass-window",
+    continuousPassCounter: { x0: 0.09, x1: 3.92, w: 3.83, lipId: "r7-pass-lip" },
+    studyChairMeshOmitted: true,
+    kitchenFloorMaterial: "r7KitchenChecker",
+    sofaMaterial: "r7BlackLeather",
+    cinemaSofaMaterial: "r7ForestGreen",
+    masterBeddingMaterial: "r7PlaidBedding",
     sign: { id: "r2-bar-sign", x: sign.x, z: sign.z, y: sign.y, w: sign.w, h: sign.h, d: sign.d },
     beerBay: { y0: 0, y1: 0.915, equipmentY0: 0, equipmentH: 0.85, counterSupportKept: true, coolingClaim: false },
-    materials: ["r7Pale", "r7NicheWood", "r7BlackGlass", "r7Tile", "r7Brushed", "r7Mustard", "r7LipWood"],
-    scope: "finish, fold pass and sign mount; not a site survey, hardware acceptance or gas seal",
+    materials: [
+      "r7Pale",
+      "r7NicheWood",
+      "r7BlackGlass",
+      "r7Tile",
+      "r7Brushed",
+      "r7Mustard",
+      "r7LipWood",
+      "r7KitchenChecker",
+      "r7BlackLeather",
+      "r7ForestGreen",
+      "r7PlaidBedding",
+      "r7CinemaRug",
+    ],
+    scope: "finish, fold pass, sign mount and render-aligned styling; not a site survey, hardware acceptance or gas seal",
   };
   return m;
 }

@@ -134,8 +134,12 @@ export function r7WalkerInSweep(x: number, z: number, sweep: { x0: number; x1: n
   return x > sweep.x0 - radius && x < sweep.x1 + radius && z > sweep.z0 - radius && z < sweep.z1 + radius;
 }
 
-/** 100mm glazed tiles on the bar face of the peninsula only. */
-export function buildR7PassTiles(peninsula: THREE.Object3D | null, materials: Record<string, THREE.Material>, spec?: { w: number; h: number; t: number; x: number; y: number; z: number }) {
+/** Continuous 100mm grey-blue glazed tiles, white plinth and walnut sill/end trim across the pass-through bar face (x = 0.09..3.92). */
+export function buildR7PassTiles(
+  peninsula: THREE.Object3D | null,
+  materials: Record<string, THREE.Material>,
+  spec?: { w: number; h: number; t: number; x: number; y: number; z: number; fullSpan?: boolean },
+) {
   if (!peninsula || !spec || peninsula.getObjectByName("r7-pass-tiles")) return;
   const tile = materials.r7Tile || materials.stone;
   const mesh = new THREE.Mesh(metricUV(new THREE.BoxGeometry(spec.w, spec.h, spec.t)), tile);
@@ -144,5 +148,34 @@ export function buildR7PassTiles(peninsula: THREE.Object3D | null, materials: Re
   mesh.castShadow = false;
   mesh.receiveShadow = true;
   mesh.userData.r7Role = "outer-face-tiles";
+  mesh.userData.physicsBody = false;
   peninsula.add(mesh);
+
+  const plinthMat = materials.r7Pale || materials.cream || tile;
+  const skirting = new THREE.Mesh(metricUV(new THREE.BoxGeometry(spec.w, 0.09, spec.t + 0.004)), plinthMat);
+  skirting.name = "r7-pass-skirting";
+  skirting.position.set(spec.x, 0.045, spec.z + 0.001);
+  skirting.receiveShadow = true;
+  skirting.userData.r7Role = "outer-face-skirting";
+  skirting.userData.physicsBody = false;
+  peninsula.add(skirting);
+
+  const lipWood = materials.r7LipWood || materials.r7NicheWood || materials.oak || tile;
+  const sillTop = new THREE.Mesh(metricUV(new THREE.BoxGeometry(spec.w, 0.032, 0.24)), lipWood);
+  sillTop.name = "r7-pass-sill-cap";
+  sillTop.position.set(spec.x, 0.935, spec.z - 0.04);
+  sillTop.castShadow = true;
+  sillTop.receiveShadow = true;
+  sillTop.userData.r7Role = "outer-counter-cap";
+  sillTop.userData.physicsBody = false;
+  peninsula.add(sillTop);
+
+  const endCap = new THREE.Mesh(metricUV(new THREE.BoxGeometry(0.032, 0.95, 0.50)), lipWood);
+  endCap.name = "r7-pass-end-panel";
+  endCap.position.set(spec.x + spec.w / 2 + 0.016, 0.475, spec.z - 0.17);
+  endCap.castShadow = true;
+  endCap.receiveShadow = true;
+  endCap.userData.r7Role = "outer-counter-end";
+  endCap.userData.physicsBody = false;
+  peninsula.add(endCap);
 }

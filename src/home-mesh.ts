@@ -247,13 +247,15 @@ export function buildHomeFurniture(
     return true;
   }
   if (o.type === "modular_sofa") {
+    const bodyMat = o.material === "r7BlackLeather" && m.r7BlackLeather ? "r7BlackLeather" : "salonFabric";
+    const legMat = o.material === "r7BlackLeather" && m.r7Ink ? "r7Ink" : "salonTimber";
     for (let index = 0; index < 2; index++) {
       const module = new THREE.Group();
       module.name = `sofa-module-${index + 1}`;
       const w = 1.275,
         d = 1.05,
         outer = o.moduleOuterSigns?.[index] ?? (index === 0 ? 1 : -1);
-      box(module, m, w, 0.22, d, 0, 0.245, 0, "salonFabric", 0.065);
+      box(module, m, w, 0.22, d, 0, 0.245, 0, bodyMat, 0.065);
       box(
         module,
         m,
@@ -263,10 +265,10 @@ export function buildHomeFurniture(
         0,
         0.425,
         -0.01,
-        "salonFabric",
+        bodyMat,
         0.065,
       );
-      box(module, m, w - 0.03, 0.3, 0.17, 0, 0.61, 0.425, "salonFabric", 0.065);
+      box(module, m, w - 0.03, 0.3, 0.17, 0, 0.61, 0.425, bodyMat, 0.065);
       box(
         module,
         m,
@@ -276,12 +278,12 @@ export function buildHomeFurniture(
         outer * (w / 2 - 0.0625),
         0.43,
         0,
-        "salonFabric",
+        bodyMat,
         0.05,
       );
       for (const x of [-0.5, 0.5])
         for (const z of [-0.36, 0.36])
-          box(module, m, 0.045, 0.14, 0.045, x, 0.07, z, "salonTimber");
+          box(module, m, 0.045, 0.14, 0.045, x, 0.07, z, legMat);
       box(module, m, 0.04, 0.025, 0.09, o.moduleOuterSigns ? -outer*(w/2-.025) : (-outer*w)/2, 0.17, -0.25, "steel");
       const cushion = box(
         module,

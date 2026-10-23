@@ -42,6 +42,14 @@ test("R7 keeps the R6 plan, switches and the beer floor opening", () => {
   const lip = model.objects.find((o: any) => o.id === "r7-pass-lip");
   expect(lip.y + lip.h).toBeCloseTo(0.95, 3);
   expect(lip.h).toBeCloseTo(0.03, 3);
+  expect(lip.w).toBeCloseTo(3.83, 2);
+  expect(lip.x - lip.w / 2).toBeCloseTo(0.09, 2);
+  expect(lip.x + lip.w / 2).toBeCloseTo(3.92, 2);
+  expect(model.homeDesign.r7Tiles.w).toBeCloseTo(3.83, 2);
+  expect(model.objects.find((o: any) => o.id === "study-office-chair").r7OmitMesh).toBe(true);
+  expect(model.objects.find((o: any) => o.id === "living-sofa").material).toBe("r7BlackLeather");
+  expect(model.objects.find((o: any) => o.id === "study-sofa-bed").material).toBe("r7ForestGreen");
+  expect(model.objects.find((o: any) => o.id === "guest-sofa-bed").material).toBe("r7ForestGreen");
   expect(model.objects.find((o: any) => o.id === "coffee-machine").y).toBeCloseTo(0.95);
   expect(model.homeDesign.electrical.points.filter((p: any) => p.kind === "switch")).toHaveLength(16);
 });
@@ -132,6 +140,11 @@ test("R7 materials stay distinct and share one tile map", () => {
   expect(pale.metalness).toBeLessThan(0.1);
   expect((m.r7BlackGlass as THREE.MeshStandardMaterial).transparent).toBe(true);
   expect((m.r7BlackGlass as THREE.MeshStandardMaterial).opacity).toBeLessThan(0.5);
+  expect(m.r7KitchenChecker).toBeTruthy();
+  expect(m.r7BlackLeather).toBeTruthy();
+  expect(m.r7ForestGreen).toBeTruthy();
+  expect(m.r7PlaidBedding).toBeTruthy();
+  expect(m.r7CinemaRug).toBeTruthy();
 });
 
 test("a walker inside the pass sweep cannot start the fold", async ({ page }) => {

@@ -1,17 +1,17 @@
 import type { DesignInput } from "./storage-design";
 export const roomPalette = {
   paper: "#eeece5",
-  masterPaper: "#f1ece2",
+  masterPaper: "#ded6c8",
   clay: "#ad7359",
   moss: "#6d7967",
-  masterSage: "#6f796d",
-  masterMushroom: "#81796e",
+  masterSage: "#5a5547",
+  masterMushroom: "#645d4f",
   tobacco: "#bda68f",
   oat: "#deddd5",
   media: "#aaa99f",
-  cinema: "#485149",
+  cinema: "#3d473f",
   cinemaFront: "#303933",
-  cinemaCeiling: "#53594f",
+  cinemaCeiling: "#495047",
 };
 export interface ThemeScene {
   id: string;
